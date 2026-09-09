@@ -1,24 +1,61 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-// No head() here: the home route inherits title/description/og/twitter from
-// __root.tsx, and ships no og:image so serve-time hosting can inject the
-// project's social preview (explicit og:image or latest screenshot).
 export const Route = createFileRoute("/")({
+  head: () => ({
+    meta: [
+      { title: "Kearly | Welcome" },
+      {
+        name: "description",
+        content: "Automate operations, safety checks, and site compliance reporting with Kearly.",
+      },
+      { property: "og:title", content: "Kearly | Welcome" },
+      {
+        property: "og:description",
+        content: "Automate operations, safety checks, and site compliance reporting with Kearly.",
+      },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+    ],
+  }),
   component: Index,
 });
 
-// IMPORTANT: Replace this placeholder. See ./README.md for routing conventions.
 function Index() {
   return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
-    </div>
+    <main className="welcome-page">
+      <div className="welcome-shape welcome-shape-one" aria-hidden="true" />
+      <div className="welcome-shape welcome-shape-two" aria-hidden="true" />
+      <div className="welcome-shape welcome-shape-three" aria-hidden="true" />
+
+      <section className="welcome-content" aria-labelledby="welcome-heading">
+        <header className="brand-header">
+          <div className="logo-mark" role="img" aria-label="Kearly logo">
+            <span className="logo-petal logo-petal-one" />
+            <span className="logo-petal logo-petal-two" />
+            <span className="logo-petal logo-petal-three" />
+            <span className="logo-petal logo-petal-four" />
+          </div>
+          <p className="brand-name">Kearly</p>
+          <p className="brand-tagline">Compliance automated &amp; simplified.</p>
+        </header>
+
+        <div className="welcome-card">
+          <h1 id="welcome-heading">Welcome to Kearly</h1>
+          <p className="welcome-description">
+            Automate operations, schedule safety checks, and simplify site compliance reports in real-time.
+          </p>
+          <a className="welcome-action" href="#get-started">
+            Get Started
+          </a>
+          <div className="welcome-divider" />
+          <p className="login-prompt">
+            Already have an account?{" "}
+            <a className="login-link" href="#log-in">
+              Log in
+            </a>
+          </p>
+        </div>
+      </section>
+    </main>
   );
 }
