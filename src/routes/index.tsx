@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -44,9 +44,9 @@ function Index() {
           <p className="welcome-description">
             Automate operations, schedule safety checks, and simplify site compliance reports in real-time.
           </p>
-          <a className="welcome-action" href="#get-started">
+          <Link className="welcome-action" to="/signup">
             Get Started
-          </a>
+          </Link>
           <div className="welcome-divider" />
           <p className="login-prompt">
             Already have an account?{" "}
