@@ -77,11 +77,17 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Lovable App" },
-      { name: "description", content: "Lovable Generated Project" },
-      { name: "author", content: "Lovable" },
-      { property: "og:title", content: "Lovable App" },
-      { property: "og:description", content: "Lovable Generated Project" },
+      { title: "Kearly | Compliance made simple" },
+      {
+        name: "description",
+        content: "Automate operations, safety checks, and site compliance reporting with Kearly.",
+      },
+      { name: "author", content: "Kearly" },
+      { property: "og:title", content: "Kearly | Compliance made simple" },
+      {
+        property: "og:description",
+        content: "Automate operations, safety checks, and site compliance reporting with Kearly.",
+      },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:site", content: "@Lovable" },
