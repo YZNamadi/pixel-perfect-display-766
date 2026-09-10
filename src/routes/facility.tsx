@@ -120,9 +120,9 @@ function FacilityPage() {
             </div>
 
             <div className="facility-actions">
-              <button type="submit" className="facility-continue">
+              <Link to="/site" className="facility-continue">
                 Continue
-              </button>
+              </Link>
               <Link className="facility-skip" to="/">
                 Skip for now
               </Link>
