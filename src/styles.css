@@ -473,15 +473,19 @@
   }
 
   .auth-submit {
+    align-items: center;
     background: var(--color-primary);
     border: none;
     border-radius: 0.5rem;
     color: var(--color-primary-foreground);
     cursor: pointer;
+    display: flex;
     font-size: 0.9375rem;
     font-weight: 700;
+    justify-content: center;
     margin-top: 0.5rem;
     min-height: 3rem;
+    text-decoration: none;
     transition: filter 160ms ease;
     width: 100%;
   }
