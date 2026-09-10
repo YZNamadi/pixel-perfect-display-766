@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as FacilityRouteImport } from './routes/facility'
 import { Route as SignupRouteImport } from './routes/signup'
+import { Route as SiteRouteImport } from './routes/site'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -28,35 +29,44 @@ const SignupRoute = SignupRouteImport.update({
   path: '/signup',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SiteRoute = SiteRouteImport.update({
+  id: '/site',
+  path: '/site',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/facility': typeof FacilityRoute
   '/signup': typeof SignupRoute
+  '/site': typeof SiteRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/facility': typeof FacilityRoute
   '/signup': typeof SignupRoute
+  '/site': typeof SiteRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/facility': typeof FacilityRoute
   '/signup': typeof SignupRoute
+  '/site': typeof SiteRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/facility' | '/signup'
+  fullPaths: '/' | '/facility' | '/signup' | '/site'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/facility' | '/signup'
-  id: '__root__' | '/' | '/facility' | '/signup'
+  to: '/' | '/facility' | '/signup' | '/site'
+  id: '__root__' | '/' | '/facility' | '/signup' | '/site'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   FacilityRoute: typeof FacilityRoute
   SignupRoute: typeof SignupRoute
+  SiteRoute: typeof SiteRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -82,6 +92,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SignupRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/site': {
+      id: '/site'
+      path: '/site'
+      fullPath: '/site'
+      preLoaderRoute: typeof SiteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -89,6 +106,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   FacilityRoute: FacilityRoute,
   SignupRoute: SignupRoute,
+  SiteRoute: SiteRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
