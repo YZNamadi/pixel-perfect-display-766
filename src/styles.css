@@ -1418,8 +1418,8 @@
     transition: filter 160ms ease;
   }
 
-  .import-continue:hover:not(:disabled) { filter: brightness(0.92); }
-  .import-continue:disabled { cursor: not-allowed; opacity: 0.55; }
+  .import-continue:hover:not([data-disabled="true"]) { filter: brightness(0.92); }
+  .import-continue[data-disabled="true"] { cursor: not-allowed; opacity: 0.55; }
 
   .import-skip {
     color: var(--color-muted-foreground);
