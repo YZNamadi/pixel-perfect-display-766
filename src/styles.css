@@ -3086,3 +3086,136 @@
   .sd-deco-phone { font-size: 140px; }
   .sd-deco-leaf { font-size: 110px; }
 }
+
+/* ===== Upload Data card (new import design) ===== */
+.ud-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1rem;
+  background: linear-gradient(to bottom right, #E8F5F0 0%, #DCF0E8 40%, #D4ECE4 70%, #CDE8DF 100%);
+  position: relative;
+  overflow: hidden;
+  font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+}
+.ud-deco {
+  position: absolute;
+  z-index: 0;
+  pointer-events: none;
+  user-select: none;
+  line-height: 1;
+}
+.ud-deco-phone { left: 5%; top: 15%; font-size: 240px; opacity: 0.3; filter: blur(8px); }
+.ud-deco-shield { right: 10%; top: 10%; font-size: 110px; opacity: 0.25; filter: blur(6px); }
+.ud-deco-leaf { left: 15%; bottom: 10%; font-size: 180px; opacity: 0.3; filter: blur(10px); }
+
+.ud-card {
+  position: relative;
+  z-index: 10;
+  width: 620px;
+  max-width: 95vw;
+  min-height: 560px;
+  background: #ffffff;
+  border-radius: 12px;
+  border: 1px solid #D1DDD8;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06), 0 1px 4px rgba(0, 0, 0, 0.04);
+  padding: 2rem 2.5rem 2.5rem;
+  display: flex;
+  flex-direction: column;
+}
+.ud-card-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.75rem;
+}
+.ud-logo { display: flex; align-items: center; gap: 0.5rem; }
+.ud-logo-text { display: flex; flex-direction: column; }
+.ud-logo-name { font-size: 0.9rem; font-weight: 800; color: #2D3748; letter-spacing: 0.05em; line-height: 1.2; }
+.ud-logo-tag { font-size: 0.5rem; color: #718096; line-height: 1.2; }
+.ud-back {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #2D3748;
+  text-decoration: none;
+}
+.ud-back:hover { color: #4A9B7A; }
+
+.ud-stepper { display: flex; align-items: center; justify-content: center; margin-bottom: 1.25rem; }
+.ud-step-wrap { display: flex; align-items: center; }
+.ud-step { display: flex; align-items: center; gap: 0.5rem; }
+.ud-step-circle {
+  width: 20px;
+  height: 20px;
+  border-radius: 999px;
+  border: 1px solid #4A9B7A;
+  color: #4A9B7A;
+  background: #ffffff;
+  font-size: 0.7rem;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+}
+.ud-step.is-active .ud-step-circle { background: #4A9B7A; color: #ffffff; }
+.ud-step-label { font-size: 0.75rem; color: #4A5568; white-space: nowrap; }
+.ud-step-line { width: 70px; height: 1px; background: #4A9B7A; margin: 0 0.75rem; }
+
+.ud-heading { font-size: 1.6rem; font-weight: 700; color: #2D3748; text-align: center; margin: 0.5rem 0 0.25rem; }
+.ud-sub { font-size: 0.9rem; color: #4A5568; text-align: center; margin: 0 0 1.5rem; }
+
+.ud-file-input { display: none; }
+
+.ud-drop {
+  border: 1px solid #7FBFA3;
+  border-radius: 8px;
+  background: rgba(248, 250, 249, 0.6);
+  padding: 2rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  text-align: center;
+}
+.ud-drop.is-dragging { background: #EEF7F2; border-color: #4A9B7A; }
+.ud-drop-icon { line-height: 0; margin-bottom: 0.25rem; }
+.ud-drop strong { font-size: 1rem; font-weight: 500; color: #2D3748; }
+.ud-or { font-size: 0.8rem; color: #4A5568; }
+.ud-browse {
+  background: #4A9B7A;
+  color: #ffffff;
+  border: none;
+  border-radius: 6px;
+  padding: 0.6rem 1.25rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+}
+.ud-browse:hover { background: #3D8A6A; }
+.ud-drop small { font-size: 0.75rem; color: #8A9A95; margin-top: 0.5rem; }
+
+.ud-continue {
+  align-self: center;
+  margin-top: auto;
+  padding: 0.85rem 2.5rem;
+  border: 1px solid #2D3748;
+  border-radius: 8px;
+  background: #ffffff;
+  color: #2D3748;
+  font-size: 1rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+.ud-continue:hover:not([data-disabled="true"]) { background: #F3F7F5; }
+.ud-continue[data-disabled="true"] { opacity: 0.55; cursor: not-allowed; }
+
+@media (max-width: 600px) {
+  .ud-card { padding: 1.5rem 1.25rem 2rem; min-height: auto; }
+  .ud-step-label { display: none; }
+  .ud-step-line { width: 40px; }
+  .ud-deco-phone { font-size: 140px; }
+  .ud-deco-leaf { font-size: 110px; }
+}
