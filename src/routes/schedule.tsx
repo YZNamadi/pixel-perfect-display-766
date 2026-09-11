@@ -189,17 +189,31 @@ function SchedulePage() {
         </header>
 
         <div className="ps-toolbar">
-          <button type="button" className="ps-today">
+          <button
+            type="button"
+            className="ps-today"
+            onClick={() => setCursor(new Date(today.getFullYear(), today.getMonth(), 1))}
+          >
             Today
           </button>
           <div className="ps-month-nav">
-            <button type="button" className="ps-arrow" aria-label="Previous month">
+            <button type="button" className="ps-arrow" aria-label="Previous month" onClick={() => shiftMonth(-1)}>
               <ChevronLeft size={20} aria-hidden="true" />
             </button>
-            <strong className="ps-month">August 2026</strong>
-            <button type="button" className="ps-arrow" aria-label="Next month">
+            <strong className="ps-month">{monthLabel}</strong>
+            <button type="button" className="ps-arrow" aria-label="Next month" onClick={() => shiftMonth(1)}>
               <ChevronRight size={20} aria-hidden="true" />
             </button>
+            <input
+              type="month"
+              className="ps-jump"
+              aria-label="Jump to month"
+              value={`${year}-${String(month + 1).padStart(2, "0")}`}
+              onChange={(e) => {
+                const [y, m] = e.target.value.split("-").map(Number);
+                if (y && m) setCursor(new Date(y, m - 1, 1));
+              }}
+            />
           </div>
           <div className="ps-views" role="tablist" aria-label="Calendar view">
             {views.map((item) => (
