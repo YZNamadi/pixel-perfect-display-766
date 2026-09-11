@@ -14,6 +14,7 @@ import { Route as CompleteRouteImport } from './routes/complete'
 import { Route as DashboardWelcomeRouteImport } from './routes/dashboard-welcome'
 import { Route as FacilityRouteImport } from './routes/facility'
 import { Route as ImportRouteImport } from './routes/import'
+import { Route as LoginRouteImport } from './routes/login'
 import { Route as OnboardingRouteImport } from './routes/onboarding'
 import { Route as SignupRouteImport } from './routes/signup'
 import { Route as SiteRouteImport } from './routes/site'
@@ -43,6 +44,11 @@ const FacilityRoute = FacilityRouteImport.update({
 const ImportRoute = ImportRouteImport.update({
   id: '/import',
   path: '/import',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
   getParentRoute: () => rootRouteImport,
 } as any)
 const OnboardingRoute = OnboardingRouteImport.update({
@@ -77,6 +83,7 @@ export interface FileRoutesByFullPath {
   '/dashboard-welcome': typeof DashboardWelcomeRoute
   '/facility': typeof FacilityRoute
   '/import': typeof ImportRoute
+  '/login': typeof LoginRoute
   '/onboarding': typeof OnboardingRoute
   '/signup': typeof SignupRoute
   '/site': typeof SiteRoute
@@ -89,6 +96,7 @@ export interface FileRoutesByTo {
   '/dashboard-welcome': typeof DashboardWelcomeRoute
   '/facility': typeof FacilityRoute
   '/import': typeof ImportRoute
+  '/login': typeof LoginRoute
   '/onboarding': typeof OnboardingRoute
   '/signup': typeof SignupRoute
   '/site': typeof SiteRoute
@@ -102,6 +110,7 @@ export interface FileRoutesById {
   '/dashboard-welcome': typeof DashboardWelcomeRoute
   '/facility': typeof FacilityRoute
   '/import': typeof ImportRoute
+  '/login': typeof LoginRoute
   '/onboarding': typeof OnboardingRoute
   '/signup': typeof SignupRoute
   '/site': typeof SiteRoute
@@ -116,6 +125,7 @@ export interface FileRouteTypes {
     | '/dashboard-welcome'
     | '/facility'
     | '/import'
+    | '/login'
     | '/onboarding'
     | '/signup'
     | '/site'
@@ -128,6 +138,7 @@ export interface FileRouteTypes {
     | '/dashboard-welcome'
     | '/facility'
     | '/import'
+    | '/login'
     | '/onboarding'
     | '/signup'
     | '/site'
@@ -140,6 +151,7 @@ export interface FileRouteTypes {
     | '/dashboard-welcome'
     | '/facility'
     | '/import'
+    | '/login'
     | '/onboarding'
     | '/signup'
     | '/site'
@@ -153,6 +165,7 @@ export interface RootRouteChildren {
   DashboardWelcomeRoute: typeof DashboardWelcomeRoute
   FacilityRoute: typeof FacilityRoute
   ImportRoute: typeof ImportRoute
+  LoginRoute: typeof LoginRoute
   OnboardingRoute: typeof OnboardingRoute
   SignupRoute: typeof SignupRoute
   SiteRoute: typeof SiteRoute
@@ -195,6 +208,13 @@ declare module '@tanstack/react-router' {
       path: '/import'
       fullPath: '/import'
       preLoaderRoute: typeof ImportRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/onboarding': {
@@ -241,6 +261,7 @@ const rootRouteChildren: RootRouteChildren = {
   DashboardWelcomeRoute: DashboardWelcomeRoute,
   FacilityRoute: FacilityRoute,
   ImportRoute: ImportRoute,
+  LoginRoute: LoginRoute,
   OnboardingRoute: OnboardingRoute,
   SignupRoute: SignupRoute,
   SiteRoute: SiteRoute,
