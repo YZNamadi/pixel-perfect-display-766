@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AddTaskRouteImport } from './routes/add-task'
 import { Route as AssetsRouteImport } from './routes/assets'
+import { Route as AuditLogRouteImport } from './routes/audit-log'
 import { Route as CompleteRouteImport } from './routes/complete'
 import { Route as ComplianceRouteImport } from './routes/compliance'
 import { Route as DashboardRouteImport } from './routes/dashboard'
@@ -24,7 +25,9 @@ import { Route as MappingRouteImport } from './routes/mapping'
 import { Route as OnboardingRouteImport } from './routes/onboarding'
 import { Route as PreviewRouteImport } from './routes/preview'
 import { Route as RepairsRouteImport } from './routes/repairs'
+import { Route as ReportsRouteImport } from './routes/reports'
 import { Route as ScheduleRouteImport } from './routes/schedule'
+import { Route as SettingsRouteImport } from './routes/settings'
 import { Route as SignupRouteImport } from './routes/signup'
 import { Route as SiteRouteImport } from './routes/site'
 import { Route as SplashRouteImport } from './routes/splash'
@@ -44,6 +47,11 @@ const AddTaskRoute = AddTaskRouteImport.update({
 const AssetsRoute = AssetsRouteImport.update({
   id: '/assets',
   path: '/assets',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuditLogRoute = AuditLogRouteImport.update({
+  id: '/audit-log',
+  path: '/audit-log',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CompleteRoute = CompleteRouteImport.update({
@@ -106,9 +114,19 @@ const RepairsRoute = RepairsRouteImport.update({
   path: '/repairs',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ReportsRoute = ReportsRouteImport.update({
+  id: '/reports',
+  path: '/reports',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ScheduleRoute = ScheduleRouteImport.update({
   id: '/schedule',
   path: '/schedule',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SettingsRoute = SettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SignupRoute = SignupRouteImport.update({
@@ -141,6 +159,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/add-task': typeof AddTaskRoute
   '/assets': typeof AssetsRoute
+  '/audit-log': typeof AuditLogRoute
   '/complete': typeof CompleteRoute
   '/compliance': typeof ComplianceRoute
   '/dashboard': typeof DashboardRoute
@@ -153,7 +172,9 @@ export interface FileRoutesByFullPath {
   '/onboarding': typeof OnboardingRoute
   '/preview': typeof PreviewRoute
   '/repairs': typeof RepairsRoute
+  '/reports': typeof ReportsRoute
   '/schedule': typeof ScheduleRoute
+  '/settings': typeof SettingsRoute
   '/signup': typeof SignupRoute
   '/site': typeof SiteRoute
   '/splash': typeof SplashRoute
@@ -164,6 +185,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/add-task': typeof AddTaskRoute
   '/assets': typeof AssetsRoute
+  '/audit-log': typeof AuditLogRoute
   '/complete': typeof CompleteRoute
   '/compliance': typeof ComplianceRoute
   '/dashboard': typeof DashboardRoute
@@ -176,7 +198,9 @@ export interface FileRoutesByTo {
   '/onboarding': typeof OnboardingRoute
   '/preview': typeof PreviewRoute
   '/repairs': typeof RepairsRoute
+  '/reports': typeof ReportsRoute
   '/schedule': typeof ScheduleRoute
+  '/settings': typeof SettingsRoute
   '/signup': typeof SignupRoute
   '/site': typeof SiteRoute
   '/splash': typeof SplashRoute
@@ -188,6 +212,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/add-task': typeof AddTaskRoute
   '/assets': typeof AssetsRoute
+  '/audit-log': typeof AuditLogRoute
   '/complete': typeof CompleteRoute
   '/compliance': typeof ComplianceRoute
   '/dashboard': typeof DashboardRoute
@@ -200,7 +225,9 @@ export interface FileRoutesById {
   '/onboarding': typeof OnboardingRoute
   '/preview': typeof PreviewRoute
   '/repairs': typeof RepairsRoute
+  '/reports': typeof ReportsRoute
   '/schedule': typeof ScheduleRoute
+  '/settings': typeof SettingsRoute
   '/signup': typeof SignupRoute
   '/site': typeof SiteRoute
   '/splash': typeof SplashRoute
@@ -213,6 +240,7 @@ export interface FileRouteTypes {
     | '/'
     | '/add-task'
     | '/assets'
+    | '/audit-log'
     | '/complete'
     | '/compliance'
     | '/dashboard'
@@ -225,7 +253,9 @@ export interface FileRouteTypes {
     | '/onboarding'
     | '/preview'
     | '/repairs'
+    | '/reports'
     | '/schedule'
+    | '/settings'
     | '/signup'
     | '/site'
     | '/splash'
@@ -236,6 +266,7 @@ export interface FileRouteTypes {
     | '/'
     | '/add-task'
     | '/assets'
+    | '/audit-log'
     | '/complete'
     | '/compliance'
     | '/dashboard'
@@ -248,7 +279,9 @@ export interface FileRouteTypes {
     | '/onboarding'
     | '/preview'
     | '/repairs'
+    | '/reports'
     | '/schedule'
+    | '/settings'
     | '/signup'
     | '/site'
     | '/splash'
@@ -259,6 +292,7 @@ export interface FileRouteTypes {
     | '/'
     | '/add-task'
     | '/assets'
+    | '/audit-log'
     | '/complete'
     | '/compliance'
     | '/dashboard'
@@ -271,7 +305,9 @@ export interface FileRouteTypes {
     | '/onboarding'
     | '/preview'
     | '/repairs'
+    | '/reports'
     | '/schedule'
+    | '/settings'
     | '/signup'
     | '/site'
     | '/splash'
@@ -283,6 +319,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AddTaskRoute: typeof AddTaskRoute
   AssetsRoute: typeof AssetsRoute
+  AuditLogRoute: typeof AuditLogRoute
   CompleteRoute: typeof CompleteRoute
   ComplianceRoute: typeof ComplianceRoute
   DashboardRoute: typeof DashboardRoute
@@ -295,7 +332,9 @@ export interface RootRouteChildren {
   OnboardingRoute: typeof OnboardingRoute
   PreviewRoute: typeof PreviewRoute
   RepairsRoute: typeof RepairsRoute
+  ReportsRoute: typeof ReportsRoute
   ScheduleRoute: typeof ScheduleRoute
+  SettingsRoute: typeof SettingsRoute
   SignupRoute: typeof SignupRoute
   SiteRoute: typeof SiteRoute
   SplashRoute: typeof SplashRoute
@@ -324,6 +363,13 @@ declare module '@tanstack/react-router' {
       path: '/assets'
       fullPath: '/assets'
       preLoaderRoute: typeof AssetsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/audit-log': {
+      id: '/audit-log'
+      path: '/audit-log'
+      fullPath: '/audit-log'
+      preLoaderRoute: typeof AuditLogRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/complete': {
@@ -410,11 +456,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof RepairsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/reports': {
+      id: '/reports'
+      path: '/reports'
+      fullPath: '/reports'
+      preLoaderRoute: typeof ReportsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/schedule': {
       id: '/schedule'
       path: '/schedule'
       fullPath: '/schedule'
       preLoaderRoute: typeof ScheduleRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/settings': {
+      id: '/settings'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof SettingsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/signup': {
@@ -459,6 +519,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AddTaskRoute: AddTaskRoute,
   AssetsRoute: AssetsRoute,
+  AuditLogRoute: AuditLogRoute,
   CompleteRoute: CompleteRoute,
   ComplianceRoute: ComplianceRoute,
   DashboardRoute: DashboardRoute,
@@ -471,7 +532,9 @@ const rootRouteChildren: RootRouteChildren = {
   OnboardingRoute: OnboardingRoute,
   PreviewRoute: PreviewRoute,
   RepairsRoute: RepairsRoute,
+  ReportsRoute: ReportsRoute,
   ScheduleRoute: ScheduleRoute,
+  SettingsRoute: SettingsRoute,
   SignupRoute: SignupRoute,
   SiteRoute: SiteRoute,
   SplashRoute: SplashRoute,

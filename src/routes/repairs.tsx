@@ -46,9 +46,9 @@ const navItems = [
   { label: "Compliance", icon: ShieldCheck, to: "/compliance" as const },
   { label: "Repairs", icon: Wrench, to: "/repairs" as const, active: true },
   { label: "Assets", icon: Building2, to: "/assets" as const },
-  { label: "Reports", icon: BarChart3 },
-  { label: "Audit Log", icon: ScrollText },
-  { label: "Settings", icon: Settings },
+  { label: "Reports", icon: BarChart3, to: "/reports" as const },
+  { label: "Audit Log", icon: ScrollText, to: "/audit-log" as const },
+  { label: "Settings", icon: Settings, to: "/settings" as const },
 ];
 
 const stats = [
