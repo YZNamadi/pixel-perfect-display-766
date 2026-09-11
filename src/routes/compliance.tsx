@@ -224,10 +224,10 @@ function CompliancePage() {
               <option value="oakfield">Oakfield Tower</option>
               <option value="birch">Birch Lane</option>
             </select>
-            <button type="button" className="am-add">
+            <Link to="/add-task" className="am-add">
               <Plus size={15} aria-hidden="true" />
               <span>Add Task</span>
-            </button>
+            </Link>
           </div>
 
           <h2 className="cp-table-title">Tasks</h2>

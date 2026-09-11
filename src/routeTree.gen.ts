@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AddTaskRouteImport } from './routes/add-task'
 import { Route as AssetsRouteImport } from './routes/assets'
 import { Route as CompleteRouteImport } from './routes/complete'
 import { Route as ComplianceRouteImport } from './routes/compliance'
@@ -30,6 +31,11 @@ import { Route as VerifyRouteImport } from './routes/verify'
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AddTaskRoute = AddTaskRouteImport.update({
+  id: '/add-task',
+  path: '/add-task',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AssetsRoute = AssetsRouteImport.update({
@@ -115,6 +121,7 @@ const VerifyRoute = VerifyRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/add-task': typeof AddTaskRoute
   '/assets': typeof AssetsRoute
   '/complete': typeof CompleteRoute
   '/compliance': typeof ComplianceRoute
@@ -134,6 +141,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/add-task': typeof AddTaskRoute
   '/assets': typeof AssetsRoute
   '/complete': typeof CompleteRoute
   '/compliance': typeof ComplianceRoute
@@ -154,6 +162,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/add-task': typeof AddTaskRoute
   '/assets': typeof AssetsRoute
   '/complete': typeof CompleteRoute
   '/compliance': typeof ComplianceRoute
@@ -175,6 +184,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/add-task'
     | '/assets'
     | '/complete'
     | '/compliance'
@@ -194,6 +204,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/add-task'
     | '/assets'
     | '/complete'
     | '/compliance'
@@ -213,6 +224,7 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/add-task'
     | '/assets'
     | '/complete'
     | '/compliance'
@@ -233,6 +245,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AddTaskRoute: typeof AddTaskRoute
   AssetsRoute: typeof AssetsRoute
   CompleteRoute: typeof CompleteRoute
   ComplianceRoute: typeof ComplianceRoute
@@ -258,6 +271,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/add-task': {
+      id: '/add-task'
+      path: '/add-task'
+      fullPath: '/add-task'
+      preLoaderRoute: typeof AddTaskRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/assets': {
@@ -377,6 +397,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AddTaskRoute: AddTaskRoute,
   AssetsRoute: AssetsRoute,
   CompleteRoute: CompleteRoute,
   ComplianceRoute: ComplianceRoute,
