@@ -63,7 +63,7 @@ function DashboardWelcomePage() {
             </span>
             View Quick Guide
           </Link>
-          <Link className="dw-primary" to="/">
+          <Link className="dw-primary" to="/onboarding">
             <span className="dw-icon" aria-hidden="true">
               ↗
             </span>
