@@ -3758,3 +3758,25 @@ a.am-menu-item { text-decoration: none; }
   .ps-week-head span { font-size: 0.7rem; padding: 0.6rem 0.25rem; }
   .ps-event { font-size: 0.62rem; }
 }
+
+.ps-jump {
+  margin-left: 0.5rem;
+  border: 1px solid #d7e2dd;
+  border-radius: 0.6rem;
+  background: #fff;
+  color: #2d3748;
+  font: inherit;
+  font-size: 0.85rem;
+  padding: 0.35rem 0.5rem;
+  cursor: pointer;
+}
+
+.ps-cell.is-today {
+  background: #eaf4ef;
+  box-shadow: inset 0 0 0 2px #4a7c6f;
+}
+
+.ps-cell.is-today .ps-date {
+  color: #2f6b5c;
+  font-weight: 800;
+}
