@@ -1174,3 +1174,290 @@
   .site-header h1 { font-size: 1.5rem; }
   .site-header p { font-size: 0.75rem; }
 }
+
+@layer components {
+  .import-page {
+    background: oklch(0.972 0.005 170);
+    min-height: 100svh;
+    overflow: hidden;
+    padding: 1.25rem 1.25rem 3rem;
+    position: relative;
+  }
+
+  .import-watermark {
+    display: grid;
+    gap: 1.875rem;
+    grid-template-columns: repeat(2, minmax(8rem, 18.75rem));
+    grid-template-rows: repeat(2, minmax(10rem, 22.5rem));
+    left: 50%;
+    opacity: 0.3;
+    pointer-events: none;
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -40%);
+    width: max-content;
+  }
+
+  .import-watermark-petal {
+    background: oklch(0.87 0.022 162);
+    display: block;
+    height: 100%;
+    width: 100%;
+  }
+
+  .import-wm-one { border-radius: 5rem 5rem 14rem 5rem; }
+  .import-wm-two { border-radius: 5rem 5rem 5rem 14rem; }
+  .import-wm-three { border-radius: 5rem 14rem 5rem 5rem; }
+  .import-wm-four { border-radius: 14rem 5rem 5rem 5rem; }
+
+  .import-content {
+    margin: 0 auto;
+    max-width: 58rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  .import-stepper {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    margin: 0 auto 2rem;
+    max-width: 56rem;
+  }
+
+  .import-step-wrap {
+    align-items: center;
+    display: flex;
+    flex: 1;
+    min-width: 0;
+  }
+
+  .import-step {
+    align-items: center;
+    display: flex;
+    gap: 0.5rem;
+    white-space: nowrap;
+  }
+
+  .import-step-circle {
+    align-items: center;
+    background: var(--color-background);
+    border: 2px solid oklch(0.84 0.02 245);
+    border-radius: 999px;
+    color: oklch(0.58 0.045 245);
+    display: inline-flex;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    height: 1.75rem;
+    justify-content: center;
+    width: 1.75rem;
+  }
+
+  .import-step-label {
+    color: oklch(0.58 0.045 245);
+    font-size: 0.8125rem;
+    font-weight: 500;
+  }
+
+  .import-step.is-completed .import-step-circle,
+  .import-step.is-active .import-step-circle {
+    background: var(--color-primary);
+    border-color: var(--color-primary);
+    color: var(--color-primary-foreground);
+  }
+
+  .import-step.is-completed .import-step-label,
+  .import-step.is-active .import-step-label {
+    color: var(--color-foreground);
+    font-weight: 700;
+  }
+
+  .import-step-line {
+    background: oklch(0.84 0.02 245);
+    flex: 1;
+    height: 1px;
+    margin: 0 1rem;
+    min-width: 1rem;
+  }
+
+  .import-step-line.is-completed { background: var(--color-primary); }
+
+  .import-panel {
+    margin: 0 auto;
+    max-width: 45rem;
+  }
+
+  .import-header {
+    margin: 0 auto 1.75rem;
+    text-align: center;
+  }
+
+  .import-header h1 {
+    color: var(--color-foreground);
+    font-size: clamp(1.75rem, 4vw, 2rem);
+    font-weight: 700;
+    line-height: 1.3;
+    margin: 0;
+  }
+
+  .import-header p {
+    color: var(--color-muted-foreground);
+    font-size: 0.8125rem;
+    line-height: 1.5;
+    margin: 0.45rem auto 0;
+    max-width: 38rem;
+  }
+
+  .import-card {
+    background: oklch(1 0 0 / 0.92);
+    border: 1px solid oklch(0.86 0.02 170 / 0.8);
+    border-radius: 0.625rem;
+    box-shadow: 0 0.5rem 2rem oklch(0.25 0.03 160 / 0.06);
+    padding: 0 1.5rem 1.5rem;
+  }
+
+  .import-tabs {
+    align-items: stretch;
+    border-bottom: 1px solid oklch(0.84 0.02 245 / 0.72);
+    display: flex;
+    gap: 1.25rem;
+    margin-bottom: 1rem;
+  }
+
+  .import-tab {
+    color: oklch(0.58 0.045 245);
+    font-size: 0.75rem;
+    font-weight: 500;
+    padding: 1.25rem 0 0.7rem;
+  }
+
+  .import-tab.is-active {
+    border-bottom: 2px solid var(--color-primary);
+    color: var(--color-primary);
+    font-weight: 700;
+  }
+
+  .import-file-input { display: none; }
+
+  .import-upload-zone {
+    align-items: center;
+    background: oklch(0.975 0.008 245);
+    border: 2px dashed oklch(0.82 0.035 245);
+    border-radius: 0.5rem;
+    color: var(--color-foreground);
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    font: inherit;
+    justify-content: center;
+    min-height: 11.75rem;
+    padding: 1.5rem;
+    text-align: center;
+    transition: background-color 160ms ease, border-color 160ms ease;
+    width: 100%;
+  }
+
+  .import-upload-zone:hover,
+  .import-upload-zone.is-dragging {
+    background: oklch(0.95 0.016 245);
+    border-color: var(--color-primary);
+  }
+
+  .import-upload-zone strong {
+    font-size: 0.875rem;
+    font-weight: 700;
+    line-height: 1.4;
+    max-width: 100%;
+    overflow-wrap: anywhere;
+  }
+
+  .import-upload-zone > span:not(.import-upload-icon) {
+    color: var(--color-muted-foreground);
+    font-size: 0.75rem;
+    margin-top: 0.2rem;
+  }
+
+  .import-upload-zone small {
+    color: oklch(0.62 0.045 245);
+    font-size: 0.6875rem;
+    margin-top: 0.6rem;
+  }
+
+  .import-upload-icon {
+    align-items: center;
+    color: oklch(0.62 0.09 245);
+    display: inline-flex;
+    font-size: 2.25rem;
+    font-weight: 300;
+    height: 2.5rem;
+    justify-content: center;
+    line-height: 1;
+    margin-bottom: 0.65rem;
+  }
+
+  .import-actions {
+    align-items: center;
+    border-top: 1px solid oklch(0.84 0.02 245 / 0.72);
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+    padding-top: 1rem;
+  }
+
+  .import-continue {
+    background: var(--color-primary);
+    border: 0;
+    border-radius: 0.4rem;
+    color: var(--color-primary-foreground);
+    cursor: pointer;
+    font: inherit;
+    font-size: 0.75rem;
+    font-weight: 700;
+    min-height: 2.125rem;
+    padding: 0 1.25rem;
+    transition: filter 160ms ease;
+  }
+
+  .import-continue:hover:not(:disabled) { filter: brightness(0.92); }
+  .import-continue:disabled { cursor: not-allowed; opacity: 0.55; }
+
+  .import-skip {
+    color: var(--color-muted-foreground);
+    font-size: 0.75rem;
+    text-decoration: none;
+  }
+
+  .import-skip:hover { color: var(--color-foreground); }
+
+  .import-upload-zone:focus-visible,
+  .import-continue:focus-visible,
+  .import-skip:focus-visible {
+    outline: 2px solid var(--color-ring);
+    outline-offset: 3px;
+  }
+}
+
+@media (max-width: 760px) {
+  .import-page { padding: 1rem 0.75rem 2rem; }
+
+  .import-stepper {
+    gap: 0.375rem;
+    justify-content: flex-start;
+    margin-bottom: 1.5rem;
+    overflow-x: auto;
+    padding: 0.125rem 0.25rem 0.5rem;
+  }
+
+  .import-step-wrap { flex: 0 0 auto; }
+  .import-step-line { margin: 0 0.5rem; min-width: 1.5rem; }
+  .import-card { padding: 0 1rem 1rem; }
+}
+
+@media (max-width: 520px) {
+  .import-step-label { display: none; }
+  .import-header h1 { font-size: 1.5rem; }
+  .import-header p { font-size: 0.75rem; }
+  .import-tabs { gap: 0.9rem; }
+  .import-tab { font-size: 0.6875rem; }
+  .import-actions { align-items: flex-start; flex-direction: column; gap: 0.75rem; }
+}
