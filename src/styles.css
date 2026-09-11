@@ -2309,7 +2309,32 @@
     width: 1.5rem;
   }
 
+  .ob-actions {
+    align-items: center;
+    display: flex;
+    gap: 1.25rem;
+    justify-content: center;
+  }
+
+  .ob-prev {
+    background: none;
+    border: none;
+    color: #2c3338;
+    cursor: pointer;
+    font-size: 1.0625rem;
+    font-weight: 600;
+    padding: 1rem 1.25rem;
+  }
+
+  .ob-prev:hover { color: #4a9e76; }
+
+  .ob-prev:focus-visible {
+    outline: 2px solid #2c3338;
+    outline-offset: 3px;
+  }
+
   .ob-next {
+
     background: #4a9e76;
     border: none;
     border-radius: 0.75rem;
