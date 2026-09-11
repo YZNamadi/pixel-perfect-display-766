@@ -262,14 +262,6 @@ function CompliancePage() {
                       <div className="am-menu-wrap">
                         <button
                           type="button"
-                          className="cp-trash"
-                          aria-label={`Delete ${row.title}`}
-                          onClick={() => setDeleteTask(row.title)}
-                        >
-                          <Trash2 size={16} aria-hidden="true" />
-                        </button>
-                        <button
-                          type="button"
                           className="am-kebab"
                           aria-label={`Actions for ${row.title}`}
                           aria-expanded={openMenu === row.title}
@@ -297,7 +289,10 @@ function CompliancePage() {
                                   role="menuitem"
                                   key={label}
                                   className={`am-menu-item ${danger ? "is-danger" : ""}`}
-                                  onClick={() => setOpenMenu(null)}
+                                  onClick={() => {
+                                    setOpenMenu(null);
+                                    if (danger) setDeleteTask(row.title);
+                                  }}
                                 >
                                   <Icon size={14} aria-hidden="true" />
                                   <span>{label}</span>
@@ -359,11 +354,11 @@ function CompliancePage() {
                 <AlertTriangle size={26} />
               </span>
               <h2 className="cp-modal-title" id="cp-modal-title">
-                Delete Task
+                Deactivate Task
               </h2>
             </div>
             <p className="cp-modal-text">
-              Are you sure you want to delete this task?
+              Are you sure you want to deactivate this task?
               <br />
               This action cannot be undone.
             </p>
@@ -372,7 +367,7 @@ function CompliancePage() {
                 Cancel
               </button>
               <button type="button" className="cp-modal-delete" onClick={() => setDeleteTask(null)}>
-                Delete
+                Deactivate
               </button>
             </div>
           </div>
