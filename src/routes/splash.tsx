@@ -20,7 +20,7 @@ export const Route = createFileRoute("/splash")({
       { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
-  component: SplashScreen;
+  component: SplashScreen,
 });
 
 function SplashScreen() {
