@@ -240,7 +240,7 @@ function SchedulePage() {
           </select>
         </div>
 
-        <section className="ps-calendar" aria-label="August 2026 schedule">
+        <section className="ps-calendar" aria-label={`${monthLabel} schedule`}>
           <div className="ps-week-head">
             {weekdays.map((day) => (
               <span key={day}>{day}</span>
