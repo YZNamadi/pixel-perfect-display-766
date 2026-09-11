@@ -2623,6 +2623,17 @@
 
   .si-form { display: flex; flex-direction: column; gap: 0.75rem; }
 
+  .si-name-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+  }
+
+  @media (max-width: 480px) {
+    .si-name-row { grid-template-columns: 1fr; }
+  }
+
+
   .si-input {
     width: 100%;
     padding: 0.85rem 1rem;
