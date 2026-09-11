@@ -1,18 +1,17 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useState } from "react";
 
 export const Route = createFileRoute("/site")({
   head: () => ({
     meta: [
-      { title: "Kearly | Add Your First Site" },
+      { title: "Kearly | Continue With Site Details" },
       {
         name: "description",
-        content: "Add your first Kearly site and configure its operating hours and compliance categories.",
+        content: "Add your Kearly site details including name, address, categories and operating hours.",
       },
-      { property: "og:title", content: "Kearly | Add Your First Site" },
+      { property: "og:title", content: "Kearly | Continue With Site Details" },
       {
         property: "og:description",
-        content: "Add your first Kearly site and configure its operating hours and compliance categories.",
+        content: "Add your Kearly site details including name, address, categories and operating hours.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -21,126 +20,74 @@ export const Route = createFileRoute("/site")({
   component: SitePage,
 });
 
-const steps = ["Account", "Facility", "Site", "Import", "Team", "Complete"];
-const categories = ["Electrical", "Fire", "Gas & Water", "Lifts", "Repairs"];
+const chevronBg =
+  "url(\"data:image/svg+xml;utf8,<svg fill='%234A7C6F' height='22' viewBox='0 0 24 24' width='22' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/><path d='M0 0h24v24H0z' fill='none'/></svg>\")";
 
 function SitePage() {
-  const [selectedCategories, setSelectedCategories] = useState(["Electrical", "Fire", "Gas & Water"]);
-
-  const toggleCategory = (category: string) => {
-    setSelectedCategories((current) =>
-      current.includes(category) ? current.filter((item) => item !== category) : [...current, category],
-    );
-  };
-
   return (
-    <main className="site-page">
-      <div className="site-watermark" aria-hidden="true">
-        <span className="site-watermark-petal site-wm-one" />
-        <span className="site-watermark-petal site-wm-two" />
-        <span className="site-watermark-petal site-wm-three" />
-        <span className="site-watermark-petal site-wm-four" />
+    <main className="sd-page">
+      <div className="sd-deco sd-deco-phone" aria-hidden="true">
+        📱
+      </div>
+      <div className="sd-deco sd-deco-shield" aria-hidden="true">
+        🛡️
+      </div>
+      <div className="sd-deco sd-deco-leaf" aria-hidden="true">
+        🌿
       </div>
 
-      <div className="site-content">
-        <nav className="site-stepper" aria-label="Setup progress">
-          {steps.map((step, index) => {
-            const isCompleted = index < 2;
-            const isActive = index === 2;
+      <section className="sd-card" aria-labelledby="sd-heading">
+        <header className="sd-card-head">
+          <div className="sd-logo" aria-label="Kearly">
+            <svg width="22" height="22" viewBox="0 0 100 100" aria-hidden="true">
+              <rect x="5" y="5" width="40" height="40" rx="10" fill="#4A7C6F" />
+              <path d="M 55 5 L 95 5 L 95 45 Q 75 45 55 25 Z" fill="#4A7C6F" />
+              <rect x="5" y="55" width="40" height="40" rx="10" fill="#4A7C6F" />
+              <path d="M 55 55 Q 75 55 95 75 L 95 95 L 55 95 Z" fill="#4A7C6F" />
+            </svg>
+            <span className="sd-logo-text">
+              <span className="sd-logo-name">KEARLY</span>
+              <span className="sd-logo-tag">Compliance. Automated &amp; Simplified.</span>
+            </span>
+          </div>
+          <Link to="/facility" className="sd-back">
+            Back
+          </Link>
+        </header>
 
-            return (
-              <div className="site-step-wrap" key={step}>
-                <div
-                  className={`site-step ${isCompleted ? "is-completed" : ""} ${isActive ? "is-active" : ""}`}
-                  aria-current={isActive ? "step" : undefined}
-                >
-                  <span className="site-step-circle">{isCompleted ? "✓" : index + 1}</span>
-                  <span className="site-step-label">{step}</span>
-                </div>
-                {index < steps.length - 1 && (
-                  <span className={`site-step-line ${index < 2 ? "is-completed" : ""}`} />
-                )}
-              </div>
-            );
-          })}
-        </nav>
+        <h1 id="sd-heading" className="sd-heading">
+          Continue with site details
+        </h1>
 
-        <section className="site-panel" aria-labelledby="site-heading">
-          <header className="site-header">
-            <h1 id="site-heading">Add your first site</h1>
-            <p>Enter details for your primary building or medical site to start tracking specific asset items.</p>
-          </header>
+        <form className="sd-form" onSubmit={(event) => event.preventDefault()}>
+          <input className="sd-input" name="siteName" placeholder="Site Name" aria-label="Site Name" />
+          <input className="sd-input" name="address" placeholder="Address" aria-label="Address" />
+          <input className="sd-input" name="siteCategories" placeholder="Site Categories" aria-label="Site Categories" />
+          <select
+            className="sd-input sd-select"
+            name="operatingHours"
+            defaultValue=""
+            aria-label="Operating Hours"
+            style={{ backgroundImage: chevronBg }}
+          >
+            <option value="" disabled>
+              Operating Hours
+            </option>
+            <option value="08-18">08:00 – 18:00</option>
+            <option value="09-17">09:00 – 17:00</option>
+            <option value="24-7">Open 24/7</option>
+          </select>
 
-          <form className="site-form" onSubmit={(event) => event.preventDefault()}>
-            <div className="site-field">
-              <label htmlFor="site-name">
-                Site Name <span aria-hidden="true">*</span>
-              </label>
-              <input id="site-name" name="siteName" required placeholder="e.g. Riverside Central Clinic" />
-            </div>
-
-            <div className="site-field">
-              <label htmlFor="site-address">Address</label>
-              <textarea id="site-address" name="address" rows={3} placeholder="e.g. 12 Riverside Road, London, SW1V 4QQ" />
-            </div>
-
-            <div className="site-field-grid">
-              <div className="site-field">
-                <label htmlFor="hours-from">Operating Hours From</label>
-                <select id="hours-from" name="hoursFrom" defaultValue="08:00">
-                  <option>08:00</option>
-                  <option>07:00</option>
-                  <option>09:00</option>
-                  <option>10:00</option>
-                </select>
-              </div>
-              <div className="site-field">
-                <label htmlFor="hours-to">Operating Hours To</label>
-                <select id="hours-to" name="hoursTo" defaultValue="18:00">
-                  <option>18:00</option>
-                  <option>17:00</option>
-                  <option>19:00</option>
-                  <option>20:00</option>
-                </select>
-              </div>
-            </div>
-
-            <fieldset className="site-categories">
-              <legend>Compliance Categories Needed</legend>
-              <div className="site-category-list">
-                {categories.map((category) => {
-                  const isSelected = selectedCategories.includes(category);
-                  return (
-                    <button
-                      type="button"
-                      className={`site-category ${isSelected ? "is-selected" : ""}`}
-                      aria-pressed={isSelected}
-                      key={category}
-                      onClick={() => toggleCategory(category)}
-                    >
-                      {category}
-                    </button>
-                  );
-                })}
-              </div>
-            </fieldset>
-
-            <p className="site-notice">
-              <span aria-hidden="true">ⓘ</span>
-              You can add more sites later from the Buildings page.
-            </p>
-
-            <div className="site-actions">
-              <Link to="/import" className="site-continue">
-                Continue
-              </Link>
-              <Link className="site-skip" to="/">
-                Skip for now
-              </Link>
-            </div>
-          </form>
-        </section>
-      </div>
+          <div className="sd-actions">
+            <Link to="/import" className="sd-save">
+              Save
+            </Link>
+            <Link to="/import" className="sd-import">
+              Import Data
+            </Link>
+          </div>
+        </form>
+      </section>
     </main>
   );
 }
