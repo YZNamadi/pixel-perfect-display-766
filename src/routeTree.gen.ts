@@ -16,6 +16,7 @@ import { Route as CompleteRouteImport } from './routes/complete'
 import { Route as ComplianceRouteImport } from './routes/compliance'
 import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as DashboardWelcomeRouteImport } from './routes/dashboard-welcome'
+import { Route as EditTaskRouteImport } from './routes/edit-task'
 import { Route as FacilityRouteImport } from './routes/facility'
 import { Route as ImportRouteImport } from './routes/import'
 import { Route as LoginRouteImport } from './routes/login'
@@ -61,6 +62,11 @@ const DashboardRoute = DashboardRouteImport.update({
 const DashboardWelcomeRoute = DashboardWelcomeRouteImport.update({
   id: '/dashboard-welcome',
   path: '/dashboard-welcome',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EditTaskRoute = EditTaskRouteImport.update({
+  id: '/edit-task',
+  path: '/edit-task',
   getParentRoute: () => rootRouteImport,
 } as any)
 const FacilityRoute = FacilityRouteImport.update({
@@ -127,6 +133,7 @@ export interface FileRoutesByFullPath {
   '/compliance': typeof ComplianceRoute
   '/dashboard': typeof DashboardRoute
   '/dashboard-welcome': typeof DashboardWelcomeRoute
+  '/edit-task': typeof EditTaskRoute
   '/facility': typeof FacilityRoute
   '/import': typeof ImportRoute
   '/login': typeof LoginRoute
@@ -147,6 +154,7 @@ export interface FileRoutesByTo {
   '/compliance': typeof ComplianceRoute
   '/dashboard': typeof DashboardRoute
   '/dashboard-welcome': typeof DashboardWelcomeRoute
+  '/edit-task': typeof EditTaskRoute
   '/facility': typeof FacilityRoute
   '/import': typeof ImportRoute
   '/login': typeof LoginRoute
@@ -168,6 +176,7 @@ export interface FileRoutesById {
   '/compliance': typeof ComplianceRoute
   '/dashboard': typeof DashboardRoute
   '/dashboard-welcome': typeof DashboardWelcomeRoute
+  '/edit-task': typeof EditTaskRoute
   '/facility': typeof FacilityRoute
   '/import': typeof ImportRoute
   '/login': typeof LoginRoute
@@ -190,6 +199,7 @@ export interface FileRouteTypes {
     | '/compliance'
     | '/dashboard'
     | '/dashboard-welcome'
+    | '/edit-task'
     | '/facility'
     | '/import'
     | '/login'
@@ -210,6 +220,7 @@ export interface FileRouteTypes {
     | '/compliance'
     | '/dashboard'
     | '/dashboard-welcome'
+    | '/edit-task'
     | '/facility'
     | '/import'
     | '/login'
@@ -230,6 +241,7 @@ export interface FileRouteTypes {
     | '/compliance'
     | '/dashboard'
     | '/dashboard-welcome'
+    | '/edit-task'
     | '/facility'
     | '/import'
     | '/login'
@@ -251,6 +263,7 @@ export interface RootRouteChildren {
   ComplianceRoute: typeof ComplianceRoute
   DashboardRoute: typeof DashboardRoute
   DashboardWelcomeRoute: typeof DashboardWelcomeRoute
+  EditTaskRoute: typeof EditTaskRoute
   FacilityRoute: typeof FacilityRoute
   ImportRoute: typeof ImportRoute
   LoginRoute: typeof LoginRoute
@@ -313,6 +326,13 @@ declare module '@tanstack/react-router' {
       path: '/dashboard-welcome'
       fullPath: '/dashboard-welcome'
       preLoaderRoute: typeof DashboardWelcomeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/edit-task': {
+      id: '/edit-task'
+      path: '/edit-task'
+      fullPath: '/edit-task'
+      preLoaderRoute: typeof EditTaskRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/facility': {
@@ -403,6 +423,7 @@ const rootRouteChildren: RootRouteChildren = {
   ComplianceRoute: ComplianceRoute,
   DashboardRoute: DashboardRoute,
   DashboardWelcomeRoute: DashboardWelcomeRoute,
+  EditTaskRoute: EditTaskRoute,
   FacilityRoute: FacilityRoute,
   ImportRoute: ImportRoute,
   LoginRoute: LoginRoute,
