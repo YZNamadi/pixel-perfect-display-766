@@ -8,7 +8,6 @@ import {
   BarChart3,
   ScrollText,
   Settings,
-  ClipboardList,
   AlertCircle,
   CalendarCheck,
   Clock,
@@ -320,8 +319,6 @@ function CompliancePage() {
             </div>
           </div>
         </section>
-
-        <ClipboardList className="cp-hidden-icon" aria-hidden="true" />
       </main>
     </div>
   );
