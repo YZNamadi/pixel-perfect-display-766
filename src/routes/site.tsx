@@ -131,9 +131,9 @@ function SitePage() {
             </p>
 
             <div className="site-actions">
-              <button type="submit" className="site-continue">
+              <Link to="/import" className="site-continue">
                 Continue
-              </button>
+              </Link>
               <Link className="site-skip" to="/">
                 Skip for now
               </Link>
