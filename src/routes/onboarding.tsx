@@ -30,10 +30,11 @@ const slides = [
       "Recurring tasks, reminders, and evidence capture, so nothing falls through the cracks.",
   },
   {
-    heading: "Keep every site inspection ready",
+    heading: "Monitor financial risk in real time",
     subtitle:
-      "Live status across your estate, with certificates and checks stored against each site.",
+      "Get instant visibility into over due tasks, expiring certificates, and compliance gaps as they happen.",
   },
+
   {
     heading: "Work with your contractors",
     subtitle:
@@ -101,9 +102,21 @@ function OnboardingCarousel() {
           ))}
         </div>
 
-        <button type="button" className="ob-next" onClick={next}>
-          {index === slides.length - 1 ? "Get Started" : "Next"}
-        </button>
+        <div className="ob-actions">
+          {index > 0 && (
+            <button
+              type="button"
+              className="ob-prev"
+              onClick={() => setIndex(index - 1)}
+            >
+              Previous
+            </button>
+          )}
+          <button type="button" className="ob-next" onClick={next}>
+            {index === slides.length - 1 ? "Get Started" : "Next"}
+          </button>
+        </div>
+
       </section>
     </main>
   );
