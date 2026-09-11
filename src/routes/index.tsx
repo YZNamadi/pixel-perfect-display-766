@@ -23,9 +23,12 @@ export const Route = createFileRoute("/")({
 function Index() {
   return (
     <main className="welcome-page">
-      <div className="welcome-shape welcome-shape-one" aria-hidden="true" />
-      <div className="welcome-shape welcome-shape-two" aria-hidden="true" />
-      <div className="welcome-shape welcome-shape-three" aria-hidden="true" />
+      <div className="welcome-watermark" aria-hidden="true">
+        <span className="welcome-wm-petal welcome-wm-one" />
+        <span className="welcome-wm-petal welcome-wm-two" />
+        <span className="welcome-wm-petal welcome-wm-three" />
+        <span className="welcome-wm-petal welcome-wm-four" />
+      </div>
 
       <section className="welcome-content" aria-labelledby="welcome-heading">
         <header className="brand-header">
