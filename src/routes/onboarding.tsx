@@ -52,7 +52,7 @@ function OnboardingCarousel() {
     if (index < slides.length - 1) {
       setIndex(index + 1);
     } else {
-      navigate({ to: "/dashboard-welcome" });
+      navigate({ to: "/dashboard" });
     }
   };
 
@@ -71,7 +71,7 @@ function OnboardingCarousel() {
             <p className="ob-brand-tagline">Compliance. Automated &amp; Simplified.</p>
           </div>
         </div>
-        <Link className="ob-skip" to="/dashboard-welcome">
+        <Link className="ob-skip" to="/dashboard">
           Skip
         </Link>
       </header>
