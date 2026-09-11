@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as FacilityRouteImport } from './routes/facility'
+import { Route as ImportRouteImport } from './routes/import'
 import { Route as SignupRouteImport } from './routes/signup'
 import { Route as SiteRouteImport } from './routes/site'
 
@@ -22,6 +23,11 @@ const IndexRoute = IndexRouteImport.update({
 const FacilityRoute = FacilityRouteImport.update({
   id: '/facility',
   path: '/facility',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ImportRoute = ImportRouteImport.update({
+  id: '/import',
+  path: '/import',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SignupRoute = SignupRouteImport.update({
@@ -38,12 +44,14 @@ const SiteRoute = SiteRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/facility': typeof FacilityRoute
+  '/import': typeof ImportRoute
   '/signup': typeof SignupRoute
   '/site': typeof SiteRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/facility': typeof FacilityRoute
+  '/import': typeof ImportRoute
   '/signup': typeof SignupRoute
   '/site': typeof SiteRoute
 }
@@ -51,20 +59,22 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/facility': typeof FacilityRoute
+  '/import': typeof ImportRoute
   '/signup': typeof SignupRoute
   '/site': typeof SiteRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/facility' | '/signup' | '/site'
+  fullPaths: '/' | '/facility' | '/import' | '/signup' | '/site'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/facility' | '/signup' | '/site'
-  id: '__root__' | '/' | '/facility' | '/signup' | '/site'
+  to: '/' | '/facility' | '/import' | '/signup' | '/site'
+  id: '__root__' | '/' | '/facility' | '/import' | '/signup' | '/site'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   FacilityRoute: typeof FacilityRoute
+  ImportRoute: typeof ImportRoute
   SignupRoute: typeof SignupRoute
   SiteRoute: typeof SiteRoute
 }
@@ -83,6 +93,13 @@ declare module '@tanstack/react-router' {
       path: '/facility'
       fullPath: '/facility'
       preLoaderRoute: typeof FacilityRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/import': {
+      id: '/import'
+      path: '/import'
+      fullPath: '/import'
+      preLoaderRoute: typeof ImportRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/signup': {
@@ -105,6 +122,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   FacilityRoute: FacilityRoute,
+  ImportRoute: ImportRoute,
   SignupRoute: SignupRoute,
   SiteRoute: SiteRoute,
 }
