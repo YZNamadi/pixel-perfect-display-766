@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AssetsRouteImport } from './routes/assets'
 import { Route as CompleteRouteImport } from './routes/complete'
 import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as DashboardWelcomeRouteImport } from './routes/dashboard-welcome'
@@ -28,6 +29,11 @@ import { Route as VerifyRouteImport } from './routes/verify'
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AssetsRoute = AssetsRouteImport.update({
+  id: '/assets',
+  path: '/assets',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CompleteRoute = CompleteRouteImport.update({
@@ -103,6 +109,7 @@ const VerifyRoute = VerifyRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/assets': typeof AssetsRoute
   '/complete': typeof CompleteRoute
   '/dashboard': typeof DashboardRoute
   '/dashboard-welcome': typeof DashboardWelcomeRoute
@@ -120,6 +127,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/assets': typeof AssetsRoute
   '/complete': typeof CompleteRoute
   '/dashboard': typeof DashboardRoute
   '/dashboard-welcome': typeof DashboardWelcomeRoute
@@ -138,6 +146,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/assets': typeof AssetsRoute
   '/complete': typeof CompleteRoute
   '/dashboard': typeof DashboardRoute
   '/dashboard-welcome': typeof DashboardWelcomeRoute
@@ -157,6 +166,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/assets'
     | '/complete'
     | '/dashboard'
     | '/dashboard-welcome'
@@ -174,6 +184,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/assets'
     | '/complete'
     | '/dashboard'
     | '/dashboard-welcome'
@@ -191,6 +202,7 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/assets'
     | '/complete'
     | '/dashboard'
     | '/dashboard-welcome'
@@ -209,6 +221,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AssetsRoute: typeof AssetsRoute
   CompleteRoute: typeof CompleteRoute
   DashboardRoute: typeof DashboardRoute
   DashboardWelcomeRoute: typeof DashboardWelcomeRoute
@@ -232,6 +245,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/assets': {
+      id: '/assets'
+      path: '/assets'
+      fullPath: '/assets'
+      preLoaderRoute: typeof AssetsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/complete': {
@@ -337,6 +357,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AssetsRoute: AssetsRoute,
   CompleteRoute: CompleteRoute,
   DashboardRoute: DashboardRoute,
   DashboardWelcomeRoute: DashboardWelcomeRoute,
