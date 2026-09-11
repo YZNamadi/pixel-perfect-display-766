@@ -23,6 +23,7 @@ import { Route as LoginRouteImport } from './routes/login'
 import { Route as MappingRouteImport } from './routes/mapping'
 import { Route as OnboardingRouteImport } from './routes/onboarding'
 import { Route as PreviewRouteImport } from './routes/preview'
+import { Route as RepairsRouteImport } from './routes/repairs'
 import { Route as ScheduleRouteImport } from './routes/schedule'
 import { Route as SignupRouteImport } from './routes/signup'
 import { Route as SiteRouteImport } from './routes/site'
@@ -100,6 +101,11 @@ const PreviewRoute = PreviewRouteImport.update({
   path: '/preview',
   getParentRoute: () => rootRouteImport,
 } as any)
+const RepairsRoute = RepairsRouteImport.update({
+  id: '/repairs',
+  path: '/repairs',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ScheduleRoute = ScheduleRouteImport.update({
   id: '/schedule',
   path: '/schedule',
@@ -146,6 +152,7 @@ export interface FileRoutesByFullPath {
   '/mapping': typeof MappingRoute
   '/onboarding': typeof OnboardingRoute
   '/preview': typeof PreviewRoute
+  '/repairs': typeof RepairsRoute
   '/schedule': typeof ScheduleRoute
   '/signup': typeof SignupRoute
   '/site': typeof SiteRoute
@@ -168,6 +175,7 @@ export interface FileRoutesByTo {
   '/mapping': typeof MappingRoute
   '/onboarding': typeof OnboardingRoute
   '/preview': typeof PreviewRoute
+  '/repairs': typeof RepairsRoute
   '/schedule': typeof ScheduleRoute
   '/signup': typeof SignupRoute
   '/site': typeof SiteRoute
@@ -191,6 +199,7 @@ export interface FileRoutesById {
   '/mapping': typeof MappingRoute
   '/onboarding': typeof OnboardingRoute
   '/preview': typeof PreviewRoute
+  '/repairs': typeof RepairsRoute
   '/schedule': typeof ScheduleRoute
   '/signup': typeof SignupRoute
   '/site': typeof SiteRoute
@@ -215,6 +224,7 @@ export interface FileRouteTypes {
     | '/mapping'
     | '/onboarding'
     | '/preview'
+    | '/repairs'
     | '/schedule'
     | '/signup'
     | '/site'
@@ -237,6 +247,7 @@ export interface FileRouteTypes {
     | '/mapping'
     | '/onboarding'
     | '/preview'
+    | '/repairs'
     | '/schedule'
     | '/signup'
     | '/site'
@@ -259,6 +270,7 @@ export interface FileRouteTypes {
     | '/mapping'
     | '/onboarding'
     | '/preview'
+    | '/repairs'
     | '/schedule'
     | '/signup'
     | '/site'
@@ -282,6 +294,7 @@ export interface RootRouteChildren {
   MappingRoute: typeof MappingRoute
   OnboardingRoute: typeof OnboardingRoute
   PreviewRoute: typeof PreviewRoute
+  RepairsRoute: typeof RepairsRoute
   ScheduleRoute: typeof ScheduleRoute
   SignupRoute: typeof SignupRoute
   SiteRoute: typeof SiteRoute
@@ -390,6 +403,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PreviewRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/repairs': {
+      id: '/repairs'
+      path: '/repairs'
+      fullPath: '/repairs'
+      preLoaderRoute: typeof RepairsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/schedule': {
       id: '/schedule'
       path: '/schedule'
@@ -450,6 +470,7 @@ const rootRouteChildren: RootRouteChildren = {
   MappingRoute: MappingRoute,
   OnboardingRoute: OnboardingRoute,
   PreviewRoute: PreviewRoute,
+  RepairsRoute: RepairsRoute,
   ScheduleRoute: ScheduleRoute,
   SignupRoute: SignupRoute,
   SiteRoute: SiteRoute,

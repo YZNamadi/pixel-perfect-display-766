@@ -11,9 +11,7 @@ import {
   AlertCircle,
   CalendarCheck,
   Clock,
-  Plus,
   ChevronLeft,
-  ChevronRight,
   Menu,
   MapPin,
   Pencil,
@@ -23,32 +21,30 @@ import {
   AlertTriangle,
 } from "lucide-react";
 
-export const Route = createFileRoute("/compliance")({
+export const Route = createFileRoute("/repairs")({
   head: () => ({
     meta: [
-      { title: "Kearly | Compliance & PPM Tasks" },
+      { title: "Kearly | Repairs Overview" },
       {
         name: "description",
-        content:
-          "Planned preventive maintenance overview and compliance task management across all Kearly facilities.",
+        content: "Track pending repairs, overdue jobs and next service dates across all Kearly facilities.",
       },
-      { property: "og:title", content: "Kearly | Compliance & PPM Tasks" },
+      { property: "og:title", content: "Kearly | Repairs Overview" },
       {
         property: "og:description",
-        content:
-          "Planned preventive maintenance overview and compliance task management across all Kearly facilities.",
+        content: "Track pending repairs, overdue jobs and next service dates across all Kearly facilities.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
-  component: CompliancePage,
+  component: RepairsPage,
 });
 
 const navItems = [
   { label: "Dashboard", icon: LayoutDashboard, to: "/dashboard" as const },
-  { label: "Compliance", icon: ShieldCheck, to: "/compliance" as const, active: true },
-  { label: "Repairs", icon: Wrench, to: "/repairs" as const },
+  { label: "Compliance", icon: ShieldCheck, to: "/compliance" as const },
+  { label: "Repairs", icon: Wrench, to: "/repairs" as const, active: true },
   { label: "Assets", icon: Building2, to: "/assets" as const },
   { label: "Reports", icon: BarChart3 },
   { label: "Audit Log", icon: ScrollText },
@@ -64,57 +60,25 @@ const stats = [
 
 const rows = [
   {
-    title: "HVAC Unit — Building A",
-    category: "HVAC",
-    frequency: "12 hrs",
-    status: "Completed",
-    due: "12 Jul 2026",
-    next: "12 Jan 2027",
-  },
-  {
-    title: "Fire Alarm Panel — Main Hub",
-    category: "Fire Safety",
-    frequency: "7 days",
-    status: "Completed",
-    due: "3 Aug 2026",
-    next: "3 Feb 2027",
-  },
-  {
     title: "Elevator — East Wing",
     category: "Mechanical",
-    frequency: "14 days",
+    frequency: "Oakfield Tower",
     status: "Due Soon",
     due: "15 Mar 2026",
     next: "15 Sep 2026",
   },
   {
-    title: "Generator — Backup Power",
-    category: "Electrical",
-    frequency: "3 days",
-    status: "Completed",
-    due: "20 Jun 2026",
-    next: "20 Dec 2026",
-  },
-  {
     title: "Water Heater — Unit 3C",
     category: "Plumbing",
-    frequency: "14 days",
+    frequency: "Birch Lane",
     status: "Overdue",
     due: "8 May 2026",
     next: "—",
   },
   {
-    title: "Security Camera System",
-    category: "Security",
-    frequency: "4 days",
-    status: "Completed",
-    due: "1 Aug 2026",
-    next: "1 Feb 2027",
-  },
-  {
     title: "Boiler — Central Heating",
     category: "HVAC",
-    frequency: "14 days",
+    frequency: "Maple Court",
     status: "Due Soon",
     due: "22 Feb 2026",
     next: "22 Aug 2026",
@@ -132,9 +96,9 @@ const rowActions = [
 const statusClass = (status: string) =>
   status === "Completed" ? "is-active" : status === "Due Soon" ? "is-due" : "is-inactive";
 
-function CompliancePage() {
+function RepairsPage() {
   const [openMenu, setOpenMenu] = useState<string | null>(null);
-  const [deleteTask, setDeleteTask] = useState<string | null>(null);
+  const [deactivate, setDeactivate] = useState<string | null>(null);
 
   return (
     <div className="db-shell">
@@ -150,6 +114,10 @@ function CompliancePage() {
             <span className="db-logo-name">KEARLY</span>
             <span className="db-logo-tag">Compliance. Automated &amp; Simplified.</span>
           </span>
+        </Link>
+
+        <Link to="/dashboard" className="at-back" aria-label="Back to dashboard">
+          <ChevronLeft size={22} aria-hidden="true" />
         </Link>
 
         <nav className="db-nav" aria-label="Main navigation">
@@ -182,11 +150,11 @@ function CompliancePage() {
 
       <main className="db-main">
         <header className="am-head">
-          <h1 className="db-title">Compliance</h1>
-          <p className="db-subtitle">Planned preventive maintenance (PPM) overview and task management</p>
+          <h1 className="db-title">Repairs</h1>
+          <p className="db-subtitle">Repairs overview and management</p>
         </header>
 
-        <section className="db-stats" aria-label="Compliance overview">
+        <section className="db-stats" aria-label="Repairs overview">
           {stats.map(({ label, value, note, icon: Icon, tone }) => (
             <article className={`db-stat is-${tone}`} key={label}>
               <div className="db-stat-top">
@@ -201,44 +169,30 @@ function CompliancePage() {
           ))}
         </section>
 
-        <div className="cp-tabs" role="tablist" aria-label="Compliance views">
-          <button type="button" role="tab" aria-selected="true" className="cp-tab is-active">
-            PPM Overview
-          </button>
-        </div>
-
-        <section className="am-panel" aria-label="PPM tasks">
+        <section className="am-panel" aria-label="Pending repairs">
           <div className="am-toolbar">
-            <input className="am-search" type="search" placeholder="Search Tasks..." aria-label="Search tasks" />
-            <select className="am-select" aria-label="Filter by category" defaultValue="all">
-              <option value="all">All Categories</option>
-              <option value="hvac">HVAC</option>
-              <option value="fire">Fire Safety</option>
+            <input className="am-search" type="search" placeholder="Search Tasks..." aria-label="Search repairs" />
+            <select className="am-select" aria-label="Filter by state" defaultValue="pending">
+              <option value="pending">Pending Repairs</option>
+              <option value="progress">In Progress</option>
+              <option value="completed">Completed</option>
+            </select>
+            <select className="am-select" aria-label="Filter by type" defaultValue="all">
+              <option value="all">All Repairs</option>
               <option value="mechanical">Mechanical</option>
-              <option value="electrical">Electrical</option>
               <option value="plumbing">Plumbing</option>
-              <option value="security">Security</option>
+              <option value="hvac">HVAC</option>
+              <option value="electrical">Electrical</option>
             </select>
-            <select className="am-select" aria-label="Filter by site" defaultValue="all">
-              <option value="all">All Sites</option>
-              <option value="maple">Maple Court</option>
-              <option value="hub">Main Hub</option>
-              <option value="oakfield">Oakfield Tower</option>
-              <option value="birch">Birch Lane</option>
-            </select>
-            <Link to="/add-task" className="am-add">
-              <Plus size={15} aria-hidden="true" />
-              <span>Add Task</span>
-            </Link>
           </div>
 
-          <h2 className="cp-table-title">Tasks</h2>
+          <h2 className="cp-table-title">Pending Repairs</h2>
 
           <div className="am-table-wrap">
             <table className="am-table">
               <thead>
                 <tr>
-                  <th>Task Title</th>
+                  <th>Task Tile</th>
                   <th>Category</th>
                   <th>Frequency</th>
                   <th>Status</th>
@@ -291,7 +245,7 @@ function CompliancePage() {
                                   className={`am-menu-item ${danger ? "is-danger" : ""}`}
                                   onClick={() => {
                                     setOpenMenu(null);
-                                    if (danger) setDeleteTask(row.title);
+                                    if (danger) setDeactivate(row.title);
                                   }}
                                 >
                                   <Icon size={14} aria-hidden="true" />
@@ -308,65 +262,36 @@ function CompliancePage() {
               </tbody>
             </table>
           </div>
-
-          <div className="am-foot">
-            <small>Showing 1–7 of 64 Tasks</small>
-            <Link to="/schedule" className="cp-schedule">
-              See Schedule
-            </Link>
-
-            <div className="am-pager">
-              <button type="button" className="am-page" aria-label="Previous page">
-                <ChevronLeft size={15} aria-hidden="true" />
-              </button>
-              <button type="button" className="am-page is-current" aria-current="page">
-                1
-              </button>
-              <button type="button" className="am-page">
-                2
-              </button>
-              <button type="button" className="am-page">
-                3
-              </button>
-              <span className="am-ellipsis">...</span>
-              <button type="button" className="am-page">
-                20
-              </button>
-              <button type="button" className="am-page" aria-label="Next page">
-                <ChevronRight size={15} aria-hidden="true" />
-              </button>
-            </div>
-          </div>
         </section>
       </main>
 
-      {deleteTask && (
-        <div className="cp-overlay" role="presentation" onClick={() => setDeleteTask(null)}>
+      {deactivate && (
+        <div className="cp-overlay" role="presentation" onClick={() => setDeactivate(null)}>
           <div
             className="cp-modal"
             role="alertdialog"
             aria-modal="true"
-            aria-labelledby="cp-modal-title"
+            aria-labelledby="rp-modal-title"
             onClick={(event) => event.stopPropagation()}
           >
             <div className="cp-modal-head">
               <span className="cp-modal-icon" aria-hidden="true">
                 <AlertTriangle size={26} />
               </span>
-              <h2 className="cp-modal-title" id="cp-modal-title">
-                Deactivate Task
+              <h2 className="cp-modal-title" id="rp-modal-title">
+                Deactivate Repair
               </h2>
             </div>
             <p className="cp-modal-text">
-              Are you sure you want to deactivate this task?
+              Are you sure you want to deactivate this repair?
               <br />
               This action cannot be undone.
             </p>
             <div className="cp-modal-actions">
-              <button type="button" className="cp-modal-cancel" onClick={() => setDeleteTask(null)}>
+              <button type="button" className="cp-modal-cancel" onClick={() => setDeactivate(null)}>
                 Cancel
               </button>
-              <button type="button" className="cp-modal-delete" onClick={() => setDeleteTask(null)}>
+              <button type="button" className="cp-modal-delete" onClick={() => setDeactivate(null)}>
                 Deactivate
               </button>
             </div>

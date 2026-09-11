@@ -42,7 +42,7 @@ export const Route = createFileRoute("/schedule")({
 const navItems = [
   { label: "Dashboard", icon: LayoutDashboard, to: "/dashboard" as const },
   { label: "Compliance", icon: ShieldCheck, to: "/compliance" as const, active: true },
-  { label: "Repairs", icon: Wrench },
+  { label: "Repairs", icon: Wrench, to: "/repairs" as const },
   { label: "Assets", icon: Building2, to: "/assets" as const },
   { label: "Reports", icon: BarChart3 },
   { label: "Audit Log", icon: ScrollText },
@@ -103,7 +103,7 @@ function buildCells(year: number, month: number): Cell[] {
       key,
       label: String(day.getDate()),
       muted: day.getMonth() !== month,
-      events: eventsByDate[key],
+      events: eventsByDate[key] ?? [],
     });
     if (i >= 27 && day.getDay() === 6) {
       const next = new Date(day.getFullYear(), day.getMonth(), day.getDate() + 1);
