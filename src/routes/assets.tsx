@@ -111,8 +111,17 @@ const rows = [
   },
 ];
 
+const rowActions = [
+  { label: "Add Site", icon: MapPin },
+  { label: "Edit Details", icon: Pencil },
+  { label: "Assign Staff", icon: Users },
+  { label: "History", icon: History },
+  { label: "Deactivate", icon: Trash2, danger: true },
+];
+
 const statusClass = (status: string) =>
   status === "Active" ? "is-active" : status === "Due Service" ? "is-due" : "is-inactive";
+
 
 function AssetsPage() {
   return (
