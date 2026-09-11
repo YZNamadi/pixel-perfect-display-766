@@ -93,9 +93,9 @@ function SignupPage() {
 
         <p className="auth-footer">
           Already have an account?{" "}
-          <a className="login-link" href="#log-in">
+          <Link className="login-link" to="/login">
             Log in
-          </a>
+          </Link>
         </p>
       </section>
     </main>

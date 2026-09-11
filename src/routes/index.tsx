@@ -50,9 +50,9 @@ function Index() {
           <div className="welcome-divider" />
           <p className="login-prompt">
             Already have an account?{" "}
-            <a className="login-link" href="#log-in">
+            <Link className="login-link" to="/login">
               Log in
-            </a>
+            </Link>
           </p>
         </div>
       </section>
