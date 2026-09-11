@@ -135,10 +135,10 @@ function TeamPage() {
             </button>
 
             <div className="team-actions">
-              <button type="submit" className="team-continue">
+              <Link className="team-continue" to="/complete">
                 Send Invites &amp; Continue
-              </button>
-              <Link className="team-skip" to="/">
+              </Link>
+              <Link className="team-skip" to="/complete">
                 Skip for now
               </Link>
             </div>
