@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import {
   LayoutDashboard,
@@ -13,7 +14,14 @@ import {
   Plus,
   ChevronLeft,
   ChevronRight,
+  Menu,
+  MapPin,
+  Pencil,
+  Users,
+  History,
+  Trash2,
 } from "lucide-react";
+
 
 export const Route = createFileRoute("/assets")({
   head: () => ({
