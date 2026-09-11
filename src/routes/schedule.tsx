@@ -248,7 +248,10 @@ function SchedulePage() {
           </div>
           <div className="ps-grid">
             {cells.map((cell) => (
-              <div key={cell.key} className={`ps-cell ${cell.muted ? "is-muted" : ""}`}>
+              <div
+                key={cell.key}
+                className={`ps-cell ${cell.muted ? "is-muted" : ""} ${cell.key === todayKey ? "is-today" : ""}`}
+              >
                 <span className="ps-date">{cell.label}</span>
                 {cell.events?.map((event, index) => (
                   <button
