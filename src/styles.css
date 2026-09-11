@@ -3507,6 +3507,7 @@
   cursor: pointer;
 }
 .am-add:hover { background: #27794D; }
+a.am-add { text-decoration: none; }
 
 .am-table-wrap { overflow-x: auto; }
 .am-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
@@ -3594,3 +3595,51 @@
   color: #2F6E55; cursor: pointer;
 }
 .cp-schedule:hover { text-decoration: underline; }
+
+/* Add PPM Task page */
+.at-back {
+  display: inline-flex; align-items: center; padding: 0.5rem;
+  margin: -1.75rem 0 1rem; color: #4A5568; border-radius: 8px;
+}
+.at-back:hover { background: #F3F7F5; }
+
+.at-card {
+  background: #ffffff; border: 1px solid #B7DCC6; border-radius: 16px;
+  padding: 1.75rem 2rem 1.5rem; max-width: 900px;
+}
+.at-card-title { font-size: 1.15rem; font-weight: 700; color: #2D3748; margin: 0 0 1.5rem; }
+.at-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.25rem 1.5rem; }
+.at-field { display: flex; flex-direction: column; gap: 0.5rem; }
+.at-field label { font-size: 0.9rem; font-weight: 600; color: #2D3748; }
+.at-field input,
+.at-field select,
+.at-field textarea {
+  border: 1px solid #9FCDB4; border-radius: 10px; background: #ffffff;
+  padding: 0.75rem 0.85rem; font: inherit; font-size: 0.9rem; color: #2D3748;
+}
+.at-field textarea { resize: vertical; min-height: 118px; }
+.at-field input::placeholder,
+.at-field textarea::placeholder { color: #94A3A0; }
+.at-field select:invalid, .at-field select:has(option[value=""]:checked) { color: #94A3A0; }
+.at-field input:focus-visible,
+.at-field select:focus-visible,
+.at-field textarea:focus-visible { outline: 2px solid #2F8F5B; outline-offset: 1px; }
+
+.at-actions { display: flex; justify-content: flex-end; align-items: center; gap: 0.75rem; margin-top: 2rem; }
+.at-cancel {
+  border: 1px solid #CBD5E0; border-radius: 8px; background: #ffffff;
+  padding: 0.55rem 1.15rem; font-size: 0.85rem; font-weight: 600; color: #2D3748;
+  text-decoration: none;
+}
+.at-cancel:hover { background: #F3F7F5; }
+.at-next {
+  border: none; border-radius: 8px; background: #2F8F5B; color: #ffffff;
+  padding: 0.6rem 1.3rem; font: inherit; font-size: 0.85rem; font-weight: 600; cursor: pointer;
+}
+.at-next:hover { background: #27794D; }
+
+@media (max-width: 980px) { .at-grid { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 680px) {
+  .at-card { padding: 1.25rem 1rem; }
+  .at-grid { grid-template-columns: 1fr; }
+}
