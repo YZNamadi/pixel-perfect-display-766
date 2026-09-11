@@ -354,11 +354,11 @@ function CompliancePage() {
                 <AlertTriangle size={26} />
               </span>
               <h2 className="cp-modal-title" id="cp-modal-title">
-                Delete Task
+                Deactivate Task
               </h2>
             </div>
             <p className="cp-modal-text">
-              Are you sure you want to delete this task?
+              Are you sure you want to deactivate this task?
               <br />
               This action cannot be undone.
             </p>
@@ -367,7 +367,7 @@ function CompliancePage() {
                 Cancel
               </button>
               <button type="button" className="cp-modal-delete" onClick={() => setDeleteTask(null)}>
-                Delete
+                Deactivate
               </button>
             </div>
           </div>
