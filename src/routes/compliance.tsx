@@ -342,6 +342,40 @@ function CompliancePage() {
           </div>
         </section>
       </main>
+
+      {deleteTask && (
+        <div className="cp-overlay" role="presentation" onClick={() => setDeleteTask(null)}>
+          <div
+            className="cp-modal"
+            role="alertdialog"
+            aria-modal="true"
+            aria-labelledby="cp-modal-title"
+            onClick={(event) => event.stopPropagation()}
+          >
+            <div className="cp-modal-head">
+              <span className="cp-modal-icon" aria-hidden="true">
+                <AlertTriangle size={26} />
+              </span>
+              <h2 className="cp-modal-title" id="cp-modal-title">
+                Delete Task
+              </h2>
+            </div>
+            <p className="cp-modal-text">
+              Are you sure you want to delete this task?
+              <br />
+              This action cannot be undone.
+            </p>
+            <div className="cp-modal-actions">
+              <button type="button" className="cp-modal-cancel" onClick={() => setDeleteTask(null)}>
+                Cancel
+              </button>
+              <button type="button" className="cp-modal-delete" onClick={() => setDeleteTask(null)}>
+                Delete
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
