@@ -1700,8 +1700,12 @@
     font: inherit;
     font-size: 0.75rem;
     font-weight: 700;
+    align-items: center;
+    display: inline-flex;
+    justify-content: center;
     min-height: 2.375rem;
     padding: 0 1.25rem;
+    text-decoration: none;
     transition: filter 160ms ease;
   }
 
