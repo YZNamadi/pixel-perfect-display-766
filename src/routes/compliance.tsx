@@ -133,6 +133,7 @@ const statusClass = (status: string) =>
 
 function CompliancePage() {
   const [openMenu, setOpenMenu] = useState<string | null>(null);
+  const [deleteTask, setDeleteTask] = useState<string | null>(null);
 
   return (
     <div className="db-shell">
