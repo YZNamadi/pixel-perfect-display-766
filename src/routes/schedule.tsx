@@ -125,6 +125,14 @@ const views = ["Month", "Week", "List"] as const;
 function SchedulePage() {
   const [view, setView] = useState<(typeof views)[number]>("Month");
   const [selected, setSelected] = useState<{ cell: string; event: Ev } | null>(null);
+  const today = new Date();
+  const todayKey = iso(today);
+  const [cursor, setCursor] = useState(() => new Date(today.getFullYear(), today.getMonth(), 1));
+  const year = cursor.getFullYear();
+  const month = cursor.getMonth();
+  const cells = buildCells(year, month);
+  const monthLabel = `${monthNames[month]} ${year}`;
+  const shiftMonth = (delta: number) => setCursor(new Date(year, month + delta, 1));
 
   return (
     <div className="db-shell">
