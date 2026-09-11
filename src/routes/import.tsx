@@ -122,7 +122,7 @@ function ImportPage() {
 
         <Link
           className="ud-continue"
-          to="/team"
+          to="/mapping"
           data-disabled={!selectedFile}
           onClick={(event) => {
             if (!selectedFile) event.preventDefault();
