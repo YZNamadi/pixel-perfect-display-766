@@ -91,7 +91,7 @@ function TeamPage() {
               {members.map((member, index) => (
                 <div className="team-member-row" key={index}>
                   <div className="team-field">
-                    <label className={index > 0 ? "team-sr-only" : undefined} htmlFor={`team-email-${index}`}>
+                    <label className="team-row-label team-sr-only" htmlFor={`team-email-${index}`}>
                       Email Address
                     </label>
                     <input
@@ -103,7 +103,7 @@ function TeamPage() {
                     />
                   </div>
                   <div className="team-field">
-                    <label className={index > 0 ? "team-sr-only" : undefined} htmlFor={`team-role-${index}`}>
+                    <label className="team-row-label team-sr-only" htmlFor={`team-role-${index}`}>
                       Role
                     </label>
                     <select

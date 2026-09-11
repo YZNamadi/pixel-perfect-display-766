@@ -1631,8 +1631,6 @@
     margin-bottom: 0.35rem;
   }
 
-  .team-member-row:not(:first-child) .team-field label { margin-bottom: 0; }
-
   .team-field input,
   .team-field select {
     appearance: none;
@@ -1761,6 +1759,14 @@
   .team-member-row { gap: 0.6rem; grid-template-columns: 1fr; }
   .team-member-header { display: none; }
   .team-member-row:not(:first-child) .team-field label { margin-bottom: 0.35rem; }
-  .team-member-row .team-field label.team-sr-only { display: none; }
+  .team-member-row:first-child .team-row-label {
+    clip: auto;
+    clip-path: none;
+    height: auto;
+    overflow: visible;
+    position: static;
+    white-space: normal;
+    width: auto;
+  }
   .team-actions { align-items: flex-start; flex-direction: column; gap: 0.75rem; }
 }
