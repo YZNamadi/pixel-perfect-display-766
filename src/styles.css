@@ -3676,3 +3676,85 @@ a.am-add { text-decoration: none; }
   .at-grid { grid-template-columns: 1fr; }
 }
 a.am-menu-item { text-decoration: none; }
+
+/* PPM Schedule page */
+.ps-toolbar { display: flex; align-items: center; gap: 1.25rem; flex-wrap: wrap; margin: 1.5rem 0 1rem; }
+.ps-today {
+  border: 1px solid #2F8F5B; border-radius: 10px; background: #ffffff; color: #2D3748;
+  padding: 0.6rem 1.5rem; font: inherit; font-size: 1rem; font-weight: 600; cursor: pointer;
+}
+.ps-today:hover { background: #F1F6F3; }
+.ps-month-nav { display: flex; align-items: center; gap: 0.75rem; }
+.ps-arrow { border: none; background: none; color: #4A5568; cursor: pointer; padding: 0.25rem; border-radius: 8px; }
+.ps-arrow:hover { background: #EAF2ED; }
+.ps-month { font-size: 1.05rem; font-weight: 700; color: #2D3748; }
+.ps-views { display: flex; align-items: center; gap: 0.35rem; }
+.ps-view {
+  border: none; background: none; border-radius: 8px; padding: 0.5rem 1rem;
+  font: inherit; font-size: 1rem; font-weight: 600; color: #4A5568; cursor: pointer;
+}
+.ps-view.is-active { background: #CFE7D8; color: #234E3B; }
+.ps-category {
+  margin-left: auto; border: 1px solid #2F8F5B; border-radius: 10px; background: #ffffff;
+  padding: 0.6rem 1rem; font: inherit; font-size: 1rem; font-weight: 600; color: #2D3748; min-width: 190px;
+}
+
+.ps-calendar { background: #ffffff; border: 1px solid #C6D3CD; border-radius: 4px; overflow: hidden; }
+.ps-week-head, .ps-grid { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); }
+.ps-week-head span {
+  padding: 0.85rem 0.5rem; text-align: center; font-size: 0.85rem; font-weight: 700; color: #2D3748;
+  border-right: 1px solid #C6D3CD; border-bottom: 1px solid #C6D3CD;
+}
+.ps-week-head span:last-child { border-right: none; }
+.ps-cell {
+  min-height: 102px; padding: 0.5rem; border-right: 1px solid #C6D3CD; border-bottom: 1px solid #C6D3CD;
+  display: flex; flex-direction: column; align-items: center; gap: 0.35rem;
+}
+.ps-cell:nth-child(7n) { border-right: none; }
+.ps-date { font-size: 0.95rem; font-weight: 700; color: #2D3748; }
+.ps-cell.is-muted .ps-date { color: #4A5568; }
+.ps-event {
+  width: 100%; border: none; border-radius: 4px; padding: 0.28rem 0.4rem; cursor: pointer;
+  font: inherit; font-size: 0.72rem; font-weight: 600; color: #ffffff; background: #2F8F5B;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.ps-event.is-due { background: #C98A16; }
+.ps-event.is-critical { background: #B3231B; }
+.ps-event.is-inactive { background: #9AA5A1; }
+.ps-event:hover { filter: brightness(0.94); }
+
+.ps-legend { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; margin: 1rem 0 0.5rem; }
+.ps-legend-item { display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.9rem; color: #2D3748; }
+.ps-dot { width: 14px; height: 14px; border-radius: 3px; background: #2F8F5B; }
+.ps-dot.is-due { background: #C98A16; }
+.ps-dot.is-critical { background: #B3231B; }
+.ps-dot.is-inactive { background: #9AA5A1; }
+
+.ps-overlay {
+  position: fixed; inset: 0; background: rgba(15, 33, 26, 0.25);
+  display: flex; align-items: center; justify-content: center; padding: 1.5rem; z-index: 100;
+}
+.ps-popover {
+  background: #ffffff; border: 1px solid #C6D3CD; border-radius: 6px;
+  width: min(500px, 100%); box-shadow: 0 18px 40px rgba(15, 33, 26, 0.18);
+}
+.ps-pop-actions {
+  display: flex; align-items: center; justify-content: flex-end; gap: 1rem;
+  padding: 0.85rem 1.1rem; border-bottom: 1px solid #E2E8F0;
+}
+.ps-pop-btn, .ps-pop-close {
+  border: none; background: none; color: #2D3748; cursor: pointer; padding: 0.2rem; border-radius: 6px;
+  display: inline-flex; align-items: center;
+}
+.ps-pop-btn:hover, .ps-pop-close:hover { background: #EAF2ED; }
+.ps-pop-body { padding: 1.5rem 1.5rem 1.75rem; display: flex; flex-direction: column; gap: 1.1rem; }
+.ps-pop-row { display: flex; align-items: center; gap: 0.9rem; margin: 0; font-size: 1.15rem; color: #2D3748; }
+.ps-pop-row svg { color: #2F8F5B; flex-shrink: 0; }
+.ps-pop-row .ps-pop-ring { color: #2F8F5B; }
+
+@media (max-width: 900px) {
+  .ps-category { margin-left: 0; }
+  .ps-cell { min-height: 82px; }
+  .ps-week-head span { font-size: 0.7rem; padding: 0.6rem 0.25rem; }
+  .ps-event { font-size: 0.62rem; }
+}
