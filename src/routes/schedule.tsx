@@ -103,7 +103,7 @@ function buildCells(year: number, month: number): Cell[] {
       key,
       label: String(day.getDate()),
       muted: day.getMonth() !== month,
-      events: eventsByDate[key],
+      events: eventsByDate[key] ?? [],
     });
     if (i >= 27 && day.getDay() === 6) {
       const next = new Date(day.getFullYear(), day.getMonth(), day.getDate() + 1);
