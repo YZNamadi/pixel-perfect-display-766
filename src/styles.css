@@ -3791,32 +3791,3 @@ a.am-menu-item { text-decoration: none; }
   color: #2f6b5c;
   font-weight: 800;
 }
-
-/* ---------- Page transitions ---------- */
-@keyframes kl-page-in {
-  from {
-    opacity: 0;
-    transform: translate3d(0, 14px, 0) scale(0.995);
-  }
-  to {
-    opacity: 1;
-    transform: translate3d(0, 0, 0) scale(1);
-  }
-}
-
-.kl-page-transition {
-  animation: kl-page-in 0.42s cubic-bezier(0.22, 1, 0.36, 1) both;
-  will-change: opacity, transform;
-}
-
-.kl-page-transition > * {
-  animation: kl-page-in 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
-  animation-delay: 0.06s;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .kl-page-transition,
-  .kl-page-transition > * {
-    animation: none;
-  }
-}
