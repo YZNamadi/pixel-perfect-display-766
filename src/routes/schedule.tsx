@@ -62,43 +62,56 @@ const ev = (tone: Ev["tone"] = "active"): Ev => ({
   owner: "Jane Doe",
 });
 
-const cells: Cell[] = [
-  { key: "jul26", label: "26", muted: true },
-  { key: "jul27", label: "27", muted: true },
-  { key: "jul28", label: "28", muted: true },
-  { key: "jul29", label: "29", muted: true },
-  { key: "jul30", label: "30", muted: true },
-  { key: "jul31", label: "31", muted: true },
-  { key: "aug1", label: "Aug 1" },
-  { key: "2", label: "2" },
-  { key: "3", label: "3", events: [ev("active")] },
-  { key: "4", label: "4" },
-  { key: "5", label: "5" },
-  { key: "6", label: "6" },
-  { key: "7", label: "7", events: [ev("active")] },
-  { key: "8", label: "8" },
-  { key: "9", label: "9" },
-  { key: "10", label: "10" },
-  { key: "11", label: "11" },
-  { key: "12", label: "12" },
-  { key: "13", label: "13" },
-  { key: "14", label: "14" },
-  { key: "15", label: "15" },
-  { key: "16", label: "16" },
-  { key: "17", label: "17", events: [ev("active"), ev("inactive")] },
-  { key: "18", label: "18" },
-  { key: "19", label: "19", events: [ev("inactive")] },
-  { key: "20", label: "20" },
-  { key: "21", label: "21" },
-  { key: "22", label: "22" },
-  { key: "23", label: "23" },
-  { key: "24", label: "24" },
-  { key: "25", label: "25" },
-  { key: "26", label: "26" },
-  { key: "27", label: "27" },
-  { key: "28", label: "28" },
-  { key: "29", label: "29" },
+const iso = (d: Date) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+
+// Sample scheduled tasks, keyed by real calendar date
+const eventsByDate: Record<string, Ev[]> = {
+  "2026-08-03": [ev("active")],
+  "2026-08-07": [ev("active")],
+  "2026-08-17": [ev("active"), ev("inactive")],
+  "2026-08-19": [ev("inactive")],
+  "2026-09-04": [ev("due")],
+  "2026-09-15": [ev("critical")],
+  "2026-09-23": [ev("active")],
+  "2026-10-06": [ev("active")],
+  "2026-10-20": [ev("due")],
+};
+
+const monthNames = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
 ];
+
+function buildCells(year: number, month: number): Cell[] {
+  const first = new Date(year, month, 1);
+  const start = new Date(year, month, 1 - first.getDay());
+  const out: Cell[] = [];
+  for (let i = 0; i < 42; i += 1) {
+    const day = new Date(start.getFullYear(), start.getMonth(), start.getDate() + i);
+    const key = iso(day);
+    out.push({
+      key,
+      label: String(day.getDate()),
+      muted: day.getMonth() !== month,
+      events: eventsByDate[key],
+    });
+    if (i >= 27 && day.getDay() === 6) {
+      const next = new Date(day.getFullYear(), day.getMonth(), day.getDate() + 1);
+      if (next.getMonth() !== month) break;
+    }
+  }
+  return out;
+}
 
 const legend = [
   { label: "Active/Safe", tone: "active" },
@@ -112,6 +125,14 @@ const views = ["Month", "Week", "List"] as const;
 function SchedulePage() {
   const [view, setView] = useState<(typeof views)[number]>("Month");
   const [selected, setSelected] = useState<{ cell: string; event: Ev } | null>(null);
+  const today = new Date();
+  const todayKey = iso(today);
+  const [cursor, setCursor] = useState(() => new Date(today.getFullYear(), today.getMonth(), 1));
+  const year = cursor.getFullYear();
+  const month = cursor.getMonth();
+  const cells = buildCells(year, month);
+  const monthLabel = `${monthNames[month]} ${year}`;
+  const shiftMonth = (delta: number) => setCursor(new Date(year, month + delta, 1));
 
   return (
     <div className="db-shell">
@@ -168,17 +189,31 @@ function SchedulePage() {
         </header>
 
         <div className="ps-toolbar">
-          <button type="button" className="ps-today">
+          <button
+            type="button"
+            className="ps-today"
+            onClick={() => setCursor(new Date(today.getFullYear(), today.getMonth(), 1))}
+          >
             Today
           </button>
           <div className="ps-month-nav">
-            <button type="button" className="ps-arrow" aria-label="Previous month">
+            <button type="button" className="ps-arrow" aria-label="Previous month" onClick={() => shiftMonth(-1)}>
               <ChevronLeft size={20} aria-hidden="true" />
             </button>
-            <strong className="ps-month">August 2026</strong>
-            <button type="button" className="ps-arrow" aria-label="Next month">
+            <strong className="ps-month">{monthLabel}</strong>
+            <button type="button" className="ps-arrow" aria-label="Next month" onClick={() => shiftMonth(1)}>
               <ChevronRight size={20} aria-hidden="true" />
             </button>
+            <input
+              type="month"
+              className="ps-jump"
+              aria-label="Jump to month"
+              value={`${year}-${String(month + 1).padStart(2, "0")}`}
+              onChange={(e) => {
+                const [y, m] = e.target.value.split("-").map(Number);
+                if (y && m) setCursor(new Date(y, m - 1, 1));
+              }}
+            />
           </div>
           <div className="ps-views" role="tablist" aria-label="Calendar view">
             {views.map((item) => (
@@ -205,7 +240,7 @@ function SchedulePage() {
           </select>
         </div>
 
-        <section className="ps-calendar" aria-label="August 2026 schedule">
+        <section className="ps-calendar" aria-label={`${monthLabel} schedule`}>
           <div className="ps-week-head">
             {weekdays.map((day) => (
               <span key={day}>{day}</span>
@@ -213,7 +248,10 @@ function SchedulePage() {
           </div>
           <div className="ps-grid">
             {cells.map((cell) => (
-              <div key={cell.key} className={`ps-cell ${cell.muted ? "is-muted" : ""}`}>
+              <div
+                key={cell.key}
+                className={`ps-cell ${cell.muted ? "is-muted" : ""} ${cell.key === todayKey ? "is-today" : ""}`}
+              >
                 <span className="ps-date">{cell.label}</span>
                 {cell.events?.map((event, index) => (
                   <button
