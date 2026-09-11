@@ -3643,3 +3643,4 @@ a.am-add { text-decoration: none; }
   .at-card { padding: 1.25rem 1rem; }
   .at-grid { grid-template-columns: 1fr; }
 }
+a.am-menu-item { text-decoration: none; }

@@ -122,7 +122,7 @@ const rows = [
 
 const rowActions = [
   { label: "Add Site", icon: MapPin },
-  { label: "Edit Details", icon: Pencil },
+  { label: "Edit Details", icon: Pencil, to: "/edit-task" as const },
   { label: "Assign Staff", icon: Users },
   { label: "History", icon: History },
   { label: "Deactivate", icon: Trash2, danger: true },
@@ -269,18 +269,31 @@ function CompliancePage() {
                         </button>
                         {openMenu === row.title && (
                           <div className="am-menu" role="menu">
-                            {rowActions.map(({ label, icon: Icon, danger }) => (
-                              <button
-                                type="button"
-                                role="menuitem"
-                                key={label}
-                                className={`am-menu-item ${danger ? "is-danger" : ""}`}
-                                onClick={() => setOpenMenu(null)}
-                              >
-                                <Icon size={14} aria-hidden="true" />
-                                <span>{label}</span>
-                              </button>
-                            ))}
+                            {rowActions.map(({ label, icon: Icon, danger, to }) =>
+                              to ? (
+                                <Link
+                                  role="menuitem"
+                                  key={label}
+                                  to={to}
+                                  className="am-menu-item"
+                                  onClick={() => setOpenMenu(null)}
+                                >
+                                  <Icon size={14} aria-hidden="true" />
+                                  <span>{label}</span>
+                                </Link>
+                              ) : (
+                                <button
+                                  type="button"
+                                  role="menuitem"
+                                  key={label}
+                                  className={`am-menu-item ${danger ? "is-danger" : ""}`}
+                                  onClick={() => setOpenMenu(null)}
+                                >
+                                  <Icon size={14} aria-hidden="true" />
+                                  <span>{label}</span>
+                                </button>
+                              ),
+                            )}
                           </div>
                         )}
                       </div>
