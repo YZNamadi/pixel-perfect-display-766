@@ -1,19 +1,20 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
+import { useState } from "react";
 
 export const Route = createFileRoute("/signup")({
   head: () => ({
     meta: [
-      { title: "Create your Kearly account" },
+      { title: "Kearly | Create Your Compliance Account" },
       {
         name: "description",
         content:
-          "Sign up for Kearly to automate operations, safety checks, and site compliance reporting.",
+          "Create a Kearly account to automate compliance tasks, site certificates, and audit evidence for your facilities.",
       },
-      { property: "og:title", content: "Create your Kearly account" },
+      { property: "og:title", content: "Kearly | Create Your Compliance Account" },
       {
         property: "og:description",
         content:
-          "Sign up for Kearly to automate operations, safety checks, and site compliance reporting.",
+          "Create a Kearly account to automate compliance tasks, site certificates, and audit evidence for your facilities.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -23,80 +24,143 @@ export const Route = createFileRoute("/signup")({
 });
 
 function SignupPage() {
+  const navigate = useNavigate();
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+
   return (
-    <main className="auth-page">
-      <div className="auth-watermark" aria-hidden="true">
-        <span className="auth-watermark-petal wm-one" />
-        <span className="auth-watermark-petal wm-two" />
-        <span className="auth-watermark-petal wm-three" />
-        <span className="auth-watermark-petal wm-four" />
-      </div>
+    <main className="si-page">
+      <div className="si-decor si-decor-phone" aria-hidden="true" />
+      <div className="si-decor si-decor-shield" aria-hidden="true" />
+      <div className="si-decor si-decor-leaf" aria-hidden="true" />
 
-      <section className="auth-card" aria-labelledby="signup-heading">
-        <header className="auth-header">
-          <div className="auth-logo" role="img" aria-label="Kearly logo">
-            <span className="logo-petal logo-petal-one" />
-            <span className="logo-petal logo-petal-two" />
-            <span className="logo-petal logo-petal-three" />
-            <span className="logo-petal logo-petal-four" />
+      <section className="si-card" aria-labelledby="su-heading">
+        <div className="si-card-logo">
+          <div className="si-logo" role="img" aria-label="Kearly logo">
+            <span className="si-petal si-petal-one" />
+            <span className="si-petal si-petal-two" />
+            <span className="si-petal si-petal-three" />
+            <span className="si-petal si-petal-four" />
           </div>
-          <h1 id="signup-heading" className="auth-brand">
-            KEARLY
-          </h1>
-          <p className="auth-tagline">Compliance. Automated &amp; Simplified.</p>
-        </header>
-
-        <form className="auth-form" onSubmit={(e) => e.preventDefault()}>
-          <div className="auth-field">
-            <label htmlFor="email">
-              Work Email <span className="auth-required">*</span>
-            </label>
-            <input
-              id="email"
-              name="email"
-              type="email"
-              required
-              placeholder="alex@kearly.com"
-              autoComplete="email"
-            />
+          <div className="si-brand">
+            <p className="si-wordmark">KEARLY</p>
+            <p className="si-tagline">Compliance. Automated &amp; Simplified.</p>
           </div>
-
-          <div className="auth-field">
-            <label htmlFor="password">
-              Password <span className="auth-required">*</span>
-            </label>
-            <input
-              id="password"
-              name="password"
-              type="password"
-              required
-              placeholder="••••••••"
-              autoComplete="new-password"
-            />
-          </div>
-
-          <Link to="/facility" className="auth-submit">
-            Create Account
-          </Link>
-        </form>
-
-        <div className="auth-separator">
-          <span>OR</span>
         </div>
 
-        <button type="button" className="auth-google">
-          <span className="auth-google-mark" aria-hidden="true">
+        <div className="si-tabs" role="tablist" aria-label="Authentication">
+          <Link className="si-tab" role="tab" aria-selected={false} to="/login">
+            Sign In
+          </Link>
+          <span className="si-tab is-active" role="tab" aria-selected={true}>
+            Sign Up
+          </span>
+        </div>
+
+        <h1 id="su-heading" className="si-heading">
+          Get started with smarter <strong>compliance</strong> management
+        </h1>
+
+        <form
+          className="si-form"
+          onSubmit={(event) => {
+            event.preventDefault();
+            navigate({ to: "/facility" });
+          }}
+        >
+          <div className="si-name-row">
+            <div>
+              <label className="si-visually-hidden" htmlFor="su-first">
+                First name
+              </label>
+              <input
+                id="su-first"
+                className="si-input"
+                type="text"
+                autoComplete="given-name"
+                placeholder="First name"
+                value={firstName}
+                onChange={(event) => setFirstName(event.target.value)}
+                required
+              />
+            </div>
+            <div>
+              <label className="si-visually-hidden" htmlFor="su-last">
+                Last name
+              </label>
+              <input
+                id="su-last"
+                className="si-input"
+                type="text"
+                autoComplete="family-name"
+                placeholder="Last name"
+                value={lastName}
+                onChange={(event) => setLastName(event.target.value)}
+                required
+              />
+            </div>
+          </div>
+
+          <label className="si-visually-hidden" htmlFor="su-email">
+            Work email
+          </label>
+          <input
+            id="su-email"
+            className="si-input"
+            type="email"
+            autoComplete="email"
+            placeholder="Email"
+            value={email}
+            onChange={(event) => setEmail(event.target.value)}
+            required
+          />
+
+          <label className="si-visually-hidden" htmlFor="su-password">
+            Password
+          </label>
+          <input
+            id="su-password"
+            className="si-input"
+            type="password"
+            autoComplete="new-password"
+            placeholder="Password"
+            value={password}
+            onChange={(event) => setPassword(event.target.value)}
+            required
+          />
+
+          <label className="si-visually-hidden" htmlFor="su-confirm">
+            Confirm password
+          </label>
+          <input
+            id="su-confirm"
+            className="si-input"
+            type="password"
+            autoComplete="new-password"
+            placeholder="Confirm Password"
+            value={confirmPassword}
+            onChange={(event) => setConfirmPassword(event.target.value)}
+            required
+          />
+
+          <button type="submit" className="si-submit">
+            Create Account
+          </button>
+        </form>
+
+        <div className="si-or">
+          <span>Or</span>
+        </div>
+
+        <button type="button" className="si-google">
+          Sign up with Google
+          <span className="si-google-mark" aria-hidden="true">
             G
           </span>
-          Sign in with Google
         </button>
-
-        <p className="auth-footer">
-          Already have an account?{" "}
-          <Link className="login-link" to="/login">
-            Log in
-          </Link>
-        </p>
       </section>
     </main>
   );
