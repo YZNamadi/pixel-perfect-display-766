@@ -3596,6 +3596,38 @@ a.am-add { text-decoration: none; }
 }
 .cp-schedule:hover { text-decoration: underline; }
 
+/* Delete task confirmation */
+.cp-trash {
+  border: none; background: transparent; color: #DC2626; cursor: pointer;
+  padding: 0.25rem; border-radius: 6px; display: inline-flex; margin-right: 0.35rem;
+}
+.cp-trash:hover { background: #FEE2E2; }
+.cp-overlay {
+  position: fixed; inset: 0; z-index: 90; display: flex; align-items: center; justify-content: center;
+  background: rgba(15, 32, 25, 0.35); padding: 1.25rem;
+}
+.cp-modal {
+  width: min(100%, 560px); background: #FFFFFF; border-radius: 16px; padding: 2rem 2.25rem 1.75rem;
+  box-shadow: 0 24px 60px rgba(15, 32, 25, 0.22); text-align: left;
+}
+.cp-modal-head { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.25rem; }
+.cp-modal-icon { color: #DC2626; display: inline-flex; }
+.cp-modal-title { margin: 0; font-size: 1.5rem; font-weight: 800; color: #2D3748; }
+.cp-modal-text { margin: 0 0 1.75rem; font-size: 1.05rem; font-weight: 600; color: #2D3748; line-height: 1.5; }
+.cp-modal-actions { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; }
+.cp-modal-cancel, .cp-modal-delete {
+  font: inherit; font-size: 1rem; font-weight: 700; padding: 0.7rem 1.6rem; border-radius: 10px; cursor: pointer;
+}
+.cp-modal-cancel { background: #FFFFFF; color: #2D3748; border: 2px solid #2F6E55; }
+.cp-modal-cancel:hover { background: #F1F6F3; }
+.cp-modal-delete { background: #C0281F; color: #FFFFFF; border: 2px solid #C0281F; }
+.cp-modal-delete:hover { background: #A32118; }
+@media (max-width: 640px) {
+  .cp-modal { padding: 1.5rem 1.25rem; }
+  .cp-modal-title { font-size: 1.25rem; }
+}
+
+
 /* Add PPM Task page */
 .at-back {
   display: inline-flex; align-items: center; padding: 0.5rem;
