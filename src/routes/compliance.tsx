@@ -316,9 +316,10 @@ function CompliancePage() {
 
           <div className="am-foot">
             <small>Showing 1–7 of 64 Tasks</small>
-            <button type="button" className="cp-schedule">
+            <Link to="/schedule" className="cp-schedule">
               See Schedule
-            </button>
+            </Link>
+
             <div className="am-pager">
               <button type="button" className="am-page" aria-label="Previous page">
                 <ChevronLeft size={15} aria-hidden="true" />
