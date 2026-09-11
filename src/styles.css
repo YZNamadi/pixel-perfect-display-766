@@ -3550,3 +3550,29 @@
   .am-add { margin-left: 0; width: 100%; justify-content: center; }
 }
 
+
+/* Asset row action menu */
+.am-actions-cell { width: 40px; text-align: right; }
+.am-menu-wrap { position: relative; display: inline-block; }
+.am-kebab {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 26px; height: 26px; border: none; background: transparent;
+  border-radius: 6px; color: #718096; cursor: pointer;
+}
+.am-kebab:hover { background: #EDF2F7; color: #2D3748; }
+.am-menu {
+  position: absolute; right: 0; top: calc(100% + 6px); z-index: 20;
+  min-width: 168px; padding: 0.35rem;
+  background: #ffffff; border: 1px solid #E2E8F0; border-radius: 10px;
+  box-shadow: 0 12px 28px rgba(45, 55, 72, 0.14);
+  display: flex; flex-direction: column;
+}
+.am-menu-item {
+  display: flex; align-items: center; gap: 0.55rem;
+  padding: 0.5rem 0.6rem; border: none; background: transparent;
+  border-radius: 6px; font: inherit; font-size: 0.8rem; color: #2D3748;
+  cursor: pointer; text-align: left;
+}
+.am-menu-item:hover { background: #F1F8F4; }
+.am-menu-item.is-danger { color: #C25151; font-weight: 600; }
+.am-menu-item.is-danger:hover { background: #FBE3E3; }
