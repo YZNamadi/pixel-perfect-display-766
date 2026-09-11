@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as CompleteRouteImport } from './routes/complete'
+import { Route as DashboardWelcomeRouteImport } from './routes/dashboard-welcome'
 import { Route as FacilityRouteImport } from './routes/facility'
 import { Route as ImportRouteImport } from './routes/import'
 import { Route as SignupRouteImport } from './routes/signup'
@@ -25,6 +26,11 @@ const IndexRoute = IndexRouteImport.update({
 const CompleteRoute = CompleteRouteImport.update({
   id: '/complete',
   path: '/complete',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DashboardWelcomeRoute = DashboardWelcomeRouteImport.update({
+  id: '/dashboard-welcome',
+  path: '/dashboard-welcome',
   getParentRoute: () => rootRouteImport,
 } as any)
 const FacilityRoute = FacilityRouteImport.update({
@@ -56,6 +62,7 @@ const TeamRoute = TeamRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/complete': typeof CompleteRoute
+  '/dashboard-welcome': typeof DashboardWelcomeRoute
   '/facility': typeof FacilityRoute
   '/import': typeof ImportRoute
   '/signup': typeof SignupRoute
@@ -65,6 +72,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/complete': typeof CompleteRoute
+  '/dashboard-welcome': typeof DashboardWelcomeRoute
   '/facility': typeof FacilityRoute
   '/import': typeof ImportRoute
   '/signup': typeof SignupRoute
@@ -75,6 +83,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/complete': typeof CompleteRoute
+  '/dashboard-welcome': typeof DashboardWelcomeRoute
   '/facility': typeof FacilityRoute
   '/import': typeof ImportRoute
   '/signup': typeof SignupRoute
@@ -84,14 +93,29 @@ export interface FileRoutesById {
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    '/' | '/complete' | '/facility' | '/import' | '/signup' | '/site' | '/team'
+    | '/'
+    | '/complete'
+    | '/dashboard-welcome'
+    | '/facility'
+    | '/import'
+    | '/signup'
+    | '/site'
+    | '/team'
   fileRoutesByTo: FileRoutesByTo
   to:
-    '/' | '/complete' | '/facility' | '/import' | '/signup' | '/site' | '/team'
+    | '/'
+    | '/complete'
+    | '/dashboard-welcome'
+    | '/facility'
+    | '/import'
+    | '/signup'
+    | '/site'
+    | '/team'
   id:
     | '__root__'
     | '/'
     | '/complete'
+    | '/dashboard-welcome'
     | '/facility'
     | '/import'
     | '/signup'
@@ -102,6 +126,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   CompleteRoute: typeof CompleteRoute
+  DashboardWelcomeRoute: typeof DashboardWelcomeRoute
   FacilityRoute: typeof FacilityRoute
   ImportRoute: typeof ImportRoute
   SignupRoute: typeof SignupRoute
@@ -123,6 +148,13 @@ declare module '@tanstack/react-router' {
       path: '/complete'
       fullPath: '/complete'
       preLoaderRoute: typeof CompleteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/dashboard-welcome': {
+      id: '/dashboard-welcome'
+      path: '/dashboard-welcome'
+      fullPath: '/dashboard-welcome'
+      preLoaderRoute: typeof DashboardWelcomeRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/facility': {
@@ -166,6 +198,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   CompleteRoute: CompleteRoute,
+  DashboardWelcomeRoute: DashboardWelcomeRoute,
   FacilityRoute: FacilityRoute,
   ImportRoute: ImportRoute,
   SignupRoute: SignupRoute,
