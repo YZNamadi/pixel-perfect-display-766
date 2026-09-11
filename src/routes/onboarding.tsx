@@ -44,7 +44,7 @@ const slides = [
 function OnboardingCarousel() {
   const [index, setIndex] = useState(0);
   const navigate = useNavigate();
-  const slide = slides[index];
+  const slide = slides[index] ?? slides[0]!;
 
   const next = () => {
     if (index < slides.length - 1) {
