@@ -260,6 +260,14 @@ function CompliancePage() {
                       <div className="am-menu-wrap">
                         <button
                           type="button"
+                          className="cp-trash"
+                          aria-label={`Delete ${row.title}`}
+                          onClick={() => setDeleteTask(row.title)}
+                        >
+                          <Trash2 size={16} aria-hidden="true" />
+                        </button>
+                        <button
+                          type="button"
                           className="am-kebab"
                           aria-label={`Actions for ${row.title}`}
                           aria-expanded={openMenu === row.title}
