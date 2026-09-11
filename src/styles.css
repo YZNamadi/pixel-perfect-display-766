@@ -3507,6 +3507,7 @@
   cursor: pointer;
 }
 .am-add:hover { background: #27794D; }
+a.am-add { text-decoration: none; }
 
 .am-table-wrap { overflow-x: auto; }
 .am-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
