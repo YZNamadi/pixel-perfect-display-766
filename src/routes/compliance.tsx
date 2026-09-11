@@ -20,6 +20,7 @@ import {
   Users,
   History,
   Trash2,
+  AlertTriangle,
 } from "lucide-react";
 
 export const Route = createFileRoute("/compliance")({
@@ -133,6 +134,7 @@ const statusClass = (status: string) =>
 
 function CompliancePage() {
   const [openMenu, setOpenMenu] = useState<string | null>(null);
+  const [deleteTask, setDeleteTask] = useState<string | null>(null);
 
   return (
     <div className="db-shell">
@@ -260,6 +262,14 @@ function CompliancePage() {
                       <div className="am-menu-wrap">
                         <button
                           type="button"
+                          className="cp-trash"
+                          aria-label={`Delete ${row.title}`}
+                          onClick={() => setDeleteTask(row.title)}
+                        >
+                          <Trash2 size={16} aria-hidden="true" />
+                        </button>
+                        <button
+                          type="button"
                           className="am-kebab"
                           aria-label={`Actions for ${row.title}`}
                           aria-expanded={openMenu === row.title}
@@ -333,6 +343,40 @@ function CompliancePage() {
           </div>
         </section>
       </main>
+
+      {deleteTask && (
+        <div className="cp-overlay" role="presentation" onClick={() => setDeleteTask(null)}>
+          <div
+            className="cp-modal"
+            role="alertdialog"
+            aria-modal="true"
+            aria-labelledby="cp-modal-title"
+            onClick={(event) => event.stopPropagation()}
+          >
+            <div className="cp-modal-head">
+              <span className="cp-modal-icon" aria-hidden="true">
+                <AlertTriangle size={26} />
+              </span>
+              <h2 className="cp-modal-title" id="cp-modal-title">
+                Delete Task
+              </h2>
+            </div>
+            <p className="cp-modal-text">
+              Are you sure you want to delete this task?
+              <br />
+              This action cannot be undone.
+            </p>
+            <div className="cp-modal-actions">
+              <button type="button" className="cp-modal-cancel" onClick={() => setDeleteTask(null)}>
+                Cancel
+              </button>
+              <button type="button" className="cp-modal-delete" onClick={() => setDeleteTask(null)}>
+                Delete
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
