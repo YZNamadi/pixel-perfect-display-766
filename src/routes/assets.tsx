@@ -132,6 +132,8 @@ const statusClass = (status: string) =>
 
 
 function AssetsPage() {
+  const [openMenu, setOpenMenu] = useState<string | null>(null);
+
   return (
     <div className="db-shell">
       <aside className="db-sidebar">
