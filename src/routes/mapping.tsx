@@ -115,9 +115,10 @@ function MappingPage() {
           ))}
         </div>
 
-        <Link className="ud-continue" to="/team">
+        <Link className="ud-continue" to="/preview">
           Continue
         </Link>
+
       </section>
     </main>
   );
