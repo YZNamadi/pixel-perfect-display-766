@@ -115,9 +115,16 @@ function ImportPage() {
             </button>
 
             <div className="import-actions">
-              <button type="button" className="import-continue" disabled={!selectedFile}>
+              <Link
+                className="import-continue"
+                to="/team"
+                data-disabled={!selectedFile}
+                onClick={(event) => {
+                  if (!selectedFile) event.preventDefault();
+                }}
+              >
                 Continue
-              </button>
+              </Link>
               <Link className="import-skip" to="/">
                 Continue without importing
               </Link>
