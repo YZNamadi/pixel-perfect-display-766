@@ -114,14 +114,22 @@ function DashboardPage() {
         </Link>
 
         <nav className="db-nav" aria-label="Main navigation">
-          {navItems.map(({ label, icon: Icon, active }) => (
-            <button type="button" key={label} className={`db-nav-item ${active ? "is-active" : ""}`}>
-              <Icon size={18} aria-hidden="true" />
-              <span>{label}</span>
-              {active && <span className="db-nav-bar" aria-hidden="true" />}
-            </button>
-          ))}
+          {navItems.map(({ label, icon: Icon, to, active }) =>
+            to ? (
+              <Link key={label} to={to} className={`db-nav-item ${active ? "is-active" : ""}`}>
+                <Icon size={18} aria-hidden="true" />
+                <span>{label}</span>
+                {active && <span className="db-nav-bar" aria-hidden="true" />}
+              </Link>
+            ) : (
+              <button type="button" key={label} className="db-nav-item">
+                <Icon size={18} aria-hidden="true" />
+                <span>{label}</span>
+              </button>
+            ),
+          )}
         </nav>
+
 
         <div className="db-user">
           <span className="db-avatar" aria-hidden="true">
