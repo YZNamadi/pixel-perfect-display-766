@@ -43,9 +43,9 @@ const navItems = [
   { label: "Compliance", icon: ShieldCheck, to: "/compliance" as const },
   { label: "Repairs", icon: Wrench, to: "/repairs" as const },
   { label: "Assets", icon: Building2, to: "/assets" as const },
-  { label: "Reports", icon: BarChart3 },
-  { label: "Audit Log", icon: ScrollText },
-  { label: "Settings", icon: Settings },
+  { label: "Reports", icon: BarChart3, to: "/reports" as const },
+  { label: "Audit Log", icon: ScrollText, to: "/audit-log" as const },
+  { label: "Settings", icon: Settings, to: "/settings" as const },
 ];
 
 
@@ -114,20 +114,13 @@ function DashboardPage() {
         </Link>
 
         <nav className="db-nav" aria-label="Main navigation">
-          {navItems.map(({ label, icon: Icon, to, active }) =>
-            to ? (
-              <Link key={label} to={to} className={`db-nav-item ${active ? "is-active" : ""}`}>
-                <Icon size={18} aria-hidden="true" />
-                <span>{label}</span>
-                {active && <span className="db-nav-bar" aria-hidden="true" />}
-              </Link>
-            ) : (
-              <button type="button" key={label} className="db-nav-item">
-                <Icon size={18} aria-hidden="true" />
-                <span>{label}</span>
-              </button>
-            ),
-          )}
+          {navItems.map(({ label, icon: Icon, to, active }) => (
+            <Link key={label} to={to} className={`db-nav-item ${active ? "is-active" : ""}`}>
+              <Icon size={18} aria-hidden="true" />
+              <span>{label}</span>
+              {active && <span className="db-nav-bar" aria-hidden="true" />}
+            </Link>
+          ))}
         </nav>
 
 
