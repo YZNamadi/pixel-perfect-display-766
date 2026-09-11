@@ -68,7 +68,7 @@ function SignupPage() {
           className="si-form"
           onSubmit={(event) => {
             event.preventDefault();
-            navigate({ to: "/facility" });
+            navigate({ to: "/verify" });
           }}
         >
           <div className="si-name-row">
