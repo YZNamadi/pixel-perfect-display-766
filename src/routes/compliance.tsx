@@ -20,6 +20,7 @@ import {
   Users,
   History,
   Trash2,
+  AlertTriangle,
 } from "lucide-react";
 
 export const Route = createFileRoute("/compliance")({
