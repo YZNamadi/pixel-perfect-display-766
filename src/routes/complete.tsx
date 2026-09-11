@@ -106,7 +106,7 @@ function CompletePage() {
           </ul>
 
           <div className="complete-actions">
-            <Link className="complete-primary" to="/">
+            <Link className="complete-primary" to="/dashboard-welcome">
               Go to Dashboard
             </Link>
             <Link className="complete-secondary" to="/">
