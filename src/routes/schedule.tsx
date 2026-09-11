@@ -42,7 +42,7 @@ export const Route = createFileRoute("/schedule")({
 const navItems = [
   { label: "Dashboard", icon: LayoutDashboard, to: "/dashboard" as const },
   { label: "Compliance", icon: ShieldCheck, to: "/compliance" as const, active: true },
-  { label: "Repairs", icon: Wrench },
+  { label: "Repairs", icon: Wrench, to: "/repairs" as const },
   { label: "Assets", icon: Building2, to: "/assets" as const },
   { label: "Reports", icon: BarChart3 },
   { label: "Audit Log", icon: ScrollText },
