@@ -8,9 +8,9 @@ import {
   BarChart3,
   ScrollText,
   Settings,
-  ShieldAlert,
-  CalendarClock,
-  Timer,
+  AlertCircle,
+  CalendarCheck,
+  Clock,
   Plus,
   ChevronLeft,
   ChevronRight,
@@ -22,99 +22,100 @@ import {
   Trash2,
 } from "lucide-react";
 
-
-export const Route = createFileRoute("/assets")({
+export const Route = createFileRoute("/compliance")({
   head: () => ({
     meta: [
-      { title: "Kearly | Asset Management" },
+      { title: "Kearly | Compliance & PPM Tasks" },
       {
         name: "description",
-        content: "Track and manage all facility assets and equipment, service dates and warranties in Kearly.",
+        content:
+          "Planned preventive maintenance overview and compliance task management across all Kearly facilities.",
       },
-      { property: "og:title", content: "Kearly | Asset Management" },
+      { property: "og:title", content: "Kearly | Compliance & PPM Tasks" },
       {
         property: "og:description",
-        content: "Track and manage all facility assets and equipment, service dates and warranties in Kearly.",
+        content:
+          "Planned preventive maintenance overview and compliance task management across all Kearly facilities.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
-  component: AssetsPage,
+  component: CompliancePage,
 });
 
 const navItems = [
   { label: "Dashboard", icon: LayoutDashboard, to: "/dashboard" as const },
-  { label: "Compliance", icon: ShieldCheck, to: "/compliance" as const },
+  { label: "Compliance", icon: ShieldCheck, to: "/compliance" as const, active: true },
   { label: "Repairs", icon: Wrench },
-  { label: "Assets", icon: Building2, to: "/assets" as const, active: true },
+  { label: "Assets", icon: Building2, to: "/assets" as const },
   { label: "Reports", icon: BarChart3 },
   { label: "Audit Log", icon: ScrollText },
   { label: "Settings", icon: Settings },
 ];
 
 const stats = [
-  { label: "Total Assets", value: "156", note: "Across all facilities", icon: Wrench, tone: "green" },
-  { label: "Active", value: "142", note: "91% operational", icon: ShieldAlert, tone: "teal" },
-  { label: "Due for Service", value: "18", note: "7 this week", icon: CalendarClock, tone: "amber" },
-  { label: "Warranty Expiring", value: "4", note: "Within 30 days", icon: Timer, tone: "orange" },
+  { label: "Total PPM Tasks", value: "64", note: "Across all facilities", icon: Wrench, tone: "green" },
+  { label: "Due This Week", value: "12", note: "Tasks", icon: AlertCircle, tone: "amber" },
+  { label: "Completed", value: "45", note: "Tasks", icon: CalendarCheck, tone: "teal" },
+  { label: "Overdue", value: "4", note: "Tasks", icon: Clock, tone: "red" },
 ];
 
 const rows = [
   {
-    name: "HVAC Unit — Building A",
+    title: "HVAC Unit — Building A",
     category: "HVAC",
-    location: "Maple Court",
-    status: "Active",
-    last: "12 Jul 2026",
+    frequency: "12 hrs",
+    status: "Completed",
+    due: "12 Jul 2026",
     next: "12 Jan 2027",
   },
   {
-    name: "Fire Alarm Panel — Main Hub",
+    title: "Fire Alarm Panel — Main Hub",
     category: "Fire Safety",
-    location: "Main Hub",
-    status: "Active",
-    last: "3 Aug 2026",
+    frequency: "7 days",
+    status: "Completed",
+    due: "3 Aug 2026",
     next: "3 Feb 2027",
   },
   {
-    name: "Elevator — East Wing",
+    title: "Elevator — East Wing",
     category: "Mechanical",
-    location: "Oakfield Tower",
-    status: "Due Service",
-    last: "15 Mar 2026",
+    frequency: "14 days",
+    status: "Due Soon",
+    due: "15 Mar 2026",
     next: "15 Sep 2026",
   },
   {
-    name: "Generator — Backup Power",
+    title: "Generator — Backup Power",
     category: "Electrical",
-    location: "Main Hub",
-    status: "Active",
-    last: "20 Jun 2026",
+    frequency: "3 days",
+    status: "Completed",
+    due: "20 Jun 2026",
     next: "20 Dec 2026",
   },
   {
-    name: "Water Heater — Unit 3C",
+    title: "Water Heater — Unit 3C",
     category: "Plumbing",
-    location: "Birch Lane",
-    status: "Inactive",
-    last: "8 May 2026",
+    frequency: "14 days",
+    status: "Overdue",
+    due: "8 May 2026",
     next: "—",
   },
   {
-    name: "Security Camera System",
+    title: "Security Camera System",
     category: "Security",
-    location: "All Sites",
-    status: "Active",
-    last: "1 Aug 2026",
+    frequency: "4 days",
+    status: "Completed",
+    due: "1 Aug 2026",
     next: "1 Feb 2027",
   },
   {
-    name: "Boiler — Central Heating",
+    title: "Boiler — Central Heating",
     category: "HVAC",
-    location: "Maple Court",
-    status: "Due Service",
-    last: "22 Feb 2026",
+    frequency: "14 days",
+    status: "Due Soon",
+    due: "22 Feb 2026",
     next: "22 Aug 2026",
   },
 ];
@@ -128,10 +129,9 @@ const rowActions = [
 ];
 
 const statusClass = (status: string) =>
-  status === "Active" ? "is-active" : status === "Due Service" ? "is-due" : "is-inactive";
+  status === "Completed" ? "is-active" : status === "Due Soon" ? "is-due" : "is-inactive";
 
-
-function AssetsPage() {
+function CompliancePage() {
   const [openMenu, setOpenMenu] = useState<string | null>(null);
 
   return (
@@ -180,11 +180,11 @@ function AssetsPage() {
 
       <main className="db-main">
         <header className="am-head">
-          <h1 className="db-title">Asset Management</h1>
-          <p className="db-subtitle">Track and manage all facility assets and equipment.</p>
+          <h1 className="db-title">Compliance</h1>
+          <p className="db-subtitle">Planned preventive maintenance (PPM) overview and task management</p>
         </header>
 
-        <section className="db-stats" aria-label="Asset overview">
+        <section className="db-stats" aria-label="Compliance overview">
           {stats.map(({ label, value, note, icon: Icon, tone }) => (
             <article className={`db-stat is-${tone}`} key={label}>
               <div className="db-stat-top">
@@ -199,9 +199,15 @@ function AssetsPage() {
           ))}
         </section>
 
-        <section className="am-panel" aria-label="Assets">
+        <div className="cp-tabs" role="tablist" aria-label="Compliance views">
+          <button type="button" role="tab" aria-selected="true" className="cp-tab is-active">
+            PPM Overview
+          </button>
+        </div>
+
+        <section className="am-panel" aria-label="PPM tasks">
           <div className="am-toolbar">
-            <input className="am-search" type="search" placeholder="Search assets..." aria-label="Search assets" />
+            <input className="am-search" type="search" placeholder="Search Tasks..." aria-label="Search tasks" />
             <select className="am-select" aria-label="Filter by category" defaultValue="all">
               <option value="all">All Categories</option>
               <option value="hvac">HVAC</option>
@@ -211,54 +217,57 @@ function AssetsPage() {
               <option value="plumbing">Plumbing</option>
               <option value="security">Security</option>
             </select>
-            <select className="am-select" aria-label="Filter by status" defaultValue="all">
-              <option value="all">All Statuses</option>
-              <option value="active">Active</option>
-              <option value="due">Due Service</option>
-              <option value="inactive">Inactive</option>
+            <select className="am-select" aria-label="Filter by site" defaultValue="all">
+              <option value="all">All Sites</option>
+              <option value="maple">Maple Court</option>
+              <option value="hub">Main Hub</option>
+              <option value="oakfield">Oakfield Tower</option>
+              <option value="birch">Birch Lane</option>
             </select>
             <button type="button" className="am-add">
               <Plus size={15} aria-hidden="true" />
-              <span>Add Asset</span>
+              <span>Add Task</span>
             </button>
           </div>
+
+          <h2 className="cp-table-title">Tasks</h2>
 
           <div className="am-table-wrap">
             <table className="am-table">
               <thead>
                 <tr>
-                  <th>Asset Name</th>
+                  <th>Task Title</th>
                   <th>Category</th>
-                  <th>Location</th>
+                  <th>Frequency</th>
                   <th>Status</th>
-                  <th>Last Serviced</th>
+                  <th>Due Date</th>
                   <th>Next Service</th>
                   <th aria-label="Actions" />
                 </tr>
               </thead>
               <tbody>
                 {rows.map((row) => (
-                  <tr key={row.name}>
-                    <td className="am-name">{row.name}</td>
+                  <tr key={row.title}>
+                    <td className="am-name">{row.title}</td>
                     <td>{row.category}</td>
-                    <td>{row.location}</td>
+                    <td>{row.frequency}</td>
                     <td>
                       <span className={`am-status ${statusClass(row.status)}`}>{row.status}</span>
                     </td>
-                    <td>{row.last}</td>
-                    <td className={row.status === "Due Service" ? "am-next-due" : undefined}>{row.next}</td>
+                    <td>{row.due}</td>
+                    <td className={row.status === "Due Soon" ? "am-next-due" : undefined}>{row.next}</td>
                     <td className="am-actions-cell">
                       <div className="am-menu-wrap">
                         <button
                           type="button"
                           className="am-kebab"
-                          aria-label={`Actions for ${row.name}`}
-                          aria-expanded={openMenu === row.name}
-                          onClick={() => setOpenMenu(openMenu === row.name ? null : row.name)}
+                          aria-label={`Actions for ${row.title}`}
+                          aria-expanded={openMenu === row.title}
+                          onClick={() => setOpenMenu(openMenu === row.title ? null : row.title)}
                         >
                           <Menu size={15} aria-hidden="true" />
                         </button>
-                        {openMenu === row.name && (
+                        {openMenu === row.title && (
                           <div className="am-menu" role="menu">
                             {rowActions.map(({ label, icon: Icon, danger }) => (
                               <button
@@ -282,9 +291,11 @@ function AssetsPage() {
             </table>
           </div>
 
-
           <div className="am-foot">
-            <small>Showing 1–7 of 156 assets</small>
+            <small>Showing 1–7 of 64 Tasks</small>
+            <button type="button" className="cp-schedule">
+              See Schedule
+            </button>
             <div className="am-pager">
               <button type="button" className="am-page" aria-label="Previous page">
                 <ChevronLeft size={15} aria-hidden="true" />

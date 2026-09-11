@@ -3576,3 +3576,21 @@
 .am-menu-item:hover { background: #F1F8F4; }
 .am-menu-item.is-danger { color: #C25151; font-weight: 600; }
 .am-menu-item.is-danger:hover { background: #FBE3E3; }
+
+/* Compliance page */
+.cp-tabs { display: flex; gap: 1.25rem; margin-bottom: 1rem; }
+.cp-tab {
+  border: none; background: transparent; font: inherit; font-size: 1rem; font-weight: 700;
+  color: #718096; padding: 0 0 0.6rem; cursor: pointer; position: relative;
+}
+.cp-tab.is-active { color: #2D3748; }
+.cp-tab.is-active::after {
+  content: ""; position: absolute; left: 0; right: 0; bottom: 0;
+  height: 3px; border-radius: 2px; background: #2F8F5B;
+}
+.cp-table-title { font-size: 1rem; font-weight: 700; color: #2D3748; margin: 0 0 0.75rem; }
+.cp-schedule {
+  border: none; background: transparent; font: inherit; font-size: 0.85rem; font-weight: 600;
+  color: #2F6E55; cursor: pointer;
+}
+.cp-schedule:hover { text-decoration: underline; }
