@@ -36,10 +36,11 @@ const slides = [
   },
 
   {
-    heading: "Work with your contractors",
+    heading: "Prepare audit evidence with ai",
     subtitle:
-      "Raise work orders, track progress, and collect sign-off evidence in one shared place.",
+      "Generate inspection-ready reports on demand, backed by a complete, tamper-trail audit trail.",
   },
+
 ];
 
 function OnboardingCarousel() {
