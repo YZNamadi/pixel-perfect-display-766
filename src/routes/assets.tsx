@@ -214,6 +214,7 @@ function AssetsPage() {
                   <th>Status</th>
                   <th>Last Serviced</th>
                   <th>Next Service</th>
+                  <th aria-label="Actions" />
                 </tr>
               </thead>
               <tbody>
@@ -227,11 +228,41 @@ function AssetsPage() {
                     </td>
                     <td>{row.last}</td>
                     <td className={row.status === "Due Service" ? "am-next-due" : undefined}>{row.next}</td>
+                    <td className="am-actions-cell">
+                      <div className="am-menu-wrap">
+                        <button
+                          type="button"
+                          className="am-kebab"
+                          aria-label={`Actions for ${row.name}`}
+                          aria-expanded={openMenu === row.name}
+                          onClick={() => setOpenMenu(openMenu === row.name ? null : row.name)}
+                        >
+                          <Menu size={15} aria-hidden="true" />
+                        </button>
+                        {openMenu === row.name && (
+                          <div className="am-menu" role="menu">
+                            {rowActions.map(({ label, icon: Icon, danger }) => (
+                              <button
+                                type="button"
+                                role="menuitem"
+                                key={label}
+                                className={`am-menu-item ${danger ? "is-danger" : ""}`}
+                                onClick={() => setOpenMenu(null)}
+                              >
+                                <Icon size={14} aria-hidden="true" />
+                                <span>{label}</span>
+                              </button>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                    </td>
                   </tr>
                 ))}
               </tbody>
             </table>
           </div>
+
 
           <div className="am-foot">
             <small>Showing 1–7 of 156 assets</small>
