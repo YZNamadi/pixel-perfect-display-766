@@ -5673,3 +5673,21 @@ a.am-menu-item { text-decoration: none; }
   color: #374151; font-size: 0.88rem; font-weight: 600; cursor: pointer; padding: 0.5rem 0;
 }
 .at-back-step:hover { color: #15803D; }
+
+/* Repairs — mark ticket complete */
+.ct-card {
+  max-width: 740px; margin: 1.25rem auto 0; background: #FFFFFF; border: 1px solid #E5E7EB;
+  border-radius: 14px; padding: 1.75rem;
+}
+.ct-ticket { background: #F9FAFB; border: 1px solid #E5E7EB; border-radius: 10px; padding: 1rem 1.1rem; margin-bottom: 1.5rem; }
+.ct-ticket-label { margin: 0; font-size: 0.66rem; font-weight: 700; letter-spacing: 0.08em; color: #9CA3AF; }
+.ct-ticket-title { display: flex; align-items: center; gap: 0.6rem; margin: 0.35rem 0 0.25rem; font-size: 1.02rem; font-weight: 700; color: #111827; }
+.ct-ticket-priority { font-size: 0.7rem; font-weight: 700; color: #DC2626; }
+.ct-ticket-meta { margin: 0; font-size: 0.82rem; color: #6B7280; }
+.ct-textarea { min-height: 110px; }
+.ct-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; align-items: start; margin-top: 0.25rem; }
+.ct-toggle-row { display: flex; align-items: center; gap: 0.7rem; margin-top: 0.55rem; }
+.ct-toggle-text { font-size: 0.85rem; color: #374151; }
+.ct-actions { display: flex; justify-content: flex-end; align-items: center; gap: 0.7rem; margin-top: 1.5rem; padding-top: 1.25rem; border-top: 1px solid #E5E7EB; }
+.ct-cancel { border: 1px solid #E5E7EB; border-radius: 8px; padding: 0.6rem 1.1rem; background: #FFFFFF; }
+@media (max-width: 720px) { .ct-grid { grid-template-columns: 1fr; } }
