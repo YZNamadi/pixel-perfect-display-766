@@ -4567,3 +4567,21 @@ a.am-menu-item { text-decoration: none; }
   font-size: 0.62rem; font-weight: 700; letter-spacing: 0.06em;
   color: #0E7C42; background: #E7F6EF; padding: 0.25rem 0.5rem; border-radius: 5px;
 }
+
+/* Login page (lg-) */
+.lg-brand { display: flex; align-items: center; gap: 0.6rem; margin-bottom: 1.25rem; }
+.lg-logo {
+  display: grid; gap: 3px;
+  grid-template-columns: repeat(2, 9px);
+  grid-template-rows: repeat(2, 9px);
+}
+.lg-petal { background: #14544a; display: block; height: 9px; width: 9px; }
+.lg-petal-one { border-radius: 3px 3px 7px 3px; }
+.lg-petal-two { border-radius: 3px 3px 3px 7px; }
+.lg-petal-three { border-radius: 3px 7px 3px 3px; }
+.lg-petal-four { border-radius: 7px 3px 3px 3px; }
+.lg-brand-name { color: #14544a; font-size: 0.95rem; font-weight: 800; }
+.lg-label-row { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; }
+.lg-forgot { color: #0B6B5E; font-size: 0.78rem; font-weight: 600; text-decoration: none; }
+.lg-forgot:hover { text-decoration: underline; }
+.lg-submit { letter-spacing: 0.06em; text-transform: uppercase; }

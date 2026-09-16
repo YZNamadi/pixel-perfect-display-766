@@ -4,17 +4,17 @@ import { useState } from "react";
 export const Route = createFileRoute("/login")({
   head: () => ({
     meta: [
-      { title: "Kearly | Sign In to Manage Your Compliance" },
+      { title: "Kearly | Log In" },
       {
         name: "description",
         content:
-          "Sign in to Kearly to manage compliance tasks, site certificates, and audit evidence for your facilities.",
+          "Log in to Kearly to manage compliance workflows, safety checks and site operations in one place.",
       },
-      { property: "og:title", content: "Kearly | Sign In to Manage Your Compliance" },
+      { property: "og:title", content: "Kearly | Log In" },
       {
         property: "og:description",
         content:
-          "Sign in to Kearly to manage compliance tasks, site certificates, and audit evidence for your facilities.",
+          "Log in to Kearly to manage compliance workflows, safety checks and site operations in one place.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -23,109 +23,116 @@ export const Route = createFileRoute("/login")({
   component: LoginPage,
 });
 
+const trustedBy = ["SOC 2", "ISO 27001", "GDPR", "HIPAA", "PCI DSS"];
+
 function LoginPage() {
   const navigate = useNavigate();
-  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [remember, setRemember] = useState(false);
 
   return (
-    <main className="si-page">
-      <div className="si-decor si-decor-phone" aria-hidden="true" />
-      <div className="si-decor si-decor-shield" aria-hidden="true" />
-      <div className="si-decor si-decor-leaf" aria-hidden="true" />
-
-      <section className="si-card" aria-labelledby="si-heading">
-        <div className="si-card-logo">
-          <div className="si-logo" role="img" aria-label="Kearly logo">
-            <span className="si-petal si-petal-one" />
-            <span className="si-petal si-petal-two" />
-            <span className="si-petal si-petal-three" />
-            <span className="si-petal si-petal-four" />
-          </div>
-          <div className="si-brand">
-            <p className="si-wordmark">KEARLY</p>
-            <p className="si-tagline">Compliance. Automated &amp; Simplified.</p>
-          </div>
+    <main className="su-page">
+      <section className="su-panel" aria-label="Kearly">
+        <div className="su-panel-decor" aria-hidden="true">
+          <span className="su-circle su-circle-one" />
+          <span className="su-circle su-circle-two" />
+          <span className="su-circle su-circle-three" />
         </div>
-
-        <div className="si-tabs" role="tablist" aria-label="Authentication">
-          <span className="si-tab is-active" role="tab" aria-selected={true}>
-            Sign In
-          </span>
-          <Link className="si-tab" role="tab" aria-selected={false} to="/signup">
-            Sign Up
-          </Link>
+        <div className="su-panel-content">
+          <h2 className="su-panel-title">Compliance. Automated &amp; Simplified.</h2>
+          <p className="su-panel-text">
+            Enter your credentials to access your account and manage compliance workflows with
+            ease.
+          </p>
+          <p className="su-trusted-label">Trusted by leading healthcare facilities</p>
+          <ul className="su-trusted-list">
+            {trustedBy.map((name) => (
+              <li key={name}>{name}</li>
+            ))}
+          </ul>
         </div>
+      </section>
 
-        <h1 id="si-heading" className="si-heading">
-          Sign in to manage your <strong>compliance</strong>
-        </h1>
-
+      <section className="su-form-side">
         <form
-          className="si-form"
+          className="su-form"
           onSubmit={(event) => {
             event.preventDefault();
-            navigate({ to: "/dashboard-welcome" });
+            void navigate({ to: "/dashboard" });
           }}
         >
-          <label className="si-visually-hidden" htmlFor="si-email">
-            Work email
-          </label>
-          <input
-            id="si-email"
-            className="si-input"
-            type="email"
-            autoComplete="email"
-            placeholder="Email"
-            value={email}
-            onChange={(event) => setEmail(event.target.value)}
-            required
-          />
-
-          <label className="si-visually-hidden" htmlFor="si-password">
-            Password
-          </label>
-          <input
-            id="si-password"
-            className="si-input"
-            type="password"
-            autoComplete="current-password"
-            placeholder="Password"
-            value={password}
-            onChange={(event) => setPassword(event.target.value)}
-            required
-          />
-
-          <div className="si-row">
-            <label className="si-remember">
-              <input
-                type="checkbox"
-                checked={remember}
-                onChange={(event) => setRemember(event.target.checked)}
-              />
-              Keep me logged in
-            </label>
-            <a className="si-forgot" href="#forgot-password">
-              Forgot Password
-            </a>
+          <div className="lg-brand">
+            <span className="lg-logo" role="img" aria-label="Kearly logo">
+              <span className="lg-petal lg-petal-one" />
+              <span className="lg-petal lg-petal-two" />
+              <span className="lg-petal lg-petal-three" />
+              <span className="lg-petal lg-petal-four" />
+            </span>
+            <span className="lg-brand-name">Kearly</span>
           </div>
 
-          <button type="submit" className="si-submit">
-            Sign In
+          <h1 className="su-title">Log in</h1>
+          <p className="su-subtitle">Welcome back. Please enter your email.</p>
+
+          <label className="su-label" htmlFor="lg-email">
+            Email <span className="su-required">*</span>
+          </label>
+          <div className="su-field">
+            <input
+              className="su-input"
+              id="lg-email"
+              type="email"
+              name="email"
+              autoComplete="email"
+              placeholder="alex@kearly.com"
+              required
+            />
+          </div>
+
+          <div className="lg-label-row">
+            <label className="su-label" htmlFor="lg-password">
+              Password <span className="su-required">*</span>
+            </label>
+            <Link className="lg-forgot" to="/login">
+              Forgot password?
+            </Link>
+          </div>
+          <div className="su-field">
+            <input
+              className="su-input"
+              id="lg-password"
+              type="password"
+              name="password"
+              autoComplete="current-password"
+              placeholder="••••••••"
+              value={password}
+              onChange={(event) => setPassword(event.target.value)}
+              required
+            />
+          </div>
+
+          <button className="su-submit lg-submit" type="submit">
+            LOGIN
           </button>
+
+          <div className="su-divider">
+            <span>OR</span>
+          </div>
+
+          <button className="su-google" type="button">
+            <span className="su-google-mark" aria-hidden="true">
+              G
+            </span>
+            Sign in with Google
+          </button>
+
+          <p className="su-footer">
+            Don&apos;t have an account?{" "}
+            <Link className="su-footer-link" to="/signup">
+              Sign up
+            </Link>
+          </p>
         </form>
-
-        <div className="si-or">
-          <span>Or</span>
-        </div>
-
-        <button type="button" className="si-google">
-          Sign in with Google
-          <span className="si-google-mark" aria-hidden="true">
-            G
-          </span>
-        </button>
+        <p className="su-copyright">© Kearly 2025</p>
       </section>
     </main>
   );
