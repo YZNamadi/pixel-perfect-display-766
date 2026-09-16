@@ -2951,3 +2951,14 @@
   color: #9ca3af;
   font-size: 0.85rem;
 }
+
+/* Restored: conditionally-applied classes */
+.at-step-label { font-size: 0.85rem; color: inherit; white-space: nowrap; }
+.rp-new {
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  background: #15803D; color: #ffffff; border: 0; border-radius: 8px;
+  padding: 0.55rem 1.1rem; font-size: 0.85rem; font-weight: 600; text-decoration: none;
+  cursor: pointer; transition: background 0.15s ease;
+}
+.rp-new:hover { background: #166534; }
+.se-toggle-text { display: flex; flex-direction: column; gap: 0.15rem; }
