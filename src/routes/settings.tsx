@@ -13,6 +13,10 @@ import {
   User,
   Bell,
   Stethoscope,
+  Plus,
+  Pencil,
+  FileText,
+
 } from "lucide-react";
 
 export const Route = createFileRoute("/settings")({
