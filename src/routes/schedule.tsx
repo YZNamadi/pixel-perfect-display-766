@@ -8,13 +8,16 @@ import {
   BarChart3,
   ScrollText,
   Settings,
+  CreditCard,
+  Users,
+  Search,
+  Calendar,
   ChevronLeft,
   ChevronRight,
   Pencil,
   Trash2,
   MoreVertical,
   X,
-  Circle,
   Bell,
   UserCircle2,
 } from "lucide-react";
@@ -22,15 +25,17 @@ import {
 export const Route = createFileRoute("/schedule")({
   head: () => ({
     meta: [
-      { title: "Kearly | PPM Schedule" },
+      { title: "Kearly | Compliance Event Schedule" },
       {
         name: "description",
-        content: "Calendar view of all scheduled planned preventive maintenance tasks across Kearly facilities.",
+        content:
+          "Monthly compliance event planner: water temperature logs, gas safety records, fire alarm services, lift inspections and asbestos re-inspections.",
       },
-      { property: "og:title", content: "Kearly | PPM Schedule" },
+      { property: "og:title", content: "Kearly | Compliance Event Schedule" },
       {
         property: "og:description",
-        content: "Calendar view of all scheduled planned preventive maintenance tasks across Kearly facilities.",
+        content:
+          "Monthly compliance event planner: water temperature logs, gas safety records, fire alarm services, lift inspections and asbestos re-inspections.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -39,43 +44,21 @@ export const Route = createFileRoute("/schedule")({
   component: SchedulePage,
 });
 
-const navItems = [
+const overviewNav = [
   { label: "Dashboard", icon: LayoutDashboard, to: "/dashboard" as const },
   { label: "Compliance", icon: ShieldCheck, to: "/compliance" as const, active: true },
-  { label: "Repairs", icon: Wrench, to: "/repairs" as const },
-  { label: "Assets", icon: Building2, to: "/assets" as const },
-  { label: "Reports", icon: BarChart3, to: "/reports" as const },
-  { label: "Audit Log", icon: ScrollText, to: "/audit-log" as const },
-  { label: "Settings", icon: Settings, to: "/settings" as const },
+  { label: "Repairs", icon: Wrench, to: "/repairs" as const, badge: "2" },
+  { label: "Buildings", icon: Building2, to: "/assets" as const },
 ];
 
-const weekdays = ["SUNDAY", "MON", "TUES", "WED", "THUR", "FRI", "SAT"];
+const governanceNav = [
+  { label: "Reports", icon: BarChart3, to: "/reports" as const },
+  { label: "Team", icon: Users, to: "/team" as const },
+  { label: "Audit log", icon: ScrollText, to: "/audit-log" as const },
+  { label: "Billing", icon: CreditCard, to: "/settings" as const },
+];
 
-type Ev = { title: string; tone: "active" | "due" | "critical" | "inactive"; reminder: string; owner: string };
-
-type Cell = { key: string; label: string; muted?: boolean; events?: Ev[] };
-
-const ev = (tone: Ev["tone"] = "active"): Ev => ({
-  title: "Compliance Check",
-  tone,
-  reminder: "The day before by 10amm",
-  owner: "Jane Doe",
-});
-
-const iso = (d: Date) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
-
-// Sample scheduled tasks, keyed by real calendar date
-const eventsByDate: Record<string, Ev[]> = {
-  "2026-08-03": [ev("active")],
-  "2026-08-07": [ev("active")],
-  "2026-08-17": [ev("active"), ev("inactive")],
-  "2026-08-19": [ev("inactive")],
-  "2026-09-04": [ev("due")],
-  "2026-09-15": [ev("critical")],
-  "2026-09-23": [ev("active")],
-  "2026-10-06": [ev("active")],
-  "2026-10-20": [ev("due")],
-};
+const weekdays = ["MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"];
 
 const monthNames = [
   "January",
@@ -92,20 +75,39 @@ const monthNames = [
   "December",
 ];
 
+type Category = {
+  tag: string;
+  title: string;
+  tone: "water" | "emlt" | "gas" | "alarm" | "lifts" | "asb";
+  reminder: string;
+  owner: string;
+};
+
+const categories: Category[] = [
+  { tag: "WATER", title: "Water Temp Log", tone: "water", reminder: "The day before by 10am", owner: "Sarah Jones" },
+  { tag: "EM-LT", title: "Emergency Light", tone: "emlt", reminder: "The day before by 9am", owner: "James Carter" },
+  { tag: "GAS", title: "Gas Safety Record", tone: "gas", reminder: "Two days before by 8am", owner: "Michael Finch" },
+  { tag: "ALARM", title: "Fire Alarm Service", tone: "alarm", reminder: "The day before by 10am", owner: "David Vance" },
+  { tag: "LIFTS", title: "Lift LOLER Inspection", tone: "lifts", reminder: "Three days before", owner: "James Carter" },
+  { tag: "ASB", title: "Asbestos Re-inspection", tone: "asb", reminder: "A week before", owner: "Sarah Jones" },
+];
+
+const categoryForDay = (day: number): Category => categories[(day - 1) % categories.length]!;
+
+const iso = (d: Date) =>
+  `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+
+type Cell = { key: string; day: number; muted: boolean };
+
 function buildCells(year: number, month: number): Cell[] {
   const first = new Date(year, month, 1);
-  const start = new Date(year, month, 1 - first.getDay());
+  const offset = (first.getDay() + 6) % 7; // Monday-first grid
+  const start = new Date(year, month, 1 - offset);
   const out: Cell[] = [];
   for (let i = 0; i < 42; i += 1) {
     const day = new Date(start.getFullYear(), start.getMonth(), start.getDate() + i);
-    const key = iso(day);
-    out.push({
-      key,
-      label: String(day.getDate()),
-      muted: day.getMonth() !== month,
-      events: eventsByDate[key] ?? [],
-    });
-    if (i >= 27 && day.getDay() === 6) {
+    out.push({ key: iso(day), day: day.getDate(), muted: day.getMonth() !== month });
+    if (i >= 27 && day.getDay() === 0) {
       const next = new Date(day.getFullYear(), day.getMonth(), day.getDate() + 1);
       if (next.getMonth() !== month) break;
     }
@@ -113,21 +115,15 @@ function buildCells(year: number, month: number): Cell[] {
   return out;
 }
 
-const legend = [
-  { label: "Active/Safe", tone: "active" },
-  { label: "Due soon/Attention", tone: "due" },
-  { label: "Critical/Overdue", tone: "critical" },
-  { label: "Inactive/No data", tone: "inactive" },
-];
-
-const views = ["Month", "Week", "List"] as const;
+const views = ["Month", "Week", "Day"] as const;
 
 function SchedulePage() {
-  const [view, setView] = useState<(typeof views)[number]>("Month");
-  const [selected, setSelected] = useState<{ cell: string; event: Ev } | null>(null);
   const today = new Date();
   const todayKey = iso(today);
+  const [view, setView] = useState<(typeof views)[number]>("Month");
   const [cursor, setCursor] = useState(() => new Date(today.getFullYear(), today.getMonth(), 1));
+  const [selected, setSelected] = useState<{ key: string; event: Category } | null>(null);
+
   const year = cursor.getFullYear();
   const month = cursor.getMonth();
   const cells = buildCells(year, month);
@@ -135,144 +131,161 @@ function SchedulePage() {
   const shiftMonth = (delta: number) => setCursor(new Date(year, month + delta, 1));
 
   return (
-    <div className="db-shell">
-      <aside className="db-sidebar">
-        <Link to="/dashboard" className="db-logo" aria-label="Kearly">
-          <svg width="28" height="28" viewBox="0 0 100 100" aria-hidden="true">
-            <rect x="5" y="5" width="40" height="40" rx="10" fill="#4A7C6F" />
-            <path d="M 55 5 L 95 5 L 95 45 Q 75 45 55 25 Z" fill="#4A7C6F" />
-            <rect x="5" y="55" width="40" height="40" rx="10" fill="#4A7C6F" />
-            <path d="M 55 55 Q 75 55 95 75 L 95 95 L 55 95 Z" fill="#4A7C6F" />
+    <div className="po-shell">
+      <aside className="po-sidebar">
+        <Link to="/dashboard" className="po-logo" aria-label="Kearly">
+          <svg width="26" height="26" viewBox="0 0 100 100" aria-hidden="true">
+            <rect x="5" y="5" width="40" height="40" rx="10" fill="#15803D" />
+            <path d="M 55 5 L 95 5 L 95 45 Q 75 45 55 25 Z" fill="#15803D" />
+            <rect x="5" y="55" width="40" height="40" rx="10" fill="#15803D" />
+            <path d="M 55 55 Q 75 55 95 75 L 95 95 L 55 95 Z" fill="#15803D" />
           </svg>
-          <span className="db-logo-text">
-            <span className="db-logo-name">KEARLY</span>
-            <span className="db-logo-tag">Compliance. Automated &amp; Simplified.</span>
+          <span className="po-logo-text">
+            <span className="po-logo-name">KEARLY</span>
+            <span className="po-logo-tag">Compliance. Automated &amp; Simplified.</span>
           </span>
         </Link>
 
-        <Link to="/compliance" className="at-back" aria-label="Back to compliance">
-          <ChevronLeft size={22} aria-hidden="true" />
-        </Link>
-
-        <nav className="db-nav" aria-label="Main navigation">
-          {navItems.map(({ label, icon: Icon, to, active }) => (
-            <Link key={label} to={to} className={`db-nav-item ${active ? "is-active" : ""}`}>
-              <Icon size={18} aria-hidden="true" />
+        <nav className="po-nav" aria-label="Main navigation">
+          <p className="po-nav-label">OVERVIEW</p>
+          {overviewNav.map(({ label, icon: Icon, to, active, badge }) => (
+            <Link key={label} to={to} className={`po-nav-item ${active ? "is-active" : ""}`}>
+              <Icon size={17} aria-hidden="true" />
               <span>{label}</span>
-              {active && <span className="db-nav-bar" aria-hidden="true" />}
+              {badge ? <span className="po-nav-badge">{badge}</span> : null}
+            </Link>
+          ))}
+
+          <p className="po-nav-label po-nav-label-gap">GOVERNANCE</p>
+          {governanceNav.map(({ label, icon: Icon, to }) => (
+            <Link key={label} to={to} className="po-nav-item">
+              <Icon size={17} aria-hidden="true" />
+              <span>{label}</span>
             </Link>
           ))}
         </nav>
 
-        <div className="db-user">
-          <span className="db-avatar" aria-hidden="true">
-            JD
-          </span>
-          <span className="db-user-meta">
-            <strong>Jane Doe</strong>
-            <small>Practice Admin</small>
-          </span>
+        <div className="po-sidebar-foot">
+          <Link to="/settings" className="po-nav-item">
+            <Settings size={17} aria-hidden="true" />
+            <span>Settings</span>
+          </Link>
+          <div className="po-user">
+            <span className="po-user-avatar" aria-hidden="true">
+              AR
+            </span>
+            <span className="po-user-text">
+              <span className="po-user-name">Alex Rowe</span>
+              <span className="po-user-role">Portfolio admin</span>
+            </span>
+          </div>
         </div>
       </aside>
 
-      <main className="db-main">
-        <header className="am-head">
-          <h1 className="db-title">PPM Schedule</h1>
-          <p className="db-subtitle">Calender view for all scheduled PPM mentainance tasks</p>
+      <main className="po-main">
+        <header className="po-topbar">
+          <div>
+            <h1 className="po-title">Schedule</h1>
+            <p className="po-subtitle">Monthly Compliance Event Planner</p>
+          </div>
+          <div className="po-topbar-actions">
+            <div className="po-search">
+              <Search size={15} aria-hidden="true" />
+              <input type="search" placeholder="Search..." aria-label="Search events" />
+            </div>
+            <span className="sc-month-chip">
+              <button type="button" className="sc-arrow" aria-label="Previous month" onClick={() => shiftMonth(-1)}>
+                <ChevronLeft size={14} aria-hidden="true" />
+              </button>
+              <button
+                type="button"
+                className="sc-month-label"
+                onClick={() => setCursor(new Date(today.getFullYear(), today.getMonth(), 1))}
+                title="Jump to today"
+              >
+                {monthLabel}
+              </button>
+              <button type="button" className="sc-arrow" aria-label="Next month" onClick={() => shiftMonth(1)}>
+                <ChevronRight size={14} aria-hidden="true" />
+              </button>
+            </span>
+            <span className="po-chip">
+              <Calendar size={14} aria-hidden="true" />
+              All buildings
+            </span>
+            <div className="sc-views" role="tablist" aria-label="Calendar view">
+              {views.map((item) => (
+                <button
+                  key={item}
+                  type="button"
+                  role="tab"
+                  aria-selected={view === item}
+                  className={`sc-view ${view === item ? "is-active" : ""}`}
+                  onClick={() => setView(item)}
+                >
+                  {item}
+                </button>
+              ))}
+            </div>
+            <Link to="/add-task" className="po-download">
+              Add Event
+            </Link>
+          </div>
         </header>
 
-        <div className="ps-toolbar">
-          <button
-            type="button"
-            className="ps-today"
-            onClick={() => setCursor(new Date(today.getFullYear(), today.getMonth(), 1))}
-          >
-            Today
-          </button>
-          <div className="ps-month-nav">
-            <button type="button" className="ps-arrow" aria-label="Previous month" onClick={() => shiftMonth(-1)}>
-              <ChevronLeft size={20} aria-hidden="true" />
-            </button>
-            <strong className="ps-month">{monthLabel}</strong>
-            <button type="button" className="ps-arrow" aria-label="Next month" onClick={() => shiftMonth(1)}>
-              <ChevronRight size={20} aria-hidden="true" />
-            </button>
-            <input
-              type="month"
-              className="ps-jump"
-              aria-label="Jump to month"
-              value={`${year}-${String(month + 1).padStart(2, "0")}`}
-              onChange={(e) => {
-                const [y, m] = e.target.value.split("-").map(Number);
-                if (y && m) setCursor(new Date(y, m - 1, 1));
-              }}
-            />
-          </div>
-          <div className="ps-views" role="tablist" aria-label="Calendar view">
-            {views.map((item) => (
-              <button
-                key={item}
-                type="button"
-                role="tab"
-                aria-selected={view === item}
-                className={`ps-view ${view === item ? "is-active" : ""}`}
-                onClick={() => setView(item)}
-              >
-                {item}
-              </button>
-            ))}
-          </div>
-          <select className="ps-category" aria-label="Filter by category" defaultValue="all">
-            <option value="all">All Category</option>
-            <option value="hvac">HVAC</option>
-            <option value="fire">Fire Safety</option>
-            <option value="mechanical">Mechanical</option>
-            <option value="electrical">Electrical</option>
-            <option value="plumbing">Plumbing</option>
-            <option value="security">Security</option>
-          </select>
-        </div>
-
-        <section className="ps-calendar" aria-label={`${monthLabel} schedule`}>
-          <div className="ps-week-head">
+        <section className="sc-calendar" aria-label={`${monthLabel} schedule`}>
+          <div className="sc-week-head">
             {weekdays.map((day) => (
               <span key={day}>{day}</span>
             ))}
           </div>
-          <div className="ps-grid">
-            {cells.map((cell) => (
-              <div
-                key={cell.key}
-                className={`ps-cell ${cell.muted ? "is-muted" : ""} ${cell.key === todayKey ? "is-today" : ""}`}
-              >
-                <span className="ps-date">{cell.label}</span>
-                {cell.events?.map((event, index) => (
-                  <button
-                    type="button"
-                    key={`${cell.key}-${index}`}
-                    className={`ps-event is-${event.tone}`}
-                    onClick={() =>
-                      setSelected(
-                        selected?.cell === `${cell.key}-${index}` ? null : { cell: `${cell.key}-${index}`, event },
-                      )
-                    }
-                  >
-                    {event.title}
-                  </button>
-                ))}
-              </div>
-            ))}
+          <div className="sc-grid">
+            {cells.map((cell) => {
+              const category = cell.muted ? null : categoryForDay(cell.day);
+              return (
+                <div
+                  key={cell.key}
+                  className={`sc-cell ${cell.muted ? "is-muted" : ""} ${cell.key === todayKey ? "is-today" : ""}`}
+                >
+                  {!cell.muted && (
+                    <>
+                      <div className="sc-cell-head">
+                        <span className="sc-date">{cell.day}</span>
+                        {category && <span className={`sc-tag is-${category.tone}`}>{category.tag}</span>}
+                      </div>
+                      {category && (
+                        <button
+                          type="button"
+                          className={`sc-event is-${category.tone}`}
+                          onClick={() =>
+                            setSelected(selected?.key === cell.key ? null : { key: cell.key, event: category })
+                          }
+                        >
+                          {category.title}
+                        </button>
+                      )}
+                      {cell.day % 7 === 2 && category && (
+                        <button
+                          type="button"
+                          className={`sc-event is-${categoryForDay(cell.day + 1).tone}`}
+                          onClick={() =>
+                            setSelected(
+                              selected?.key === `${cell.key}-b`
+                                ? null
+                                : { key: `${cell.key}-b`, event: categoryForDay(cell.day + 1) },
+                            )
+                          }
+                        >
+                          {categoryForDay(cell.day + 1).title}
+                        </button>
+                      )}
+                    </>
+                  )}
+                </div>
+              );
+            })}
           </div>
         </section>
-
-        <div className="ps-legend">
-          {legend.map(({ label, tone }) => (
-            <span className="ps-legend-item" key={label}>
-              <span className={`ps-dot is-${tone}`} aria-hidden="true" />
-              {label}
-            </span>
-          ))}
-        </div>
       </main>
 
       {selected && (
@@ -285,10 +298,10 @@ function SchedulePage() {
             onClick={(event) => event.stopPropagation()}
           >
             <div className="ps-pop-actions">
-              <Link to="/edit-task" className="ps-pop-btn" aria-label="Edit task">
+              <Link to="/edit-task" className="ps-pop-btn" aria-label="Edit event">
                 <Pencil size={18} aria-hidden="true" />
               </Link>
-              <button type="button" className="ps-pop-btn" aria-label="Delete task">
+              <button type="button" className="ps-pop-btn" aria-label="Delete event">
                 <Trash2 size={18} aria-hidden="true" />
               </button>
               <button type="button" className="ps-pop-btn" aria-label="More options">
@@ -300,7 +313,7 @@ function SchedulePage() {
             </div>
             <div className="ps-pop-body">
               <p className="ps-pop-row">
-                <Circle size={22} aria-hidden="true" className="ps-pop-ring" />
+                <span className={`sc-tag is-${selected.event.tone}`}>{selected.event.tag}</span>
                 <span className="ps-pop-title">{selected.event.title}</span>
               </p>
               <p className="ps-pop-row">

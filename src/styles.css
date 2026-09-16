@@ -4943,3 +4943,67 @@ a.am-menu-item { text-decoration: none; }
 .bs-avatar:nth-child(2) { background: #DC2626; }
 .bs-avatar:nth-child(3) { background: #15803D; }
 .bs-manage { display: inline-flex; align-items: center; gap: 0.35rem; font-size: 0.8rem; font-weight: 600; color: #15803D; text-decoration: none; }
+
+/* ===== Schedule (sc-) : monthly compliance event planner ===== */
+.sc-month-chip {
+  display: inline-flex; align-items: center; gap: 0.15rem;
+  border: 1px solid #E5E7EB; background: #fff; border-radius: 8px; padding: 0.1rem 0.25rem;
+}
+.sc-arrow {
+  border: none; background: none; color: #6B7280; cursor: pointer; padding: 0.3rem; border-radius: 6px;
+  display: inline-flex; align-items: center;
+}
+.sc-arrow:hover { background: #F3F4F6; color: #111827; }
+.sc-month-label {
+  border: none; background: none; cursor: pointer; font-size: 0.8rem; font-weight: 600; color: #111827;
+  padding: 0.3rem 0.35rem; border-radius: 6px; white-space: nowrap;
+}
+.sc-month-label:hover { background: #F3F4F6; }
+
+.sc-views { display: inline-flex; align-items: center; gap: 0.2rem; border: 1px solid #E5E7EB; background: #fff; border-radius: 8px; padding: 0.15rem; }
+.sc-view {
+  border: none; background: none; cursor: pointer; font-size: 0.78rem; font-weight: 600; color: #6B7280;
+  padding: 0.35rem 0.7rem; border-radius: 6px;
+}
+.sc-view:hover { color: #111827; }
+.sc-view.is-active { background: #15803D; color: #fff; }
+
+.sc-calendar { background: #fff; border: 1px solid #E5E7EB; border-radius: 12px; overflow: hidden; margin-top: 1.25rem; }
+.sc-week-head, .sc-grid { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); }
+.sc-week-head span {
+  font-size: 0.68rem; font-weight: 700; letter-spacing: 0.06em; color: #6B7280; text-align: center;
+  padding: 0.75rem 0.25rem; border-right: 1px solid #E5E7EB; border-bottom: 1px solid #E5E7EB; background: #F9FAFB;
+}
+.sc-week-head span:last-child { border-right: none; }
+.sc-cell {
+  min-height: 118px; padding: 0.5rem; border-right: 1px solid #E5E7EB; border-bottom: 1px solid #E5E7EB;
+  display: flex; flex-direction: column; gap: 0.35rem;
+}
+.sc-cell:nth-child(7n) { border-right: none; }
+.sc-cell.is-muted { background: #FAFAFA; }
+.sc-cell.is-today { background: #ECFDF3; box-shadow: inset 0 0 0 2px #15803D; }
+.sc-cell-head { display: flex; align-items: center; justify-content: space-between; gap: 0.35rem; }
+.sc-date { font-size: 0.85rem; font-weight: 700; color: #111827; }
+.sc-tag { font-size: 0.55rem; font-weight: 800; letter-spacing: 0.04em; }
+.sc-tag.is-water { color: #0D9488; }
+.sc-tag.is-emlt { color: #D97706; }
+.sc-tag.is-gas { color: #EA580C; }
+.sc-tag.is-alarm { color: #DC2626; }
+.sc-tag.is-lifts { color: #7C3AED; }
+.sc-tag.is-asb { color: #15803D; }
+.sc-event {
+  border: none; cursor: pointer; text-align: left; color: #fff; font-size: 0.66rem; font-weight: 600;
+  padding: 0.3rem 0.45rem; border-radius: 5px; width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.sc-event.is-water { background: #DC2626; }
+.sc-event.is-emlt { background: #F59E0B; }
+.sc-event.is-gas { background: #EA580C; }
+.sc-event.is-alarm { background: #D97706; }
+.sc-event.is-lifts { background: #7C3AED; }
+.sc-event.is-asb { background: #0D9488; }
+.sc-event:hover { filter: brightness(0.93); }
+
+@media (max-width: 900px) {
+  .sc-cell { min-height: 84px; padding: 0.35rem; }
+  .sc-event { font-size: 0.58rem; }
+}
