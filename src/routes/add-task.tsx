@@ -206,12 +206,13 @@ function AddTaskPage() {
               <label className="at-field">
                 <span className="at-label">Frequency</span>
                 <select className="at-input" defaultValue="annually">
-                  <option value="weekly">Weekly</option>
                   <option value="monthly">Monthly</option>
                   <option value="quarterly">Quarterly</option>
-                  <option value="biannually">Every 6 Months</option>
+                  <option value="biannually">Bi-Annually</option>
                   <option value="annually">Annually</option>
-                  <option value="biennially">Every 2 Years</option>
+                  <option value="5years">5 Years</option>
+                  <option value="custom">Custom</option>
+
                 </select>
               </label>
 
