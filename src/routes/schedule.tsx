@@ -20,6 +20,8 @@ import {
   X,
   XCircle,
   UploadCloud,
+  CheckSquare,
+  FileText,
   Check,
   Stethoscope,
 } from "lucide-react";
