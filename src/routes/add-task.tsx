@@ -154,12 +154,15 @@ function AddTaskPage() {
             <span className="at-label">Category</span>
             <select className="at-input" defaultValue="fire">
               <option value="fire">Fire &amp; General Safety</option>
-              <option value="electrical">Electrical</option>
-              <option value="gas">Gas &amp; Water</option>
-              <option value="lifts">Lifts</option>
-              <option value="medical">Medical Equipment</option>
-              <option value="asbestos">Asbestos</option>
+              <option value="electrical">Electrical Systems</option>
+              <option value="hvac">HVAC &amp; Ventilation</option>
+              <option value="water">Water &amp; Plumbing</option>
+              <option value="structural">Structural &amp; Building Fabric</option>
+              <option value="lifts">Lifts &amp; Escalators</option>
+              <option value="gas">Gas &amp; Boiler Systems</option>
+              <option value="lighting">Emergency Lighting</option>
             </select>
+
           </label>
 
           <label className="at-field">
