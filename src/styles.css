@@ -5700,3 +5700,12 @@ a.am-menu-item { text-decoration: none; }
   font-size: 0.85rem; font-weight: 600; cursor: pointer;
 }
 .sa-delete:hover { background: #FECACA; }
+
+/* ============ Training records (tr-) ============ */
+.tr-staff { display: flex; flex-direction: column; line-height: 1.25; }
+.tr-staff-name { font-size: 0.82rem; font-weight: 700; color: #111827; }
+.tr-staff-role { font-size: 0.68rem; color: #9CA3AF; }
+.tr-cert {
+  display: inline-flex; align-items: center; gap: 0.3rem;
+  font-size: 0.75rem; font-weight: 600; color: #374151;
+}

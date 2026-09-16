@@ -10,37 +10,35 @@ import {
   Settings,
   CreditCard,
   Users,
-  Search,
   Building,
   ChevronDown,
-  UploadCloud,
-  Eye,
-  Download,
+  FileText,
+  Pencil,
   Trash2,
   AlertTriangle,
   Stethoscope,
 } from "lucide-react";
 
-export const Route = createFileRoute("/documents")({
+export const Route = createFileRoute("/training")({
   head: () => ({
     meta: [
-      { title: "Kearly | Compliance Documents" },
+      { title: "Kearly | Staff Training Records" },
       {
         name: "description",
         content:
-          "Manage compliance documents and certificates: gas, electrical, fire risk, asbestos and water hygiene records with expiry tracking.",
+          "Track staff training and certifications: fire safety, first aid, legionella, safeguarding and CQC prep with expiry status.",
       },
-      { property: "og:title", content: "Kearly | Compliance Documents" },
+      { property: "og:title", content: "Kearly | Staff Training Records" },
       {
         property: "og:description",
         content:
-          "Manage compliance documents and certificates: gas, electrical, fire risk, asbestos and water hygiene records with expiry tracking.",
+          "Track staff training and certifications: fire safety, first aid, legionella, safeguarding and CQC prep with expiry status.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
-  component: DocumentsPage,
+  component: TrainingPage,
 });
 
 const overviewNav = [
@@ -58,104 +56,119 @@ const governanceNav = [
   { label: "Billing", icon: CreditCard, to: "/settings" as const },
 ];
 
-type Doc = {
+type Record_ = {
   name: string;
-  property: string;
-  type: string;
-  uploaded: string;
+  role: string;
+  initials: string;
+  tone: "red" | "blue" | "green" | "purple" | "teal";
+  training: string;
+  provider: string;
+  completed: string;
   expiry: string;
-  expiryTone: "tone-green" | "tone-amber" | "tone-red";
-  ppm: string;
-  tag: string;
+  status: "Valid" | "Expiring" | "Expired";
 };
 
-const documents: Doc[] = [
+const records: Record_[] = [
   {
-    name: "Riverside_CP12_GasSafety_2024.pdf",
-    property: "Riverside Court",
-    type: "Gas Certificate",
-    uploaded: "02 Jul 2024",
-    expiry: "02 Jul 2025",
-    expiryTone: "tone-green",
-    ppm: "PPM-1240",
-    tag: "CQC",
+    name: "Alex Rowe",
+    role: "Facility Lead",
+    initials: "AR",
+    tone: "green",
+    training: "Fire Safety Marshall Training",
+    provider: "UK Fire Safety Academy",
+    completed: "15 Jan 2024",
+    expiry: "15 Jan 2025",
+    status: "Valid",
   },
   {
-    name: "Electrical_EICR_Block_A_Final.pdf",
-    property: "Elmwood Court",
-    type: "Electrical Cert",
-    uploaded: "28 Jun 2024",
-    expiry: "28 Jun 2029",
-    expiryTone: "tone-green",
-    ppm: "PPM-8821",
-    tag: "EICR",
+    name: "Sarah Jones",
+    role: "Care Administrator",
+    initials: "SJ",
+    tone: "blue",
+    training: "First Aid at Work (Level 3)",
+    provider: "St John Ambulance",
+    completed: "22 Mar 2024",
+    expiry: "22 Mar 2027",
+    status: "Valid",
   },
   {
-    name: "FireRiskAssessment_Elmwood_v2.pdf",
-    property: "Elmwood Court",
-    type: "Fire Risk Ass.",
-    uploaded: "14 Jun 2024",
+    name: "David Finch",
+    role: "Maintenance Engineer",
+    initials: "DF",
+    tone: "purple",
+    training: "Legionella Control & Water Safety L8",
+    provider: "CIBSE Training",
+    completed: "10 Jun 2024",
+    expiry: "10 Jun 2026",
+    status: "Valid",
+  },
+  {
+    name: "James Carter",
+    role: "Compliance Officer",
+    initials: "JC",
+    tone: "teal",
+    training: "CQC Inspection Prep Course",
+    provider: "Care Quality Experts",
+    completed: "02 Feb 2024",
+    expiry: "02 Feb 2025",
+    status: "Valid",
+  },
+  {
+    name: "Emma Watson",
+    role: "Support Worker",
+    initials: "EW",
+    tone: "red",
+    training: "Safeguarding Adults (Level 2)",
+    provider: "Social Care Institute",
+    completed: "14 Jul 2022",
     expiry: "14 Jul 2024",
-    expiryTone: "tone-amber",
-    ppm: "PPM-0982",
-    tag: "Fire Safety",
+    status: "Expired",
   },
   {
-    name: "EPC_VictoriaWharf_Unit12_Signed.pdf",
-    property: "Victoria Wharf",
-    type: "EPC",
-    uploaded: "12 May 2024",
-    expiry: "12 May 2034",
-    expiryTone: "tone-green",
-    ppm: "PPM-4450",
-    tag: "CQC",
+    name: "Robert Vance",
+    role: "Facilities Team",
+    initials: "RV",
+    tone: "blue",
+    training: "Manual Handling & Risk Assessment",
+    provider: "Safety First Ltd",
+    completed: "05 Sep 2023",
+    expiry: "05 Sep 2024",
+    status: "Expiring",
   },
   {
-    name: "Water_Hygiene_L8_Riverside_Report.pdf",
-    property: "Riverside Court",
-    type: "Water Hygiene L8",
-    uploaded: "05 May 2024",
-    expiry: "05 May 2025",
-    expiryTone: "tone-green",
-    ppm: "PPM-7729",
-    tag: "Legionella",
+    name: "Clara Oswald",
+    role: "Site Supervisor",
+    initials: "CO",
+    tone: "purple",
+    training: "COSHH Awareness Certification",
+    provider: "British Safety Council",
+    completed: "18 Nov 2023",
+    expiry: "18 Nov 2024",
+    status: "Valid",
   },
   {
-    name: "LOLER_PassengerLift_Northgate_Q2.pdf",
-    property: "Northgate House",
-    type: "Passenger Lift Cert",
-    uploaded: "22 Apr 2024",
-    expiry: "22 Oct 2024",
-    expiryTone: "tone-amber",
-    ppm: "PPM-1120",
-    tag: "LOLER",
-  },
-  {
-    name: "Asbestos_Survey_VictoriaWharf.pdf",
-    property: "Victoria Wharf",
-    type: "Asbestos Survey",
-    uploaded: "10 Jan 2024",
-    expiry: "10 Jan 2024",
-    expiryTone: "tone-red",
-    ppm: "PPM-3401",
-    tag: "Asbestos",
-  },
-  {
-    name: "Commercial_Building_Insurance_2024.pdf",
-    property: "Northgate House",
-    type: "Insurance Cert",
-    uploaded: "01 Jan 2024",
-    expiry: "01 Jan 2025",
-    expiryTone: "tone-green",
-    ppm: "PPM-2291",
-    tag: "CQC",
+    name: "Marcus Brody",
+    role: "Operations Admin",
+    initials: "MB",
+    tone: "green",
+    training: "Health & Safety in Care Homes",
+    provider: "Care Assured Training",
+    completed: "30 Jan 2024",
+    expiry: "30 Jan 2025",
+    status: "Valid",
   },
 ];
 
-const filters = ["Doc Type: All Types", "Property: All Properties", "Expiry Status: All"];
+const statusTone: Record<Record_["status"], string> = {
+  Valid: "tone-green",
+  Expiring: "tone-amber",
+  Expired: "tone-red",
+};
 
-function DocumentsPage() {
-  const [pending, setPending] = useState<Doc | null>(null);
+const filters = ["Staff Member: All Staff", "Training Type: All Types", "Status: All"];
+
+function TrainingPage() {
+  const [pending, setPending] = useState<Record_ | null>(null);
 
   return (
     <div className="po-shell">
@@ -212,8 +225,18 @@ function DocumentsPage() {
       <main className="po-main">
         <header className="po-topbar">
           <div>
-            <h1 className="po-title">Documents</h1>
-            <p className="po-subtitle">Manage compliance documents and certificates</p>
+            <h1 className="po-title">Training Records</h1>
+            <p className="po-subtitle">Track staff training and certifications</p>
+          </div>
+          <div className="po-topbar-actions">
+            <span className="po-chip">
+              <Building size={14} aria-hidden="true" />
+              All buildings
+              <ChevronDown size={13} aria-hidden="true" />
+            </span>
+            <button type="button" className="po-download">
+              Add Training Record
+            </button>
           </div>
         </header>
 
@@ -221,38 +244,12 @@ function DocumentsPage() {
           <Link to="/reports" role="tab" aria-selected={false} className="rr-tab">
             Reports
           </Link>
-          <Link to="/documents" role="tab" aria-selected className="rr-tab is-active">
+          <Link to="/documents" role="tab" aria-selected={false} className="rr-tab">
             Documents
           </Link>
-          <Link to="/training" role="tab" aria-selected={false} className="rr-tab">
+          <Link to="/training" role="tab" aria-selected className="rr-tab is-active">
             Training
           </Link>
-        </div>
-
-        <div className="dc-toolbar">
-          <div className="po-search dc-search">
-            <Search size={15} aria-hidden="true" />
-            <input type="search" placeholder="Search documents..." aria-label="Search documents" />
-          </div>
-          <span className="po-chip">
-            <Building size={14} aria-hidden="true" />
-            All buildings
-            <ChevronDown size={13} aria-hidden="true" />
-          </span>
-          <button type="button" className="po-download">
-            Upload Document
-          </button>
-        </div>
-
-        <div className="dc-drop">
-          <UploadCloud size={22} aria-hidden="true" />
-          <p className="dc-drop-text">
-            Drag and drop compliance certificates here, or{" "}
-            <button type="button" className="dc-browse">
-              browse files
-            </button>
-          </p>
-          <small className="dc-drop-hint">Supports PDF, PNG, JPG up to 15MB each</small>
         </div>
 
         <div className="dc-filters">
@@ -264,48 +261,62 @@ function DocumentsPage() {
           ))}
         </div>
 
-        <section className="cl-panel" aria-label="Compliance documents">
+        <section className="cl-panel" aria-label="Staff training records">
           <div className="cl-table-wrap">
             <table className="cl-table">
               <thead>
                 <tr>
-                  <th>DOCUMENT NAME</th>
-                  <th>PROPERTY</th>
-                  <th>TYPE</th>
-                  <th>UPLOAD DATE</th>
+                  <th>STAFF MEMBER</th>
+                  <th>TRAINING NAME</th>
+                  <th>PROVIDER</th>
+                  <th>DATE COMPLETED</th>
                   <th>EXPIRY DATE</th>
-                  <th>LINKED PPM</th>
-                  <th>TAGS</th>
+                  <th>CERTIFICATE</th>
+                  <th>STATUS</th>
                   <th>ACTIONS</th>
                 </tr>
               </thead>
               <tbody>
-                {documents.map((doc) => (
-                  <tr key={doc.name}>
-                    <td className="cl-name dc-doc-name">{doc.name}</td>
-                    <td className="al-details">{doc.property}</td>
-                    <td className="al-details">{doc.type}</td>
-                    <td className="rp-created">{doc.uploaded}</td>
+                {records.map((row) => (
+                  <tr key={`${row.name}-${row.training}`}>
                     <td>
-                      <span className={`dc-expiry ${doc.expiryTone}`}>{doc.expiry}</span>
+                      <span className="cl-assignee">
+                        <span className={`cl-avatar tone-${row.tone}`} aria-hidden="true">
+                          {row.initials}
+                        </span>
+                        <span className="tr-staff">
+                          <span className="tr-staff-name">{row.name}</span>
+                          <span className="tr-staff-role">{row.role}</span>
+                        </span>
+                      </span>
                     </td>
-                    <td className="al-details">{doc.ppm}</td>
+                    <td className="cl-name">{row.training}</td>
+                    <td className="al-details">{row.provider}</td>
+                    <td className="rp-created">{row.completed}</td>
+                    <td className="rp-created">{row.expiry}</td>
                     <td>
-                      <span className="eq-cat">{doc.tag}</span>
+                      <span className="tr-cert">
+                        <FileText size={14} aria-hidden="true" />
+                        PDF
+                      </span>
+                    </td>
+                    <td>
+                      <span className={`dc-expiry ${statusTone[row.status]}`}>{row.status}</span>
                     </td>
                     <td>
                       <div className="cl-row-actions">
-                        <button type="button" className="cl-icon-btn" aria-label={`View ${doc.name}`}>
-                          <Eye size={15} aria-hidden="true" />
-                        </button>
-                        <button type="button" className="cl-icon-btn" aria-label={`Download ${doc.name}`}>
-                          <Download size={15} aria-hidden="true" />
-                        </button>
+                        <Link
+                          to="/settings"
+                          className="cl-icon-btn"
+                          aria-label={`Edit ${row.training} for ${row.name}`}
+                        >
+                          <Pencil size={15} aria-hidden="true" />
+                        </Link>
                         <button
                           type="button"
                           className="cl-icon-btn dc-del"
-                          aria-label={`Delete ${doc.name}`}
-                          onClick={() => setPending(doc)}
+                          aria-label={`Delete ${row.training} for ${row.name}`}
+                          onClick={() => setPending(row)}
                         >
                           <Trash2 size={15} aria-hidden="true" />
                         </button>
@@ -318,7 +329,7 @@ function DocumentsPage() {
           </div>
 
           <div className="cl-foot">
-            <small>Showing 1-8 of 64 documents</small>
+            <small>Showing 1-8 of 48 staff records</small>
             <div className="cl-pager">
               <button type="button" className="cl-page">
                 Previous
@@ -337,19 +348,19 @@ function DocumentsPage() {
             className="cp-modal"
             role="alertdialog"
             aria-modal="true"
-            aria-labelledby="dc-del-title"
+            aria-labelledby="tr-del-title"
             onClick={(event) => event.stopPropagation()}
           >
             <div className="cp-modal-head">
               <span className="cp-modal-icon" aria-hidden="true">
                 <AlertTriangle size={26} />
               </span>
-              <h2 className="cp-modal-title" id="dc-del-title">
-                Delete Document
+              <h2 className="cp-modal-title" id="tr-del-title">
+                Delete Training Record
               </h2>
             </div>
             <p className="cp-modal-text">
-              Are you sure you want to delete {pending.name}?
+              Are you sure you want to delete {pending.training} for {pending.name}?
               <br />
               This action cannot be undone.
             </p>
