@@ -199,7 +199,7 @@ function AddTaskPage() {
                 </button>
               </div>
             </>
-          ) : (
+          ) : step === 2 ? (
             <>
               <h2 className="at-card-title">Schedule Configuration</h2>
 
@@ -248,13 +248,62 @@ function AddTaskPage() {
                   <Link to="/compliance" className="at-cancel">
                     Cancel
                   </Link>
-                  <Link to="/compliance" className="at-next">
+                  <button type="button" className="at-next" onClick={() => setStep(3)}>
                     Next Step
+                  </button>
+                </div>
+              </div>
+            </>
+          ) : (
+            <>
+              <h2 className="at-card-title">Assignment Configuration</h2>
+
+              <label className="at-field">
+                <span className="at-label">Assign Role</span>
+                <select className="at-input" defaultValue="">
+                  <option value="">Select role</option>
+                  <option value="admin">Portfolio Compliance Administrator</option>
+                  <option value="repairs">Repairs Manager</option>
+                  <option value="coordinator">Contractor Coordinator</option>
+                  <option value="inspector">Site Inspector</option>
+                  <option value="contractor">External Contractor</option>
+                </select>
+              </label>
+
+              <div className="ct-toggle-row at-evidence">
+                <div className="ct-toggle-text">
+                  <strong>Require Evidence for Submission</strong>
+                  <small>When enabled, assignees must attach evidence before completing this task.</small>
+                </div>
+                <button
+                  type="button"
+                  role="switch"
+                  aria-checked={evidence}
+                  aria-label="Require evidence for submission"
+                  className={`se-switch ${evidence ? "is-on" : ""}`}
+                  onClick={() => setEvidence((value) => !value)}
+                >
+                  <span className="se-switch-knob" aria-hidden="true" />
+                </button>
+              </div>
+
+              <div className="at-actions at-actions-split">
+                <button type="button" className="at-back-step" onClick={() => setStep(2)}>
+                  <ArrowLeft size={15} aria-hidden="true" />
+                  Back
+                </button>
+                <div className="at-actions-right">
+                  <Link to="/compliance" className="at-cancel">
+                    Cancel
+                  </Link>
+                  <Link to="/compliance" className="at-next">
+                    Save Task
                   </Link>
                 </div>
               </div>
             </>
           )}
+
 
         </form>
       </main>
