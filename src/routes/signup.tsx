@@ -110,12 +110,12 @@ function SignupPage() {
             <span>OR</span>
           </div>
 
-          <button className="su-google" type="button">
+          <Link className="su-google" to="/google-sign-in">
             <span className="su-google-mark" aria-hidden="true">
               G
             </span>
             Sign up with Google
-          </button>
+          </Link>
 
           <p className="su-footer">
             Already have an account?{" "}
