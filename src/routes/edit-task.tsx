@@ -133,37 +133,51 @@ function EditTicketPage() {
           <span className="et-crumb-current">Edit Ticket</span>
         </nav>
 
-        <form
-          className="at-card et-card"
-          onSubmit={(event) => {
-            event.preventDefault();
-          }}
-        >
-          <div className="et-card-head">
-            <h2 className="at-card-title et-title">Edit Ticket #4821</h2>
-            <span className="et-priority">P1 Priority</span>
-          </div>
+        <div className="et-layout">
+          <form
+            className="at-card et-card"
+            onSubmit={(event) => {
+              event.preventDefault();
+            }}
+          >
+            <div className="et-card-head">
+              <div>
+                <h2 className="at-card-title et-title">Edit Ticket #44621</h2>
+                <p className="et-card-sub">Update the details for this active repair ticket</p>
+              </div>
+              <span className="et-status-pill">In Progress</span>
+            </div>
 
-          <label className="at-field">
-            <span className="at-label">Ticket Title</span>
-            <input className="at-input" type="text" defaultValue="Communal heating failure" />
-          </label>
-
-          <div className="et-grid">
             <label className="at-field">
-              <span className="at-label">Site</span>
-              <select className="at-input" defaultValue="riverside">
-                <option value="riverside">Riverside Court</option>
-                <option value="northgate">Northgate House</option>
-                <option value="kingsway">Kingsway Tower</option>
-                <option value="elmwood">Elmwood Court</option>
-                <option value="maple">Maple Business Park</option>
-                <option value="victoria">Victoria Wharf</option>
+              <span className="at-label et-caps">TITLE</span>
+              <input className="at-input" type="text" defaultValue="Communal heating failure" />
+            </label>
+
+            <label className="at-field">
+              <span className="at-label et-caps">SITE</span>
+              <input className="at-input" type="text" defaultValue="Riverside Court - Block B" />
+            </label>
+
+            <label className="at-field">
+              <span className="at-label et-caps">PRIORITY</span>
+              <select className="at-input" defaultValue="p1">
+                <option value="p1">P1 - Urgent SLA</option>
+                <option value="p2">P2 - High</option>
+                <option value="p3">P3 - Routine</option>
               </select>
             </label>
 
             <label className="at-field">
-              <span className="at-label">Assigned To</span>
+              <span className="at-label et-caps">STATUS</span>
+              <select className="at-input" defaultValue="progress">
+                <option value="open">Open</option>
+                <option value="progress">In Progress</option>
+                <option value="closed">Closed</option>
+              </select>
+            </label>
+
+            <label className="at-field">
+              <span className="at-label et-caps">ASSIGNED TO</span>
               <select className="at-input" defaultValue="michael">
                 <option value="michael">Michael Finch</option>
                 <option value="sarah">Sarah Jones</option>
@@ -174,42 +188,59 @@ function EditTicketPage() {
             </label>
 
             <label className="at-field">
-              <span className="at-label">Priority</span>
-              <select className="at-input" defaultValue="p1">
-                <option value="p1">P1 - Critical</option>
-                <option value="p2">P2 - High</option>
-                <option value="p3">P3 - Routine</option>
-              </select>
+              <span className="at-label et-caps">DESCRIPTION / NOTES</span>
+              <textarea
+                className="at-input at-textarea et-textarea"
+                rows={3}
+                defaultValue="Total boiler lockout reported on boiler #2. Affecting communal corridors and hot water loop supply. Resident callouts logged. Urgent dispatch requested."
+              />
             </label>
 
-            <label className="at-field">
-              <span className="at-label">Status</span>
-              <select className="at-input" defaultValue="open">
-                <option value="open">Open</option>
-                <option value="progress">In Progress</option>
-                <option value="closed">Closed</option>
-              </select>
-            </label>
-          </div>
+            <div className="at-actions et-actions">
+              <Link to="/repairs" className="at-cancel">
+                Cancel
+              </Link>
+              <Link to="/repairs" className="at-next et-save">
+                Save Changes
+              </Link>
+            </div>
+          </form>
 
-          <label className="at-field">
-            <span className="at-label">Description &amp; Notes</span>
-            <textarea
-              className="at-input at-textarea et-textarea"
-              rows={4}
-              defaultValue="Total boiler lockout reported on boiler #2. Affecting communal corridors and hot water loop supply. Resident callouts logged."
-            />
-          </label>
+          <aside className="at-card et-activity" aria-label="Activity log">
+            <h2 className="at-card-title">Activity Log</h2>
+            <ul className="et-log">
+              <li className="et-log-row">
+                <span className="et-log-icon tone-blue" aria-hidden="true">
+                  <CheckCircle2 size={16} />
+                </span>
+                <div>
+                  <strong>Completed by Michael Finch</strong>
+                  <small>Today, 11:20 AM</small>
+                  <p>&ldquo;Thermostat replaced and hot loop stabilized at 65C.&rdquo;</p>
+                </div>
+              </li>
+              <li className="et-log-row">
+                <span className="et-log-icon tone-amber" aria-hidden="true">
+                  <Pencil size={16} />
+                </span>
+                <div>
+                  <strong>Status Changed to In Progress</strong>
+                  <small>Today, 09:15 AM</small>
+                </div>
+              </li>
+              <li className="et-log-row">
+                <span className="et-log-icon tone-red" aria-hidden="true">
+                  <AlertTriangle size={16} />
+                </span>
+                <div>
+                  <strong>Ticket Created</strong>
+                  <small>Today, 08:30 AM • by Alex Rowe</small>
+                </div>
+              </li>
+            </ul>
+          </aside>
+        </div>
 
-          <div className="at-actions et-actions">
-            <Link to="/repairs" className="at-cancel">
-              Cancel
-            </Link>
-            <Link to="/repairs" className="at-next">
-              Save Changes
-            </Link>
-          </div>
-        </form>
       </main>
     </div>
   );
