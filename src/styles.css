@@ -223,10 +223,6 @@
     font-weight: 700;
   }
 
-  .import-upload-zone:hover,
-
-  .import-upload-zone:focus-visible,
-  .import-continue:focus-visible,
 }
 
 @media (max-width: 760px) {
@@ -259,9 +255,6 @@
     color: var(--color-foreground);
     font-weight: 700;
   }
-
-  .complete-primary:focus-visible,
-  .complete-secondary:focus-visible,
 }
 
 @media (max-width: 760px) {
@@ -271,14 +264,6 @@
 @media (max-width: 520px) {
 }
 
-@layer components {
-
-  .dw-nav-petal,
-
-  .dw-secondary,
-
-  .dw-secondary:focus-visible,
-}
 
 @media (max-width: 768px) {
 }
@@ -293,9 +278,6 @@
     border-radius: 0.25rem;
     width: 1.5rem;
   }
-
-  .ob-next:focus-visible,
-  .ob-dot:focus-visible,
 }
 
 @media (max-width: 768px) {
