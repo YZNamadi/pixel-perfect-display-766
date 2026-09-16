@@ -18,7 +18,6 @@ import { Route as CompleteRouteImport } from './routes/complete'
 import { Route as CompleteTicketRouteImport } from './routes/complete-ticket'
 import { Route as ComplianceRouteImport } from './routes/compliance'
 import { Route as DashboardRouteImport } from './routes/dashboard'
-import { Route as DashboardWelcomeRouteImport } from './routes/dashboard-welcome'
 import { Route as DocumentsRouteImport } from './routes/documents'
 import { Route as EditTaskRouteImport } from './routes/edit-task'
 import { Route as EquipmentRouteImport } from './routes/equipment'
@@ -26,19 +25,14 @@ import { Route as FacilityRouteImport } from './routes/facility'
 import { Route as GoogleSignInRouteImport } from './routes/google-sign-in'
 import { Route as ImportRouteImport } from './routes/import'
 import { Route as LoginRouteImport } from './routes/login'
-import { Route as MappingRouteImport } from './routes/mapping'
-import { Route as OnboardingRouteImport } from './routes/onboarding'
-import { Route as PreviewRouteImport } from './routes/preview'
 import { Route as RepairsRouteImport } from './routes/repairs'
 import { Route as ReportsRouteImport } from './routes/reports'
 import { Route as ScheduleRouteImport } from './routes/schedule'
 import { Route as SettingsRouteImport } from './routes/settings'
 import { Route as SignupRouteImport } from './routes/signup'
 import { Route as SiteRouteImport } from './routes/site'
-import { Route as SplashRouteImport } from './routes/splash'
 import { Route as TeamRouteImport } from './routes/team'
 import { Route as TrainingRouteImport } from './routes/training'
-import { Route as VerifyRouteImport } from './routes/verify'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -85,11 +79,6 @@ const DashboardRoute = DashboardRouteImport.update({
   path: '/dashboard',
   getParentRoute: () => rootRouteImport,
 } as any)
-const DashboardWelcomeRoute = DashboardWelcomeRouteImport.update({
-  id: '/dashboard-welcome',
-  path: '/dashboard-welcome',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const DocumentsRoute = DocumentsRouteImport.update({
   id: '/documents',
   path: '/documents',
@@ -125,21 +114,6 @@ const LoginRoute = LoginRouteImport.update({
   path: '/login',
   getParentRoute: () => rootRouteImport,
 } as any)
-const MappingRoute = MappingRouteImport.update({
-  id: '/mapping',
-  path: '/mapping',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const OnboardingRoute = OnboardingRouteImport.update({
-  id: '/onboarding',
-  path: '/onboarding',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const PreviewRoute = PreviewRouteImport.update({
-  id: '/preview',
-  path: '/preview',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const RepairsRoute = RepairsRouteImport.update({
   id: '/repairs',
   path: '/repairs',
@@ -170,11 +144,6 @@ const SiteRoute = SiteRouteImport.update({
   path: '/site',
   getParentRoute: () => rootRouteImport,
 } as any)
-const SplashRoute = SplashRouteImport.update({
-  id: '/splash',
-  path: '/splash',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const TeamRoute = TeamRouteImport.update({
   id: '/team',
   path: '/team',
@@ -183,11 +152,6 @@ const TeamRoute = TeamRouteImport.update({
 const TrainingRoute = TrainingRouteImport.update({
   id: '/training',
   path: '/training',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const VerifyRoute = VerifyRouteImport.update({
-  id: '/verify',
-  path: '/verify',
   getParentRoute: () => rootRouteImport,
 } as any)
 
@@ -201,7 +165,6 @@ export interface FileRoutesByFullPath {
   '/complete-ticket': typeof CompleteTicketRoute
   '/compliance': typeof ComplianceRoute
   '/dashboard': typeof DashboardRoute
-  '/dashboard-welcome': typeof DashboardWelcomeRoute
   '/documents': typeof DocumentsRoute
   '/edit-task': typeof EditTaskRoute
   '/equipment': typeof EquipmentRoute
@@ -209,19 +172,14 @@ export interface FileRoutesByFullPath {
   '/google-sign-in': typeof GoogleSignInRoute
   '/import': typeof ImportRoute
   '/login': typeof LoginRoute
-  '/mapping': typeof MappingRoute
-  '/onboarding': typeof OnboardingRoute
-  '/preview': typeof PreviewRoute
   '/repairs': typeof RepairsRoute
   '/reports': typeof ReportsRoute
   '/schedule': typeof ScheduleRoute
   '/settings': typeof SettingsRoute
   '/signup': typeof SignupRoute
   '/site': typeof SiteRoute
-  '/splash': typeof SplashRoute
   '/team': typeof TeamRoute
   '/training': typeof TrainingRoute
-  '/verify': typeof VerifyRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -233,7 +191,6 @@ export interface FileRoutesByTo {
   '/complete-ticket': typeof CompleteTicketRoute
   '/compliance': typeof ComplianceRoute
   '/dashboard': typeof DashboardRoute
-  '/dashboard-welcome': typeof DashboardWelcomeRoute
   '/documents': typeof DocumentsRoute
   '/edit-task': typeof EditTaskRoute
   '/equipment': typeof EquipmentRoute
@@ -241,19 +198,14 @@ export interface FileRoutesByTo {
   '/google-sign-in': typeof GoogleSignInRoute
   '/import': typeof ImportRoute
   '/login': typeof LoginRoute
-  '/mapping': typeof MappingRoute
-  '/onboarding': typeof OnboardingRoute
-  '/preview': typeof PreviewRoute
   '/repairs': typeof RepairsRoute
   '/reports': typeof ReportsRoute
   '/schedule': typeof ScheduleRoute
   '/settings': typeof SettingsRoute
   '/signup': typeof SignupRoute
   '/site': typeof SiteRoute
-  '/splash': typeof SplashRoute
   '/team': typeof TeamRoute
   '/training': typeof TrainingRoute
-  '/verify': typeof VerifyRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -266,7 +218,6 @@ export interface FileRoutesById {
   '/complete-ticket': typeof CompleteTicketRoute
   '/compliance': typeof ComplianceRoute
   '/dashboard': typeof DashboardRoute
-  '/dashboard-welcome': typeof DashboardWelcomeRoute
   '/documents': typeof DocumentsRoute
   '/edit-task': typeof EditTaskRoute
   '/equipment': typeof EquipmentRoute
@@ -274,19 +225,14 @@ export interface FileRoutesById {
   '/google-sign-in': typeof GoogleSignInRoute
   '/import': typeof ImportRoute
   '/login': typeof LoginRoute
-  '/mapping': typeof MappingRoute
-  '/onboarding': typeof OnboardingRoute
-  '/preview': typeof PreviewRoute
   '/repairs': typeof RepairsRoute
   '/reports': typeof ReportsRoute
   '/schedule': typeof ScheduleRoute
   '/settings': typeof SettingsRoute
   '/signup': typeof SignupRoute
   '/site': typeof SiteRoute
-  '/splash': typeof SplashRoute
   '/team': typeof TeamRoute
   '/training': typeof TrainingRoute
-  '/verify': typeof VerifyRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -300,7 +246,6 @@ export interface FileRouteTypes {
     | '/complete-ticket'
     | '/compliance'
     | '/dashboard'
-    | '/dashboard-welcome'
     | '/documents'
     | '/edit-task'
     | '/equipment'
@@ -308,19 +253,14 @@ export interface FileRouteTypes {
     | '/google-sign-in'
     | '/import'
     | '/login'
-    | '/mapping'
-    | '/onboarding'
-    | '/preview'
     | '/repairs'
     | '/reports'
     | '/schedule'
     | '/settings'
     | '/signup'
     | '/site'
-    | '/splash'
     | '/team'
     | '/training'
-    | '/verify'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -332,7 +272,6 @@ export interface FileRouteTypes {
     | '/complete-ticket'
     | '/compliance'
     | '/dashboard'
-    | '/dashboard-welcome'
     | '/documents'
     | '/edit-task'
     | '/equipment'
@@ -340,19 +279,14 @@ export interface FileRouteTypes {
     | '/google-sign-in'
     | '/import'
     | '/login'
-    | '/mapping'
-    | '/onboarding'
-    | '/preview'
     | '/repairs'
     | '/reports'
     | '/schedule'
     | '/settings'
     | '/signup'
     | '/site'
-    | '/splash'
     | '/team'
     | '/training'
-    | '/verify'
   id:
     | '__root__'
     | '/'
@@ -364,7 +298,6 @@ export interface FileRouteTypes {
     | '/complete-ticket'
     | '/compliance'
     | '/dashboard'
-    | '/dashboard-welcome'
     | '/documents'
     | '/edit-task'
     | '/equipment'
@@ -372,19 +305,14 @@ export interface FileRouteTypes {
     | '/google-sign-in'
     | '/import'
     | '/login'
-    | '/mapping'
-    | '/onboarding'
-    | '/preview'
     | '/repairs'
     | '/reports'
     | '/schedule'
     | '/settings'
     | '/signup'
     | '/site'
-    | '/splash'
     | '/team'
     | '/training'
-    | '/verify'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -397,7 +325,6 @@ export interface RootRouteChildren {
   CompleteTicketRoute: typeof CompleteTicketRoute
   ComplianceRoute: typeof ComplianceRoute
   DashboardRoute: typeof DashboardRoute
-  DashboardWelcomeRoute: typeof DashboardWelcomeRoute
   DocumentsRoute: typeof DocumentsRoute
   EditTaskRoute: typeof EditTaskRoute
   EquipmentRoute: typeof EquipmentRoute
@@ -405,19 +332,14 @@ export interface RootRouteChildren {
   GoogleSignInRoute: typeof GoogleSignInRoute
   ImportRoute: typeof ImportRoute
   LoginRoute: typeof LoginRoute
-  MappingRoute: typeof MappingRoute
-  OnboardingRoute: typeof OnboardingRoute
-  PreviewRoute: typeof PreviewRoute
   RepairsRoute: typeof RepairsRoute
   ReportsRoute: typeof ReportsRoute
   ScheduleRoute: typeof ScheduleRoute
   SettingsRoute: typeof SettingsRoute
   SignupRoute: typeof SignupRoute
   SiteRoute: typeof SiteRoute
-  SplashRoute: typeof SplashRoute
   TeamRoute: typeof TeamRoute
   TrainingRoute: typeof TrainingRoute
-  VerifyRoute: typeof VerifyRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -485,13 +407,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/dashboard-welcome': {
-      id: '/dashboard-welcome'
-      path: '/dashboard-welcome'
-      fullPath: '/dashboard-welcome'
-      preLoaderRoute: typeof DashboardWelcomeRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/documents': {
       id: '/documents'
       path: '/documents'
@@ -541,27 +456,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LoginRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/mapping': {
-      id: '/mapping'
-      path: '/mapping'
-      fullPath: '/mapping'
-      preLoaderRoute: typeof MappingRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/onboarding': {
-      id: '/onboarding'
-      path: '/onboarding'
-      fullPath: '/onboarding'
-      preLoaderRoute: typeof OnboardingRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/preview': {
-      id: '/preview'
-      path: '/preview'
-      fullPath: '/preview'
-      preLoaderRoute: typeof PreviewRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/repairs': {
       id: '/repairs'
       path: '/repairs'
@@ -604,13 +498,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SiteRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/splash': {
-      id: '/splash'
-      path: '/splash'
-      fullPath: '/splash'
-      preLoaderRoute: typeof SplashRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/team': {
       id: '/team'
       path: '/team'
@@ -623,13 +510,6 @@ declare module '@tanstack/react-router' {
       path: '/training'
       fullPath: '/training'
       preLoaderRoute: typeof TrainingRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/verify': {
-      id: '/verify'
-      path: '/verify'
-      fullPath: '/verify'
-      preLoaderRoute: typeof VerifyRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
@@ -645,7 +525,6 @@ const rootRouteChildren: RootRouteChildren = {
   CompleteTicketRoute: CompleteTicketRoute,
   ComplianceRoute: ComplianceRoute,
   DashboardRoute: DashboardRoute,
-  DashboardWelcomeRoute: DashboardWelcomeRoute,
   DocumentsRoute: DocumentsRoute,
   EditTaskRoute: EditTaskRoute,
   EquipmentRoute: EquipmentRoute,
@@ -653,19 +532,14 @@ const rootRouteChildren: RootRouteChildren = {
   GoogleSignInRoute: GoogleSignInRoute,
   ImportRoute: ImportRoute,
   LoginRoute: LoginRoute,
-  MappingRoute: MappingRoute,
-  OnboardingRoute: OnboardingRoute,
-  PreviewRoute: PreviewRoute,
   RepairsRoute: RepairsRoute,
   ReportsRoute: ReportsRoute,
   ScheduleRoute: ScheduleRoute,
   SettingsRoute: SettingsRoute,
   SignupRoute: SignupRoute,
   SiteRoute: SiteRoute,
-  SplashRoute: SplashRoute,
   TeamRoute: TeamRoute,
   TrainingRoute: TrainingRoute,
-  VerifyRoute: VerifyRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
