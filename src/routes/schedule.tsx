@@ -94,6 +94,26 @@ const categories: Category[] = [
   { tag: "ASB", title: "Asbestos Re-inspection", tone: "asb", reminder: "A week before", owner: "Sarah Jones" },
 ];
 
+const tagOptions = [
+  { name: "Water Safety", dot: "#15803D" },
+  { name: "Fire & Emergency", dot: "#D97706" },
+  { name: "Gas Compliance", dot: "#DC2626" },
+  { name: "Lifts & LOLER", dot: "#7C3AED" },
+  { name: "Asbestos", dot: "#0D9488" },
+];
+
+const noticeDays = [1, 3, 5, 7, 21];
+
+const tagForTone: Record<Category["tone"], string> = {
+  water: "Water Safety",
+  emlt: "Fire & Emergency",
+  gas: "Gas Compliance",
+  alarm: "Fire & Emergency",
+  lifts: "Lifts & LOLER",
+  asb: "Asbestos",
+};
+
+
 const categoryForDay = (day: number): Category => categories[(day - 1) % categories.length]!;
 
 const iso = (d: Date) =>
