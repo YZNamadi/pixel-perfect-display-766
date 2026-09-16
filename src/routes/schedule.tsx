@@ -489,6 +489,167 @@ function SchedulePage() {
           </div>
         </div>
       )}
+
+      {editTarget && (
+        <div className="cp-overlay" role="presentation" onClick={() => setEditTarget(null)}>
+          <div
+            className="sa-modal"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="se-edit-heading"
+            onClick={(event) => event.stopPropagation()}
+          >
+            <div className="sa-head">
+              <h2 className="sa-heading" id="se-edit-heading">
+                Edit Compliance Task
+              </h2>
+              <button type="button" className="sa-close" aria-label="Close" onClick={() => setEditTarget(null)}>
+                <X size={18} aria-hidden="true" />
+              </button>
+            </div>
+
+            <form
+              className="sa-body"
+              onSubmit={(event) => {
+                event.preventDefault();
+                setEditTarget(null);
+              }}
+            >
+              <div className="sa-field">
+                <label className="sa-label" htmlFor="ed-title">
+                  Task Title <span className="sa-req">*</span>
+                </label>
+                <input
+                  id="ed-title"
+                  className="sa-input"
+                  defaultValue={`${editTarget.title} Check`}
+                  required
+                />
+              </div>
+
+              <div className="sa-field">
+                <label className="sa-label" htmlFor="ed-equipment">
+                  Specific Equipment
+                </label>
+                <input id="ed-equipment" className="sa-input" placeholder="e.g. Boiler Unit 3" />
+              </div>
+
+              <div className="sa-row">
+                <div className="sa-field">
+                  <label className="sa-label" htmlFor="ed-assign">
+                    Assign To
+                  </label>
+                  <select id="ed-assign" className="sa-input" defaultValue="Marcus Aurelius (Lead Technician)">
+                    <option>Marcus Aurelius (Lead Technician)</option>
+                    <option>Alex Rowe</option>
+                    <option>Sarah Jenkins</option>
+                    <option>James Carter</option>
+                    <option>Michael Finch</option>
+                  </select>
+                </div>
+                <div className="sa-field">
+                  <label className="sa-label" htmlFor="ed-due">
+                    Due Date <span className="sa-req">*</span>
+                  </label>
+                  <input id="ed-due" type="date" className="sa-input" required />
+                </div>
+              </div>
+
+              <div className="sa-field">
+                <label className="sa-label" htmlFor="ed-frequency">
+                  Frequency
+                </label>
+                <select id="ed-frequency" className="sa-input" defaultValue="Monthly">
+                  <option>Weekly</option>
+                  <option>Monthly</option>
+                  <option>Quarterly</option>
+                  <option>Every 6 Months</option>
+                  <option>Annually</option>
+                </select>
+              </div>
+
+              <div className="sa-field">
+                <span className="sa-label">Notice Days</span>
+                <div className="sa-priority" role="group" aria-label="Notice days">
+                  {noticeDays.map((day) => (
+                    <button
+                      key={day}
+                      type="button"
+                      aria-pressed={editNotice === day}
+                      className={`sa-pri ${editNotice === day ? "is-active is-medium" : ""}`}
+                      onClick={() => setEditNotice(day)}
+                    >
+                      {day}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              <div className="sa-field">
+                <span className="sa-label">Priority Level</span>
+                <div className="sa-priority" role="group" aria-label="Priority level">
+                  {(["Low", "Medium", "High"] as const).map((level) => (
+                    <button
+                      key={level}
+                      type="button"
+                      aria-pressed={editPriority === level}
+                      className={`sa-pri ${editPriority === level ? `is-active is-${level.toLowerCase()}` : ""}`}
+                      onClick={() => setEditPriority(level)}
+                    >
+                      {level}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              <div className="sa-field">
+                <span className="sa-label">Category / Tag</span>
+                <div className="sa-tags" role="group" aria-label="Category">
+                  {tagOptions.map((item) => (
+                    <button
+                      key={item.name}
+                      type="button"
+                      aria-pressed={editTag === item.name}
+                      className={`sa-tag-btn ${editTag === item.name ? "is-active" : ""}`}
+                      onClick={() => setEditTag(item.name)}
+                    >
+                      <span className="sa-dot" style={{ background: item.dot }} aria-hidden="true" />
+                      {item.name}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              <div className="sa-field">
+                <label className="sa-label" htmlFor="ed-notes">
+                  Description / Notes
+                </label>
+                <textarea
+                  id="ed-notes"
+                  className="sa-input sa-textarea"
+                  rows={3}
+                  defaultValue="Routine sentinel outlet water temperature checks. Record values in Celsius for both hot and cold outlets to prevent Legionella proliferation. Report anomalies instantly."
+                />
+              </div>
+
+              <div className="sa-actions sa-actions-split">
+                <button type="button" className="sa-delete" onClick={() => setEditTarget(null)}>
+                  Delete Task
+                </button>
+                <div className="sa-actions-right">
+                  <button type="button" className="sa-cancel" onClick={() => setEditTarget(null)}>
+                    Cancel
+                  </button>
+                  <button type="submit" className="sa-save">
+                    Save Changes
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
     </div>
   );
 }
