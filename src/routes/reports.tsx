@@ -13,6 +13,7 @@ import {
   Calendar,
   ChevronDown,
   Download,
+  Stethoscope,
 } from "lucide-react";
 
 export const Route = createFileRoute("/reports")({
@@ -40,6 +41,7 @@ export const Route = createFileRoute("/reports")({
 const overviewNav = [
   { label: "Dashboard", icon: LayoutDashboard, to: "/dashboard" as const },
   { label: "Compliance", icon: ShieldCheck, to: "/compliance" as const },
+  { label: "Equipment", icon: Stethoscope, to: "/equipment" as const },
   { label: "Repairs", icon: Wrench, to: "/repairs" as const, badge: "2" },
   { label: "Buildings", icon: Building2, to: "/assets" as const },
 ];

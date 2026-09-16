@@ -12,6 +12,7 @@ import {
   Users,
   User,
   Bell,
+  Stethoscope,
 } from "lucide-react";
 
 export const Route = createFileRoute("/settings")({
@@ -37,6 +38,7 @@ export const Route = createFileRoute("/settings")({
 const overviewNav = [
   { label: "Dashboard", icon: LayoutDashboard, to: "/dashboard" as const },
   { label: "Compliance", icon: ShieldCheck, to: "/compliance" as const },
+  { label: "Equipment", icon: Stethoscope, to: "/equipment" as const },
   { label: "Repairs", icon: Wrench, to: "/repairs" as const, badge: "2" },
   { label: "Buildings", icon: Building2, to: "/assets" as const },
 ];

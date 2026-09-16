@@ -14,38 +14,39 @@ import {
   Calendar,
   Plus,
   Pencil,
-  Check,
-  Eye,
+  Trash2,
+  ChevronLeft,
   AlertTriangle,
   Stethoscope,
+  Barcode,
 } from "lucide-react";
 
-export const Route = createFileRoute("/compliance")({
+export const Route = createFileRoute("/equipment")({
   head: () => ({
     meta: [
-      { title: "Kearly | Compliance & PPM Tasks" },
+      { title: "Kearly | Medical Equipment Registry" },
       {
         name: "description",
         content:
-          "NHS and healthcare clinical compliance schedules: track PPM tasks, due dates, assignees and status across every site.",
+          "Medical equipment asset registry with serial tracking, PPM schedules, breakdown history and status across every site.",
       },
-      { property: "og:title", content: "Kearly | Compliance & PPM Tasks" },
+      { property: "og:title", content: "Kearly | Medical Equipment Registry" },
       {
         property: "og:description",
         content:
-          "NHS and healthcare clinical compliance schedules: track PPM tasks, due dates, assignees and status across every site.",
+          "Medical equipment asset registry with serial tracking, PPM schedules, breakdown history and status across every site.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
-  component: CompliancePage,
+  component: EquipmentPage,
 });
 
 const overviewNav = [
   { label: "Dashboard", icon: LayoutDashboard, to: "/dashboard" as const },
-  { label: "Compliance", icon: ShieldCheck, to: "/compliance" as const, active: true },
-  { label: "Equipment", icon: Stethoscope, to: "/equipment" as const },
+  { label: "Compliance", icon: ShieldCheck, to: "/compliance" as const },
+  { label: "Equipment", icon: Stethoscope, to: "/equipment" as const, active: true },
   { label: "Repairs", icon: Wrench, to: "/repairs" as const, badge: "2" },
   { label: "Buildings", icon: Building2, to: "/assets" as const },
 ];
@@ -58,41 +59,42 @@ const governanceNav = [
 ];
 
 const tabs = [
-  { label: "All Tasks (12)", key: "all" },
-  { label: "Due Soon (5)", key: "due" },
-  { label: "Overdue (3)", key: "overdue" },
-  { label: "Completed (4)", key: "completed" },
+  { label: "All Equipment (48)", key: "all" },
+  { label: "Active (42)", key: "active" },
+  { label: "Under Maintenance (4)", key: "maintenance" },
+  { label: "Decommissioned (2)", key: "decommissioned" },
 ];
 
 type Row = {
   name: string;
+  serial: string;
   category: string;
   site: string;
-  frequency: string;
-  due: string;
-  assignee: string;
   initials: string;
   avatarTone: string;
-  status: "Overdue" | "Due Soon" | "On Track";
+  schedule: string;
+  due: string;
+  incidents: number;
+  status: "Active" | "Under Maintenance" | "Decommissioned";
 };
 
 const rows: Row[] = [
-  { name: "Fire Risk Assessment", category: "FRA", site: "Riverside Court", frequency: "Annually", due: "15 Jul 2024", assignee: "Sarah Jones", initials: "SJ", avatarTone: "red", status: "Overdue" },
-  { name: "Electrical Installation (EICR)", category: "EICR", site: "Victoria Wharf", frequency: "5 Years", due: "18 Jul 2024", assignee: "James Carter", initials: "JC", avatarTone: "blue", status: "Overdue" },
-  { name: "Legionella Risk Assessment", category: "WATER", site: "Maple Business Park", frequency: "Bi-Annually", due: "22 Jul 2024", assignee: "Alex Rowe", initials: "AR", avatarTone: "green", status: "Due Soon" },
-  { name: "Gas Safety Record (LGSR)", category: "GAS", site: "Kingsway Tower", frequency: "Annually", due: "25 Jul 2024", assignee: "Michael Finch", initials: "MF", avatarTone: "purple", status: "Due Soon" },
-  { name: "Fire Alarm Service", category: "ALARM", site: "Riverside Court", frequency: "Quarterly", due: "29 Jul 2024", assignee: "Sarah Jones", initials: "SJ", avatarTone: "red", status: "Due Soon" },
-  { name: "Emergency Lighting Test", category: "EM-LT", site: "Northgate House", frequency: "Monthly", due: "02 Aug 2024", assignee: "Alex Rowe", initials: "AR", avatarTone: "green", status: "On Track" },
-  { name: "Lift LOLER Inspection", category: "LIFTS", site: "Elmwood Court", frequency: "6 Months", due: "05 Aug 2024", assignee: "David Vance", initials: "DV", avatarTone: "teal", status: "On Track" },
-  { name: "Asbestos Re-Inspections", category: "ASB", site: "Maple Business Park", frequency: "Annually", due: "10 Aug 2024", assignee: "James Carter", initials: "JC", avatarTone: "blue", status: "On Track" },
+  { name: "Defibrillator AED Plus", serial: "SN-DEF-2024-084", category: "EMERGENCY", site: "Riverside Court", initials: "RC", avatarTone: "red", schedule: "Quarterly", due: "15 Jul 2024", incidents: 0, status: "Active" },
+  { name: "Patient Hoist (Ceiling)", serial: "SN-HST-2023-120", category: "PATIENT HANDLING", site: "Victoria Wharf", initials: "VW", avatarTone: "blue", schedule: "6 Months", due: "22 Jul 2024", incidents: 2, status: "Active" },
+  { name: "Oxygen Concentrator", serial: "SN-OXY-2024-039", category: "RESPIRATORY", site: "Maple Business Park", initials: "MB", avatarTone: "green", schedule: "Monthly", due: "01 Aug 2024", incidents: 1, status: "Active" },
+  { name: "Suction Unit (Portable)", serial: "SN-SUC-2023-075", category: "EMERGENCY", site: "Kingsway Tower", initials: "KT", avatarTone: "purple", schedule: "Quarterly", due: "28 Jul 2024", incidents: 0, status: "Active" },
+  { name: "Bed (Profiling Electric)", serial: "SN-BED-2022-158", category: "WARD FURNITURE", site: "Northgate House", initials: "NH", avatarTone: "teal", schedule: "Annually", due: "10 Sep 2024", incidents: 3, status: "Under Maintenance" },
+  { name: "Blood Pressure Monitor", serial: "SN-BPM-2024-011", category: "DIAGNOSTICS", site: "Elmwood Court", initials: "EC", avatarTone: "green", schedule: "6 Months", due: "05 Aug 2024", incidents: 0, status: "Active" },
+  { name: "Syringe Driver", serial: "SN-SYR-2023-062", category: "INFUSION", site: "Riverside Court", initials: "RC", avatarTone: "red", schedule: "Monthly", due: "18 Jul 2024", incidents: 1, status: "Active" },
+  { name: "Examination Couch", serial: "SN-EXC-2021-029", category: "FURNITURE", site: "Victoria Wharf", initials: "VW", avatarTone: "blue", schedule: "Annually", due: "30 Nov 2024", incidents: 0, status: "Decommissioned" },
 ];
 
 const statusTone = (status: Row["status"]) =>
-  status === "Overdue" ? "tone-red" : status === "Due Soon" ? "tone-amber" : "tone-green";
+  status === "Active" ? "tone-green" : status === "Under Maintenance" ? "tone-amber" : "tone-muted";
 
-function CompliancePage() {
+function EquipmentPage() {
   const [activeTab, setActiveTab] = useState("all");
-  const [deactivate, setDeactivate] = useState<string | null>(null);
+  const [pendingDelete, setPendingDelete] = useState<string | null>(null);
 
   return (
     <div className="po-shell">
@@ -149,33 +151,33 @@ function CompliancePage() {
       <main className="po-main">
         <header className="po-topbar">
           <div>
-            <h1 className="po-title">Compliance - PPM</h1>
-            <p className="po-subtitle">NHS &amp; Healthcare Clinical Compliance Schedules</p>
+            <Link to="/compliance" className="eq-back" aria-label="Back to compliance">
+              <ChevronLeft size={20} aria-hidden="true" />
+            </Link>
+            <h1 className="po-title">Medical Equipment</h1>
+            <p className="po-subtitle">Asset registry with serial tracking &amp; PPM schedules</p>
           </div>
           <div className="po-topbar-actions">
             <div className="po-search">
               <Search size={15} aria-hidden="true" />
-              <input type="search" placeholder="Search..." aria-label="Search tasks" />
+              <input type="search" placeholder="Search serial or name..." aria-label="Search equipment" />
             </div>
-            <span className="po-chip">Jul 2024</span>
             <span className="po-chip">
+              Jul 2024
               <Calendar size={14} aria-hidden="true" />
+            </span>
+            <span className="po-chip">
+              <Building2 size={14} aria-hidden="true" />
               All buildings
             </span>
-            <button type="button" className="cl-outline">
-              Medical Equipment
-            </button>
-            <Link to="/schedule" className="cl-outline">
-              View Calendar
-            </Link>
             <Link to="/add-task" className="po-download">
               <Plus size={15} aria-hidden="true" />
-              Add Task
+              Add Equipment
             </Link>
           </div>
         </header>
 
-        <div className="cl-tabs" role="tablist" aria-label="Task filters">
+        <div className="cl-tabs" role="tablist" aria-label="Equipment filters">
           {tabs.map(({ label, key }) => (
             <button
               key={key}
@@ -190,35 +192,48 @@ function CompliancePage() {
           ))}
         </div>
 
-        <section className="cl-panel" aria-label="Compliance tasks">
+        <section className="cl-panel" aria-label="Medical equipment registry">
           <div className="cl-table-wrap">
             <table className="cl-table">
               <thead>
                 <tr>
-                  <th>TASK NAME</th>
+                  <th>EQUIPMENT NAME</th>
+                  <th>SERIAL / BARCODE</th>
                   <th>CATEGORY</th>
                   <th>SITE</th>
-                  <th>FREQUENCY</th>
+                  <th>PPM SCHEDULE</th>
                   <th>NEXT DUE</th>
-                  <th>ASSIGNED TO</th>
+                  <th>BREAKDOWN HISTORY</th>
                   <th>STATUS</th>
                   <th aria-label="Actions" />
                 </tr>
               </thead>
               <tbody>
                 {rows.map((row) => (
-                  <tr key={row.name}>
+                  <tr key={row.serial}>
                     <td className="cl-name">{row.name}</td>
-                    <td className="cl-cat">{row.category}</td>
-                    <td>{row.site}</td>
-                    <td>{row.frequency}</td>
-                    <td>{row.due}</td>
+                    <td>
+                      <span className="eq-serial">
+                        <Barcode size={15} aria-hidden="true" />
+                        {row.serial}
+                      </span>
+                    </td>
+                    <td>
+                      <span className="eq-cat">{row.category}</span>
+                    </td>
                     <td>
                       <span className="cl-assignee">
                         <span className={`cl-avatar tone-${row.avatarTone}`} aria-hidden="true">
                           {row.initials}
                         </span>
-                        {row.assignee}
+                        {row.site}
+                      </span>
+                    </td>
+                    <td>{row.schedule}</td>
+                    <td>{row.due}</td>
+                    <td>
+                      <span className={row.incidents > 0 ? "eq-incidents is-warn" : "eq-incidents"}>
+                        {row.incidents} {row.incidents === 1 ? "incident" : "incidents"}
                       </span>
                     </td>
                     <td>
@@ -232,18 +247,10 @@ function CompliancePage() {
                         <button
                           type="button"
                           className="cl-icon-btn"
-                          aria-label={`Mark ${row.name} complete`}
-                          onClick={() => setDeactivate(null)}
+                          aria-label={`Delete ${row.name}`}
+                          onClick={() => setPendingDelete(row.name)}
                         >
-                          <Check size={15} aria-hidden="true" />
-                        </button>
-                        <button
-                          type="button"
-                          className="cl-icon-btn"
-                          aria-label={`View ${row.name}`}
-                          onClick={() => setDeactivate(row.name)}
-                        >
-                          <Eye size={15} aria-hidden="true" />
+                          <Trash2 size={15} aria-hidden="true" />
                         </button>
                       </span>
                     </td>
@@ -254,7 +261,7 @@ function CompliancePage() {
           </div>
 
           <div className="cl-foot">
-            <small>Showing 1-8 of 12 compliance tasks</small>
+            <small>Showing 1-8 of 48 active medical assets</small>
             <div className="cl-pager">
               <button type="button" className="cl-page">
                 Previous
@@ -267,34 +274,34 @@ function CompliancePage() {
         </section>
       </main>
 
-      {deactivate && (
-        <div className="cp-overlay" role="presentation" onClick={() => setDeactivate(null)}>
+      {pendingDelete && (
+        <div className="cp-overlay" role="presentation" onClick={() => setPendingDelete(null)}>
           <div
             className="cp-modal"
             role="alertdialog"
             aria-modal="true"
-            aria-labelledby="cp-modal-title"
+            aria-labelledby="eq-modal-title"
             onClick={(event) => event.stopPropagation()}
           >
             <div className="cp-modal-head">
               <span className="cp-modal-icon" aria-hidden="true">
                 <AlertTriangle size={26} />
               </span>
-              <h2 className="cp-modal-title" id="cp-modal-title">
-                Deactivate Task
+              <h2 className="cp-modal-title" id="eq-modal-title">
+                Delete Equipment
               </h2>
             </div>
             <p className="cp-modal-text">
-              Are you sure you want to deactivate {deactivate}?
+              Are you sure you want to delete {pendingDelete}?
               <br />
               This action cannot be undone.
             </p>
             <div className="cp-modal-actions">
-              <button type="button" className="cp-modal-cancel" onClick={() => setDeactivate(null)}>
+              <button type="button" className="cp-modal-cancel" onClick={() => setPendingDelete(null)}>
                 Cancel
               </button>
-              <button type="button" className="cp-modal-delete" onClick={() => setDeactivate(null)}>
-                Deactivate
+              <button type="button" className="cp-modal-delete" onClick={() => setPendingDelete(null)}>
+                Delete
               </button>
             </div>
           </div>
