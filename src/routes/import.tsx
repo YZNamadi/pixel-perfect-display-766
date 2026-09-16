@@ -1,18 +1,21 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useRef, useState } from "react";
+import { Check, UploadCloud } from "lucide-react";
 
 export const Route = createFileRoute("/import")({
   head: () => ({
     meta: [
-      { title: "Kearly | Upload Data" },
+      { title: "Kearly | Import Existing Data" },
       {
         name: "description",
-        content: "Upload your asset, asbestos, or equipment spreadsheets securely into Kearly.",
+        content:
+          "Upload your asset, asbestos, or equipment spreadsheets and let Kearly map the fields automatically.",
       },
-      { property: "og:title", content: "Kearly | Upload Data" },
+      { property: "og:title", content: "Kearly | Import Existing Data" },
       {
         property: "og:description",
-        content: "Upload your asset, asbestos, or equipment spreadsheets securely into Kearly.",
+        content:
+          "Upload your asset, asbestos, or equipment spreadsheets and let Kearly map the fields automatically.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -20,8 +23,6 @@ export const Route = createFileRoute("/import")({
   }),
   component: ImportPage,
 });
-
-const steps = ["Upload Sheet", "Data Mapping", "Data  Preview"];
 
 function ImportPage() {
   const inputRef = useRef<HTMLInputElement>(null);
@@ -33,103 +34,116 @@ function ImportPage() {
   };
 
   return (
-    <main className="ud-page">
-      <div className="ud-deco ud-deco-phone" aria-hidden="true">
-        📱
-      </div>
-      <div className="ud-deco ud-deco-shield" aria-hidden="true">
-        🛡️
-      </div>
-      <div className="ud-deco ud-deco-leaf" aria-hidden="true">
-        🌿
-      </div>
-
-      <section className="ud-card" aria-labelledby="ud-heading">
-        <header className="ud-card-head">
-          <div className="ud-logo" aria-label="Kearly">
-            <svg width="22" height="22" viewBox="0 0 100 100" aria-hidden="true">
-              <rect x="5" y="5" width="40" height="40" rx="10" fill="#4A7C6F" />
-              <path d="M 55 5 L 95 5 L 95 45 Q 75 45 55 25 Z" fill="#4A7C6F" />
-              <rect x="5" y="55" width="40" height="40" rx="10" fill="#4A7C6F" />
-              <path d="M 55 55 Q 75 55 95 75 L 95 95 L 55 95 Z" fill="#4A7C6F" />
-            </svg>
-            <span className="ud-logo-text">
-              <span className="ud-logo-name">KEARLY</span>
-              <span className="ud-logo-tag">Compliance. Automated &amp; Simplified.</span>
-            </span>
+    <main className="fp-page">
+      <section className="fp-panel" aria-label="Kearly onboarding">
+        <div className="fp-panel-decor" aria-hidden="true">
+          <span className="fp-circle fp-circle-one" />
+          <span className="fp-circle fp-circle-two" />
+          <span className="fp-circle fp-circle-three" />
+        </div>
+        <div className="fp-panel-content">
+          <h2 className="fp-panel-title">The simplest way to manage your assets</h2>
+          <p className="fp-panel-text">
+            Import your existing data and let Kearly automatically map fields, detect
+            anomalies, and get your team up and running in minutes.
+          </p>
+          <div>
+            <p className="fp-trusted-label">Trusted by leading healthcare facilities</p>
+            <ul className="fp-badges">
+              <li>NHS</li>
+              <li>Bupa</li>
+              <li>Spire</li>
+              <li>UCLH</li>
+              <li>Circle</li>
+            </ul>
           </div>
-          <Link to="/site" className="ud-back">
-            Back
-          </Link>
-        </header>
+        </div>
+      </section>
 
-        <nav className="ud-stepper" aria-label="Import progress">
-          {steps.map((step, index) => (
-            <div className="ud-step-wrap" key={step}>
-              <div className={`ud-step ${index === 0 ? "is-active" : ""}`}>
-                <span className="ud-step-circle">{index + 1}</span>
-                <span className="ud-step-label">{step}</span>
-              </div>
-              {index < steps.length - 1 && <span className="ud-step-line" />}
-            </div>
+      <section className="fp-main">
+        <nav className="fp-steps" aria-label="Progress">
+          {["Account", "Facility", "Site"].map((label) => (
+            <span className="fp-step fp-step-done" key={label}>
+              <span className="fp-step-mark fp-step-mark-done">
+                <Check size={13} strokeWidth={3} aria-hidden="true" />
+              </span>
+              {label}
+            </span>
+          ))}
+          <span className="fp-step fp-step-active" aria-current="step">
+            <span className="fp-step-mark fp-step-mark-active">4</span>
+            Import
+          </span>
+          {["Team", "Complete"].map((label, index) => (
+            <span className="fp-step" key={label}>
+              <span className="fp-step-mark">{index + 5}</span>
+              {label}
+            </span>
           ))}
         </nav>
 
-        <h1 id="ud-heading" className="ud-heading">
-          Upload Data
-        </h1>
-        <p className="ud-sub">Import your data securely to continue</p>
+        <div className="fp-body">
+          <h1 className="fp-heading">Import existing data</h1>
+          <p className="fp-sub">
+            Upload active asset logs, current asbestos logs, or equipment logs to map
+            automatically.
+          </p>
 
-        <input
-          ref={inputRef}
-          className="ud-file-input"
-          type="file"
-          accept=".xlsx,.xls,.csv"
-          onChange={(event) => handleFile(event.target.files?.[0])}
-        />
+          <div className="fp-card im-card">
+            <nav className="im-tabs" aria-label="Import steps">
+              <span className="im-tab im-tab-on" aria-current="step">
+                1. Upload
+              </span>
+              <span className="im-tab">2. Map Fields</span>
+              <span className="im-tab">3. Preview</span>
+            </nav>
 
-        <div
-          className={`ud-drop ${isDragging ? "is-dragging" : ""}`}
-          onDragEnter={(event) => {
-            event.preventDefault();
-            setIsDragging(true);
-          }}
-          onDragOver={(event) => event.preventDefault()}
-          onDragLeave={() => setIsDragging(false)}
-          onDrop={(event) => {
-            event.preventDefault();
-            setIsDragging(false);
-            handleFile(event.dataTransfer.files[0]);
-          }}
-        >
-          <span className="ud-drop-icon" aria-hidden="true">
-            <svg width="86" height="66" viewBox="0 0 86 66" fill="none">
-              <path
-                d="M22 56C11.5 56 3 47.7 3 37.5S11.5 19 22 19c1 0 2 .1 3 .2C27.6 9.6 36.5 2.5 47 2.5c12.7 0 23 10.2 23 22.8 0 .6 0 1.2-.1 1.8 8 1.6 13.1 8 13.1 15.4 0 8.6-7 13.5-15.6 13.5H22Z"
-                fill="#9AA5A1"
-              />
-              <path d="M43 52V27" stroke="#fff" strokeWidth="7" strokeLinecap="round" />
-              <path d="M31 38l12-12 12 12" stroke="#fff" strokeWidth="7" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
-          </span>
-          <strong>{selectedFile ? selectedFile.name : "Drag and drop your files here"}</strong>
-          <span className="ud-or">{selectedFile ? "Ready to import" : "Or"}</span>
-          <button type="button" className="ud-browse" onClick={() => inputRef.current?.click()}>
-            Browse Files
-          </button>
-          <small>Supported format: xlsx, xls, csv, Google sheet</small>
+            <input
+              ref={inputRef}
+              className="im-file-input"
+              type="file"
+              accept=".xlsx,.xls,.csv"
+              onChange={(event) => handleFile(event.target.files?.[0])}
+            />
+
+            <button
+              type="button"
+              className={`im-drop${isDragging ? " is-dragging" : ""}`}
+              onClick={() => inputRef.current?.click()}
+              onDragEnter={(event) => {
+                event.preventDefault();
+                setIsDragging(true);
+              }}
+              onDragOver={(event) => event.preventDefault()}
+              onDragLeave={() => setIsDragging(false)}
+              onDrop={(event) => {
+                event.preventDefault();
+                setIsDragging(false);
+                handleFile(event.dataTransfer.files[0]);
+              }}
+            >
+              <UploadCloud size={34} strokeWidth={1.5} aria-hidden="true" />
+              <strong>
+                {selectedFile ? selectedFile.name : "Drag & drop your spreadsheet here"}
+              </strong>
+              <span>
+                {selectedFile
+                  ? "Ready to import"
+                  : "or click to browse from your computer"}
+              </span>
+              <small>Supported formats: .xlsx, .csv, Google Sheets export</small>
+            </button>
+
+            <div className="im-actions">
+              <Link to="/mapping" className="fp-continue">
+                Continue
+              </Link>
+              <Link to="/team" className="fp-skip">
+                Continue without importing
+              </Link>
+            </div>
+          </div>
         </div>
-
-        <Link
-          className="ud-continue"
-          to="/mapping"
-          data-disabled={!selectedFile}
-          onClick={(event) => {
-            if (!selectedFile) event.preventDefault();
-          }}
-        >
-          Continue
-        </Link>
       </section>
     </main>
   );
