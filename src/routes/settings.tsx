@@ -72,6 +72,20 @@ const contractors = [
   { name: "Michael Scott", company: "Scranton Paper Fire Alarms", active: false, tickets: 0, documents: 1 },
 ];
 
+const internalTeam = [
+  {
+    name: "Alex Rowe",
+    email: "alex.rowe@kearlycompliance.com",
+    role: "Portfolio Compliance Administrator",
+    active: true,
+  },
+  { name: "Sarah Connor", email: "s.connor@kearlycompliance.com", role: "Repairs Manager", active: true },
+  { name: "Marcus Wright", email: "m.wright@kearlycompliance.com", role: "Contractor Coordinator", active: true },
+  { name: "Kyle Reese", email: "k.reese@kearlycompliance.com", role: "Site Inspector", active: true },
+  { name: "John Connor", email: "j.connor@kearlycompliance.com", role: "Viewer / Auditor", active: false },
+];
+
+
 function SettingsPage() {
   const [digest, setDigest] = useState(true);
   const [reminders, setReminders] = useState(true);
@@ -312,11 +326,16 @@ function SettingsPage() {
                       Add Contractor
                     </button>
                   ) : (
-                    <Link to="/team" className="se-primary se-team-add">
-                      <Plus size={15} aria-hidden="true" />
-                      Invite Team Member
-                    </Link>
+                    <div className="se-team-right">
+                      <span className="se-team-count-title">Internal Team</span>
+                      <span className="se-team-count">{internalTeam.length} members</span>
+                      <Link to="/team" className="se-primary se-team-add">
+                        <Plus size={15} aria-hidden="true" />
+                        Send Invite
+                      </Link>
+                    </div>
                   )}
+
                 </div>
 
                 {teamTab === "External Labour" ? (
@@ -362,28 +381,41 @@ function SettingsPage() {
                     </table>
                   </div>
                 ) : (
-                  <ul className="se-team">
-                    {[
-                      { name: "Alex Rowe", email: "alex.rowe@kearlycompliance.com", role: "Portfolio admin" },
-                      { name: "Sarah Jones", email: "sarah.jones@riverside.nhs.uk", role: "Facility Manager" },
-                      { name: "Michael Finch", email: "michael.finch@riverside.nhs.uk", role: "Engineer" },
-                      { name: "James Carter", email: "james.carter@riverside.nhs.uk", role: "Viewer" },
-                    ].map((member) => (
-                      <li key={member.email} className="se-team-row">
-                        <span className="se-team-avatar" aria-hidden="true">
-                          {member.name
-                            .split(" ")
-                            .map((part) => part[0])
-                            .join("")}
-                        </span>
-                        <span className="se-team-text">
-                          <strong>{member.name}</strong>
-                          <small>{member.email}</small>
-                        </span>
-                        <span className="se-team-role">{member.role}</span>
-                      </li>
-                    ))}
-                  </ul>
+                  <div className="cl-table-wrap">
+                    <table className="cl-table">
+                      <thead>
+                        <tr>
+                          <th>NAME</th>
+                          <th>EMAIL</th>
+                          <th>ROLE / PERMISSIONS</th>
+                          <th>STATUS</th>
+                          <th>ACTION</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {internalTeam.map((member) => (
+                          <tr key={member.email}>
+                            <td className="cl-name">{member.name}</td>
+                            <td className="al-details se-team-email">{member.email}</td>
+                            <td className="al-details">{member.role}</td>
+                            <td>
+                              <span className={`dc-expiry ${member.active ? "tone-green" : "tone-muted"}`}>
+                                {member.active ? "Active" : "Inactive"}
+                              </span>
+                            </td>
+                            <td>
+                              <div className="cl-row-actions">
+                                <button type="button" className="cl-icon-btn" aria-label={`Edit ${member.name}`}>
+                                  <Pencil size={15} aria-hidden="true" />
+                                </button>
+                              </div>
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+
                 )}
               </>
             )}
