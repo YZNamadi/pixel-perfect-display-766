@@ -5286,3 +5286,34 @@ a.am-menu-item { text-decoration: none; }
     min-height: 0;
   }
 }
+
+/* ==== Equipment registry (eq-) ==== */
+.eq-back {
+  display: inline-flex;
+  align-items: center;
+  color: #15803D;
+  margin-bottom: 0.25rem;
+}
+.eq-serial {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.78rem;
+  color: #374151;
+  white-space: nowrap;
+}
+.eq-serial svg { color: #6B7280; }
+.eq-cat {
+  display: inline-block;
+  padding: 0.15rem 0.45rem;
+  border-radius: 0.35rem;
+  background: #F3F4F6;
+  color: #6B7280;
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+}
+.eq-incidents { color: #15803D; font-size: 0.8rem; }
+.eq-incidents.is-warn { color: #D97706; }
