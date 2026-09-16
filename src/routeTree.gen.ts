@@ -19,6 +19,7 @@ import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as DashboardWelcomeRouteImport } from './routes/dashboard-welcome'
 import { Route as EditTaskRouteImport } from './routes/edit-task'
 import { Route as FacilityRouteImport } from './routes/facility'
+import { Route as GoogleSignInRouteImport } from './routes/google-sign-in'
 import { Route as ImportRouteImport } from './routes/import'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as MappingRouteImport } from './routes/mapping'
@@ -82,6 +83,11 @@ const EditTaskRoute = EditTaskRouteImport.update({
 const FacilityRoute = FacilityRouteImport.update({
   id: '/facility',
   path: '/facility',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GoogleSignInRoute = GoogleSignInRouteImport.update({
+  id: '/google-sign-in',
+  path: '/google-sign-in',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ImportRoute = ImportRouteImport.update({
@@ -166,6 +172,7 @@ export interface FileRoutesByFullPath {
   '/dashboard-welcome': typeof DashboardWelcomeRoute
   '/edit-task': typeof EditTaskRoute
   '/facility': typeof FacilityRoute
+  '/google-sign-in': typeof GoogleSignInRoute
   '/import': typeof ImportRoute
   '/login': typeof LoginRoute
   '/mapping': typeof MappingRoute
@@ -192,6 +199,7 @@ export interface FileRoutesByTo {
   '/dashboard-welcome': typeof DashboardWelcomeRoute
   '/edit-task': typeof EditTaskRoute
   '/facility': typeof FacilityRoute
+  '/google-sign-in': typeof GoogleSignInRoute
   '/import': typeof ImportRoute
   '/login': typeof LoginRoute
   '/mapping': typeof MappingRoute
@@ -219,6 +227,7 @@ export interface FileRoutesById {
   '/dashboard-welcome': typeof DashboardWelcomeRoute
   '/edit-task': typeof EditTaskRoute
   '/facility': typeof FacilityRoute
+  '/google-sign-in': typeof GoogleSignInRoute
   '/import': typeof ImportRoute
   '/login': typeof LoginRoute
   '/mapping': typeof MappingRoute
@@ -247,6 +256,7 @@ export interface FileRouteTypes {
     | '/dashboard-welcome'
     | '/edit-task'
     | '/facility'
+    | '/google-sign-in'
     | '/import'
     | '/login'
     | '/mapping'
@@ -273,6 +283,7 @@ export interface FileRouteTypes {
     | '/dashboard-welcome'
     | '/edit-task'
     | '/facility'
+    | '/google-sign-in'
     | '/import'
     | '/login'
     | '/mapping'
@@ -299,6 +310,7 @@ export interface FileRouteTypes {
     | '/dashboard-welcome'
     | '/edit-task'
     | '/facility'
+    | '/google-sign-in'
     | '/import'
     | '/login'
     | '/mapping'
@@ -326,6 +338,7 @@ export interface RootRouteChildren {
   DashboardWelcomeRoute: typeof DashboardWelcomeRoute
   EditTaskRoute: typeof EditTaskRoute
   FacilityRoute: typeof FacilityRoute
+  GoogleSignInRoute: typeof GoogleSignInRoute
   ImportRoute: typeof ImportRoute
   LoginRoute: typeof LoginRoute
   MappingRoute: typeof MappingRoute
@@ -412,6 +425,13 @@ declare module '@tanstack/react-router' {
       path: '/facility'
       fullPath: '/facility'
       preLoaderRoute: typeof FacilityRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/google-sign-in': {
+      id: '/google-sign-in'
+      path: '/google-sign-in'
+      fullPath: '/google-sign-in'
+      preLoaderRoute: typeof GoogleSignInRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/import': {
@@ -526,6 +546,7 @@ const rootRouteChildren: RootRouteChildren = {
   DashboardWelcomeRoute: DashboardWelcomeRoute,
   EditTaskRoute: EditTaskRoute,
   FacilityRoute: FacilityRoute,
+  GoogleSignInRoute: GoogleSignInRoute,
   ImportRoute: ImportRoute,
   LoginRoute: LoginRoute,
   MappingRoute: MappingRoute,
