@@ -5634,3 +5634,24 @@ a.am-menu-item { text-decoration: none; }
 .dc-expiry.tone-red { background: #FEF2F2; color: #DC2626; }
 .dc-del { color: #DC2626; }
 .dc-del:hover { background: #FEF2F2; color: #DC2626; }
+
+/* Settings: notification toggles */
+.se-group-label {
+  margin: 1.75rem 0 0.25rem; font-size: 0.72rem; font-weight: 600;
+  color: #9CA3AF; letter-spacing: 0.08em;
+}
+.se-toggle-row {
+  display: flex; align-items: center; justify-content: space-between; gap: 1.5rem;
+  padding: 1rem 0; border-bottom: 1px solid #F1F5F9;
+}
+.se-toggle-title { margin: 0 0 0.2rem; font-size: 0.92rem; font-weight: 700; color: #111827; }
+.se-toggle-sub { margin: 0; font-size: 0.82rem; color: #6B7280; }
+.se-switch {
+  flex-shrink: 0; width: 44px; height: 24px; border-radius: 999px; border: none;
+  background: #D1D5DB; padding: 3px; cursor: pointer; display: inline-flex;
+  justify-content: flex-start; transition: background 0.15s ease;
+}
+.se-switch.is-on { background: #15803D; justify-content: flex-end; }
+.se-switch-knob { width: 18px; height: 18px; border-radius: 999px; background: #FFFFFF; }
+.se-field-wide { max-width: 620px; margin-top: 0.5rem; }
+.se-foot-divided { border-top: 1px solid #E5E7EB; margin-top: 1.75rem; padding-top: 1.25rem; }
