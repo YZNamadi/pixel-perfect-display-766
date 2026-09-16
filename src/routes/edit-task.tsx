@@ -1,197 +1,213 @@
-import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import {
   LayoutDashboard,
   ShieldCheck,
+  Stethoscope,
   Wrench,
   Building2,
   BarChart3,
   ScrollText,
   Settings,
-  ChevronLeft,
+  CreditCard,
+  Users,
+  Search,
+  Plus,
+  Calendar,
 } from "lucide-react";
 
 export const Route = createFileRoute("/edit-task")({
   head: () => ({
     meta: [
-      { title: "Kearly | Edit PPM Task" },
+      { title: "Kearly | Edit Repair Ticket" },
       {
         name: "description",
-        content: "Customise an existing planned preventive maintenance task, its frequency, due date and assigned roles.",
+        content:
+          "Update a maintenance repair ticket: title, site, assignee, priority, status and engineer notes.",
       },
-      { property: "og:title", content: "Kearly | Edit PPM Task" },
+      { property: "og:title", content: "Kearly | Edit Repair Ticket" },
       {
         property: "og:description",
-        content: "Customise an existing planned preventive maintenance task, its frequency, due date and assigned roles.",
+        content:
+          "Update a maintenance repair ticket: title, site, assignee, priority, status and engineer notes.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
-  component: EditTaskPage,
+  component: EditTicketPage,
 });
 
-const navItems = [
+const overviewNav = [
   { label: "Dashboard", icon: LayoutDashboard, to: "/dashboard" as const },
-  { label: "Compliance", icon: ShieldCheck, to: "/compliance" as const, active: true },
-  { label: "Repairs", icon: Wrench, to: "/repairs" as const },
-  { label: "Assets", icon: Building2, to: "/assets" as const },
-  { label: "Reports", icon: BarChart3, to: "/reports" as const },
-  { label: "Audit Log", icon: ScrollText, to: "/audit-log" as const },
-  { label: "Settings", icon: Settings, to: "/settings" as const },
+  { label: "Compliance", icon: ShieldCheck, to: "/compliance" as const },
+  { label: "Equipment", icon: Stethoscope, to: "/equipment" as const },
+  { label: "Repairs", icon: Wrench, to: "/repairs" as const, active: true, badge: "2" },
+  { label: "Buildings", icon: Building2, to: "/assets" as const },
 ];
 
-function EditTaskPage() {
-  const navigate = useNavigate();
+const governanceNav = [
+  { label: "Reports", icon: BarChart3, to: "/reports" as const },
+  { label: "Team", icon: Users, to: "/team" as const },
+  { label: "Audit log", icon: ScrollText, to: "/audit-log" as const },
+  { label: "Billing", icon: CreditCard, to: "/settings" as const },
+];
 
+function EditTicketPage() {
   return (
-    <div className="db-shell">
-      <aside className="db-sidebar">
-        <Link to="/dashboard" className="db-logo" aria-label="Kearly">
-          <svg width="28" height="28" viewBox="0 0 100 100" aria-hidden="true">
-            <rect x="5" y="5" width="40" height="40" rx="10" fill="#4A7C6F" />
-            <path d="M 55 5 L 95 5 L 95 45 Q 75 45 55 25 Z" fill="#4A7C6F" />
-            <rect x="5" y="55" width="40" height="40" rx="10" fill="#4A7C6F" />
-            <path d="M 55 55 Q 75 55 95 75 L 95 95 L 55 95 Z" fill="#4A7C6F" />
+    <div className="po-shell">
+      <aside className="po-sidebar">
+        <Link to="/dashboard" className="po-logo" aria-label="Kearly">
+          <svg width="26" height="26" viewBox="0 0 100 100" aria-hidden="true">
+            <rect x="5" y="5" width="40" height="40" rx="10" fill="#15803D" />
+            <path d="M 55 5 L 95 5 L 95 45 Q 75 45 55 25 Z" fill="#15803D" />
+            <rect x="5" y="55" width="40" height="40" rx="10" fill="#15803D" />
+            <path d="M 55 55 Q 75 55 95 75 L 95 95 L 55 95 Z" fill="#15803D" />
           </svg>
-          <span className="db-logo-text">
-            <span className="db-logo-name">KEARLY</span>
-            <span className="db-logo-tag">Compliance. Automated &amp; Simplified.</span>
+          <span className="po-logo-text">
+            <span className="po-logo-name">KEARLY</span>
+            <span className="po-logo-tag">Compliance. Automated &amp; Simplified.</span>
           </span>
         </Link>
 
-        <Link to="/compliance" className="at-back" aria-label="Back to compliance">
-          <ChevronLeft size={22} aria-hidden="true" />
-        </Link>
-
-        <nav className="db-nav" aria-label="Main navigation">
-          {navItems.map(({ label, icon: Icon, to, active }) => (
-            <Link key={label} to={to} className={`db-nav-item ${active ? "is-active" : ""}`}>
-              <Icon size={18} aria-hidden="true" />
+        <nav className="po-nav" aria-label="Main navigation">
+          <p className="po-nav-label">OVERVIEW</p>
+          {overviewNav.map(({ label, icon: Icon, to, active, badge }) => (
+            <Link key={label} to={to} className={`po-nav-item ${active ? "is-active" : ""}`}>
+              <Icon size={17} aria-hidden="true" />
               <span>{label}</span>
-              {active && <span className="db-nav-bar" aria-hidden="true" />}
+              {badge ? <span className="po-nav-badge">{badge}</span> : null}
+            </Link>
+          ))}
+
+          <p className="po-nav-label po-nav-label-gap">GOVERNANCE</p>
+          {governanceNav.map(({ label, icon: Icon, to }) => (
+            <Link key={label} to={to} className="po-nav-item">
+              <Icon size={17} aria-hidden="true" />
+              <span>{label}</span>
             </Link>
           ))}
         </nav>
 
-        <div className="db-user">
-          <span className="db-avatar" aria-hidden="true">
-            JD
-          </span>
-          <span className="db-user-meta">
-            <strong>Jane Doe</strong>
-            <small>Practice Admin</small>
-          </span>
+        <div className="po-sidebar-foot">
+          <Link to="/settings" className="po-nav-item">
+            <Settings size={17} aria-hidden="true" />
+            <span>Settings</span>
+          </Link>
+          <div className="po-user">
+            <span className="po-user-avatar" aria-hidden="true">
+              AR
+            </span>
+            <span className="po-user-text">
+              <span className="po-user-name">Alex Rowe</span>
+              <span className="po-user-role">Portfolio admin</span>
+            </span>
+          </div>
         </div>
       </aside>
 
-      <main className="db-main">
-        <header className="am-head">
-          <h1 className="db-title">Edit PPM Task</h1>
-          <p className="db-subtitle">Customise your Planned preventive maintenance (PPM) task.</p>
+      <main className="po-main">
+        <header className="po-topbar">
+          <div>
+            <h1 className="po-title">Repairs</h1>
+            <p className="po-subtitle">Active maintenance tickets &amp; repairs</p>
+          </div>
+          <div className="po-topbar-actions">
+            <div className="po-search">
+              <Search size={15} aria-hidden="true" />
+              <input type="search" placeholder="Search..." aria-label="Search tickets" />
+            </div>
+            <span className="po-chip">
+              <Calendar size={14} aria-hidden="true" />
+              Jul 2024
+            </span>
+            <Link to="/add-task" className="po-download">
+              <Plus size={15} aria-hidden="true" />
+              New Ticket
+            </Link>
+          </div>
         </header>
 
+        <nav className="et-crumbs" aria-label="Breadcrumb">
+          <Link to="/repairs">Repairs</Link>
+          <span aria-hidden="true">/</span>
+          <span className="et-crumb-current">Edit Ticket</span>
+        </nav>
+
         <form
-          className="at-card"
+          className="at-card et-card"
           onSubmit={(event) => {
             event.preventDefault();
-            void navigate({ to: "/compliance" });
           }}
         >
-          <h2 className="at-card-title">Task Details</h2>
-
-          <div className="at-grid">
-            <div className="at-field">
-              <label htmlFor="et-title">Title</label>
-              <input id="et-title" type="text" placeholder="Enter task title" />
-            </div>
-
-            <div className="at-field">
-              <label htmlFor="et-category">Category</label>
-              <select id="et-category" defaultValue="">
-                <option value="" disabled>
-                  Select category
-                </option>
-                <option value="hvac">HVAC</option>
-                <option value="fire">Fire Safety</option>
-                <option value="mechanical">Mechanical</option>
-                <option value="electrical">Electrical</option>
-                <option value="plumbing">Plumbing</option>
-                <option value="security">Security</option>
-              </select>
-            </div>
-
-            <div className="at-field">
-              <label htmlFor="et-equipment">Specific Equipment</label>
-              <select id="et-equipment" defaultValue="">
-                <option value="" disabled>
-                  Select equipment (Optional)
-                </option>
-                <option value="hvac-a">HVAC Unit — Building A</option>
-                <option value="fire-panel">Fire Alarm Panel — Main Hub</option>
-                <option value="elevator">Elevator — East Wing</option>
-                <option value="generator">Generator — Backup Power</option>
-              </select>
-            </div>
-
-            <div className="at-field">
-              <label htmlFor="et-note">Note</label>
-              <textarea id="et-note" rows={4} placeholder="Enter notes or instructions" />
-            </div>
-
-            <div className="at-field">
-              <label htmlFor="et-frequency">Frequency</label>
-              <select id="et-frequency" defaultValue="">
-                <option value="" disabled>
-                  Select frequency
-                </option>
-                <option value="12h">12 hrs</option>
-                <option value="3d">3 days</option>
-                <option value="7d">7 days</option>
-                <option value="14d">14 days</option>
-                <option value="monthly">Monthly</option>
-              </select>
-            </div>
-
-            <div className="at-field">
-              <label htmlFor="et-due">Due Date</label>
-              <input id="et-due" type="date" placeholder="Select due date" />
-            </div>
-
-            <div className="at-field">
-              <label htmlFor="et-notice">Notice Days</label>
-              <select id="et-notice" defaultValue="">
-                <option value="" disabled>
-                  Select notice days (1,2,...)
-                </option>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="7">7</option>
-                <option value="14">14</option>
-              </select>
-            </div>
-
-            <div className="at-field">
-              <label htmlFor="et-role">Assign Roles</label>
-              <select id="et-role" defaultValue="">
-                <option value="" disabled>
-                  Select role
-                </option>
-                <option value="admin">Practice Admin</option>
-                <option value="manager">Facility Manager</option>
-                <option value="engineer">Maintenance Engineer</option>
-                <option value="nurse">Nurse Lead</option>
-              </select>
-            </div>
+          <div className="et-card-head">
+            <h2 className="at-card-title et-title">Edit Ticket #4821</h2>
+            <span className="et-priority">P1 Priority</span>
           </div>
 
-          <div className="at-actions">
-            <Link to="/compliance" className="at-cancel">
+          <label className="at-field">
+            <span className="at-label">Ticket Title</span>
+            <input className="at-input" type="text" defaultValue="Communal heating failure" />
+          </label>
+
+          <div className="et-grid">
+            <label className="at-field">
+              <span className="at-label">Site</span>
+              <select className="at-input" defaultValue="riverside">
+                <option value="riverside">Riverside Court</option>
+                <option value="northgate">Northgate House</option>
+                <option value="kingsway">Kingsway Tower</option>
+                <option value="elmwood">Elmwood Court</option>
+                <option value="maple">Maple Business Park</option>
+                <option value="victoria">Victoria Wharf</option>
+              </select>
+            </label>
+
+            <label className="at-field">
+              <span className="at-label">Assigned To</span>
+              <select className="at-input" defaultValue="michael">
+                <option value="michael">Michael Finch</option>
+                <option value="sarah">Sarah Jones</option>
+                <option value="james">James Carter</option>
+                <option value="alex">Alex Rowe</option>
+                <option value="david">David Vance</option>
+              </select>
+            </label>
+
+            <label className="at-field">
+              <span className="at-label">Priority</span>
+              <select className="at-input" defaultValue="p1">
+                <option value="p1">P1 - Critical</option>
+                <option value="p2">P2 - High</option>
+                <option value="p3">P3 - Routine</option>
+              </select>
+            </label>
+
+            <label className="at-field">
+              <span className="at-label">Status</span>
+              <select className="at-input" defaultValue="open">
+                <option value="open">Open</option>
+                <option value="progress">In Progress</option>
+                <option value="closed">Closed</option>
+              </select>
+            </label>
+          </div>
+
+          <label className="at-field">
+            <span className="at-label">Description &amp; Notes</span>
+            <textarea
+              className="at-input at-textarea et-textarea"
+              rows={4}
+              defaultValue="Total boiler lockout reported on boiler #2. Affecting communal corridors and hot water loop supply. Resident callouts logged."
+            />
+          </label>
+
+          <div className="at-actions et-actions">
+            <Link to="/repairs" className="at-cancel">
               Cancel
             </Link>
-            <button type="submit" className="at-next">
+            <Link to="/repairs" className="at-next">
               Save Changes
-            </button>
+            </Link>
           </div>
         </form>
       </main>
