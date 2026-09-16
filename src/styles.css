@@ -5007,3 +5007,6 @@ a.am-menu-item { text-decoration: none; }
   .sc-cell { min-height: 84px; padding: 0.35rem; }
   .sc-event { font-size: 0.58rem; }
 }
+
+/* ===== Audit log (al-) ===== */
+.al-details { color: #6B7280; font-size: 0.82rem; }
