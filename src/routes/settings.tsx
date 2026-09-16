@@ -423,35 +423,87 @@ function SettingsPage() {
 
             {section === "Billing" && (
               <>
-                <h2 className="se-panel-title">Billing</h2>
-                <p className="se-panel-sub">Your current plan, payment method and invoice history</p>
+                <h2 className="se-panel-title">Billing &amp; Subscription Plan</h2>
+                <p className="se-panel-sub">
+                  View current licenses, active add-ons, invoice history, and manage payment methods
+                </p>
 
-                <div className="se-plan">
+                <div className="se-plan-card">
                   <div>
-                    <strong>Portfolio Plan</strong>
-                    <small>6 buildings · billed annually · renews 01 Jan 2025</small>
+                    <p className="se-plan-head">
+                      <strong>Professional Plan</strong>
+                      <span className="dc-expiry tone-green">Active Plan</span>
+                    </p>
+                    <p className="se-plan-desc">All-in-one compliance platform for commercial property portfolios.</p>
+                    <p className="se-plan-renew">
+                      Renews automatically on <strong>Jan 1, 2027</strong>
+                    </p>
                   </div>
-                  <span className="se-plan-price">£249 / mo</span>
+                  <div className="se-plan-cost">
+                    <span className="se-plan-amount">
+                      £249 <small>/ month</small>
+                    </span>
+                    <small>Billed annually (recurring)</small>
+                  </div>
                 </div>
 
-                <div className="se-fields">
-                  <div className="se-field">
-                    <label htmlFor="se-card">Card on File</label>
-                    <input id="se-card" type="text" defaultValue="Visa ending 4242" />
-                  </div>
-                  <div className="se-field">
-                    <label htmlFor="se-billing-email">Billing Email</label>
-                    <input id="se-billing-email" type="email" defaultValue="finance@kearlycompliance.com" />
+                <div className="se-pay-card">
+                  <span className="se-group-label">PAYMENT METHOD</span>
+                  <div className="se-pay-row">
+                    <span className="se-pay-brand" aria-hidden="true">
+                      VISA
+                    </span>
+                    <span className="se-pay-text">
+                      <strong>Visa Ending in •••• 4242</strong>
+                      <small>Expiry 12/28</small>
+                    </span>
+                    <button type="button" className="cp-modal-cancel se-pay-update">
+                      Update Details
+                    </button>
                   </div>
                 </div>
 
-                <div className="se-foot">
+                <span className="se-group-label se-modules-label">ACTIVE MODULES &amp; SUBSCRIPTIONS</span>
+                <div className="cl-table-wrap">
+                  <table className="cl-table">
+                    <thead>
+                      <tr>
+                        <th>Module / Add-on</th>
+                        <th>Cost Description</th>
+                        <th>Billing Date</th>
+                        <th>Status</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {[
+                        { name: "Compliance Core Module", cost: "Included in Professional Plan" },
+                        { name: "Repairs Tracking Add-on", cost: "£49 / month" },
+                        { name: "Document Vault Storage (Extra 10GB)", cost: "£19 / month" },
+                      ].map((mod) => (
+                        <tr key={mod.name}>
+                          <td className="cl-name">{mod.name}</td>
+                          <td className="al-details">{mod.cost}</td>
+                          <td className="rp-muted">Jan 1, 2027</td>
+                          <td>
+                            <span className="dc-expiry tone-green">Active</span>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+
+                <div className="se-billing-foot">
+                  <p className="se-plan-renew">
+                    Need custom options? <strong>Contact Enterprise Sales</strong>
+                  </p>
                   <button type="button" className="se-primary">
-                    Update Billing
+                    Upgrade Subscription Plan
                   </button>
                 </div>
               </>
             )}
+
           </section>
         </div>
       </main>
