@@ -17,6 +17,7 @@ import {
   Eye,
   Download,
   Trash2,
+  AlertTriangle,
   Stethoscope,
 } from "lucide-react";
 
@@ -294,15 +295,15 @@ function DocumentsPage() {
                     </td>
                     <td>
                       <div className="cl-row-actions">
-                        <button type="button" className="cl-icon" aria-label={`View ${doc.name}`}>
+                        <button type="button" className="cl-icon-btn" aria-label={`View ${doc.name}`}>
                           <Eye size={15} aria-hidden="true" />
                         </button>
-                        <button type="button" className="cl-icon" aria-label={`Download ${doc.name}`}>
+                        <button type="button" className="cl-icon-btn" aria-label={`Download ${doc.name}`}>
                           <Download size={15} aria-hidden="true" />
                         </button>
                         <button
                           type="button"
-                          className="cl-icon dc-del"
+                          className="cl-icon-btn dc-del"
                           aria-label={`Delete ${doc.name}`}
                           onClick={() => setPending(doc)}
                         >
@@ -334,21 +335,29 @@ function DocumentsPage() {
         <div className="cp-overlay" role="presentation" onClick={() => setPending(null)}>
           <div
             className="cp-modal"
-            role="dialog"
+            role="alertdialog"
             aria-modal="true"
             aria-labelledby="dc-del-title"
             onClick={(event) => event.stopPropagation()}
           >
-            <h2 id="dc-del-title">Delete Document</h2>
-            <p>
-              Are you sure you want to delete <strong>{pending.name}</strong>? This removes it from the compliance
-              record and cannot be undone.
+            <div className="cp-modal-head">
+              <span className="cp-modal-icon" aria-hidden="true">
+                <AlertTriangle size={26} />
+              </span>
+              <h2 className="cp-modal-title" id="dc-del-title">
+                Delete Document
+              </h2>
+            </div>
+            <p className="cp-modal-text">
+              Are you sure you want to delete {pending.name}?
+              <br />
+              This action cannot be undone.
             </p>
             <div className="cp-modal-actions">
-              <button type="button" className="cp-cancel" onClick={() => setPending(null)}>
+              <button type="button" className="cp-modal-cancel" onClick={() => setPending(null)}>
                 Cancel
               </button>
-              <button type="button" className="cp-confirm" onClick={() => setPending(null)}>
+              <button type="button" className="cp-modal-delete" onClick={() => setPending(null)}>
                 Delete
               </button>
             </div>
