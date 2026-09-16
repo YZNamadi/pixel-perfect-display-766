@@ -125,6 +125,9 @@ function SchedulePage() {
   const [view, setView] = useState<(typeof views)[number]>("Month");
   const [cursor, setCursor] = useState(() => new Date(today.getFullYear(), today.getMonth(), 1));
   const [selected, setSelected] = useState<{ key: string; event: Category } | null>(null);
+  const [addOpen, setAddOpen] = useState(false);
+  const [priority, setPriority] = useState<"Low" | "Medium" | "High">("High");
+  const [tag, setTag] = useState("Water Safety");
 
   const year = cursor.getFullYear();
   const month = cursor.getMonth();
