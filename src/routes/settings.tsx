@@ -190,48 +190,82 @@ function SettingsPage() {
             {section === "Notifications" && (
               <>
                 <h2 className="se-panel-title">Notification Preferences</h2>
-                <p className="se-panel-sub">Choose how and when Kearly alerts you about compliance activity</p>
+                <p className="se-panel-sub">
+                  Configure how and when you receive compliance alerts and system reports
+                </p>
 
-                <div className="se-fields">
-                  <div className="se-field">
-                    <label htmlFor="se-task-alerts">Task Reminders</label>
-                    <select id="se-task-alerts" defaultValue="both">
-                      <option value="email">Email</option>
-                      <option value="inapp">In-app only</option>
-                      <option value="both">Email and in-app</option>
-                      <option value="off">Turn off</option>
-                    </select>
+                <p className="se-group-label">SYSTEM ALERT PREFERENCES</p>
+                <div className="se-toggle-row">
+                  <div className="se-toggle-text">
+                    <p className="se-toggle-title">Weekly Compliance Digest</p>
+                    <p className="se-toggle-sub">
+                      Receive a summary of all pending audits and complete tasks every Monday morning
+                    </p>
                   </div>
-                  <div className="se-field">
-                    <label htmlFor="se-notice">Advance Notice</label>
-                    <select id="se-notice" defaultValue="7">
-                      <option value="1">1 day before</option>
-                      <option value="3">3 days before</option>
-                      <option value="7">7 days before</option>
-                      <option value="14">14 days before</option>
-                    </select>
+                  <button
+                    type="button"
+                    role="switch"
+                    aria-checked={digest}
+                    aria-label="Weekly Compliance Digest"
+                    className={`se-switch ${digest ? "is-on" : ""}`}
+                    onClick={() => setDigest(!digest)}
+                  >
+                    <span className="se-switch-knob" aria-hidden="true" />
+                  </button>
+                </div>
+                <div className="se-toggle-row">
+                  <div className="se-toggle-text">
+                    <p className="se-toggle-title">Upcoming Audits &amp; PPM Reminders</p>
+                    <p className="se-toggle-sub">
+                      Get notified 30 days prior to a scheduled compliance event expiration
+                    </p>
                   </div>
-                  <div className="se-field">
-                    <label htmlFor="se-digest">Weekly Digest</label>
-                    <select id="se-digest" defaultValue="monday">
-                      <option value="monday">Every Monday</option>
-                      <option value="friday">Every Friday</option>
-                      <option value="off">Turn off</option>
-                    </select>
-                  </div>
-                  <div className="se-field">
-                    <label htmlFor="se-overdue">Overdue Escalation</label>
-                    <select id="se-overdue" defaultValue="manager">
-                      <option value="manager">Notify facility manager</option>
-                      <option value="admin">Notify portfolio admin</option>
-                      <option value="off">No escalation</option>
-                    </select>
-                  </div>
+                  <button
+                    type="button"
+                    role="switch"
+                    aria-checked={reminders}
+                    aria-label="Upcoming Audits and PPM Reminders"
+                    className={`se-switch ${reminders ? "is-on" : ""}`}
+                    onClick={() => setReminders(!reminders)}
+                  >
+                    <span className="se-switch-knob" aria-hidden="true" />
+                  </button>
                 </div>
 
-                <div className="se-foot">
+                <p className="se-group-label">EMERGENCY ALERTS &amp; CRITICAL FAILURES</p>
+                <div className="se-toggle-row">
+                  <div className="se-toggle-text">
+                    <p className="se-toggle-title">Direct SMS Alerts</p>
+                    <p className="se-toggle-sub">
+                      Send high-priority SMS messages immediately upon a failed safety inspection
+                    </p>
+                  </div>
+                  <button
+                    type="button"
+                    role="switch"
+                    aria-checked={sms}
+                    aria-label="Direct SMS Alerts"
+                    className={`se-switch ${sms ? "is-on" : ""}`}
+                    onClick={() => setSms(!sms)}
+                  >
+                    <span className="se-switch-knob" aria-hidden="true" />
+                  </button>
+                </div>
+
+                <p className="se-group-label">DELIVERY FREQUENCY</p>
+                <div className="se-field se-field-wide">
+                  <label htmlFor="se-frequency">Customize Email Frequency</label>
+                  <select id="se-frequency" defaultValue="daily">
+                    <option value="instant">Instant</option>
+                    <option value="daily">Daily Digest</option>
+                    <option value="weekly">Weekly Digest</option>
+                    <option value="monthly">Monthly Summary</option>
+                  </select>
+                </div>
+
+                <div className="se-foot se-foot-divided">
                   <button type="button" className="se-primary">
-                    Save Preferences
+                    Save Global Changes
                   </button>
                 </div>
               </>
