@@ -276,39 +276,103 @@ function SettingsPage() {
 
             {section === "Teams" && (
               <>
-                <h2 className="se-panel-title">Team Credentials</h2>
-                <p className="se-panel-sub">Review who has access to your portfolio and their permission level</p>
-
-                <ul className="se-team">
-                  {[
-                    { name: "Alex Rowe", email: "alex.rowe@kearlycompliance.com", role: "Portfolio admin" },
-                    { name: "Sarah Jones", email: "sarah.jones@riverside.nhs.uk", role: "Facility Manager" },
-                    { name: "Michael Finch", email: "michael.finch@riverside.nhs.uk", role: "Engineer" },
-                    { name: "James Carter", email: "james.carter@riverside.nhs.uk", role: "Viewer" },
-                  ].map((member) => (
-                    <li key={member.email} className="se-team-row">
-                      <span className="se-team-avatar" aria-hidden="true">
-                        {member.name
-                          .split(" ")
-                          .map((part) => part[0])
-                          .join("")}
-                      </span>
-                      <span className="se-team-text">
-                        <strong>{member.name}</strong>
-                        <small>{member.email}</small>
-                      </span>
-                      <span className="se-team-role">{member.role}</span>
-                    </li>
-                  ))}
-                </ul>
-
-                <div className="se-foot">
-                  <Link to="/team" className="se-primary">
-                    Invite Team Member
-                  </Link>
+                <div className="se-team-head">
+                  <div className="se-team-tabs" role="tablist" aria-label="Team type">
+                    {(["External Labour", "Internal"] as const).map((tab) => (
+                      <button
+                        key={tab}
+                        type="button"
+                        role="tab"
+                        aria-selected={teamTab === tab}
+                        className={`se-team-tab ${teamTab === tab ? "is-active" : ""}`}
+                        onClick={() => setTeamTab(tab)}
+                      >
+                        {tab}
+                      </button>
+                    ))}
+                  </div>
+                  {teamTab === "External Labour" ? (
+                    <button type="button" className="se-primary se-team-add">
+                      <Plus size={15} aria-hidden="true" />
+                      Add Contractor
+                    </button>
+                  ) : (
+                    <Link to="/team" className="se-primary se-team-add">
+                      <Plus size={15} aria-hidden="true" />
+                      Invite Team Member
+                    </Link>
+                  )}
                 </div>
+
+                {teamTab === "External Labour" ? (
+                  <div className="cl-table-wrap">
+                    <table className="cl-table">
+                      <thead>
+                        <tr>
+                          <th>NAME</th>
+                          <th>COMPANY</th>
+                          <th>STATUS</th>
+                          <th>ASSIGNED TICKETS</th>
+                          <th>DOCUMENTS</th>
+                          <th>ACTION</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {contractors.map((c) => (
+                          <tr key={c.name}>
+                            <td className="cl-name">{c.name}</td>
+                            <td className="al-details">{c.company}</td>
+                            <td>
+                              <span className={`dc-expiry ${c.active ? "tone-green" : "tone-muted"}`}>
+                                {c.active ? "Active" : "Inactive"}
+                              </span>
+                            </td>
+                            <td className="al-details">{c.tickets} active tickets</td>
+                            <td>
+                              <span className="tr-cert">
+                                <FileText size={14} aria-hidden="true" />
+                                {c.documents} Verified
+                              </span>
+                            </td>
+                            <td>
+                              <div className="cl-row-actions">
+                                <button type="button" className="cl-icon-btn" aria-label={`Edit ${c.name}`}>
+                                  <Pencil size={15} aria-hidden="true" />
+                                </button>
+                              </div>
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                ) : (
+                  <ul className="se-team">
+                    {[
+                      { name: "Alex Rowe", email: "alex.rowe@kearlycompliance.com", role: "Portfolio admin" },
+                      { name: "Sarah Jones", email: "sarah.jones@riverside.nhs.uk", role: "Facility Manager" },
+                      { name: "Michael Finch", email: "michael.finch@riverside.nhs.uk", role: "Engineer" },
+                      { name: "James Carter", email: "james.carter@riverside.nhs.uk", role: "Viewer" },
+                    ].map((member) => (
+                      <li key={member.email} className="se-team-row">
+                        <span className="se-team-avatar" aria-hidden="true">
+                          {member.name
+                            .split(" ")
+                            .map((part) => part[0])
+                            .join("")}
+                        </span>
+                        <span className="se-team-text">
+                          <strong>{member.name}</strong>
+                          <small>{member.email}</small>
+                        </span>
+                        <span className="se-team-role">{member.role}</span>
+                      </li>
+                    ))}
+                  </ul>
+                )}
               </>
             )}
+
 
             {section === "Billing" && (
               <>
