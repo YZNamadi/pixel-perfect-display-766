@@ -20,6 +20,7 @@ import {
   X,
   Bell,
   UserCircle2,
+  Stethoscope,
 } from "lucide-react";
 
 export const Route = createFileRoute("/schedule")({

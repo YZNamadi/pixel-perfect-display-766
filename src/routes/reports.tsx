@@ -13,6 +13,7 @@ import {
   Calendar,
   ChevronDown,
   Download,
+  Stethoscope,
 } from "lucide-react";
 
 export const Route = createFileRoute("/reports")({

@@ -17,6 +17,7 @@ import {
   Check,
   Eye,
   AlertTriangle,
+  Stethoscope,
 } from "lucide-react";
 
 export const Route = createFileRoute("/compliance")({

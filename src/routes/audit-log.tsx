@@ -17,6 +17,7 @@ import {
   BadgeCheck,
   X,
   AlertTriangle,
+  Stethoscope,
 } from "lucide-react";
 
 export const Route = createFileRoute("/audit-log")({

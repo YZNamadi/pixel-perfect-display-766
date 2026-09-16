@@ -12,6 +12,7 @@ import {
   Users,
   User,
   Bell,
+  Stethoscope,
 } from "lucide-react";
 
 export const Route = createFileRoute("/settings")({

@@ -11,6 +11,7 @@ import {
   Users,
   Search,
   ArrowRight,
+  Stethoscope,
 } from "lucide-react";
 
 export const Route = createFileRoute("/assets")({
