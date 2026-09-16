@@ -167,9 +167,9 @@ function ReportsPage() {
           <Link to="/documents" role="tab" aria-selected={false} className="rr-tab">
             Documents
           </Link>
-          <button type="button" role="tab" aria-selected={false} className="rr-tab">
+          <Link to="/training" role="tab" aria-selected={false} className="rr-tab">
             Training
-          </button>
+          </Link>
         </div>
 
         <div className="rr-stats">

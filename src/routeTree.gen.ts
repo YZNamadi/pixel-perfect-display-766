@@ -37,6 +37,7 @@ import { Route as SignupRouteImport } from './routes/signup'
 import { Route as SiteRouteImport } from './routes/site'
 import { Route as SplashRouteImport } from './routes/splash'
 import { Route as TeamRouteImport } from './routes/team'
+import { Route as TrainingRouteImport } from './routes/training'
 import { Route as VerifyRouteImport } from './routes/verify'
 
 const IndexRoute = IndexRouteImport.update({
@@ -179,6 +180,11 @@ const TeamRoute = TeamRouteImport.update({
   path: '/team',
   getParentRoute: () => rootRouteImport,
 } as any)
+const TrainingRoute = TrainingRouteImport.update({
+  id: '/training',
+  path: '/training',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const VerifyRoute = VerifyRouteImport.update({
   id: '/verify',
   path: '/verify',
@@ -214,6 +220,7 @@ export interface FileRoutesByFullPath {
   '/site': typeof SiteRoute
   '/splash': typeof SplashRoute
   '/team': typeof TeamRoute
+  '/training': typeof TrainingRoute
   '/verify': typeof VerifyRoute
 }
 export interface FileRoutesByTo {
@@ -245,6 +252,7 @@ export interface FileRoutesByTo {
   '/site': typeof SiteRoute
   '/splash': typeof SplashRoute
   '/team': typeof TeamRoute
+  '/training': typeof TrainingRoute
   '/verify': typeof VerifyRoute
 }
 export interface FileRoutesById {
@@ -277,6 +285,7 @@ export interface FileRoutesById {
   '/site': typeof SiteRoute
   '/splash': typeof SplashRoute
   '/team': typeof TeamRoute
+  '/training': typeof TrainingRoute
   '/verify': typeof VerifyRoute
 }
 export interface FileRouteTypes {
@@ -310,6 +319,7 @@ export interface FileRouteTypes {
     | '/site'
     | '/splash'
     | '/team'
+    | '/training'
     | '/verify'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -341,6 +351,7 @@ export interface FileRouteTypes {
     | '/site'
     | '/splash'
     | '/team'
+    | '/training'
     | '/verify'
   id:
     | '__root__'
@@ -372,6 +383,7 @@ export interface FileRouteTypes {
     | '/site'
     | '/splash'
     | '/team'
+    | '/training'
     | '/verify'
   fileRoutesById: FileRoutesById
 }
@@ -404,6 +416,7 @@ export interface RootRouteChildren {
   SiteRoute: typeof SiteRoute
   SplashRoute: typeof SplashRoute
   TeamRoute: typeof TeamRoute
+  TrainingRoute: typeof TrainingRoute
   VerifyRoute: typeof VerifyRoute
 }
 
@@ -605,6 +618,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TeamRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/training': {
+      id: '/training'
+      path: '/training'
+      fullPath: '/training'
+      preLoaderRoute: typeof TrainingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/verify': {
       id: '/verify'
       path: '/verify'
@@ -644,6 +664,7 @@ const rootRouteChildren: RootRouteChildren = {
   SiteRoute: SiteRoute,
   SplashRoute: SplashRoute,
   TeamRoute: TeamRoute,
+  TrainingRoute: TrainingRoute,
   VerifyRoute: VerifyRoute,
 }
 export const routeTree = rootRouteImport

@@ -224,9 +224,9 @@ function DocumentsPage() {
           <Link to="/documents" role="tab" aria-selected className="rr-tab is-active">
             Documents
           </Link>
-          <button type="button" role="tab" aria-selected={false} className="rr-tab">
+          <Link to="/training" role="tab" aria-selected={false} className="rr-tab">
             Training
-          </button>
+          </Link>
         </div>
 
         <div className="dc-toolbar">
