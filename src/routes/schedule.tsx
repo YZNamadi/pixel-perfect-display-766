@@ -18,8 +18,9 @@ import {
   Trash2,
   MoreVertical,
   X,
-  Bell,
-  UserCircle2,
+  XCircle,
+  UploadCloud,
+  Check,
   Stethoscope,
 } from "lucide-react";
 
