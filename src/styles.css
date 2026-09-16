@@ -4492,3 +4492,42 @@ a.am-menu-item { text-decoration: none; }
   padding-top: 1.25rem;
   border-top: 1px solid #EEF2F1;
 }
+
+/* Team invite step */
+.tm-head {
+  display: grid;
+  grid-template-columns: 1fr 240px;
+  gap: 0.75rem;
+  margin-bottom: -0.25rem;
+}
+.tm-row {
+  display: grid;
+  grid-template-columns: 1fr 240px;
+  gap: 0.75rem;
+}
+.tm-add {
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: none;
+  border: none;
+  padding: 0.25rem 0;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #0E9F6E;
+  cursor: pointer;
+}
+.tm-add:hover { color: #0B6B5E; }
+.tm-actions {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  margin-top: 0.5rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid #EEF2F1;
+}
+@media (max-width: 720px) {
+  .tm-head { display: none; }
+  .tm-row { grid-template-columns: 1fr; }
+}
