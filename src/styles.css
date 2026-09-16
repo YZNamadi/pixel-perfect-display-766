@@ -133,26 +133,7 @@
     font-weight: 700;
   }
 
-  .facility-field,
-
-  .facility-field input,
-
-  .facility-field input::placeholder,
-
-  .facility-field input:focus-visible,
-
-  .facility-continue:focus-visible,
-
 }
-
-@media (max-width: 760px) {
-
-}
-
-@media (max-width: 520px) {
-
-}
-
 @layer components {
 
   .site-step.is-completed .site-step-circle,
@@ -168,28 +149,7 @@
     font-weight: 700;
   }
 
-  .site-field label,
-
-  .site-field input,
-  .site-field textarea,
-
-  .site-field input::placeholder,
-
-  .site-field input:focus-visible,
-  .site-field textarea:focus-visible,
-
-  .site-continue:focus-visible,
-  .site-category:focus-visible,
-
 }
-
-@media (max-width: 760px) {
-
-}
-
-@media (max-width: 520px) {
-}
-
 @layer components {
 
   .import-step.is-completed .import-step-circle,
@@ -212,14 +172,6 @@
   }
 
 }
-
-@media (max-width: 760px) {
-
-}
-
-@media (max-width: 520px) {
-}
-
 @layer components {
 
   .team-step.is-completed .team-step-circle,
@@ -244,21 +196,6 @@
     font-weight: 700;
   }
 }
-
-@media (max-width: 760px) {
-
-}
-
-@media (max-width: 520px) {
-}
-
-
-@media (max-width: 768px) {
-}
-
-@media (max-width: 480px) {
-}
-
 @layer components {
 
   .ob-dot.is-active {
@@ -267,37 +204,13 @@
     width: 1.5rem;
   }
 }
-
-@media (max-width: 768px) {
-}
-
-@media (max-width: 480px) {
-}
-
-@layer components {
-
-  @media (max-width: 1024px) {
-  }
-
-  @media (max-width: 640px) {
-  }
-}
-
 @layer components {
 
   .si-tab.is-active {
     background: #2f8f63;
     color: #ffffff;
   }
-
-  @media (max-width: 480px) {
-  }
-
   .si-or::before,
-
-  @media (max-width: 640px) {
-  }
-
 }
 
 /* ===== Facility profile split-screen (/facility) ===== */
@@ -592,31 +505,11 @@
 }
 
 .ud-step.is-active .ud-step-circle { background: #4A9B7A; color: #ffffff; }
-
-@media (max-width: 600px) {
-}
-
-@media (max-width: 600px) {
-}
-
-@media (max-width: 600px) {
-}
-
 .db-nav-item.is-active { background: #E6F3EC; color: #2F6E55; font-weight: 600; }
-
-@media (max-width: 1100px) {
-}
-@media (max-width: 780px) {
-}
-
 .am-status.is-active { background: #E4F3E9; color: #2F8F5B; }
 
 .am-page.is-current { background: #2F8F5B; border-color: #2F8F5B; color: #ffffff; }
 .am-page:hover:not(.is-current) { background: #F1F8F4; }
-
-@media (max-width: 780px) {
-}
-
 .cp-tab.is-active { color: #2D3748; }
 .cp-tab.is-active::after {
   content: ""; position: absolute; left: 0; right: 0; bottom: 0;
@@ -695,10 +588,6 @@
 }
 
 .ps-view.is-active { background: #CFE7D8; color: #234E3B; }
-
-@media (max-width: 900px) {
-}
-
 @layer components {
   /* Homepage (hp-) */
   .hp-page {
@@ -2032,9 +1921,6 @@
 .et-title { margin: 0; }
 .et-textarea { min-height: 104px; }
 .et-actions { padding-top: 1.3rem; border-top: 1px solid #E5E7EB; }
-@media (max-width: 720px) {
-}
-
 /* ==== Building detail (bd-) ==== */
 .bd-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; flex-wrap: wrap; margin-bottom: 1.5rem; }
 .bd-title-row { display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
