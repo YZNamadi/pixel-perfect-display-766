@@ -1,4 +1,6 @@
+import { useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
+
 import {
   LayoutDashboard,
   ShieldCheck,
@@ -12,6 +14,7 @@ import {
   Search,
   ChevronLeft,
   ChevronRight,
+  ArrowLeft,
 } from "lucide-react";
 
 export const Route = createFileRoute("/add-task")({
@@ -51,13 +54,20 @@ const governanceNav = [
 ];
 
 const steps = [
-  { n: 1, label: "Task Details", active: true },
+  { n: 1, label: "Task Details" },
   { n: 2, label: "Schedule" },
   { n: 3, label: "Assignment" },
 ];
 
+const noticeDays = [1, 3, 5, 7, 21];
+
+
 function AddTaskPage() {
+  const [step, setStep] = useState(1);
+  const [notice, setNotice] = useState(7);
+
   return (
+
     <div className="po-shell">
       <aside className="po-sidebar">
         <Link to="/dashboard" className="po-logo" aria-label="Kearly">
@@ -128,8 +138,8 @@ function AddTaskPage() {
         </header>
 
         <ol className="at-steps">
-          {steps.map(({ n, label, active }, index) => (
-            <li key={label} className={`at-step ${active ? "is-active" : ""}`}>
+          {steps.map(({ n, label }, index) => (
+            <li key={label} className={`at-step ${n <= step ? "is-active" : ""}`}>
               <span className="at-step-num">{n}</span>
               <span className="at-step-label">{label}</span>
               {index < steps.length - 1 && <ChevronRight size={14} className="at-step-sep" aria-hidden="true" />}
@@ -143,50 +153,108 @@ function AddTaskPage() {
             event.preventDefault();
           }}
         >
-          <h2 className="at-card-title">Add New PPM Task</h2>
+          {step === 1 ? (
+            <>
+              <h2 className="at-card-title">Add New PPM Task</h2>
 
-          <label className="at-field">
-            <span className="at-label">Task Title</span>
-            <input className="at-input" type="text" placeholder="e.g. Annual Fire Risk Assessment" />
-          </label>
+              <label className="at-field">
+                <span className="at-label">Task Title</span>
+                <input className="at-input" type="text" placeholder="e.g. Annual Fire Risk Assessment" />
+              </label>
 
-          <label className="at-field">
-            <span className="at-label">Category</span>
-            <select className="at-input" defaultValue="fire">
-              <option value="fire">Fire &amp; General Safety</option>
-              <option value="electrical">Electrical Systems</option>
-              <option value="hvac">HVAC &amp; Ventilation</option>
-              <option value="water">Water &amp; Plumbing</option>
-              <option value="structural">Structural &amp; Building Fabric</option>
-              <option value="lifts">Lifts &amp; Escalators</option>
-              <option value="gas">Gas &amp; Boiler Systems</option>
-              <option value="lighting">Emergency Lighting</option>
-            </select>
+              <label className="at-field">
+                <span className="at-label">Category</span>
+                <select className="at-input" defaultValue="fire">
+                  <option value="fire">Fire &amp; General Safety</option>
+                  <option value="electrical">Electrical Systems</option>
+                  <option value="hvac">HVAC &amp; Ventilation</option>
+                  <option value="water">Water &amp; Plumbing</option>
+                  <option value="structural">Structural &amp; Building Fabric</option>
+                  <option value="lifts">Lifts &amp; Escalators</option>
+                  <option value="gas">Gas &amp; Boiler Systems</option>
+                  <option value="lighting">Emergency Lighting</option>
+                </select>
+              </label>
 
-          </label>
+              <label className="at-field">
+                <span className="at-label">Specific Equipment / Location (Optional)</span>
+                <input className="at-input" type="text" placeholder="e.g. Main Plant Room, Block B Boiler" />
+              </label>
 
-          <label className="at-field">
-            <span className="at-label">Specific Equipment / Location (Optional)</span>
-            <input className="at-input" type="text" placeholder="e.g. Main Plant Room, Block B Boiler" />
-          </label>
+              <label className="at-field">
+                <span className="at-label">Compliance Notes</span>
+                <textarea
+                  className="at-input at-textarea"
+                  rows={4}
+                  placeholder="Please record any observations or recommended remedial actions from prior tests..."
+                />
+              </label>
 
-          <label className="at-field">
-            <span className="at-label">Compliance Notes</span>
-            <textarea
-              className="at-input at-textarea"
-              rows={4}
-              placeholder="Please record any observations or recommended remedial actions from prior tests..."
-            />
-          </label>
+              <div className="at-actions">
+                <Link to="/compliance" className="at-cancel">
+                  Cancel
+                </Link>
+                <button type="button" className="at-next" onClick={() => setStep(2)}>
+                  Next Step
+                </button>
+              </div>
+            </>
+          ) : (
+            <>
+              <h2 className="at-card-title">Schedule Configuration</h2>
 
-          <div className="at-actions">
-            <Link to="/compliance" className="at-cancel">
-              Cancel
-            </Link>
-            <Link to="/compliance" className="at-next">
-              Next Step
-            </Link>
-          </div>
+              <label className="at-field">
+                <span className="at-label">Frequency</span>
+                <select className="at-input" defaultValue="annually">
+                  <option value="weekly">Weekly</option>
+                  <option value="monthly">Monthly</option>
+                  <option value="quarterly">Quarterly</option>
+                  <option value="biannually">Every 6 Months</option>
+                  <option value="annually">Annually</option>
+                  <option value="biennially">Every 2 Years</option>
+                </select>
+              </label>
+
+              <label className="at-field">
+                <span className="at-label">First Due Date</span>
+                <input className="at-input" type="text" defaultValue="15 Jul 2024" />
+              </label>
+
+              <div className="at-field">
+                <span className="at-label">Advance Notice (Days)</span>
+                <p className="at-hint">How many days before the due date should assignees be notified?</p>
+                <div className="at-notice" role="group" aria-label="Advance notice days">
+                  {noticeDays.map((day) => (
+                    <button
+                      key={day}
+                      type="button"
+                      className={`at-notice-btn ${notice === day ? "is-active" : ""}`}
+                      aria-pressed={notice === day}
+                      onClick={() => setNotice(day)}
+                    >
+                      {day}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              <div className="at-actions at-actions-split">
+                <button type="button" className="at-back-step" onClick={() => setStep(1)}>
+                  <ArrowLeft size={15} aria-hidden="true" />
+                  Back
+                </button>
+                <div className="at-actions-right">
+                  <Link to="/compliance" className="at-cancel">
+                    Cancel
+                  </Link>
+                  <Link to="/compliance" className="at-next">
+                    Next Step
+                  </Link>
+                </div>
+              </div>
+            </>
+          )}
+
         </form>
       </main>
     </div>
