@@ -60,7 +60,11 @@ const noticeDays = [1, 3, 5, 7, 21];
 
 
 function AddTaskPage() {
+  const [step, setStep] = useState(1);
+  const [notice, setNotice] = useState(7);
+
   return (
+
     <div className="po-shell">
       <aside className="po-sidebar">
         <Link to="/dashboard" className="po-logo" aria-label="Kearly">
