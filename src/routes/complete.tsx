@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
+import { Check } from "lucide-react";
 
 export const Route = createFileRoute("/complete")({
   head: () => ({
@@ -23,8 +24,6 @@ export const Route = createFileRoute("/complete")({
   component: CompletePage,
 });
 
-const steps = ["Account", "Facility", "Site", "Import", "Team", "Complete"];
-
 const doneTasks = ["Profile created", "First site added", "Data imported", "Team invited"];
 
 const pendingTasks = [
@@ -42,79 +41,95 @@ function CompletePage() {
     );
 
   return (
-    <main className="complete-page">
-      <div className="complete-watermark" aria-hidden="true">
-        <span className="complete-watermark-petal complete-wm-one" />
-        <span className="complete-watermark-petal complete-wm-two" />
-        <span className="complete-watermark-petal complete-wm-three" />
-        <span className="complete-watermark-petal complete-wm-four" />
-      </div>
+    <main className="fp-page">
+      <section className="fp-panel" aria-label="Kearly onboarding">
+        <div className="fp-panel-decor" aria-hidden="true">
+          <span className="fp-circle fp-circle-one" />
+          <span className="fp-circle fp-circle-two" />
+          <span className="fp-circle fp-circle-three" />
+        </div>
+        <div className="fp-panel-content">
+          <h2 className="fp-panel-title">The simplest way to manage your compliance</h2>
+          <p className="fp-panel-text">
+            Set up your facility profile to unlock smart scheduling, compliance templates, and
+            team management tools - all in one place.
+          </p>
+          <div>
+            <p className="fp-trusted-label">Trusted by leading healthcare facilities</p>
+            <ul className="fp-badges">
+              <li>NHS</li>
+              <li>CQC</li>
+              <li>GDPR</li>
+              <li>ISO 27001</li>
+            </ul>
+          </div>
+        </div>
+      </section>
 
-      <nav className="complete-stepper" aria-label="Setup progress">
-        {steps.map((step, index) => {
-          const isCompleted = index < 5;
-          const isActive = index === 5;
+      <section className="fp-main">
+        <nav className="fp-steps" aria-label="Progress">
+          {["Account", "Facility", "Site", "Import", "Team"].map((label) => (
+            <span className="fp-step fp-step-done" key={label}>
+              <span className="fp-step-mark fp-step-mark-done">
+                <Check size={13} strokeWidth={3} aria-hidden="true" />
+              </span>
+              {label}
+            </span>
+          ))}
+          <span className="fp-step fp-step-active" aria-current="step">
+            <span className="fp-step-mark fp-step-mark-active">6</span>
+            Complete
+          </span>
+        </nav>
 
-          return (
-            <div className="complete-step-wrap" key={step}>
-              <div
-                className={`complete-step ${isCompleted ? "is-completed" : ""} ${isActive ? "is-active" : ""}`}
-                aria-current={isActive ? "step" : undefined}
-              >
-                <span className="complete-step-circle">{isCompleted ? "✓" : index + 1}</span>
-                <span className="complete-step-label">{step}</span>
-              </div>
-              {index < steps.length - 1 && <span className="complete-step-line is-completed" />}
-            </div>
-          );
-        })}
-      </nav>
+        <div className="fp-body cm-body">
+          <h1 className="fp-heading cm-heading">You are almost ready!</h1>
+          <p className="fp-sub cm-sub">Complete these steps to get the most out of Kearly.</p>
 
-      <div className="complete-content">
-        <header className="complete-header">
-          <h1>You are almost ready!</h1>
-          <p>Complete these steps to get the most out of Kearly.</p>
-        </header>
-
-        <section className="complete-card" aria-label="Setup checklist">
-          <ul className="complete-list">
-            {doneTasks.map((task) => (
-              <li className="complete-item is-done" key={task}>
-                <span className="complete-check" aria-hidden="true">
-                  ✓
-                </span>
-                <span className="complete-item-label">{task}</span>
-                <span className="complete-badge">Done</span>
-              </li>
-            ))}
-
-            {pendingTasks.map((task) => (
-              <li className="complete-item" key={task}>
-                <button
-                  type="button"
-                  className={`complete-toggle ${checked.includes(task) ? "is-checked" : ""}`}
-                  aria-pressed={checked.includes(task)}
-                  onClick={() => toggle(task)}
-                >
-                  <span className="complete-circle" aria-hidden="true">
-                    {checked.includes(task) ? "✓" : ""}
+          <div className="fp-card cm-card">
+            <ul className="cm-list">
+              {doneTasks.map((task) => (
+                <li className="cm-item" key={task}>
+                  <span className="cm-check" aria-hidden="true">
+                    <Check size={12} strokeWidth={3} />
                   </span>
-                  <span className="complete-item-label is-pending">{task}</span>
-                </button>
-              </li>
-            ))}
-          </ul>
+                  <span className="cm-label">{task}</span>
+                  <span className="cm-badge">DONE</span>
+                </li>
+              ))}
 
-          <div className="complete-actions">
-            <Link className="complete-primary" to="/dashboard-welcome">
+              {pendingTasks.map((task) => {
+                const isChecked = checked.includes(task);
+                return (
+                  <li className="cm-item" key={task}>
+                    <button
+                      type="button"
+                      className="cm-toggle"
+                      aria-pressed={isChecked}
+                      onClick={() => toggle(task)}
+                    >
+                      <span
+                        className={`cm-circle ${isChecked ? "is-checked" : ""}`}
+                        aria-hidden="true"
+                      >
+                        {isChecked ? <Check size={12} strokeWidth={3} /> : null}
+                      </span>
+                      <span className="cm-label cm-label-pending">{task}</span>
+                    </button>
+                  </li>
+                );
+              })}
+            </ul>
+
+            <Link className="fp-continue" to="/dashboard-welcome">
               Go to Dashboard
             </Link>
-            <Link className="complete-secondary" to="/">
+            <Link className="fp-skip" to="/onboarding">
               Start guided walkthrough
             </Link>
           </div>
-        </section>
-      </div>
+        </div>
+      </section>
     </main>
   );
 }
