@@ -319,57 +319,131 @@ function SchedulePage() {
       </main>
 
       {selected && (
-        <div className="ps-overlay" role="presentation" onClick={() => setSelected(null)}>
+        <div className="cp-overlay" role="presentation" onClick={() => setSelected(null)}>
           <div
-            className="ps-popover"
+            className="sd-modal"
             role="dialog"
             aria-modal="true"
             aria-label={selected.event.title}
             onClick={(event) => event.stopPropagation()}
           >
-            <div className="ps-pop-actions">
-              <button
-                type="button"
-                className="ps-pop-btn"
-                aria-label="Edit event"
-                onClick={() => {
-                  setEditTag(tagForTone[selected.event.tone]);
-                  setEditPriority("Medium");
-                  setEditNotice(7);
-                  setEditTarget(selected.event);
-                  setSelected(null);
-                }}
-              >
-                <Pencil size={18} aria-hidden="true" />
-              </button>
-
-              <button type="button" className="ps-pop-btn" aria-label="Delete event">
-                <Trash2 size={18} aria-hidden="true" />
-              </button>
-              <button type="button" className="ps-pop-btn" aria-label="More options">
-                <MoreVertical size={18} aria-hidden="true" />
-              </button>
-              <button type="button" className="ps-pop-close" aria-label="Close" onClick={() => setSelected(null)}>
-                <X size={20} aria-hidden="true" />
+            <div className="sd-head">
+              <div className="sd-badges">
+                <span className={`sc-tag is-${selected.event.tone}`}>{selected.event.tag}</span>
+                <span className="sd-overdue">OVERDUE</span>
+              </div>
+              <button type="button" className="sd-close" aria-label="Close" onClick={() => setSelected(null)}>
+                <XCircle size={20} aria-hidden="true" />
               </button>
             </div>
-            <div className="ps-pop-body">
-              <p className="ps-pop-row">
-                <span className={`sc-tag is-${selected.event.tone}`}>{selected.event.tag}</span>
-                <span className="ps-pop-title">{selected.event.title}</span>
+
+            <h2 className="sd-title">{selected.event.title}</h2>
+            <p className="sd-meta">Created by System Automation on Jul 1, 2024</p>
+
+            <div className="sd-grid">
+              <div className="sd-cell">
+                <span className="sd-label">ASSIGNED TO</span>
+                <span className="sd-value sd-person">
+                  <span className="cl-avatar" aria-hidden="true">
+                    MA
+                  </span>
+                  {selected.event.owner}
+                </span>
+              </div>
+              <div className="sd-cell">
+                <span className="sd-label">DUE DATE</span>
+                <span className="sd-value sd-due">Jul 10, 2024 (2 days ago)</span>
+              </div>
+              <div className="sd-cell">
+                <span className="sd-label">PRIORITY</span>
+                <span className="sd-value sd-priority">
+                  <span className="sd-dot" aria-hidden="true" />
+                  High Importance
+                </span>
+              </div>
+              <div className="sd-cell">
+                <span className="sd-label">REFERENCE REGULATION</span>
+                <span className="sd-value">ACOP L8 / HSG274</span>
+              </div>
+            </div>
+
+            <div className="sd-notes">
+              <span className="sd-notes-title">Notes / Instructions</span>
+              <p>
+                Please check temperatures at sentinel outlets. Hot water should reach at least 50&deg;C
+                (55&deg;C in healthcare) within one minute of running. Cold water should be below 20&deg;C
+                within two minutes.
               </p>
-              <p className="ps-pop-row">
-                <Bell size={22} aria-hidden="true" />
-                <span>{selected.event.reminder}</span>
-              </p>
-              <p className="ps-pop-row">
-                <UserCircle2 size={22} aria-hidden="true" />
-                <span>{selected.event.owner}</span>
-              </p>
+            </div>
+
+            <div className="sd-cell sd-block">
+              <span className="sd-label">COMPLETION DATE</span>
+              <span className="sd-value sd-muted">Not yet completed</span>
+            </div>
+
+            <div className="sd-cell sd-block">
+              <label className="sd-label" htmlFor="sd-notes-input">
+                NOTES
+              </label>
+              <textarea id="sd-notes-input" className="ct-textarea" placeholder="Add completion notes..." rows={3} />
+            </div>
+
+            <div className="sd-cell sd-block">
+              <span className="sd-label">UPLOAD EVIDENCE OF COMPLETION</span>
+              <div className="sd-upload">
+                <UploadCloud size={20} aria-hidden="true" />
+                <strong>Upload Evidence of Completion</strong>
+                <small>Drag &amp; drop files or click to browse</small>
+              </div>
+            </div>
+
+            <div className="sd-activity">
+              <span className="sd-label">ACTIVITY &amp; COMMENTS</span>
+              <div className="sd-comment">
+                <span className="cl-avatar" aria-hidden="true">
+                  MA
+                </span>
+                <div>
+                  <p>
+                    <strong>Marcus Aurelius</strong> left a comment:
+                  </p>
+                  <p className="sd-quote">
+                    &ldquo;Delayed checking today due to water main maintenance on site. Rescheduling for
+                    first thing tomorrow.&rdquo;
+                  </p>
+                  <small>Jul 11, 2024 at 4:32 PM</small>
+                </div>
+              </div>
+            </div>
+
+            <div className="sd-actions">
+              <div className="sd-actions-left">
+                <button
+                  type="button"
+                  className="cp-modal-cancel"
+                  onClick={() => {
+                    setEditTag(tagForTone[selected.event.tone]);
+                    setEditPriority("Medium");
+                    setEditNotice(7);
+                    setEditTarget(selected.event);
+                    setSelected(null);
+                  }}
+                >
+                  Edit Task
+                </button>
+                <button type="button" className="sd-delete" onClick={() => setSelected(null)}>
+                  Delete
+                </button>
+              </div>
+              <button type="button" className="sd-complete" onClick={() => setSelected(null)}>
+                <Check size={15} aria-hidden="true" />
+                Mark Complete
+              </button>
             </div>
           </div>
         </div>
       )}
+
 
       {addOpen && (
         <div className="cp-overlay" role="presentation" onClick={() => setAddOpen(false)}>
