@@ -4848,3 +4848,36 @@ a.am-menu-item { text-decoration: none; }
   font: inherit; font-size: 0.78rem; color: #374151; cursor: pointer;
 }
 .cl-page.is-current { background: #15803D; border-color: #15803D; color: #ffffff; font-weight: 600; }
+
+/* Add / edit PPM task (at-) */
+.at-back { display: inline-flex; color: #15803D; margin-bottom: 0.15rem; }
+.at-steps { list-style: none; display: flex; align-items: center; gap: 1.25rem; margin: 1.4rem 0 2rem; padding: 0; flex-wrap: wrap; }
+.at-step { display: flex; align-items: center; gap: 0.5rem; font-size: 0.85rem; color: #9CA3AF; }
+.at-step-num {
+  width: 22px; height: 22px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center;
+  border: 1px solid #D1D5DB; font-size: 0.7rem; font-weight: 700; color: #9CA3AF; background: #ffffff;
+}
+.at-step.is-active { color: #111827; font-weight: 600; }
+.at-step.is-active .at-step-num { background: #15803D; border-color: #15803D; color: #ffffff; }
+.at-step-sep { color: #D1D5DB; margin-left: 0.35rem; }
+.at-card { max-width: 920px; margin: 0 auto; }
+.at-card-title { margin: 0 0 1.4rem; font-size: 1.1rem; font-weight: 700; color: #111827; }
+.at-field { display: block; margin-bottom: 1.2rem; }
+.at-label { display: block; margin-bottom: 0.4rem; font-size: 0.78rem; font-weight: 600; color: #374151; }
+.at-input {
+  width: 100%; box-sizing: border-box; background: #ffffff; border: 1px solid #E5E7EB; border-radius: 8px;
+  padding: 0.75rem 0.9rem; font: inherit; font-size: 0.88rem; color: #111827;
+}
+.at-input::placeholder { color: #9CA3AF; }
+.at-input:focus { outline: none; border-color: #15803D; box-shadow: 0 0 0 3px rgba(21, 128, 61, 0.12); }
+.at-textarea { resize: vertical; min-height: 92px; }
+.at-actions { display: flex; justify-content: flex-end; gap: 0.6rem; margin-top: 1.75rem; }
+.at-cancel {
+  border: 1px solid #E5E7EB; background: #ffffff; border-radius: 8px; padding: 0.6rem 1.1rem;
+  font-size: 0.85rem; color: #374151; text-decoration: none; cursor: pointer;
+}
+.at-next {
+  border: 0; background: #15803D; color: #ffffff; border-radius: 8px; padding: 0.6rem 1.25rem;
+  font-size: 0.85rem; font-weight: 600; text-decoration: none; cursor: pointer;
+}
+.at-next:hover { background: #126b33; }
