@@ -6116,3 +6116,122 @@ a.am-menu-item { text-decoration: none; }
   font-weight: 600;
   cursor: pointer;
 }
+
+/* Settings billing plan */
+.se-plan-card,
+.se-pay-card {
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  background: #fff;
+  padding: 1.25rem 1.4rem;
+  margin-bottom: 1.1rem;
+}
+
+.se-plan-card {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1.5rem;
+}
+
+.se-plan-head {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin: 0 0 0.35rem;
+  font-size: 1.15rem;
+  color: #111827;
+}
+
+.se-plan-desc {
+  margin: 0 0 0.5rem;
+  font-size: 0.87rem;
+  color: #4b5563;
+}
+
+.se-plan-renew {
+  margin: 0;
+  font-size: 0.8rem;
+  color: #9ca3af;
+}
+
+.se-plan-renew strong {
+  color: #374151;
+}
+
+.se-plan-cost {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.2rem;
+}
+
+.se-plan-amount {
+  font-size: 1.85rem;
+  font-weight: 700;
+  color: #111827;
+}
+
+.se-plan-amount small {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: #6b7280;
+}
+
+.se-plan-cost small {
+  font-size: 0.72rem;
+  color: #9ca3af;
+}
+
+.se-pay-row {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  margin-top: 0.7rem;
+}
+
+.se-pay-brand {
+  padding: 0.4rem 0.6rem;
+  border-radius: 6px;
+  background: #f3f4f6;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: #374151;
+}
+
+.se-pay-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.se-pay-text strong {
+  font-size: 0.92rem;
+  color: #111827;
+}
+
+.se-pay-text small {
+  font-size: 0.75rem;
+  color: #9ca3af;
+}
+
+.se-pay-update {
+  margin-left: auto;
+}
+
+.se-modules-label {
+  display: block;
+  margin-bottom: 0.6rem;
+}
+
+.se-billing-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 1.4rem;
+}
+
+.rp-muted {
+  color: #9ca3af;
+  font-size: 0.85rem;
+}
