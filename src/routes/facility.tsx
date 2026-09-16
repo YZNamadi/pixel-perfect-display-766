@@ -1,19 +1,20 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { Check } from "lucide-react";
 
 export const Route = createFileRoute("/facility")({
   head: () => ({
     meta: [
-      { title: "Kearly | Set Up Facility Profile" },
+      { title: "Kearly | Create Your Facility Profile" },
       {
         name: "description",
         content:
-          "Set up your Kearly facility profile with practice details, region, and contact information.",
+          "Set up your Kearly facility profile with practice details, region, size, and contact information.",
       },
-      { property: "og:title", content: "Kearly | Set Up Facility Profile" },
+      { property: "og:title", content: "Kearly | Create Your Facility Profile" },
       {
         property: "og:description",
         content:
-          "Set up your Kearly facility profile with practice details, region, and contact information.",
+          "Set up your Kearly facility profile with practice details, region, size, and contact information.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -22,101 +23,177 @@ export const Route = createFileRoute("/facility")({
   component: FacilityPage,
 });
 
-function KearlyLogo() {
-  return (
-    <div className="fp-logo" aria-label="Kearly">
-      <svg width="24" height="24" viewBox="0 0 100 100" aria-hidden="true">
-        <rect x="5" y="5" width="40" height="40" rx="10" fill="#4A7C6F" />
-        <path d="M 55 5 L 95 5 L 95 45 Q 75 45 55 25 Z" fill="#4A7C6F" />
-        <rect x="5" y="55" width="40" height="40" rx="10" fill="#4A7C6F" />
-        <path d="M 55 55 Q 75 55 95 75 L 95 95 L 55 95 Z" fill="#4A7C6F" />
-      </svg>
-      <div className="fp-logo-text">
-        <span className="fp-logo-name">KEARLY</span>
-        <span className="fp-logo-tag">Compliance. Automated &amp; Simplified.</span>
-      </div>
-    </div>
-  );
-}
-
-const chevronBg =
-  "url(\"data:image/svg+xml;utf8,<svg fill='%23718096' height='20' viewBox='0 0 24 24' width='20' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/><path d='M0 0h24v24H0z' fill='none'/></svg>\")";
+const steps = [
+  { label: "Site" },
+  { label: "Import" },
+  { label: "Team" },
+  { label: "Complete" },
+];
 
 function FacilityPage() {
   return (
     <main className="fp-page">
-      <div className="fp-deco fp-deco-phone" aria-hidden="true">
-        🌿
-      </div>
-      <div className="fp-deco fp-deco-shield" aria-hidden="true">
-        🛡️
-      </div>
-      <div className="fp-deco fp-deco-leaf" aria-hidden="true">
-        🍃
-      </div>
+      <section className="fp-panel" aria-label="Kearly onboarding">
+        <div className="fp-panel-decor" aria-hidden="true">
+          <span className="fp-circle fp-circle-one" />
+          <span className="fp-circle fp-circle-two" />
+          <span className="fp-circle fp-circle-three" />
+        </div>
+        <div className="fp-panel-content">
+          <h2 className="fp-panel-title">
+            The simplest way to manage your facility
+          </h2>
+          <p className="fp-panel-text">
+            Set up your facility profile to unlock smart scheduling, compliance
+            templates, and team management tools - all in one place.
+          </p>
+          <ul className="fp-badges">
+            <li>NHS</li>
+            <li>CQC</li>
+            <li>GDPR</li>
+            <li>ISO 27001</li>
+          </ul>
+        </div>
+      </section>
 
-      <section className="fp-card" aria-labelledby="fp-heading">
-        <KearlyLogo />
-        <h1 id="fp-heading" className="fp-heading">
-          Let&apos;s set up your facility profile
-        </h1>
+      <section className="fp-main">
+        <nav className="fp-steps" aria-label="Progress">
+          <span className="fp-step fp-step-done">
+            <span className="fp-step-mark fp-step-mark-done">
+              <Check size={13} strokeWidth={3} aria-hidden="true" />
+            </span>
+            Account
+          </span>
+          <span className="fp-step fp-step-active" aria-current="step">
+            <span className="fp-step-mark fp-step-mark-active">2</span>
+            Facility
+          </span>
+          {steps.map((step, index) => (
+            <span className="fp-step" key={step.label}>
+              <span className="fp-step-mark">{index + 3}</span>
+              {step.label}
+            </span>
+          ))}
+        </nav>
 
-        <form className="fp-form" onSubmit={(event) => event.preventDefault()}>
-          <input id="practice-name" name="practiceName" className="fp-input" placeholder="Enter Practice Name" aria-label="Practice Name" />
-          <input id="nhs-code" name="nhsCode" className="fp-input" placeholder="Enter NHS Practice Code" aria-label="NHS Practice Code" />
+        <div className="fp-body">
+          <h1 className="fp-heading">Create your facility profile</h1>
+          <p className="fp-sub">
+            Provide basic information about your medical practice, clinic, or
+            facility setup to configure templates.
+          </p>
 
-          <div className="fp-row">
-            <select
-              id="region-select"
-              name="region"
-              className="fp-input fp-select"
-              defaultValue=""
-              aria-label="Region"
-              style={{ backgroundImage: chevronBg }}
-            >
-              <option value="" disabled>
+          <form className="fp-card" onSubmit={(event) => event.preventDefault()}>
+            <div className="fp-field">
+              <label className="fp-label" htmlFor="practice-name">
+                Practice Name <span className="fp-req">*</span>
+              </label>
+              <input
+                id="practice-name"
+                name="practiceName"
+                className="fp-input"
+                placeholder="e.g. Riverside Medical Centre"
+              />
+            </div>
+
+            <div className="fp-field">
+              <label className="fp-label" htmlFor="nhs-code">
+                NHS Practice Code (If applicable)
+              </label>
+              <input
+                id="nhs-code"
+                name="nhsCode"
+                className="fp-input"
+                placeholder="e.g. Y01234"
+              />
+            </div>
+
+            <div className="fp-field">
+              <label className="fp-label" htmlFor="region">
                 Region
-              </option>
-              <option value="england">England</option>
-              <option value="scotland">Scotland</option>
-              <option value="wales">Wales</option>
-              <option value="northern-ireland">Northern Ireland</option>
-            </select>
-            <select
-              id="staff-size-select"
-              name="staffSize"
-              className="fp-input fp-select"
-              defaultValue=""
-              aria-label="Staff Size"
-              style={{ backgroundImage: chevronBg }}
-            >
-              <option value="" disabled>
-                Select Staff Size
-              </option>
-              <option value="1-10">1–10</option>
-              <option value="11-25">11–25</option>
-              <option value="26-50">26–50</option>
-              <option value="51-100">51–100</option>
-              <option value="100+">100+</option>
-            </select>
-          </div>
+              </label>
+              <select
+                id="region"
+                name="region"
+                className="fp-input fp-select"
+                defaultValue=""
+              >
+                <option value="" disabled>
+                  Select your region
+                </option>
+                <option value="england">England</option>
+                <option value="scotland">Scotland</option>
+                <option value="wales">Wales</option>
+                <option value="northern-ireland">Northern Ireland</option>
+              </select>
+            </div>
 
-          <span className="fp-section-label">Contact</span>
+            <div className="fp-grid">
+              <div className="fp-field">
+                <label className="fp-label" htmlFor="staff-count">
+                  Operating Size / Staff Count
+                </label>
+                <input
+                  id="staff-count"
+                  name="staffCount"
+                  type="number"
+                  min="0"
+                  className="fp-input"
+                  placeholder="e.g. 24"
+                />
+              </div>
+              <div className="fp-field">
+                <label className="fp-label" htmlFor="facility-size">
+                  Facility Size (sqm)
+                </label>
+                <input
+                  id="facility-size"
+                  name="facilitySize"
+                  type="number"
+                  min="0"
+                  className="fp-input"
+                  placeholder="e.g. 450"
+                />
+              </div>
+            </div>
 
-          <div className="fp-row">
-            <input id="address-line" name="addressLine" className="fp-input" placeholder="Address Line" aria-label="Address Line" />
-            <input id="phone-number" name="phoneNumber" type="tel" className="fp-input" placeholder="Phone Number" aria-label="Phone Number" />
-          </div>
+            <div className="fp-grid">
+              <div className="fp-field">
+                <label className="fp-label" htmlFor="contact-email">
+                  Contact Email <span className="fp-req">*</span>
+                </label>
+                <input
+                  id="contact-email"
+                  name="contactEmail"
+                  type="email"
+                  className="fp-input"
+                  placeholder="contact@practice.com"
+                />
+              </div>
+              <div className="fp-field">
+                <label className="fp-label" htmlFor="contact-phone">
+                  Contact Phone <span className="fp-req">*</span>
+                </label>
+                <input
+                  id="contact-phone"
+                  name="contactPhone"
+                  type="tel"
+                  className="fp-input"
+                  placeholder="+44 20 7946 0192"
+                />
+              </div>
+            </div>
 
-          <div className="fp-size-group">
-            <input id="facility-size" name="facilitySize" type="number" min="0" className="fp-size-input" placeholder="Facility Size (sqm)" aria-label="Facility Size in square meters" />
-            <span className="fp-size-suffix">SQM</span>
-          </div>
-
-          <Link to="/site" className="fp-save">
-            Save
-          </Link>
-        </form>
+            <div className="fp-actions">
+              <Link to="/site" className="fp-continue">
+                Continue
+              </Link>
+              <Link to="/site" className="fp-skip">
+                Skip for now
+              </Link>
+            </div>
+          </form>
+        </div>
       </section>
     </main>
   );
