@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import {
   LayoutDashboard,
@@ -7,24 +8,31 @@ import {
   BarChart3,
   ScrollText,
   Settings,
-  Activity,
-  UserCheck,
-  ShieldAlert,
-  Download,
+  CreditCard,
+  Users,
+  Search,
+  Calendar,
+  ChevronDown,
+  Eye,
+  BadgeCheck,
+  X,
+  AlertTriangle,
 } from "lucide-react";
 
 export const Route = createFileRoute("/audit-log")({
   head: () => ({
     meta: [
-      { title: "Kearly | Audit Log" },
+      { title: "Kearly | System Audit Log" },
       {
         name: "description",
-        content: "Tamper-evident record of every compliance action, edit and login across your Kearly account.",
+        content:
+          "Comprehensive platform compliance history: every task, status change, contractor assignment and security escalation across your portfolio.",
       },
-      { property: "og:title", content: "Kearly | Audit Log" },
+      { property: "og:title", content: "Kearly | System Audit Log" },
       {
         property: "og:description",
-        content: "Tamper-evident record of every compliance action, edit and login across your Kearly account.",
+        content:
+          "Comprehensive platform compliance history: every task, status change, contractor assignment and security escalation across your portfolio.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -33,180 +41,280 @@ export const Route = createFileRoute("/audit-log")({
   component: AuditLogPage,
 });
 
-const navItems = [
+const overviewNav = [
   { label: "Dashboard", icon: LayoutDashboard, to: "/dashboard" as const },
   { label: "Compliance", icon: ShieldCheck, to: "/compliance" as const },
-  { label: "Repairs", icon: Wrench, to: "/repairs" as const },
-  { label: "Assets", icon: Building2, to: "/assets" as const },
+  { label: "Repairs", icon: Wrench, to: "/repairs" as const, badge: "2" },
+  { label: "Buildings", icon: Building2, to: "/assets" as const },
+];
+
+const governanceNav = [
   { label: "Reports", icon: BarChart3, to: "/reports" as const },
-  { label: "Audit Log", icon: ScrollText, to: "/audit-log" as const, active: true },
-  { label: "Settings", icon: Settings, to: "/settings" as const },
+  { label: "Team", icon: Users, to: "/team" as const },
+  { label: "Audit log", icon: ScrollText, to: "/audit-log" as const, active: true },
+  { label: "Billing", icon: CreditCard, to: "/settings" as const },
 ];
 
-const stats = [
-  { label: "Events Today", value: "42", note: "All users", icon: Activity, tone: "green" },
-  { label: "Active Users", value: "8", note: "Last 24 hours", icon: UserCheck, tone: "teal" },
-  { label: "Record Changes", value: "17", note: "Last 24 hours", icon: ScrollText, tone: "amber" },
-  { label: "Security Events", value: "2", note: "Needs review", icon: ShieldAlert, tone: "red" },
-];
+type Event = {
+  id: string;
+  time: string;
+  user: string;
+  action: string;
+  details: string;
+  entity: string;
+  pending?: boolean;
+};
 
-const rows = [
+const events: Event[] = [
   {
-    time: "11 Sep 2026, 09:42",
-    user: "Jane Doe",
-    action: "Updated PPM task",
-    target: "Boiler — Central Heating",
-    type: "Change",
+    id: "e1",
+    time: "02 Jul 2024, 09:12",
+    user: "Sarah Jones",
+    action: "Task Created",
+    details: "Compliance task Fire Risk Assessment",
+    entity: "",
+    pending: true,
   },
   {
-    time: "11 Sep 2026, 09:15",
-    user: "Michael Osei",
-    action: "Marked task complete",
-    target: "Fire Alarm Test — Oakfield",
-    type: "Change",
+    id: "e2",
+    time: "02 Jul 2024, 08:32",
+    user: "Alex Rowe",
+    action: "Status Updated",
+    details: "Repair ticket #4821 from Open to In Progress",
+    entity: "Riverside Court",
   },
   {
-    time: "11 Sep 2026, 08:58",
-    user: "Jane Doe",
-    action: "Signed in",
-    target: "Web app",
-    type: "Access",
+    id: "e3",
+    time: "01 Jul 2024, 16:45",
+    user: "Alex Rowe",
+    action: "Site Added",
+    details: "Riverside Court facility added",
+    entity: "Riverside Court",
   },
   {
-    time: "10 Sep 2026, 17:31",
-    user: "Amara Bello",
-    action: "Uploaded certificate",
-    target: "Gas Safety — Birch Lane",
-    type: "Change",
-  },
-  {
-    time: "10 Sep 2026, 16:04",
+    id: "e4",
+    time: "01 Jul 2024, 12:00",
     user: "System",
-    action: "Failed sign-in attempt",
-    target: "admin@kearly.co",
-    type: "Security",
+    action: "Report Generated",
+    details: "Monthly compliance report generated",
+    entity: "Portfolio Overview",
   },
   {
-    time: "10 Sep 2026, 12:20",
-    user: "Jane Doe",
-    action: "Deactivated asset",
-    target: "Water Heater — Unit 3C",
-    type: "Change",
+    id: "e5",
+    time: "30 Jun 2024, 15:21",
+    user: "Michael Finch",
+    action: "Contractor Assigned",
+    details: "Lift inspection assigned to contractor David Vance",
+    entity: "Elmwood Court",
+  },
+  {
+    id: "e6",
+    time: "29 Jun 2024, 10:30",
+    user: "Sarah Jones",
+    action: "Task Completed",
+    details: "Monthly Emergency Lighting Test approved",
+    entity: "Northgate House",
+  },
+  {
+    id: "e7",
+    time: "28 Jun 2024, 09:15",
+    user: "System",
+    action: "SLA Escalation",
+    details: "Breach escalation alert dispatched for electrical EICR",
+    entity: "Victoria Wharf",
+  },
+  {
+    id: "e8",
+    time: "27 Jun 2024, 14:02",
+    user: "Alex Rowe",
+    action: "User Invited",
+    details: "Teammate James Carter added",
+    entity: "Victoria Wharf",
   },
 ];
-
-const typeClass = (type: string) => (type === "Access" ? "is-active" : type === "Change" ? "is-due" : "is-inactive");
 
 function AuditLogPage() {
+  const [deleteEvent, setDeleteEvent] = useState<string | null>(null);
+
   return (
-    <div className="db-shell">
-      <aside className="db-sidebar">
-        <Link to="/dashboard" className="db-logo" aria-label="Kearly">
-          <svg width="28" height="28" viewBox="0 0 100 100" aria-hidden="true">
-            <rect x="5" y="5" width="40" height="40" rx="10" fill="#4A7C6F" />
-            <path d="M 55 5 L 95 5 L 95 45 Q 75 45 55 25 Z" fill="#4A7C6F" />
-            <rect x="5" y="55" width="40" height="40" rx="10" fill="#4A7C6F" />
-            <path d="M 55 55 Q 75 55 95 75 L 95 95 L 55 95 Z" fill="#4A7C6F" />
+    <div className="po-shell">
+      <aside className="po-sidebar">
+        <Link to="/dashboard" className="po-logo" aria-label="Kearly">
+          <svg width="26" height="26" viewBox="0 0 100 100" aria-hidden="true">
+            <rect x="5" y="5" width="40" height="40" rx="10" fill="#15803D" />
+            <path d="M 55 5 L 95 5 L 95 45 Q 75 45 55 25 Z" fill="#15803D" />
+            <rect x="5" y="55" width="40" height="40" rx="10" fill="#15803D" />
+            <path d="M 55 55 Q 75 55 95 75 L 95 95 L 55 95 Z" fill="#15803D" />
           </svg>
-          <span className="db-logo-text">
-            <span className="db-logo-name">KEARLY</span>
-            <span className="db-logo-tag">Compliance. Automated &amp; Simplified.</span>
+          <span className="po-logo-text">
+            <span className="po-logo-name">KEARLY</span>
+            <span className="po-logo-tag">Compliance. Automated &amp; Simplified.</span>
           </span>
         </Link>
 
-        <nav className="db-nav" aria-label="Main navigation">
-          {navItems.map(({ label, icon: Icon, to, active }) => (
-            <Link key={label} to={to} className={`db-nav-item ${active ? "is-active" : ""}`}>
-              <Icon size={18} aria-hidden="true" />
+        <nav className="po-nav" aria-label="Main navigation">
+          <p className="po-nav-label">OVERVIEW</p>
+          {overviewNav.map(({ label, icon: Icon, to, badge }) => (
+            <Link key={label} to={to} className="po-nav-item">
+              <Icon size={17} aria-hidden="true" />
               <span>{label}</span>
-              {active && <span className="db-nav-bar" aria-hidden="true" />}
+              {badge ? <span className="po-nav-badge">{badge}</span> : null}
+            </Link>
+          ))}
+
+          <p className="po-nav-label po-nav-label-gap">GOVERNANCE</p>
+          {governanceNav.map(({ label, icon: Icon, to, active }) => (
+            <Link key={label} to={to} className={`po-nav-item ${active ? "is-active" : ""}`}>
+              <Icon size={17} aria-hidden="true" />
+              <span>{label}</span>
             </Link>
           ))}
         </nav>
 
-        <div className="db-user">
-          <span className="db-avatar" aria-hidden="true">
-            JD
-          </span>
-          <span className="db-user-meta">
-            <strong>Jane Doe</strong>
-            <small>Practice Admin</small>
-          </span>
+        <div className="po-sidebar-foot">
+          <Link to="/settings" className="po-nav-item">
+            <Settings size={17} aria-hidden="true" />
+            <span>Settings</span>
+          </Link>
+          <div className="po-user">
+            <span className="po-user-avatar" aria-hidden="true">
+              AR
+            </span>
+            <span className="po-user-text">
+              <span className="po-user-name">Alex Rowe</span>
+              <span className="po-user-role">Portfolio admin</span>
+            </span>
+          </div>
         </div>
       </aside>
 
-      <main className="db-main">
-        <header className="am-head">
-          <h1 className="db-title">Audit Log</h1>
-          <p className="db-subtitle">A tamper-evident trail of every action in your account</p>
-        </header>
-
-        <section className="db-stats" aria-label="Audit overview">
-          {stats.map(({ label, value, note, icon: Icon, tone }) => (
-            <article className={`db-stat is-${tone}`} key={label}>
-              <div className="db-stat-top">
-                <span className="db-stat-label">{label}</span>
-                <span className="db-stat-icon">
-                  <Icon size={16} aria-hidden="true" />
-                </span>
-              </div>
-              <strong className="db-stat-value">{value}</strong>
-              <small className="db-stat-note">{note}</small>
-            </article>
-          ))}
-        </section>
-
-        <section className="am-panel" aria-label="Audit events">
-          <div className="am-toolbar">
-            <input className="am-search" type="search" placeholder="Search Events..." aria-label="Search audit events" />
-            <select className="am-select" aria-label="Filter by event type" defaultValue="all">
-              <option value="all">All Events</option>
-              <option value="change">Changes</option>
-              <option value="access">Access</option>
-              <option value="security">Security</option>
-            </select>
-            <select className="am-select" aria-label="Filter by user" defaultValue="all">
-              <option value="all">All Users</option>
-              <option value="jane">Jane Doe</option>
-              <option value="michael">Michael Osei</option>
-              <option value="amara">Amara Bello</option>
-            </select>
-            <button type="button" className="am-add">
-              <Download size={15} aria-hidden="true" />
-              <span>Export Log</span>
+      <main className="po-main">
+        <header className="po-topbar">
+          <div>
+            <h1 className="po-title">System Audit Log</h1>
+            <p className="po-subtitle">Comprehensive platform compliance history</p>
+          </div>
+          <div className="po-topbar-actions">
+            <div className="po-search">
+              <Search size={15} aria-hidden="true" />
+              <input type="search" placeholder="Search..." aria-label="Search audit events" />
+            </div>
+            <span className="po-chip">Jul 2024</span>
+            <span className="po-chip">
+              <Calendar size={14} aria-hidden="true" />
+              All buildings
+              <ChevronDown size={13} aria-hidden="true" />
+            </span>
+            <button type="button" className="po-download">
+              Export CSV
             </button>
           </div>
+        </header>
 
-          <h2 className="cp-table-title">Recent Activity</h2>
+        <div className="rp-filters">
+          <button type="button" className="rp-filter">
+            User: All Users
+            <ChevronDown size={13} aria-hidden="true" />
+          </button>
+          <button type="button" className="rp-filter">
+            Action Type: All Actions
+            <ChevronDown size={13} aria-hidden="true" />
+          </button>
+        </div>
 
-          <div className="am-table-wrap">
-            <table className="am-table">
+        <section className="cl-panel" aria-label="Audit events">
+          <div className="cl-table-wrap">
+            <table className="cl-table">
               <thead>
                 <tr>
-                  <th>Date &amp; Time</th>
-                  <th>User</th>
-                  <th>Action</th>
-                  <th>Record</th>
-                  <th>Type</th>
+                  <th>TIMESTAMP</th>
+                  <th>USER</th>
+                  <th>ACTION</th>
+                  <th>DETAILS</th>
+                  <th>ENTITY AFFECTED</th>
+                  <th aria-label="Actions" />
                 </tr>
               </thead>
               <tbody>
-                {rows.map((row) => (
-                  <tr key={`${row.time}-${row.action}`}>
-                    <td className="am-name">{row.time}</td>
-                    <td>{row.user}</td>
-                    <td>{row.action}</td>
-                    <td>{row.target}</td>
+                {events.map((e) => (
+                  <tr key={e.id}>
+                    <td className="rp-created">{e.time}</td>
+                    <td className="cl-name">{e.user}</td>
+                    <td className="cl-name">{e.action}</td>
+                    <td className="al-details">{e.details}</td>
+                    <td className="cl-name">{e.entity}</td>
                     <td>
-                      <span className={`am-status ${typeClass(row.type)}`}>{row.type}</span>
+                      {e.pending ? (
+                        <span className="rp-actions">
+                          <button type="button" className="rp-btn tone-blue">
+                            <BadgeCheck size={13} aria-hidden="true" />
+                            Review
+                          </button>
+                          <button type="button" className="rp-btn tone-red" onClick={() => setDeleteEvent(e.time)}>
+                            <X size={13} aria-hidden="true" />
+                            Delete
+                          </button>
+                        </span>
+                      ) : (
+                        <button type="button" className="rp-btn">
+                          <Eye size={13} aria-hidden="true" />
+                          View
+                        </button>
+                      )}
                     </td>
                   </tr>
                 ))}
               </tbody>
             </table>
           </div>
+
+          <div className="cl-foot">
+            <small>Showing 1-8 of 142 events</small>
+            <div className="cl-pager">
+              <button type="button" className="cl-page">
+                Previous
+              </button>
+              <button type="button" className="cl-page is-current">
+                Next
+              </button>
+            </div>
+          </div>
         </section>
       </main>
+
+      {deleteEvent && (
+        <div className="cp-overlay" role="presentation" onClick={() => setDeleteEvent(null)}>
+          <div
+            className="cp-modal"
+            role="alertdialog"
+            aria-modal="true"
+            aria-labelledby="al-modal-title"
+            onClick={(event) => event.stopPropagation()}
+          >
+            <div className="cp-modal-head">
+              <span className="cp-modal-icon" aria-hidden="true">
+                <AlertTriangle size={26} />
+              </span>
+              <h2 className="cp-modal-title" id="al-modal-title">
+                Delete Event
+              </h2>
+            </div>
+            <p className="cp-modal-text">
+              Are you sure you want to delete the audit event from {deleteEvent}?
+              <br />
+              This action cannot be undone.
+            </p>
+            <div className="cp-modal-actions">
+              <button type="button" className="cp-modal-cancel" onClick={() => setDeleteEvent(null)}>
+                Cancel
+              </button>
+              <button type="button" className="cp-modal-delete" onClick={() => setDeleteEvent(null)}>
+                Delete
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
