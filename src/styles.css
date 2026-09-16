@@ -117,13 +117,6 @@
 
 @layer components {
 
-  .welcome-action:focus-visible,
-
-  .auth-field input:focus-visible,
-  .auth-submit:focus-visible,
-
-  .auth-separator::before,
-
 }
 
 @media (max-width: 640px) {
@@ -144,16 +137,6 @@
     color: var(--color-foreground);
     font-weight: 700;
   }
-
-  .facility-field,
-
-  .facility-field input,
-
-  .facility-field input::placeholder,
-
-  .facility-field input:focus-visible,
-
-  .facility-continue:focus-visible,
 
 }
 
@@ -179,19 +162,6 @@
     color: var(--color-foreground);
     font-weight: 700;
   }
-
-  .site-field label,
-
-  .site-field input,
-  .site-field textarea,
-
-  .site-field input::placeholder,
-
-  .site-field input:focus-visible,
-  .site-field textarea:focus-visible,
-
-  .site-continue:focus-visible,
-  .site-category:focus-visible,
 
 }
 
@@ -223,10 +193,6 @@
     font-weight: 700;
   }
 
-  .import-upload-zone:hover,
-
-  .import-upload-zone:focus-visible,
-  .import-continue:focus-visible,
 }
 
 @media (max-width: 760px) {
@@ -251,19 +217,6 @@
     font-weight: 700;
   }
 
-  .team-member-header,
-
-  .team-field input,
-
-  .team-field input::placeholder,
-
-  .team-field input:focus-visible,
-
-  .team-add-member:focus-visible,
-  .team-continue:focus-visible,
-  .team-skip:focus-visible,
-  .team-field input:focus-visible,
-
 }
 
 @media (max-width: 760px) {
@@ -271,7 +224,6 @@
 }
 
 @media (max-width: 520px) {
-  .team-member-header,
 }
 
 @layer components {
@@ -281,8 +233,6 @@
     font-weight: 700;
   }
 
-  .complete-primary:focus-visible,
-  .complete-secondary:focus-visible,
 }
 
 @media (max-width: 760px) {
@@ -294,11 +244,6 @@
 
 @layer components {
 
-  .dw-nav-petal,
-
-  .dw-secondary,
-
-  .dw-secondary:focus-visible,
 }
 
 @media (max-width: 768px) {
@@ -315,8 +260,6 @@
     width: 1.5rem;
   }
 
-  .ob-next:focus-visible,
-  .ob-dot:focus-visible,
 }
 
 @media (max-width: 768px) {
@@ -720,11 +663,8 @@
   padding: 0.75rem 0.85rem; font: inherit; font-size: 0.9rem; color: #2D3748;
 }
 .at-field textarea { resize: vertical; min-height: 118px; }
-.at-field input::placeholder,
 .at-field textarea::placeholder { color: #94A3A0; }
 .at-field select:invalid, .at-field select:has(option[value=""]:checked) { color: #94A3A0; }
-.at-field input:focus-visible,
-.at-field select:focus-visible,
 .at-field textarea:focus-visible { outline: 2px solid #2F8F5B; outline-offset: 1px; }
 
 .at-actions { display: flex; justify-content: flex-end; align-items: center; gap: 0.75rem; margin-top: 2rem; }
