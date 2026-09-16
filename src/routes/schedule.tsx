@@ -319,7 +319,106 @@ function SchedulePage() {
         </section>
       </main>
 
-      {selected && (
+      {selected && selected.event.tone === "lifts" && (
+        <div className="cp-overlay" role="presentation" onClick={() => setSelected(null)}>
+          <div
+            className="sd-modal"
+            role="dialog"
+            aria-modal="true"
+            aria-label={selected.event.title}
+            onClick={(event) => event.stopPropagation()}
+          >
+            <div className="sd-head">
+              <div className="sd-badges">
+                <span className="sc-tag is-lifts">LIFTS &amp; LOLER</span>
+                <span className="sd-chip">INSPECTION</span>
+              </div>
+              <button type="button" className="sd-close" aria-label="Close" onClick={() => setSelected(null)}>
+                <XCircle size={20} aria-hidden="true" />
+              </button>
+            </div>
+
+            <h2 className="sd-title">Lift LOLER Safety Inspection</h2>
+            <p className="sd-meta">Recurrence: Every 6 Months (Regulatory SLA)</p>
+
+            <div className="sd-grid">
+              <div className="sd-cell">
+                <span className="sd-label">INSPECTOR</span>
+                <span className="sd-value sd-person">
+                  <span className="cl-avatar" aria-hidden="true">
+                    SJ
+                  </span>
+                  Sarah Jenkins
+                </span>
+              </div>
+              <div className="sd-cell">
+                <span className="sd-label">SCHEDULED TIME</span>
+                <span className="sd-value">Jul 15, 2024 @ 10:00 AM</span>
+              </div>
+              <div className="sd-cell">
+                <span className="sd-label">LOCATION</span>
+                <span className="sd-value">Main Building, Elevator Shaft B</span>
+              </div>
+              <div className="sd-cell">
+                <span className="sd-label">SLA CLASS</span>
+                <span className="sd-value sd-sla">LOLER 1998 Regulation 9</span>
+              </div>
+            </div>
+
+            <div className="sd-checklist">
+              <span className="sd-label">PRE-INSPECTION CHECKLIST</span>
+              <ul>
+                {[
+                  { text: "Verify weight limit tags and emergency alarm operability", done: true },
+                  { text: "Examine suspension ropes & chains for microscopic wear", done: true },
+                  { text: "Test backup battery reserves and emergency lighting", done: false },
+                ].map((item) => (
+                  <li key={item.text}>
+                    <CheckSquare size={16} className={item.done ? "sd-check-on" : "sd-check-off"} aria-hidden="true" />
+                    <span>{item.text}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div className="sd-cell sd-block">
+              <span className="sd-label">ATTACHED DOCUMENTS</span>
+              <div className="sd-doc">
+                <FileText size={16} aria-hidden="true" />
+                <span>Prior_LOLER_Cert_BlockB_Jan2024.pdf</span>
+                <small>1.4 MB</small>
+              </div>
+            </div>
+
+            <div className="sd-actions">
+              <div className="sd-actions-left">
+                <button
+                  type="button"
+                  className="cp-modal-cancel"
+                  onClick={() => {
+                    setEditTag(tagForTone[selected.event.tone]);
+                    setEditPriority("Medium");
+                    setEditNotice(7);
+                    setEditTarget(selected.event);
+                    setSelected(null);
+                  }}
+                >
+                  Edit Event
+                </button>
+                <button type="button" className="sd-delete" onClick={() => setSelected(null)}>
+                  Cancel Event
+                </button>
+              </div>
+              <button type="button" className="sd-dark" onClick={() => setSelected(null)}>
+                Close Details
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {selected && selected.event.tone !== "lifts" && (
+
         <div className="cp-overlay" role="presentation" onClick={() => setSelected(null)}>
           <div
             className="sd-modal"
