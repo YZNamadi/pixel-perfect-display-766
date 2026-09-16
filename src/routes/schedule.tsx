@@ -229,9 +229,9 @@ function SchedulePage() {
                 </button>
               ))}
             </div>
-            <Link to="/add-task" className="po-download">
+            <button type="button" className="po-download" onClick={() => setAddOpen(true)}>
               Add Event
-            </Link>
+            </button>
           </div>
         </header>
 
