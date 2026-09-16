@@ -64,6 +64,7 @@ const noticeDays = [1, 3, 5, 7, 21];
 
 function AddTaskPage() {
   const [step, setStep] = useState(1);
+  const [evidence, setEvidence] = useState(false);
   const [notice, setNotice] = useState(7);
 
   return (

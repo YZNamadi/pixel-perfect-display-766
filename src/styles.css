@@ -5779,3 +5779,8 @@ a.am-menu-item { text-decoration: none; }
     flex-wrap: wrap;
   }
 }
+
+/* Add PPM Task – assignment step */
+.at-evidence {
+  margin: 0.25rem 0 0.5rem;
+}
