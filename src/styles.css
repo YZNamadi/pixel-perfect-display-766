@@ -5010,3 +5010,29 @@ a.am-menu-item { text-decoration: none; }
 
 /* ===== Audit log (al-) ===== */
 .al-details { color: #6B7280; font-size: 0.82rem; }
+
+/* ===== Reports (rr-) ===== */
+.rr-range {
+  display: inline-flex; align-items: center; gap: 0.4rem; border: 1px solid #E5E7EB; background: #fff;
+  border-radius: 8px; padding: 0.4rem 0.6rem; font-size: 0.78rem; color: #6B7280;
+}
+.rr-range input { border: none; outline: none; width: 82px; font-size: 0.78rem; font-weight: 600; color: #111827; background: none; }
+.rr-tabs { display: flex; align-items: center; gap: 0.5rem; margin: 1.25rem 0 1rem; }
+.rr-tab {
+  border: 1px solid #E5E7EB; background: #fff; cursor: pointer; font-size: 0.8rem; font-weight: 600; color: #6B7280;
+  padding: 0.5rem 1rem; border-radius: 8px;
+}
+.rr-tab:hover { color: #111827; }
+.rr-tab.is-active { background: #15803D; border-color: #15803D; color: #fff; }
+.rr-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; margin-bottom: 1.25rem; }
+.rr-stat { background: #fff; border: 1px solid #E5E7EB; border-radius: 12px; padding: 1.1rem 1.25rem; }
+.rr-stat-label { margin: 0 0 0.5rem; font-size: 0.8rem; color: #6B7280; }
+.rr-stat-value { margin: 0; font-size: 1.9rem; font-weight: 800; color: #111827; }
+.rr-stat-value.tone-amber { color: #D97706; }
+.rr-stat-value.tone-red { color: #DC2626; }
+.rr-stat-value.tone-green { color: #15803D; }
+.rr-dl {
+  border: none; background: none; cursor: pointer; color: #374151; padding: 0.35rem; border-radius: 6px;
+  display: inline-flex; align-items: center;
+}
+.rr-dl:hover { background: #F3F4F6; color: #15803D; }
