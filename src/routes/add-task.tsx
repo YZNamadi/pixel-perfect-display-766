@@ -14,6 +14,7 @@ import {
   Search,
   ChevronLeft,
   ChevronRight,
+  ArrowLeft,
 } from "lucide-react";
 
 export const Route = createFileRoute("/add-task")({
