@@ -18,6 +18,7 @@ import { Route as CompleteRouteImport } from './routes/complete'
 import { Route as ComplianceRouteImport } from './routes/compliance'
 import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as DashboardWelcomeRouteImport } from './routes/dashboard-welcome'
+import { Route as DocumentsRouteImport } from './routes/documents'
 import { Route as EditTaskRouteImport } from './routes/edit-task'
 import { Route as EquipmentRouteImport } from './routes/equipment'
 import { Route as FacilityRouteImport } from './routes/facility'
@@ -80,6 +81,11 @@ const DashboardRoute = DashboardRouteImport.update({
 const DashboardWelcomeRoute = DashboardWelcomeRouteImport.update({
   id: '/dashboard-welcome',
   path: '/dashboard-welcome',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DocumentsRoute = DocumentsRouteImport.update({
+  id: '/documents',
+  path: '/documents',
   getParentRoute: () => rootRouteImport,
 } as any)
 const EditTaskRoute = EditTaskRouteImport.update({
@@ -183,6 +189,7 @@ export interface FileRoutesByFullPath {
   '/compliance': typeof ComplianceRoute
   '/dashboard': typeof DashboardRoute
   '/dashboard-welcome': typeof DashboardWelcomeRoute
+  '/documents': typeof DocumentsRoute
   '/edit-task': typeof EditTaskRoute
   '/equipment': typeof EquipmentRoute
   '/facility': typeof FacilityRoute
@@ -212,6 +219,7 @@ export interface FileRoutesByTo {
   '/compliance': typeof ComplianceRoute
   '/dashboard': typeof DashboardRoute
   '/dashboard-welcome': typeof DashboardWelcomeRoute
+  '/documents': typeof DocumentsRoute
   '/edit-task': typeof EditTaskRoute
   '/equipment': typeof EquipmentRoute
   '/facility': typeof FacilityRoute
@@ -242,6 +250,7 @@ export interface FileRoutesById {
   '/compliance': typeof ComplianceRoute
   '/dashboard': typeof DashboardRoute
   '/dashboard-welcome': typeof DashboardWelcomeRoute
+  '/documents': typeof DocumentsRoute
   '/edit-task': typeof EditTaskRoute
   '/equipment': typeof EquipmentRoute
   '/facility': typeof FacilityRoute
@@ -273,6 +282,7 @@ export interface FileRouteTypes {
     | '/compliance'
     | '/dashboard'
     | '/dashboard-welcome'
+    | '/documents'
     | '/edit-task'
     | '/equipment'
     | '/facility'
@@ -302,6 +312,7 @@ export interface FileRouteTypes {
     | '/compliance'
     | '/dashboard'
     | '/dashboard-welcome'
+    | '/documents'
     | '/edit-task'
     | '/equipment'
     | '/facility'
@@ -331,6 +342,7 @@ export interface FileRouteTypes {
     | '/compliance'
     | '/dashboard'
     | '/dashboard-welcome'
+    | '/documents'
     | '/edit-task'
     | '/equipment'
     | '/facility'
@@ -361,6 +373,7 @@ export interface RootRouteChildren {
   ComplianceRoute: typeof ComplianceRoute
   DashboardRoute: typeof DashboardRoute
   DashboardWelcomeRoute: typeof DashboardWelcomeRoute
+  DocumentsRoute: typeof DocumentsRoute
   EditTaskRoute: typeof EditTaskRoute
   EquipmentRoute: typeof EquipmentRoute
   FacilityRoute: typeof FacilityRoute
@@ -444,6 +457,13 @@ declare module '@tanstack/react-router' {
       path: '/dashboard-welcome'
       fullPath: '/dashboard-welcome'
       preLoaderRoute: typeof DashboardWelcomeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/documents': {
+      id: '/documents'
+      path: '/documents'
+      fullPath: '/documents'
+      preLoaderRoute: typeof DocumentsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/edit-task': {
@@ -585,6 +605,7 @@ const rootRouteChildren: RootRouteChildren = {
   ComplianceRoute: ComplianceRoute,
   DashboardRoute: DashboardRoute,
   DashboardWelcomeRoute: DashboardWelcomeRoute,
+  DocumentsRoute: DocumentsRoute,
   EditTaskRoute: EditTaskRoute,
   EquipmentRoute: EquipmentRoute,
   FacilityRoute: FacilityRoute,
