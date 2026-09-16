@@ -148,6 +148,11 @@ function SchedulePage() {
   const [addOpen, setAddOpen] = useState(false);
   const [priority, setPriority] = useState<"Low" | "Medium" | "High">("High");
   const [tag, setTag] = useState("Water Safety");
+  const [editTarget, setEditTarget] = useState<Category | null>(null);
+  const [editPriority, setEditPriority] = useState<"Low" | "Medium" | "High">("Medium");
+  const [editTag, setEditTag] = useState("Water Safety");
+  const [editNotice, setEditNotice] = useState(7);
+
 
   const year = cursor.getFullYear();
   const month = cursor.getMonth();
