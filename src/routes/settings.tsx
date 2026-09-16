@@ -8,20 +8,24 @@ import {
   BarChart3,
   ScrollText,
   Settings as SettingsIcon,
+  CreditCard,
+  Users,
+  User,
+  Bell,
 } from "lucide-react";
 
 export const Route = createFileRoute("/settings")({
   head: () => ({
     meta: [
-      { title: "Kearly | Account Settings" },
+      { title: "Kearly | Settings" },
       {
         name: "description",
-        content: "Manage your Kearly profile, notification preferences and account security in one place.",
+        content: "Manage your Kearly profile, system notification preferences, team credentials and billing details.",
       },
-      { property: "og:title", content: "Kearly | Account Settings" },
+      { property: "og:title", content: "Kearly | Settings" },
       {
         property: "og:description",
-        content: "Manage your Kearly profile, notification preferences and account security in one place.",
+        content: "Manage your Kearly profile, system notification preferences, team credentials and billing details.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -30,218 +34,276 @@ export const Route = createFileRoute("/settings")({
   component: SettingsPage,
 });
 
-const navItems = [
+const overviewNav = [
   { label: "Dashboard", icon: LayoutDashboard, to: "/dashboard" as const },
   { label: "Compliance", icon: ShieldCheck, to: "/compliance" as const },
-  { label: "Repairs", icon: Wrench, to: "/repairs" as const },
-  { label: "Assets", icon: Building2, to: "/assets" as const },
-  { label: "Reports", icon: BarChart3, to: "/reports" as const },
-  { label: "Audit Log", icon: ScrollText, to: "/audit-log" as const },
-  { label: "Settings", icon: SettingsIcon, to: "/settings" as const, active: true },
+  { label: "Repairs", icon: Wrench, to: "/repairs" as const, badge: "2" },
+  { label: "Buildings", icon: Building2, to: "/assets" as const },
 ];
 
-const tabs = ["Profile", "Notifications", "Security"] as const;
+const governanceNav = [
+  { label: "Reports", icon: BarChart3, to: "/reports" as const },
+  { label: "Team", icon: Users, to: "/team" as const },
+  { label: "Audit log", icon: ScrollText, to: "/audit-log" as const },
+  { label: "Billing", icon: CreditCard, to: "/settings" as const },
+];
+
+const sections = [
+  { label: "Profile", icon: User },
+  { label: "Notifications", icon: Bell },
+  { label: "Teams", icon: Users },
+  { label: "Billing", icon: CreditCard },
+] as const;
+
+type Section = (typeof sections)[number]["label"];
 
 function SettingsPage() {
-  const [tab, setTab] = useState<(typeof tabs)[number]>("Profile");
+  const [section, setSection] = useState<Section>("Profile");
 
   return (
-    <div className="db-shell">
-      <aside className="db-sidebar">
-        <Link to="/dashboard" className="db-logo" aria-label="Kearly">
-          <svg width="28" height="28" viewBox="0 0 100 100" aria-hidden="true">
-            <rect x="5" y="5" width="40" height="40" rx="10" fill="#4A7C6F" />
-            <path d="M 55 5 L 95 5 L 95 45 Q 75 45 55 25 Z" fill="#4A7C6F" />
-            <rect x="5" y="55" width="40" height="40" rx="10" fill="#4A7C6F" />
-            <path d="M 55 55 Q 75 55 95 75 L 95 95 L 55 95 Z" fill="#4A7C6F" />
+    <div className="po-shell">
+      <aside className="po-sidebar">
+        <Link to="/dashboard" className="po-logo" aria-label="Kearly">
+          <svg width="26" height="26" viewBox="0 0 100 100" aria-hidden="true">
+            <rect x="5" y="5" width="40" height="40" rx="10" fill="#15803D" />
+            <path d="M 55 5 L 95 5 L 95 45 Q 75 45 55 25 Z" fill="#15803D" />
+            <rect x="5" y="55" width="40" height="40" rx="10" fill="#15803D" />
+            <path d="M 55 55 Q 75 55 95 75 L 95 95 L 55 95 Z" fill="#15803D" />
           </svg>
-          <span className="db-logo-text">
-            <span className="db-logo-name">KEARLY</span>
-            <span className="db-logo-tag">Compliance. Automated &amp; Simplified.</span>
+          <span className="po-logo-text">
+            <span className="po-logo-name">KEARLY</span>
+            <span className="po-logo-tag">Compliance. Automated &amp; Simplified.</span>
           </span>
         </Link>
 
-        <nav className="db-nav" aria-label="Main navigation">
-          {navItems.map(({ label, icon: Icon, to, active }) => (
-            <Link key={label} to={to} className={`db-nav-item ${active ? "is-active" : ""}`}>
-              <Icon size={18} aria-hidden="true" />
+        <nav className="po-nav" aria-label="Main navigation">
+          <p className="po-nav-label">OVERVIEW</p>
+          {overviewNav.map(({ label, icon: Icon, to, badge }) => (
+            <Link key={label} to={to} className="po-nav-item">
+              <Icon size={17} aria-hidden="true" />
               <span>{label}</span>
-              {active && <span className="db-nav-bar" aria-hidden="true" />}
+              {badge ? <span className="po-nav-badge">{badge}</span> : null}
+            </Link>
+          ))}
+
+          <p className="po-nav-label po-nav-label-gap">GOVERNANCE</p>
+          {governanceNav.map(({ label, icon: Icon, to }) => (
+            <Link key={label} to={to} className="po-nav-item">
+              <Icon size={17} aria-hidden="true" />
+              <span>{label}</span>
             </Link>
           ))}
         </nav>
 
-        <div className="db-user">
-          <span className="db-avatar" aria-hidden="true">
-            JD
-          </span>
-          <span className="db-user-meta">
-            <strong>Jane Doe</strong>
-            <small>Practice Admin</small>
-          </span>
+        <div className="po-sidebar-foot">
+          <Link to="/settings" className="po-nav-item se-settings-active">
+            <SettingsIcon size={17} aria-hidden="true" />
+            <span>Settings</span>
+          </Link>
+          <div className="po-user">
+            <span className="po-user-avatar" aria-hidden="true">
+              AR
+            </span>
+            <span className="po-user-text">
+              <span className="po-user-name">Alex Rowe</span>
+              <span className="po-user-role">Portfolio admin</span>
+            </span>
+          </div>
         </div>
       </aside>
 
-      <main className="db-main">
-        <header className="am-head">
-          <h1 className="db-title">Settings</h1>
-          <p className="db-subtitle">Manage your profile, alerts and account security</p>
+      <main className="po-main">
+        <header className="se-head">
+          <h1 className="po-title">Settings</h1>
+          <p className="po-subtitle">Manage your profile, system notification preferences, and team credentials</p>
         </header>
 
-        <div className="cp-tabs" role="tablist" aria-label="Settings sections">
-          {tabs.map((item) => (
-            <button
-              key={item}
-              type="button"
-              role="tab"
-              aria-selected={tab === item}
-              className={`cp-tab ${tab === item ? "is-active" : ""}`}
-              onClick={() => setTab(item)}
-            >
-              {item}
-            </button>
-          ))}
+        <div className="se-layout">
+          <nav className="se-side" role="tablist" aria-label="Settings sections">
+            {sections.map(({ label, icon: Icon }) => (
+              <button
+                key={label}
+                type="button"
+                role="tab"
+                aria-selected={section === label}
+                className={`se-side-item ${section === label ? "is-active" : ""}`}
+                onClick={() => setSection(label)}
+              >
+                <Icon size={16} aria-hidden="true" />
+                <span>{label}</span>
+              </button>
+            ))}
+          </nav>
+
+          <section className="se-panel" aria-label={`${section} settings`}>
+            {section === "Profile" && (
+              <>
+                <h2 className="se-panel-title">Profile Information</h2>
+                <p className="se-panel-sub">Update your personal details and system-wide visibility settings</p>
+
+                <div className="se-photo-row">
+                  <span className="se-photo" aria-hidden="true">
+                    AR
+                  </span>
+                  <div className="se-photo-actions">
+                    <div className="se-photo-buttons">
+                      <button type="button" className="se-primary">
+                        Upload New Photo
+                      </button>
+                      <button type="button" className="se-ghost">
+                        Remove
+                      </button>
+                    </div>
+                    <small className="se-hint">JPG, GIF or PNG. Max size of 800K</small>
+                  </div>
+                </div>
+
+                <div className="se-fields">
+                  <div className="se-field">
+                    <label htmlFor="se-name">Full Name</label>
+                    <input id="se-name" type="text" defaultValue="Alex Rowe" />
+                  </div>
+                  <div className="se-field">
+                    <label htmlFor="se-email">Email Address</label>
+                    <input id="se-email" type="email" defaultValue="alex.rowe@kearlycompliance.com" />
+                  </div>
+                  <div className="se-field">
+                    <label htmlFor="se-phone">Phone Number</label>
+                    <input id="se-phone" type="tel" defaultValue="+44 7700 900077" />
+                  </div>
+                  <div className="se-field">
+                    <label htmlFor="se-role">Job Title / Role</label>
+                    <input id="se-role" type="text" defaultValue="Portfolio Compliance Administrator" />
+                  </div>
+                </div>
+
+                <div className="se-foot">
+                  <button type="button" className="se-primary">
+                    Save Global Changes
+                  </button>
+                </div>
+              </>
+            )}
+
+            {section === "Notifications" && (
+              <>
+                <h2 className="se-panel-title">Notification Preferences</h2>
+                <p className="se-panel-sub">Choose how and when Kearly alerts you about compliance activity</p>
+
+                <div className="se-fields">
+                  <div className="se-field">
+                    <label htmlFor="se-task-alerts">Task Reminders</label>
+                    <select id="se-task-alerts" defaultValue="both">
+                      <option value="email">Email</option>
+                      <option value="inapp">In-app only</option>
+                      <option value="both">Email and in-app</option>
+                      <option value="off">Turn off</option>
+                    </select>
+                  </div>
+                  <div className="se-field">
+                    <label htmlFor="se-notice">Advance Notice</label>
+                    <select id="se-notice" defaultValue="7">
+                      <option value="1">1 day before</option>
+                      <option value="3">3 days before</option>
+                      <option value="7">7 days before</option>
+                      <option value="14">14 days before</option>
+                    </select>
+                  </div>
+                  <div className="se-field">
+                    <label htmlFor="se-digest">Weekly Digest</label>
+                    <select id="se-digest" defaultValue="monday">
+                      <option value="monday">Every Monday</option>
+                      <option value="friday">Every Friday</option>
+                      <option value="off">Turn off</option>
+                    </select>
+                  </div>
+                  <div className="se-field">
+                    <label htmlFor="se-overdue">Overdue Escalation</label>
+                    <select id="se-overdue" defaultValue="manager">
+                      <option value="manager">Notify facility manager</option>
+                      <option value="admin">Notify portfolio admin</option>
+                      <option value="off">No escalation</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div className="se-foot">
+                  <button type="button" className="se-primary">
+                    Save Preferences
+                  </button>
+                </div>
+              </>
+            )}
+
+            {section === "Teams" && (
+              <>
+                <h2 className="se-panel-title">Team Credentials</h2>
+                <p className="se-panel-sub">Review who has access to your portfolio and their permission level</p>
+
+                <ul className="se-team">
+                  {[
+                    { name: "Alex Rowe", email: "alex.rowe@kearlycompliance.com", role: "Portfolio admin" },
+                    { name: "Sarah Jones", email: "sarah.jones@riverside.nhs.uk", role: "Facility Manager" },
+                    { name: "Michael Finch", email: "michael.finch@riverside.nhs.uk", role: "Engineer" },
+                    { name: "James Carter", email: "james.carter@riverside.nhs.uk", role: "Viewer" },
+                  ].map((member) => (
+                    <li key={member.email} className="se-team-row">
+                      <span className="se-team-avatar" aria-hidden="true">
+                        {member.name
+                          .split(" ")
+                          .map((part) => part[0])
+                          .join("")}
+                      </span>
+                      <span className="se-team-text">
+                        <strong>{member.name}</strong>
+                        <small>{member.email}</small>
+                      </span>
+                      <span className="se-team-role">{member.role}</span>
+                    </li>
+                  ))}
+                </ul>
+
+                <div className="se-foot">
+                  <Link to="/team" className="se-primary">
+                    Invite Team Member
+                  </Link>
+                </div>
+              </>
+            )}
+
+            {section === "Billing" && (
+              <>
+                <h2 className="se-panel-title">Billing</h2>
+                <p className="se-panel-sub">Your current plan, payment method and invoice history</p>
+
+                <div className="se-plan">
+                  <div>
+                    <strong>Portfolio Plan</strong>
+                    <small>6 buildings · billed annually · renews 01 Jan 2025</small>
+                  </div>
+                  <span className="se-plan-price">£249 / mo</span>
+                </div>
+
+                <div className="se-fields">
+                  <div className="se-field">
+                    <label htmlFor="se-card">Card on File</label>
+                    <input id="se-card" type="text" defaultValue="Visa ending 4242" />
+                  </div>
+                  <div className="se-field">
+                    <label htmlFor="se-billing-email">Billing Email</label>
+                    <input id="se-billing-email" type="email" defaultValue="finance@kearlycompliance.com" />
+                  </div>
+                </div>
+
+                <div className="se-foot">
+                  <button type="button" className="se-primary">
+                    Update Billing
+                  </button>
+                </div>
+              </>
+            )}
+          </section>
         </div>
-
-        {tab === "Profile" && (
-          <section className="at-card" aria-label="Profile settings">
-            <h2 className="at-card-title">Profile Details</h2>
-            <div className="at-grid">
-              <div className="at-field">
-                <label htmlFor="st-name">Full Name</label>
-                <input id="st-name" type="text" defaultValue="Jane Doe" />
-              </div>
-              <div className="at-field">
-                <label htmlFor="st-email">Work Email</label>
-                <input id="st-email" type="email" defaultValue="jane.doe@kearly.co" />
-              </div>
-              <div className="at-field">
-                <label htmlFor="st-phone">Phone Number</label>
-                <input id="st-phone" type="tel" defaultValue="+44 20 7946 0812" />
-              </div>
-              <div className="at-field">
-                <label htmlFor="st-role">Role</label>
-                <select id="st-role" defaultValue="admin">
-                  <option value="admin">Practice Admin</option>
-                  <option value="manager">Facility Manager</option>
-                  <option value="engineer">Engineer</option>
-                  <option value="viewer">Viewer</option>
-                </select>
-              </div>
-              <div className="at-field">
-                <label htmlFor="st-practice">Practice Name</label>
-                <input id="st-practice" type="text" defaultValue="Oakfield Medical Group" />
-              </div>
-              <div className="at-field">
-                <label htmlFor="st-timezone">Time Zone</label>
-                <select id="st-timezone" defaultValue="london">
-                  <option value="london">Europe/London</option>
-                  <option value="dublin">Europe/Dublin</option>
-                  <option value="utc">UTC</option>
-                </select>
-              </div>
-            </div>
-            <div className="at-actions">
-              <Link to="/dashboard" className="at-cancel">
-                Cancel
-              </Link>
-              <button type="button" className="at-next">
-                Save Changes
-              </button>
-            </div>
-          </section>
-        )}
-
-        {tab === "Notifications" && (
-          <section className="at-card" aria-label="Notification settings">
-            <h2 className="at-card-title">Notification Preferences</h2>
-            <div className="at-grid">
-              <div className="at-field">
-                <label htmlFor="st-task-alerts">Task Reminders</label>
-                <select id="st-task-alerts" defaultValue="email">
-                  <option value="email">Email</option>
-                  <option value="inapp">In-app only</option>
-                  <option value="both">Email and in-app</option>
-                  <option value="off">Turn off</option>
-                </select>
-              </div>
-              <div className="at-field">
-                <label htmlFor="st-notice">Advance Notice</label>
-                <select id="st-notice" defaultValue="7">
-                  <option value="1">1 day before</option>
-                  <option value="3">3 days before</option>
-                  <option value="7">7 days before</option>
-                  <option value="14">14 days before</option>
-                </select>
-              </div>
-              <div className="at-field">
-                <label htmlFor="st-digest">Weekly Digest</label>
-                <select id="st-digest" defaultValue="monday">
-                  <option value="monday">Every Monday</option>
-                  <option value="friday">Every Friday</option>
-                  <option value="off">Turn off</option>
-                </select>
-              </div>
-              <div className="at-field">
-                <label htmlFor="st-overdue">Overdue Escalation</label>
-                <select id="st-overdue" defaultValue="manager">
-                  <option value="manager">Notify facility manager</option>
-                  <option value="admin">Notify practice admin</option>
-                  <option value="off">No escalation</option>
-                </select>
-              </div>
-            </div>
-            <div className="at-actions">
-              <button type="button" className="at-next">
-                Save Preferences
-              </button>
-            </div>
-          </section>
-        )}
-
-        {tab === "Security" && (
-          <section className="at-card" aria-label="Security settings">
-            <h2 className="at-card-title">Account Security</h2>
-            <div className="at-grid">
-              <div className="at-field">
-                <label htmlFor="st-current">Current Password</label>
-                <input id="st-current" type="password" placeholder="Enter current password" />
-              </div>
-              <div className="at-field">
-                <label htmlFor="st-new">New Password</label>
-                <input id="st-new" type="password" placeholder="Enter new password" />
-              </div>
-              <div className="at-field">
-                <label htmlFor="st-confirm">Confirm New Password</label>
-                <input id="st-confirm" type="password" placeholder="Re-enter new password" />
-              </div>
-              <div className="at-field">
-                <label htmlFor="st-2fa">Two-Factor Authentication</label>
-                <select id="st-2fa" defaultValue="app">
-                  <option value="app">Authenticator app</option>
-                  <option value="sms">Text message</option>
-                  <option value="off">Turn off</option>
-                </select>
-              </div>
-              <div className="at-field">
-                <label htmlFor="st-session">Session Timeout</label>
-                <select id="st-session" defaultValue="30">
-                  <option value="15">15 minutes</option>
-                  <option value="30">30 minutes</option>
-                  <option value="60">1 hour</option>
-                </select>
-              </div>
-            </div>
-            <div className="at-actions">
-              <Link to="/audit-log" className="at-cancel">
-                View Audit Log
-              </Link>
-              <button type="button" className="at-next">
-                Update Security
-              </button>
-            </div>
-          </section>
-        )}
       </main>
     </div>
   );
