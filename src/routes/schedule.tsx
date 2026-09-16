@@ -328,9 +328,21 @@ function SchedulePage() {
             onClick={(event) => event.stopPropagation()}
           >
             <div className="ps-pop-actions">
-              <Link to="/edit-task" className="ps-pop-btn" aria-label="Edit event">
+              <button
+                type="button"
+                className="ps-pop-btn"
+                aria-label="Edit event"
+                onClick={() => {
+                  setEditTag(tagForTone[selected.event.tone]);
+                  setEditPriority("Medium");
+                  setEditNotice(7);
+                  setEditTarget(selected.event);
+                  setSelected(null);
+                }}
+              >
                 <Pencil size={18} aria-hidden="true" />
-              </Link>
+              </button>
+
               <button type="button" className="ps-pop-btn" aria-label="Delete event">
                 <Trash2 size={18} aria-hidden="true" />
               </button>
