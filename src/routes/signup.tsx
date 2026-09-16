@@ -57,7 +57,7 @@ function SignupPage() {
           className="su-form"
           onSubmit={(event) => {
             event.preventDefault();
-            void navigate({ to: "/verify" });
+            void navigate({ to: "/facility" });
           }}
         >
           <h1 className="su-title">Create your account</h1>
