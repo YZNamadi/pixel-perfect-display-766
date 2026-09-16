@@ -13,6 +13,10 @@ import {
   Search,
   Plus,
   Calendar,
+  CheckCircle2,
+  Pencil,
+  AlertTriangle,
+
 } from "lucide-react";
 
 export const Route = createFileRoute("/edit-task")({
