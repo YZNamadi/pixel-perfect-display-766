@@ -51,10 +51,13 @@ const governanceNav = [
 ];
 
 const steps = [
-  { n: 1, label: "Task Details", active: true },
+  { n: 1, label: "Task Details" },
   { n: 2, label: "Schedule" },
   { n: 3, label: "Assignment" },
 ];
+
+const noticeDays = [1, 3, 5, 7, 21];
+
 
 function AddTaskPage() {
   return (
