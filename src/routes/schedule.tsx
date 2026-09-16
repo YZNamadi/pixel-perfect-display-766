@@ -333,6 +333,125 @@ function SchedulePage() {
           </div>
         </div>
       )}
+
+      {addOpen && (
+        <div className="cp-overlay" role="presentation" onClick={() => setAddOpen(false)}>
+          <div
+            className="sa-modal"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="sa-heading"
+            onClick={(event) => event.stopPropagation()}
+          >
+            <div className="sa-head">
+              <h2 className="sa-heading" id="sa-heading">
+                Add Compliance Task
+              </h2>
+              <button type="button" className="sa-close" aria-label="Close" onClick={() => setAddOpen(false)}>
+                <X size={16} aria-hidden="true" />
+              </button>
+            </div>
+
+            <form
+              className="sa-body"
+              onSubmit={(event) => {
+                event.preventDefault();
+                setAddOpen(false);
+              }}
+            >
+              <div className="sa-field">
+                <label className="sa-label" htmlFor="sa-title">
+                  Task Title <span className="sa-req">*</span>
+                </label>
+                <input id="sa-title" className="sa-input" placeholder="e.g., Monthly Water Temp Log" required />
+              </div>
+
+              <div className="sa-row">
+                <div className="sa-field">
+                  <label className="sa-label" htmlFor="sa-assign">
+                    Assign To
+                  </label>
+                  <select id="sa-assign" className="sa-input" defaultValue="">
+                    <option value="">Select team member</option>
+                    <option>Alex Rowe</option>
+                    <option>Sarah Jenkins</option>
+                    <option>James Carter</option>
+                    <option>Michael Finch</option>
+                  </select>
+                </div>
+                <div className="sa-field">
+                  <label className="sa-label" htmlFor="sa-due">
+                    Due Date <span className="sa-req">*</span>
+                  </label>
+                  <input id="sa-due" type="date" className="sa-input" required />
+                </div>
+              </div>
+
+              <div className="sa-field">
+                <span className="sa-label">Priority Level</span>
+                <div className="sa-priority" role="group" aria-label="Priority level">
+                  {(["Low", "Medium", "High"] as const).map((level) => (
+                    <button
+                      key={level}
+                      type="button"
+                      aria-pressed={priority === level}
+                      className={`sa-pri ${priority === level ? `is-active is-${level.toLowerCase()}` : ""}`}
+                      onClick={() => setPriority(level)}
+                    >
+                      {level}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              <div className="sa-field">
+                <span className="sa-label">Category / Tag</span>
+                <div className="sa-tags" role="group" aria-label="Category">
+                  {[
+                    { name: "Water Safety", dot: "#15803D" },
+                    { name: "Fire & Emergency", dot: "#D97706" },
+                    { name: "Gas Compliance", dot: "#DC2626" },
+                    { name: "Lifts & LOLER", dot: "#7C3AED" },
+                    { name: "Asbestos", dot: "#0D9488" },
+                  ].map((item) => (
+                    <button
+                      key={item.name}
+                      type="button"
+                      aria-pressed={tag === item.name}
+                      className={`sa-tag-btn ${tag === item.name ? "is-active" : ""}`}
+                      onClick={() => setTag(item.name)}
+                    >
+                      <span className="sa-dot" style={{ background: item.dot }} aria-hidden="true" />
+                      {item.name}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              <div className="sa-field">
+                <label className="sa-label" htmlFor="sa-notes">
+                  Description / Notes
+                </label>
+                <textarea
+                  id="sa-notes"
+                  className="sa-input sa-textarea"
+                  rows={3}
+                  placeholder="Add detailed instructions, reference standards, or compliance protocols here..."
+                />
+              </div>
+
+              <div className="sa-actions">
+                <button type="button" className="sa-cancel" onClick={() => setAddOpen(false)}>
+                  Cancel
+                </button>
+                <button type="submit" className="sa-save">
+                  Save Task
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
