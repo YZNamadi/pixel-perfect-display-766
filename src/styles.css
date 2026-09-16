@@ -6230,3 +6230,8 @@ a.am-menu-item { text-decoration: none; }
   gap: 1rem;
   margin-top: 1.4rem;
 }
+
+.rp-muted {
+  color: #9ca3af;
+  font-size: 0.85rem;
+}
