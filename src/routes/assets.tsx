@@ -170,7 +170,7 @@ function BuildingsPage() {
                     </span>
                   ))}
                 </span>
-                <Link to="/compliance" className="bs-manage">
+                <Link to="/building" className="bs-manage">
                   Manage Site
                   <ArrowRight size={14} aria-hidden="true" />
                 </Link>
