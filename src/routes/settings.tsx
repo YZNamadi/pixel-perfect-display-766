@@ -367,28 +367,41 @@ function SettingsPage() {
                     </table>
                   </div>
                 ) : (
-                  <ul className="se-team">
-                    {[
-                      { name: "Alex Rowe", email: "alex.rowe@kearlycompliance.com", role: "Portfolio admin" },
-                      { name: "Sarah Jones", email: "sarah.jones@riverside.nhs.uk", role: "Facility Manager" },
-                      { name: "Michael Finch", email: "michael.finch@riverside.nhs.uk", role: "Engineer" },
-                      { name: "James Carter", email: "james.carter@riverside.nhs.uk", role: "Viewer" },
-                    ].map((member) => (
-                      <li key={member.email} className="se-team-row">
-                        <span className="se-team-avatar" aria-hidden="true">
-                          {member.name
-                            .split(" ")
-                            .map((part) => part[0])
-                            .join("")}
-                        </span>
-                        <span className="se-team-text">
-                          <strong>{member.name}</strong>
-                          <small>{member.email}</small>
-                        </span>
-                        <span className="se-team-role">{member.role}</span>
-                      </li>
-                    ))}
-                  </ul>
+                  <div className="cl-table-wrap">
+                    <table className="cl-table">
+                      <thead>
+                        <tr>
+                          <th>NAME</th>
+                          <th>EMAIL</th>
+                          <th>ROLE / PERMISSIONS</th>
+                          <th>STATUS</th>
+                          <th>ACTION</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {internalTeam.map((member) => (
+                          <tr key={member.email}>
+                            <td className="cl-name">{member.name}</td>
+                            <td className="al-details se-team-email">{member.email}</td>
+                            <td className="al-details">{member.role}</td>
+                            <td>
+                              <span className={`dc-expiry ${member.active ? "tone-green" : "tone-muted"}`}>
+                                {member.active ? "Active" : "Inactive"}
+                              </span>
+                            </td>
+                            <td>
+                              <div className="cl-row-actions">
+                                <button type="button" className="cl-icon-btn" aria-label={`Edit ${member.name}`}>
+                                  <Pencil size={15} aria-hidden="true" />
+                                </button>
+                              </div>
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+
                 )}
               </>
             )}
