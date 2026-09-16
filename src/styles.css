@@ -5784,3 +5784,28 @@ a.am-menu-item { text-decoration: none; }
 .at-evidence {
   margin: 0.25rem 0 0.5rem;
 }
+
+/* Repairs close-ticket confirmation */
+.rp-modal-heads {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+}
+
+.rp-modal-sub {
+  font-size: 0.78rem;
+  color: #9ca3af;
+}
+
+.rp-modal-question {
+  margin: 1rem 0 0.5rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #111827;
+}
+
+.rp-modal-actions {
+  margin-top: 1.25rem;
+  padding-top: 1rem;
+  border-top: 1px solid #e5e7eb;
+}
