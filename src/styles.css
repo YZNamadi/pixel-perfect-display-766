@@ -4393,3 +4393,57 @@ a.am-menu-item { text-decoration: none; }
     padding: 3rem 1.5rem 4rem;
   }
 }
+
+/* Facility/site split-screen extras */
+.fp-trusted-label {
+  margin: 0 0 0.6rem;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.8rem;
+}
+
+.fp-textarea {
+  resize: vertical;
+  min-height: 76px;
+  line-height: 1.5;
+}
+
+.fp-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.fp-chip {
+  border: 1px solid #DCE3E1;
+  background: #ffffff;
+  color: #6B7C7A;
+  border-radius: 999px;
+  padding: 0.4rem 0.9rem;
+  font-size: 0.82rem;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.fp-chip:hover { border-color: #0E7C6F; color: #0E7C6F; }
+
+.fp-chip-on {
+  background: #E7F6EF;
+  border-color: #0E9F6E;
+  color: #0B6B5E;
+}
+
+.fp-note {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  margin: 0;
+  background: #E7F6EF;
+  border-radius: 8px;
+  padding: 0.75rem 0.9rem;
+  color: #0B6B5E;
+  font-size: 0.85rem;
+}
+
+.fp-note svg { flex: none; }
