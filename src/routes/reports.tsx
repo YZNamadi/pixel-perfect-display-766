@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import {
   LayoutDashboard,
@@ -53,8 +52,6 @@ const governanceNav = [
   { label: "Billing", icon: CreditCard, to: "/settings" as const },
 ];
 
-const tabs = ["Reports", "Documents", "Training"] as const;
-
 const stats = [
   { label: "Total Reports Generated", value: "142", tone: "" },
   { label: "Pending Reviews", value: "5", tone: "tone-amber" },
@@ -85,8 +82,6 @@ const statusTone = (s: Report["status"]) =>
   s === "Complete" ? "tone-green" : s === "Pending Review" ? "tone-amber" : "tone-red";
 
 function ReportsPage() {
-  const [tab, setTab] = useState<(typeof tabs)[number]>("Reports");
-
   return (
     <div className="po-shell">
       <aside className="po-sidebar">
@@ -166,18 +161,15 @@ function ReportsPage() {
         </header>
 
         <div className="rr-tabs" role="tablist" aria-label="Report sections">
-          {tabs.map((item) => (
-            <button
-              key={item}
-              type="button"
-              role="tab"
-              aria-selected={tab === item}
-              className={`rr-tab ${tab === item ? "is-active" : ""}`}
-              onClick={() => setTab(item)}
-            >
-              {item}
-            </button>
-          ))}
+          <Link to="/reports" role="tab" aria-selected className="rr-tab is-active">
+            Reports
+          </Link>
+          <Link to="/documents" role="tab" aria-selected={false} className="rr-tab">
+            Documents
+          </Link>
+          <button type="button" role="tab" aria-selected={false} className="rr-tab">
+            Training
+          </button>
         </div>
 
         <div className="rr-stats">
