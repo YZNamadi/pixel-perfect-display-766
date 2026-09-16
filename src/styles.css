@@ -5709,3 +5709,14 @@ a.am-menu-item { text-decoration: none; }
   display: inline-flex; align-items: center; gap: 0.3rem;
   font-size: 0.75rem; font-weight: 600; color: #374151;
 }
+
+/* ============ Settings: contractors ============ */
+.se-team-head { display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; margin-bottom: 1.25rem; }
+.se-team-tabs { display: inline-flex; gap: 0.5rem; }
+.se-team-tab {
+  padding: 0.55rem 1rem; border-radius: 8px; border: 1px solid #E5E7EB; background: #FFFFFF;
+  font-size: 0.82rem; font-weight: 600; color: #374151; cursor: pointer;
+}
+.se-team-tab.is-active { background: #15803D; border-color: #15803D; color: #FFFFFF; }
+.se-team-add { display: inline-flex; align-items: center; gap: 0.4rem; }
+.dc-expiry.tone-muted { background: #F3F4F6; color: #6B7280; }
