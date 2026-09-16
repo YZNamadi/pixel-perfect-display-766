@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import {
   LayoutDashboard,
@@ -8,298 +7,174 @@ import {
   BarChart3,
   ScrollText,
   Settings,
-  ShieldAlert,
-  CalendarClock,
-  Timer,
-  Plus,
-  ChevronLeft,
-  ChevronRight,
-  Menu,
-  MapPin,
-  Pencil,
+  CreditCard,
   Users,
-  History,
-  Trash2,
+  Search,
+  ArrowRight,
 } from "lucide-react";
-
 
 export const Route = createFileRoute("/assets")({
   head: () => ({
     meta: [
-      { title: "Kearly | Asset Management" },
+      { title: "Kearly | Buildings & Sites" },
       {
         name: "description",
-        content: "Track and manage all facility assets and equipment, service dates and warranties in Kearly.",
+        content:
+          "Overview of every NHS portfolio location with compliance scores, outstanding PPM tasks and active repairs.",
       },
-      { property: "og:title", content: "Kearly | Asset Management" },
+      { property: "og:title", content: "Kearly | Buildings & Sites" },
       {
         property: "og:description",
-        content: "Track and manage all facility assets and equipment, service dates and warranties in Kearly.",
+        content:
+          "Overview of every NHS portfolio location with compliance scores, outstanding PPM tasks and active repairs.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
-  component: AssetsPage,
+  component: BuildingsPage,
 });
 
-const navItems = [
+const overviewNav = [
   { label: "Dashboard", icon: LayoutDashboard, to: "/dashboard" as const },
   { label: "Compliance", icon: ShieldCheck, to: "/compliance" as const },
-  { label: "Repairs", icon: Wrench, to: "/repairs" as const },
-  { label: "Assets", icon: Building2, to: "/assets" as const, active: true },
+  { label: "Repairs", icon: Wrench, to: "/repairs" as const, badge: "2" },
+  { label: "Buildings", icon: Building2, to: "/assets" as const, active: true },
+];
+
+const governanceNav = [
   { label: "Reports", icon: BarChart3, to: "/reports" as const },
-  { label: "Audit Log", icon: ScrollText, to: "/audit-log" as const },
-  { label: "Settings", icon: Settings, to: "/settings" as const },
+  { label: "Team", icon: Users, to: "/team" as const },
+  { label: "Audit log", icon: ScrollText, to: "/audit-log" as const },
+  { label: "Billing", icon: CreditCard, to: "/settings" as const },
 ];
 
-const stats = [
-  { label: "Total Assets", value: "156", note: "Across all facilities", icon: Wrench, tone: "green" },
-  { label: "Active", value: "142", note: "91% operational", icon: ShieldAlert, tone: "teal" },
-  { label: "Due for Service", value: "18", note: "7 this week", icon: CalendarClock, tone: "amber" },
-  { label: "Warranty Expiring", value: "4", note: "Within 30 days", icon: Timer, tone: "orange" },
+const buildings = [
+  { name: "Northgate House", city: "London", score: 96, ppm: 0, repairs: 0 },
+  { name: "Kingsway Tower", city: "Manchester", score: 88, ppm: 2, repairs: 1 },
+  { name: "Riverside Court", city: "Leeds", score: 72, ppm: 4, repairs: 2 },
+  { name: "Elmwood Court", city: "Bristol", score: 91, ppm: 1, repairs: 1 },
+  { name: "Maple Business Park", city: "Birmingham", score: 84, ppm: 3, repairs: 2 },
+  { name: "Victoria Wharf", city: "Liverpool", score: 79, ppm: 2, repairs: 3 },
 ];
 
-const rows = [
-  {
-    name: "HVAC Unit — Building A",
-    category: "HVAC",
-    location: "Maple Court",
-    status: "Active",
-    last: "12 Jul 2026",
-    next: "12 Jan 2027",
-  },
-  {
-    name: "Fire Alarm Panel — Main Hub",
-    category: "Fire Safety",
-    location: "Main Hub",
-    status: "Active",
-    last: "3 Aug 2026",
-    next: "3 Feb 2027",
-  },
-  {
-    name: "Elevator — East Wing",
-    category: "Mechanical",
-    location: "Oakfield Tower",
-    status: "Due Service",
-    last: "15 Mar 2026",
-    next: "15 Sep 2026",
-  },
-  {
-    name: "Generator — Backup Power",
-    category: "Electrical",
-    location: "Main Hub",
-    status: "Active",
-    last: "20 Jun 2026",
-    next: "20 Dec 2026",
-  },
-  {
-    name: "Water Heater — Unit 3C",
-    category: "Plumbing",
-    location: "Birch Lane",
-    status: "Inactive",
-    last: "8 May 2026",
-    next: "—",
-  },
-  {
-    name: "Security Camera System",
-    category: "Security",
-    location: "All Sites",
-    status: "Active",
-    last: "1 Aug 2026",
-    next: "1 Feb 2027",
-  },
-  {
-    name: "Boiler — Central Heating",
-    category: "HVAC",
-    location: "Maple Court",
-    status: "Due Service",
-    last: "22 Feb 2026",
-    next: "22 Aug 2026",
-  },
-];
+const teamInitials = ["SJ", "JC", "AR"];
 
-const rowActions = [
-  { label: "Add Site", icon: MapPin },
-  { label: "Edit Details", icon: Pencil },
-  { label: "Assign Staff", icon: Users },
-  { label: "History", icon: History },
-  { label: "Deactivate", icon: Trash2, danger: true },
-];
+const scoreTone = (score: number) => (score >= 90 ? "tone-green" : score >= 80 ? "tone-amber" : "tone-red");
 
-const statusClass = (status: string) =>
-  status === "Active" ? "is-active" : status === "Due Service" ? "is-due" : "is-inactive";
-
-
-function AssetsPage() {
-  const [openMenu, setOpenMenu] = useState<string | null>(null);
-
+function BuildingsPage() {
   return (
-    <div className="db-shell">
-      <aside className="db-sidebar">
-        <Link to="/dashboard" className="db-logo" aria-label="Kearly">
-          <svg width="28" height="28" viewBox="0 0 100 100" aria-hidden="true">
-            <rect x="5" y="5" width="40" height="40" rx="10" fill="#4A7C6F" />
-            <path d="M 55 5 L 95 5 L 95 45 Q 75 45 55 25 Z" fill="#4A7C6F" />
-            <rect x="5" y="55" width="40" height="40" rx="10" fill="#4A7C6F" />
-            <path d="M 55 55 Q 75 55 95 75 L 95 95 L 55 95 Z" fill="#4A7C6F" />
+    <div className="po-shell">
+      <aside className="po-sidebar">
+        <Link to="/dashboard" className="po-logo" aria-label="Kearly">
+          <svg width="26" height="26" viewBox="0 0 100 100" aria-hidden="true">
+            <rect x="5" y="5" width="40" height="40" rx="10" fill="#15803D" />
+            <path d="M 55 5 L 95 5 L 95 45 Q 75 45 55 25 Z" fill="#15803D" />
+            <rect x="5" y="55" width="40" height="40" rx="10" fill="#15803D" />
+            <path d="M 55 55 Q 75 55 95 75 L 95 95 L 55 95 Z" fill="#15803D" />
           </svg>
-          <span className="db-logo-text">
-            <span className="db-logo-name">KEARLY</span>
-            <span className="db-logo-tag">Compliance. Automated &amp; Simplified.</span>
+          <span className="po-logo-text">
+            <span className="po-logo-name">KEARLY</span>
+            <span className="po-logo-tag">Compliance. Automated &amp; Simplified.</span>
           </span>
         </Link>
 
-        <nav className="db-nav" aria-label="Main navigation">
-          {navItems.map(({ label, icon: Icon, to, active }) => (
-            <Link key={label} to={to} className={`db-nav-item ${active ? "is-active" : ""}`}>
-              <Icon size={18} aria-hidden="true" />
+        <nav className="po-nav" aria-label="Main navigation">
+          <p className="po-nav-label">OVERVIEW</p>
+          {overviewNav.map(({ label, icon: Icon, to, active, badge }) => (
+            <Link key={label} to={to} className={`po-nav-item ${active ? "is-active" : ""}`}>
+              <Icon size={17} aria-hidden="true" />
               <span>{label}</span>
-              {active && <span className="db-nav-bar" aria-hidden="true" />}
+              {badge ? <span className="po-nav-badge">{badge}</span> : null}
+            </Link>
+          ))}
+
+          <p className="po-nav-label po-nav-label-gap">GOVERNANCE</p>
+          {governanceNav.map(({ label, icon: Icon, to }) => (
+            <Link key={label} to={to} className="po-nav-item">
+              <Icon size={17} aria-hidden="true" />
+              <span>{label}</span>
             </Link>
           ))}
         </nav>
 
-        <div className="db-user">
-          <span className="db-avatar" aria-hidden="true">
-            JD
-          </span>
-          <span className="db-user-meta">
-            <strong>Jane Doe</strong>
-            <small>Practice Admin</small>
-          </span>
+        <div className="po-sidebar-foot">
+          <Link to="/settings" className="po-nav-item">
+            <Settings size={17} aria-hidden="true" />
+            <span>Settings</span>
+          </Link>
+          <div className="po-user">
+            <span className="po-user-avatar" aria-hidden="true">
+              AR
+            </span>
+            <span className="po-user-text">
+              <span className="po-user-name">Alex Rowe</span>
+              <span className="po-user-role">Portfolio admin</span>
+            </span>
+          </div>
         </div>
       </aside>
 
-      <main className="db-main">
-        <header className="am-head">
-          <h1 className="db-title">Asset Management</h1>
-          <p className="db-subtitle">Track and manage all facility assets and equipment.</p>
+      <main className="po-main">
+        <header className="po-topbar">
+          <div>
+            <h1 className="po-title">Buildings &amp; Sites</h1>
+            <p className="po-subtitle">Overview of NHS portfolio locations</p>
+          </div>
+          <div className="po-topbar-actions">
+            <div className="po-search">
+              <Search size={15} aria-hidden="true" />
+              <input type="search" placeholder="Search..." aria-label="Search buildings" />
+            </div>
+            <span className="po-chip">Jul 2024</span>
+            <Link to="/site" className="po-download">
+              Add Site
+            </Link>
+          </div>
         </header>
 
-        <section className="db-stats" aria-label="Asset overview">
-          {stats.map(({ label, value, note, icon: Icon, tone }) => (
-            <article className={`db-stat is-${tone}`} key={label}>
-              <div className="db-stat-top">
-                <span className="db-stat-label">{label}</span>
-                <span className="db-stat-icon">
-                  <Icon size={16} aria-hidden="true" />
-                </span>
+        <section className="bs-grid" aria-label="Buildings">
+          {buildings.map((b) => (
+            <article className="bs-card" key={b.name}>
+              <h2 className="bs-name">{b.name}</h2>
+              <p className="bs-city">{b.city}</p>
+
+              <div className="bs-score-row">
+                <span className="bs-score-label">Portfolio Compliance</span>
+                <strong className={`bs-score ${scoreTone(b.score)}`}>{b.score}%</strong>
               </div>
-              <strong className="db-stat-value">{value}</strong>
-              <small className="db-stat-note">{note}</small>
+              <div className="bs-bar">
+                <span className={`bs-bar-fill ${scoreTone(b.score)}`} style={{ width: `${b.score}%` }} />
+              </div>
+
+              <div className="bs-metrics">
+                <div className="bs-metric">
+                  <span className="bs-metric-label">PPM TASKS</span>
+                  <strong className={`bs-metric-value ${b.ppm > 0 ? "" : "is-zero"}`}>{b.ppm} Outstanding</strong>
+                </div>
+                <div className="bs-metric">
+                  <span className="bs-metric-label">ACTIVE REPAIRS</span>
+                  <strong className={`bs-metric-value ${b.repairs > 0 ? "tone-red" : "is-zero"}`}>
+                    {b.repairs} Open
+                  </strong>
+                </div>
+              </div>
+
+              <div className="bs-foot">
+                <span className="bs-avatars" aria-hidden="true">
+                  {teamInitials.map((i) => (
+                    <span className="bs-avatar" key={i}>
+                      {i}
+                    </span>
+                  ))}
+                </span>
+                <Link to="/compliance" className="bs-manage">
+                  Manage Site
+                  <ArrowRight size={14} aria-hidden="true" />
+                </Link>
+              </div>
             </article>
           ))}
-        </section>
-
-        <section className="am-panel" aria-label="Assets">
-          <div className="am-toolbar">
-            <input className="am-search" type="search" placeholder="Search assets..." aria-label="Search assets" />
-            <select className="am-select" aria-label="Filter by category" defaultValue="all">
-              <option value="all">All Categories</option>
-              <option value="hvac">HVAC</option>
-              <option value="fire">Fire Safety</option>
-              <option value="mechanical">Mechanical</option>
-              <option value="electrical">Electrical</option>
-              <option value="plumbing">Plumbing</option>
-              <option value="security">Security</option>
-            </select>
-            <select className="am-select" aria-label="Filter by status" defaultValue="all">
-              <option value="all">All Statuses</option>
-              <option value="active">Active</option>
-              <option value="due">Due Service</option>
-              <option value="inactive">Inactive</option>
-            </select>
-            <button type="button" className="am-add">
-              <Plus size={15} aria-hidden="true" />
-              <span>Add Asset</span>
-            </button>
-          </div>
-
-          <div className="am-table-wrap">
-            <table className="am-table">
-              <thead>
-                <tr>
-                  <th>Asset Name</th>
-                  <th>Category</th>
-                  <th>Location</th>
-                  <th>Status</th>
-                  <th>Last Serviced</th>
-                  <th>Next Service</th>
-                  <th aria-label="Actions" />
-                </tr>
-              </thead>
-              <tbody>
-                {rows.map((row) => (
-                  <tr key={row.name}>
-                    <td className="am-name">{row.name}</td>
-                    <td>{row.category}</td>
-                    <td>{row.location}</td>
-                    <td>
-                      <span className={`am-status ${statusClass(row.status)}`}>{row.status}</span>
-                    </td>
-                    <td>{row.last}</td>
-                    <td className={row.status === "Due Service" ? "am-next-due" : undefined}>{row.next}</td>
-                    <td className="am-actions-cell">
-                      <div className="am-menu-wrap">
-                        <button
-                          type="button"
-                          className="am-kebab"
-                          aria-label={`Actions for ${row.name}`}
-                          aria-expanded={openMenu === row.name}
-                          onClick={() => setOpenMenu(openMenu === row.name ? null : row.name)}
-                        >
-                          <Menu size={15} aria-hidden="true" />
-                        </button>
-                        {openMenu === row.name && (
-                          <div className="am-menu" role="menu">
-                            {rowActions.map(({ label, icon: Icon, danger }) => (
-                              <button
-                                type="button"
-                                role="menuitem"
-                                key={label}
-                                className={`am-menu-item ${danger ? "is-danger" : ""}`}
-                                onClick={() => setOpenMenu(null)}
-                              >
-                                <Icon size={14} aria-hidden="true" />
-                                <span>{label}</span>
-                              </button>
-                            ))}
-                          </div>
-                        )}
-                      </div>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-
-
-          <div className="am-foot">
-            <small>Showing 1–7 of 156 assets</small>
-            <div className="am-pager">
-              <button type="button" className="am-page" aria-label="Previous page">
-                <ChevronLeft size={15} aria-hidden="true" />
-              </button>
-              <button type="button" className="am-page is-current" aria-current="page">
-                1
-              </button>
-              <button type="button" className="am-page">
-                2
-              </button>
-              <button type="button" className="am-page">
-                3
-              </button>
-              <span className="am-ellipsis">...</span>
-              <button type="button" className="am-page">
-                20
-              </button>
-              <button type="button" className="am-page" aria-label="Next page">
-                <ChevronRight size={15} aria-hidden="true" />
-              </button>
-            </div>
-          </div>
         </section>
       </main>
     </div>

@@ -4910,3 +4910,36 @@ a.am-menu-item { text-decoration: none; }
 .rp-btn.tone-green { color: #15803D; }
 .rp-btn.tone-blue { color: #2563EB; }
 .rp-btn.tone-red { color: #DC2626; }
+
+/* Buildings & sites cards (bs-) */
+.bs-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.25rem; margin-top: 1.5rem; }
+.bs-card { background: #ffffff; border: 1px solid #E5E7EB; border-radius: 12px; padding: 1.25rem 1.35rem; }
+.bs-name { margin: 0; text-align: center; font-size: 1rem; font-weight: 700; color: #111827; }
+.bs-city { margin: 0.2rem 0 1.1rem; text-align: center; font-size: 0.78rem; color: #9CA3AF; }
+.bs-score-row { display: flex; align-items: center; justify-content: space-between; gap: 0.75rem; }
+.bs-score-label { font-size: 0.78rem; color: #374151; }
+.bs-score { font-size: 0.85rem; font-weight: 700; }
+.bs-score.tone-green, .bs-metric-value.tone-green { color: #15803D; }
+.bs-score.tone-amber { color: #D97706; }
+.bs-score.tone-red { color: #DC2626; }
+.bs-bar { margin-top: 0.5rem; height: 5px; border-radius: 999px; background: #F3F4F6; overflow: hidden; }
+.bs-bar-fill { display: block; height: 100%; border-radius: 999px; }
+.bs-bar-fill.tone-green { background: #15803D; }
+.bs-bar-fill.tone-amber { background: #F59E0B; }
+.bs-bar-fill.tone-red { background: #EF4444; }
+.bs-metrics { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1.25rem 0; }
+.bs-metric { display: flex; flex-direction: column; align-items: center; gap: 0.3rem; text-align: center; }
+.bs-metric-label { font-size: 0.6rem; font-weight: 700; letter-spacing: 0.07em; color: #9CA3AF; }
+.bs-metric-value { font-size: 0.98rem; font-weight: 700; color: #111827; }
+.bs-metric-value.is-zero { color: #9CA3AF; }
+.bs-metric-value.tone-red { color: #DC2626; }
+.bs-foot { display: flex; align-items: center; justify-content: space-between; gap: 1rem; border-top: 1px solid #F1F3F2; padding-top: 0.9rem; }
+.bs-avatars { display: inline-flex; }
+.bs-avatar {
+  width: 24px; height: 24px; border-radius: 50%; background: #0D9488; color: #ffffff; border: 2px solid #ffffff;
+  display: inline-flex; align-items: center; justify-content: center; font-size: 0.56rem; font-weight: 700; margin-left: -6px;
+}
+.bs-avatar:first-child { margin-left: 0; }
+.bs-avatar:nth-child(2) { background: #DC2626; }
+.bs-avatar:nth-child(3) { background: #15803D; }
+.bs-manage { display: inline-flex; align-items: center; gap: 0.35rem; font-size: 0.8rem; font-weight: 600; color: #15803D; text-decoration: none; }
