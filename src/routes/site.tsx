@@ -1,17 +1,21 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { useState } from "react";
+import { Check, Info } from "lucide-react";
 
 export const Route = createFileRoute("/site")({
   head: () => ({
     meta: [
-      { title: "Kearly | Continue With Site Details" },
+      { title: "Kearly | Add Your First Site" },
       {
         name: "description",
-        content: "Add your Kearly site details including name, address, categories and operating hours.",
+        content:
+          "Add your primary building or medical site in Kearly with address, operating hours, and compliance categories.",
       },
-      { property: "og:title", content: "Kearly | Continue With Site Details" },
+      { property: "og:title", content: "Kearly | Add Your First Site" },
       {
         property: "og:description",
-        content: "Add your Kearly site details including name, address, categories and operating hours.",
+        content:
+          "Add your primary building or medical site in Kearly with address, operating hours, and compliance categories.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -20,73 +24,199 @@ export const Route = createFileRoute("/site")({
   component: SitePage,
 });
 
-const chevronBg =
-  "url(\"data:image/svg+xml;utf8,<svg fill='%234A7C6F' height='22' viewBox='0 0 24 24' width='22' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/><path d='M0 0h24v24H0z' fill='none'/></svg>\")";
+const hours = [
+  "06:00",
+  "07:00",
+  "08:00",
+  "09:00",
+  "10:00",
+  "12:00",
+  "16:00",
+  "17:00",
+  "18:00",
+  "20:00",
+  "22:00",
+  "00:00",
+];
+
+const categories = ["Electrical", "Fire", "Gas & Water", "Lifts", "Repairs"];
 
 function SitePage() {
+  const [selected, setSelected] = useState<string[]>([
+    "Electrical",
+    "Fire",
+    "Gas & Water",
+  ]);
+
+  const toggle = (name: string) =>
+    setSelected((current) =>
+      current.includes(name)
+        ? current.filter((item) => item !== name)
+        : [...current, name],
+    );
+
   return (
-    <main className="sd-page">
-      <div className="sd-deco sd-deco-phone" aria-hidden="true">
-        📱
-      </div>
-      <div className="sd-deco sd-deco-shield" aria-hidden="true">
-        🛡️
-      </div>
-      <div className="sd-deco sd-deco-leaf" aria-hidden="true">
-        🌿
-      </div>
+    <main className="fp-page">
+      <section className="fp-panel" aria-label="Kearly onboarding">
+        <div className="fp-panel-decor" aria-hidden="true">
+          <span className="fp-circle fp-circle-one" />
+          <span className="fp-circle fp-circle-two" />
+          <span className="fp-circle fp-circle-three" />
+        </div>
+        <div className="fp-panel-content">
+          <h2 className="fp-panel-title">
+            The simplest way to manage your facilities
+          </h2>
+          <p className="fp-panel-text">
+            Set up your sites, track compliance, and manage assets - all from one
+            place. Kearly keeps your team organised and your buildings compliant.
+          </p>
+          <div>
+            <p className="fp-trusted-label">
+              Trusted by leading healthcare facilities
+            </p>
+            <ul className="fp-badges">
+              <li>NHS</li>
+              <li>Bupa</li>
+              <li>Spire</li>
+              <li>UCLH</li>
+              <li>Circle</li>
+            </ul>
+          </div>
+        </div>
+      </section>
 
-      <section className="sd-card" aria-labelledby="sd-heading">
-        <header className="sd-card-head">
-          <div className="sd-logo" aria-label="Kearly">
-            <svg width="22" height="22" viewBox="0 0 100 100" aria-hidden="true">
-              <rect x="5" y="5" width="40" height="40" rx="10" fill="#4A7C6F" />
-              <path d="M 55 5 L 95 5 L 95 45 Q 75 45 55 25 Z" fill="#4A7C6F" />
-              <rect x="5" y="55" width="40" height="40" rx="10" fill="#4A7C6F" />
-              <path d="M 55 55 Q 75 55 95 75 L 95 95 L 55 95 Z" fill="#4A7C6F" />
-            </svg>
-            <span className="sd-logo-text">
-              <span className="sd-logo-name">KEARLY</span>
-              <span className="sd-logo-tag">Compliance. Automated &amp; Simplified.</span>
+      <section className="fp-main">
+        <nav className="fp-steps" aria-label="Progress">
+          <span className="fp-step fp-step-done">
+            <span className="fp-step-mark fp-step-mark-done">
+              <Check size={13} strokeWidth={3} aria-hidden="true" />
             </span>
-          </div>
-          <Link to="/facility" className="sd-back">
-            Back
-          </Link>
-        </header>
+            Account
+          </span>
+          <span className="fp-step fp-step-done">
+            <span className="fp-step-mark fp-step-mark-done">
+              <Check size={13} strokeWidth={3} aria-hidden="true" />
+            </span>
+            Facility
+          </span>
+          <span className="fp-step fp-step-active" aria-current="step">
+            <span className="fp-step-mark fp-step-mark-active">3</span>
+            Site
+          </span>
+          {["Import", "Team", "Complete"].map((label, index) => (
+            <span className="fp-step" key={label}>
+              <span className="fp-step-mark">{index + 4}</span>
+              {label}
+            </span>
+          ))}
+        </nav>
 
-        <h1 id="sd-heading" className="sd-heading">
-          Continue with site details
-        </h1>
+        <div className="fp-body">
+          <h1 className="fp-heading">Add your first site</h1>
+          <p className="fp-sub">
+            Enter details for your primary building or medical site to start
+            tracking specific asset items.
+          </p>
 
-        <form className="sd-form" onSubmit={(event) => event.preventDefault()}>
-          <input className="sd-input" name="siteName" placeholder="Site Name" aria-label="Site Name" />
-          <input className="sd-input" name="address" placeholder="Address" aria-label="Address" />
-          <input className="sd-input" name="siteCategories" placeholder="Site Categories" aria-label="Site Categories" />
-          <select
-            className="sd-input sd-select"
-            name="operatingHours"
-            defaultValue=""
-            aria-label="Operating Hours"
-            style={{ backgroundImage: chevronBg }}
-          >
-            <option value="" disabled>
-              Operating Hours
-            </option>
-            <option value="08-18">08:00 – 18:00</option>
-            <option value="09-17">09:00 – 17:00</option>
-            <option value="24-7">Open 24/7</option>
-          </select>
+          <form className="fp-card" onSubmit={(event) => event.preventDefault()}>
+            <div className="fp-field">
+              <label className="fp-label" htmlFor="site-name">
+                Site Name <span className="fp-req">*</span>
+              </label>
+              <input
+                id="site-name"
+                name="siteName"
+                className="fp-input"
+                placeholder="e.g. Riverside Central Clinic"
+              />
+            </div>
 
-          <div className="sd-actions">
-            <Link to="/import" className="sd-save">
-              Save
-            </Link>
-            <Link to="/import" className="sd-import">
-              Import Data
-            </Link>
-          </div>
-        </form>
+            <div className="fp-field">
+              <label className="fp-label" htmlFor="site-address">
+                Address
+              </label>
+              <textarea
+                id="site-address"
+                name="address"
+                className="fp-input fp-textarea"
+                rows={3}
+                placeholder="e.g. 12 Riverside Road, London, SW1V 4QQ"
+              />
+            </div>
+
+            <div className="fp-grid">
+              <div className="fp-field">
+                <label className="fp-label" htmlFor="hours-from">
+                  Operating Hours From
+                </label>
+                <select
+                  id="hours-from"
+                  name="hoursFrom"
+                  className="fp-input fp-select"
+                  defaultValue="08:00"
+                >
+                  {hours.map((hour) => (
+                    <option key={hour} value={hour}>
+                      {hour}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div className="fp-field">
+                <label className="fp-label" htmlFor="hours-to">
+                  Operating Hours To
+                </label>
+                <select
+                  id="hours-to"
+                  name="hoursTo"
+                  className="fp-input fp-select"
+                  defaultValue="18:00"
+                >
+                  {hours.map((hour) => (
+                    <option key={hour} value={hour}>
+                      {hour}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
+
+            <div className="fp-field">
+              <span className="fp-label">Compliance Categories Needed</span>
+              <div className="fp-chips">
+                {categories.map((name) => {
+                  const active = selected.includes(name);
+                  return (
+                    <button
+                      type="button"
+                      key={name}
+                      className={`fp-chip${active ? " fp-chip-on" : ""}`}
+                      aria-pressed={active}
+                      onClick={() => toggle(name)}
+                    >
+                      {name}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
+            <p className="fp-note">
+              <Info size={16} aria-hidden="true" />
+              You can add more sites later from the Buildings page.
+            </p>
+
+            <div className="fp-actions">
+              <Link to="/import" className="fp-continue">
+                Continue
+              </Link>
+              <Link to="/import" className="fp-skip">
+                Skip for now
+              </Link>
+            </div>
+          </form>
+        </div>
       </section>
     </main>
   );
