@@ -312,11 +312,16 @@ function SettingsPage() {
                       Add Contractor
                     </button>
                   ) : (
-                    <Link to="/team" className="se-primary se-team-add">
-                      <Plus size={15} aria-hidden="true" />
-                      Invite Team Member
-                    </Link>
+                    <div className="se-team-right">
+                      <span className="se-team-count-title">Internal Team</span>
+                      <span className="se-team-count">{internalTeam.length} members</span>
+                      <Link to="/team" className="se-primary se-team-add">
+                        <Plus size={15} aria-hidden="true" />
+                        Send Invite
+                      </Link>
+                    </div>
                   )}
+
                 </div>
 
                 {teamTab === "External Labour" ? (
