@@ -382,7 +382,7 @@ function SchedulePage() {
           >
             <div className="sa-head">
               <h2 className="sa-heading" id="sa-heading">
-                Add Compliance Task
+                Schedule Compliance Event
               </h2>
               <button type="button" className="sa-close" aria-label="Close" onClick={() => setAddOpen(false)}>
                 <X size={16} aria-hidden="true" />
@@ -398,55 +398,91 @@ function SchedulePage() {
             >
               <div className="sa-field">
                 <label className="sa-label" htmlFor="sa-title">
-                  Task Title <span className="sa-req">*</span>
+                  Event Name <span className="sa-req">*</span>
                 </label>
-                <input id="sa-title" className="sa-input" placeholder="e.g., Monthly Water Temp Log" required />
+                <input
+                  id="sa-title"
+                  className="sa-input"
+                  placeholder="e.g., Annual Lift LOLER Certification"
+                  required
+                />
               </div>
 
               <div className="sa-row">
                 <div className="sa-field">
-                  <label className="sa-label" htmlFor="sa-assign">
-                    Assign To
+                  <label className="sa-label" htmlFor="sa-type">
+                    Event Type <span className="sa-req">*</span>
                   </label>
-                  <select id="sa-assign" className="sa-input" defaultValue="">
-                    <option value="">Select team member</option>
+                  <select id="sa-type" className="sa-input" defaultValue="Inspection">
+                    <option>Inspection</option>
+                    <option>Servicing</option>
+                    <option>Certification</option>
+                    <option>Testing</option>
+                    <option>Audit</option>
+                  </select>
+                </div>
+                <div className="sa-field">
+                  <label className="sa-label" htmlFor="sa-location">
+                    Location / Building <span className="sa-req">*</span>
+                  </label>
+                  <input id="sa-location" className="sa-input" placeholder="e.g., Block B Lift A" required />
+                </div>
+              </div>
+
+              <div className="sa-row">
+                <div className="sa-field">
+                  <label className="sa-label" htmlFor="sa-due">
+                    Date <span className="sa-req">*</span>
+                  </label>
+                  <input id="sa-due" type="date" className="sa-input" required />
+                </div>
+                <div className="sa-field">
+                  <label className="sa-label" htmlFor="sa-time">
+                    Time Range
+                  </label>
+                  <select id="sa-time" className="sa-input" defaultValue="10:00 AM - 12:00 PM">
+                    <option>08:00 AM - 10:00 AM</option>
+                    <option>10:00 AM - 12:00 PM</option>
+                    <option>01:00 PM - 03:00 PM</option>
+                    <option>03:00 PM - 05:00 PM</option>
+                    <option>All day</option>
+                  </select>
+                </div>
+              </div>
+
+              <div className="sa-row">
+                <div className="sa-field">
+                  <label className="sa-label" htmlFor="sa-recurrence">
+                    Recurrence
+                  </label>
+                  <select id="sa-recurrence" className="sa-input" defaultValue="Monthly">
+                    <option>Does not repeat</option>
+                    <option>Weekly</option>
+                    <option>Monthly</option>
+                    <option>Quarterly</option>
+                    <option>Bi-Annually</option>
+                    <option>Annually</option>
+                  </select>
+                </div>
+                <div className="sa-field">
+                  <label className="sa-label" htmlFor="sa-assign">
+                    Assigned Team Member
+                  </label>
+                  <select id="sa-assign" className="sa-input" defaultValue="Sarah Jenkins (Senior Inspector)">
+                    <option>Sarah Jenkins (Senior Inspector)</option>
                     <option>Alex Rowe</option>
-                    <option>Sarah Jenkins</option>
                     <option>James Carter</option>
                     <option>Michael Finch</option>
                   </select>
                 </div>
-                <div className="sa-field">
-                  <label className="sa-label" htmlFor="sa-due">
-                    Due Date <span className="sa-req">*</span>
-                  </label>
-                  <input id="sa-due" type="date" className="sa-input" required />
-                </div>
               </div>
 
               <div className="sa-field">
-                <span className="sa-label">Priority Level</span>
-                <div className="sa-priority" role="group" aria-label="Priority level">
-                  {(["Low", "Medium", "High"] as const).map((level) => (
-                    <button
-                      key={level}
-                      type="button"
-                      aria-pressed={priority === level}
-                      className={`sa-pri ${priority === level ? `is-active is-${level.toLowerCase()}` : ""}`}
-                      onClick={() => setPriority(level)}
-                    >
-                      {level}
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              <div className="sa-field">
-                <span className="sa-label">Category / Tag</span>
-                <div className="sa-tags" role="group" aria-label="Category">
+                <span className="sa-label">Compliance Category</span>
+                <div className="sa-tags" role="group" aria-label="Compliance category">
                   {[
                     { name: "Water Safety", dot: "#15803D" },
-                    { name: "Fire & Emergency", dot: "#D97706" },
+                    { name: "Fire Safety", dot: "#D97706" },
                     { name: "Gas Compliance", dot: "#DC2626" },
                     { name: "Lifts & LOLER", dot: "#7C3AED" },
                     { name: "Asbestos", dot: "#0D9488" },
@@ -467,13 +503,13 @@ function SchedulePage() {
 
               <div className="sa-field">
                 <label className="sa-label" htmlFor="sa-notes">
-                  Description / Notes
+                  Special Instructions / Notes
                 </label>
                 <textarea
                   id="sa-notes"
                   className="sa-input sa-textarea"
-                  rows={3}
-                  placeholder="Add detailed instructions, reference standards, or compliance protocols here..."
+                  rows={2}
+                  placeholder="Enter special preparation notes, access codes, or regulatory guidelines..."
                 />
               </div>
 
@@ -482,10 +518,11 @@ function SchedulePage() {
                   Cancel
                 </button>
                 <button type="submit" className="sa-save">
-                  Save Task
+                  Schedule Event
                 </button>
               </div>
             </form>
+
           </div>
         </div>
       )}
