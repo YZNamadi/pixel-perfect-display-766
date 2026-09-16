@@ -93,7 +93,7 @@ const statusTone = (s: Ticket["status"]) =>
 
 function RepairsPage() {
   const [activeTab, setActiveTab] = useState("all");
-  const [deleteTicket, setDeleteTicket] = useState<string | null>(null);
+  const [deleteTicket, setDeleteTicket] = useState<Ticket | null>(null);
 
   return (
     <div className="po-shell">
@@ -243,7 +243,7 @@ function RepairsPage() {
                             <BadgeCheck size={13} aria-hidden="true" />
                             Review
                           </button>
-                          <button type="button" className="rp-btn tone-red" onClick={() => setDeleteTicket(t.id)}>
+                          <button type="button" className="rp-btn tone-red" onClick={() => setDeleteTicket(t)}>
                             <X size={13} aria-hidden="true" />
                             Delete
                           </button>
@@ -286,28 +286,34 @@ function RepairsPage() {
           >
             <div className="cp-modal-head">
               <span className="cp-modal-icon" aria-hidden="true">
-                <AlertTriangle size={26} />
+                <AlertTriangle size={22} />
               </span>
-              <h2 className="cp-modal-title" id="rp-modal-title">
-                Delete Ticket
-              </h2>
+              <span className="rp-modal-heads">
+                <h2 className="cp-modal-title" id="rp-modal-title">
+                  Close Repair Ticket
+                </h2>
+                <small className="rp-modal-sub">Ticket ID {deleteTicket.id}</small>
+              </span>
             </div>
-            <p className="cp-modal-text">
-              Are you sure you want to delete ticket {deleteTicket}?
-              <br />
-              This action cannot be undone.
+            <p className="rp-modal-question">
+              Are you sure you want to close &lsquo;{deleteTicket.title}&rsquo;?
             </p>
-            <div className="cp-modal-actions">
+            <p className="cp-modal-text">
+              This action will close the ticket and archive the associated history and assignment log in
+              the KEARLY systems.
+            </p>
+            <div className="cp-modal-actions rp-modal-actions">
               <button type="button" className="cp-modal-cancel" onClick={() => setDeleteTicket(null)}>
                 Cancel
               </button>
               <button type="button" className="cp-modal-delete" onClick={() => setDeleteTicket(null)}>
-                Delete
+                Close Ticket
               </button>
             </div>
           </div>
         </div>
       )}
+
     </div>
   );
 }
