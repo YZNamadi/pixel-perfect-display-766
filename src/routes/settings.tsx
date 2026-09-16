@@ -60,6 +60,9 @@ const sections = [
 type Section = (typeof sections)[number]["label"];
 
 function SettingsPage() {
+  const [digest, setDigest] = useState(true);
+  const [reminders, setReminders] = useState(true);
+  const [sms, setSms] = useState(true);
   const [section, setSection] = useState<Section>("Profile");
 
   return (
