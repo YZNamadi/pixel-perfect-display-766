@@ -93,7 +93,7 @@ const statusTone = (s: Ticket["status"]) =>
 
 function RepairsPage() {
   const [activeTab, setActiveTab] = useState("all");
-  const [deleteTicket, setDeleteTicket] = useState<string | null>(null);
+  const [deleteTicket, setDeleteTicket] = useState<Ticket | null>(null);
 
   return (
     <div className="po-shell">
@@ -243,7 +243,7 @@ function RepairsPage() {
                             <BadgeCheck size={13} aria-hidden="true" />
                             Review
                           </button>
-                          <button type="button" className="rp-btn tone-red" onClick={() => setDeleteTicket(t.id)}>
+                          <button type="button" className="rp-btn tone-red" onClick={() => setDeleteTicket(t)}>
                             <X size={13} aria-hidden="true" />
                             Delete
                           </button>
