@@ -234,10 +234,11 @@ function RepairsPage() {
                             <Pencil size={13} aria-hidden="true" />
                             Edit
                           </Link>
-                          <button type="button" className="rp-btn tone-green">
+                          <Link to="/complete-ticket" className="rp-btn tone-green">
                             <Check size={13} aria-hidden="true" />
                             Complete
-                          </button>
+                          </Link>
+
                           <button type="button" className="rp-btn tone-blue">
                             <BadgeCheck size={13} aria-hidden="true" />
                             Review
