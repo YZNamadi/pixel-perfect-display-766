@@ -135,7 +135,7 @@ function ImportPage() {
             </button>
 
             <div className="im-actions">
-              <Link to="/team" className="fp-continue">
+              <Link to="/mapping" className="fp-continue">
                 Continue
               </Link>
               <Link to="/team" className="fp-skip">

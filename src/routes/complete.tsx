@@ -121,10 +121,10 @@ function CompletePage() {
               })}
             </ul>
 
-            <Link className="fp-continue" to="/dashboard">
+            <Link className="fp-continue" to="/dashboard-welcome">
               Go to Dashboard
             </Link>
-            <Link className="fp-skip" to="/dashboard">
+            <Link className="fp-skip" to="/onboarding">
               Start guided walkthrough
             </Link>
           </div>
