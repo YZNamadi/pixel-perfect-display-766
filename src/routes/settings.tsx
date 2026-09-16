@@ -59,11 +59,22 @@ const sections = [
 
 type Section = (typeof sections)[number]["label"];
 
+const contractors = [
+  { name: "John Davis", company: "Apex Gas & Heating Ltd", active: true, tickets: 4, documents: 3 },
+  { name: "Sarah Jenkins", company: "Metro Electrical Services", active: true, tickets: 2, documents: 4 },
+  { name: "Robert Vance", company: "Vance Refrigeration", active: false, tickets: 0, documents: 2 },
+  { name: "Clara Oswald", company: "L8 Water Safety Pros", active: true, tickets: 5, documents: 3 },
+  { name: "Liam Neeson", company: "Guardian Security Systems", active: true, tickets: 1, documents: 5 },
+  { name: "Michael Scott", company: "Scranton Paper Fire Alarms", active: false, tickets: 0, documents: 1 },
+];
+
 function SettingsPage() {
   const [digest, setDigest] = useState(true);
   const [reminders, setReminders] = useState(true);
   const [sms, setSms] = useState(true);
   const [section, setSection] = useState<Section>("Profile");
+  const [teamTab, setTeamTab] = useState<"External Labour" | "Internal">("External Labour");
+
 
   return (
     <div className="po-shell">
