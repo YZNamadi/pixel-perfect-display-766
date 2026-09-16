@@ -72,6 +72,20 @@ const contractors = [
   { name: "Michael Scott", company: "Scranton Paper Fire Alarms", active: false, tickets: 0, documents: 1 },
 ];
 
+const internalTeam = [
+  {
+    name: "Alex Rowe",
+    email: "alex.rowe@kearlycompliance.com",
+    role: "Portfolio Compliance Administrator",
+    active: true,
+  },
+  { name: "Sarah Connor", email: "s.connor@kearlycompliance.com", role: "Repairs Manager", active: true },
+  { name: "Marcus Wright", email: "m.wright@kearlycompliance.com", role: "Contractor Coordinator", active: true },
+  { name: "Kyle Reese", email: "k.reese@kearlycompliance.com", role: "Site Inspector", active: true },
+  { name: "John Connor", email: "j.connor@kearlycompliance.com", role: "Viewer / Auditor", active: false },
+];
+
+
 function SettingsPage() {
   const [digest, setDigest] = useState(true);
   const [reminders, setReminders] = useState(true);
