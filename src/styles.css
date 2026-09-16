@@ -115,20 +115,8 @@
   }
 }
 
-@layer components {
 
-  .welcome-action:focus-visible,
 
-  .auth-field input:focus-visible,
-  .auth-submit:focus-visible,
-
-  .auth-separator::before,
-
-}
-
-@media (max-width: 640px) {
-
-}
 
 @layer components {
 
