@@ -5691,3 +5691,12 @@ a.am-menu-item { text-decoration: none; }
 .ct-actions { display: flex; justify-content: flex-end; align-items: center; gap: 0.7rem; margin-top: 1.5rem; padding-top: 1.25rem; border-top: 1px solid #E5E7EB; }
 .ct-cancel { border: 1px solid #E5E7EB; border-radius: 8px; padding: 0.6rem 1.1rem; background: #FFFFFF; }
 @media (max-width: 720px) { .ct-grid { grid-template-columns: 1fr; } }
+
+/* Schedule — edit compliance task modal */
+.sa-actions-split { justify-content: space-between; }
+.sa-actions-right { display: flex; align-items: center; gap: 0.6rem; }
+.sa-delete {
+  border: 0; border-radius: 8px; padding: 0.6rem 1rem; background: #FEE2E2; color: #DC2626;
+  font-size: 0.85rem; font-weight: 600; cursor: pointer;
+}
+.sa-delete:hover { background: #FECACA; }
