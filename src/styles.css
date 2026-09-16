@@ -4881,3 +4881,32 @@ a.am-menu-item { text-decoration: none; }
   font-size: 0.85rem; font-weight: 600; text-decoration: none; cursor: pointer;
 }
 .at-next:hover { background: #126b33; }
+
+/* Repairs tickets (rp-) */
+.rp-filters { display: flex; gap: 0.5rem; flex-wrap: wrap; margin: 0 0 1.1rem; }
+.rp-filter {
+  border: 1px solid #E5E7EB; background: #ffffff; border-radius: 999px; padding: 0.4rem 0.85rem;
+  font: inherit; font-size: 0.76rem; color: #374151; cursor: pointer;
+}
+.rp-filter.is-active { background: #111827; border-color: #111827; color: #ffffff; font-weight: 600; }
+.rp-id { font-weight: 600; color: #374151; }
+.rp-created { color: #9CA3AF; }
+.rp-sla-red { color: #DC2626; font-weight: 600; }
+.rp-priority { font-size: 0.72rem; font-weight: 700; }
+.rp-priority.tone-red { color: #DC2626; }
+.rp-priority.tone-amber { color: #D97706; }
+.rp-priority.tone-muted { color: #6B7280; }
+.rp-status { display: inline-block; border-radius: 6px; padding: 0.28rem 0.6rem; font-size: 0.72rem; font-weight: 700; }
+.rp-status.tone-blue { background: #EFF6FF; color: #2563EB; }
+.rp-status.tone-amber { background: #FEF3C7; color: #B45309; }
+.rp-status.tone-muted { background: transparent; color: #374151; }
+.rp-actions { display: inline-flex; align-items: center; gap: 0.35rem; flex-wrap: wrap; }
+.rp-btn {
+  display: inline-flex; align-items: center; gap: 0.3rem; border: 1px solid #E5E7EB; background: #ffffff;
+  border-radius: 7px; padding: 0.35rem 0.6rem; font: inherit; font-size: 0.74rem; color: #374151;
+  text-decoration: none; cursor: pointer;
+}
+.rp-btn:hover { background: #F9FAFB; }
+.rp-btn.tone-green { color: #15803D; }
+.rp-btn.tone-blue { color: #2563EB; }
+.rp-btn.tone-red { color: #DC2626; }
