@@ -247,16 +247,10 @@ function AuditLogPage() {
                     <td className="cl-name">{e.entity}</td>
                     <td>
                       {e.pending ? (
-                        <span className="rp-actions">
-                          <button type="button" className="rp-btn tone-blue">
-                            <BadgeCheck size={13} aria-hidden="true" />
-                            Review
-                          </button>
-                          <button type="button" className="rp-btn tone-red" onClick={() => setDeleteEvent(e.time)}>
-                            <X size={13} aria-hidden="true" />
-                            Delete
-                          </button>
-                        </span>
+                        <button type="button" className="rp-btn tone-blue">
+                          <BadgeCheck size={13} aria-hidden="true" />
+                          Review
+                        </button>
                       ) : (
                         <button type="button" className="rp-btn">
                           <Eye size={13} aria-hidden="true" />
