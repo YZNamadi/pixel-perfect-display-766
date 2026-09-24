@@ -4998,7 +4998,7 @@ a.am-menu-item { text-decoration: none; }
 }
 .sc-cell:nth-child(7n) { border-right: none; }
 .sc-cell.is-muted { background: #F8FAFC; }
-.sc-cell.is-today { background: #ECFDF3; box-shadow: inset 0 0 0 2px #15803D; }
+.sc-cell.is-selected { background: #DCFCE7; box-shadow: inset 0 0 0 1px #15803D; }
 .sc-cell-head { display: flex; align-items: center; justify-content: space-between; gap: 0.35rem; }
 .sc-date { font-size: 0.85rem; font-weight: 700; color: #111827; }
 .sc-tag { font-size: 0.55rem; font-weight: 800; letter-spacing: 0.04em; }

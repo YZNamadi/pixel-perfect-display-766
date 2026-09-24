@@ -12,8 +12,6 @@ import {
   Users,
   Search,
   Calendar,
-  ChevronLeft,
-  ChevronRight,
   X,
   XCircle,
   UploadCloud,
@@ -178,6 +176,7 @@ function SchedulePage() {
   const [cursor, setCursor] = useState(() => new Date(2024, 6, 1));
   const [datePickerOpen, setDatePickerOpen] = useState(false);
   const [jumpDate, setJumpDate] = useState("2024-07-01");
+  const [selectedDayKey, setSelectedDayKey] = useState("2024-07-02");
   const [selected, setSelected] = useState<{ key: string; event: Category } | null>(null);
   const [addOpen, setAddOpen] = useState(false);
   const [priority, setPriority] = useState<"Low" | "Medium" | "High">("High");
@@ -200,13 +199,15 @@ function SchedulePage() {
   const year = cursor.getFullYear();
   const month = cursor.getMonth();
   const cells = view === "Month" ? buildCells(year, month) : view === "Week" ? buildWeekCells(cursor) : [{ key: iso(cursor), day: cursor.getDate(), muted: false, date: cursor }];
-  const monthLabel = `${monthNames[month]} ${year}`;
+  const monthLabel = `${monthNames[month].slice(0, 3)} ${year}`;
   const visibleWeekdays = view === "Month" ? weekdays : cells.map((cell) => weekdays[(cell.date.getDay() + 6) % 7]!);
 
   const goToDate = () => {
     const [targetYear, targetMonth, targetDay] = jumpDate.split("-").map(Number);
     if (!targetYear || !targetMonth || !targetDay) return;
-    setCursor(new Date(targetYear, targetMonth - 1, targetDay));
+    const target = new Date(targetYear, targetMonth - 1, targetDay);
+    setCursor(target);
+    setSelectedDayKey(iso(target));
     setDatePickerOpen(false);
   };
 
@@ -295,6 +296,7 @@ function SchedulePage() {
                       onClick={() => {
                         setJumpDate(todayKey);
                         setCursor(new Date(today.getFullYear(), today.getMonth(), today.getDate()));
+                        setSelectedDayKey(todayKey);
                         setDatePickerOpen(false);
                       }}
                     >
@@ -349,7 +351,10 @@ function SchedulePage() {
               return (
                 <div
                   key={cell.key}
-                  className={`sc-cell ${cell.muted ? "is-muted" : ""} ${cell.key === todayKey ? "is-today" : ""}`}
+                  className={`sc-cell ${cell.muted ? "is-muted" : ""} ${cell.key === selectedDayKey ? "is-selected" : ""}`}
+                  onClick={() => {
+                    if (!cell.muted) setSelectedDayKey(cell.key);
+                  }}
                 >
                   {!cell.muted && (
                     <>
