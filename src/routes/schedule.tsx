@@ -199,7 +199,8 @@ function SchedulePage() {
   const year = cursor.getFullYear();
   const month = cursor.getMonth();
   const cells = view === "Month" ? buildCells(year, month) : view === "Week" ? buildWeekCells(cursor) : [{ key: iso(cursor), day: cursor.getDate(), muted: false, date: cursor }];
-  const monthLabel = `${monthNames[month].slice(0, 3)} ${year}`;
+  const monthName = monthNames[month] ?? "January";
+  const monthLabel = `${monthName.slice(0, 3)} ${year}`;
   const visibleWeekdays = view === "Month" ? weekdays : cells.map((cell) => weekdays[(cell.date.getDay() + 6) % 7]!);
 
   const goToDate = () => {
