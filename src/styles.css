@@ -5772,14 +5772,14 @@ a.am-menu-item { text-decoration: none; }
 }
 .tr-filter svg { position: absolute; right: 0.55rem; pointer-events: none; }
 .tr-panel { padding: 0; overflow: hidden; }
-.tr-table { table-layout: fixed; }
+.tr-table { min-width: 980px; table-layout: fixed; }
 .tr-table th:nth-child(1) { width: 16%; }
-.tr-table th:nth-child(2) { width: 19%; }
+.tr-table th:nth-child(2) { width: 21%; }
 .tr-table th:nth-child(3) { width: 14%; }
-.tr-table th:nth-child(4), .tr-table th:nth-child(5) { width: 11%; }
-.tr-table th:nth-child(6) { width: 10%; }
+.tr-table th:nth-child(4), .tr-table th:nth-child(5) { width: 10.5%; }
+.tr-table th:nth-child(6) { width: 9%; }
 .tr-table th:nth-child(7) { width: 10%; }
-.tr-table th:nth-child(8) { width: 9%; text-align: center; }
+.tr-table th:nth-child(8) { width: 8%; text-align: center; }
 .tr-table td { padding-top: 0.78rem; padding-bottom: 0.78rem; }
 .tr-table td:last-child { text-align: center; }
 .tr-staff { display: flex; flex-direction: column; line-height: 1.25; }
@@ -5802,7 +5802,7 @@ a.am-menu-item { text-decoration: none; }
 .tr-modal input, .tr-modal select { border: 1px solid #D1D5DB; border-radius: 8px; padding: 0.65rem 0.75rem; background: #FFFFFF; color: #111827; font: inherit; }
 .tr-modal-actions { display: flex; justify-content: flex-end; gap: 0.6rem; margin-top: 1.5rem; }
 @media (max-width: 1100px) {
-  .tr-table { min-width: 920px; table-layout: auto; }
+  .tr-table { table-layout: fixed; }
 }
 
 /* ============ Settings: contractors ============ */

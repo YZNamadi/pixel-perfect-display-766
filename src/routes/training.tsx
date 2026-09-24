@@ -146,9 +146,9 @@ function StaffRecordsPage() {
         </div>
 
         <div className="dc-filters tr-filters">
-          <label className="tr-filter"><span>Staff:</span><select aria-label="Filter by staff" value={staff} onChange={(event) => setStaff(event.target.value)}><option>All Staff</option>{records.map((row) => <option key={row.name}>{row.name}</option>)}</select><ChevronDown size={13} aria-hidden="true" /></label>
-          <label className="tr-filter"><span>Report Type:</span><select aria-label="Filter by report type" value={category} onChange={(event) => setCategory(event.target.value)}><option>All Types</option>{categories.map((item) => <option key={item}>{item}</option>)}</select><ChevronDown size={13} aria-hidden="true" /></label>
-          <label className="tr-filter"><span>Status:</span><select aria-label="Filter by status" value={status} onChange={(event) => setStatus(event.target.value)}><option>All</option><option>Filed</option><option>Closed</option><option>In Review</option></select><ChevronDown size={13} aria-hidden="true" /></label>
+          <label className="tr-filter"><span>Staff: {staff}</span><select aria-label="Filter by staff" value={staff} onChange={(event) => setStaff(event.target.value)}><option>All Staff</option>{records.map((row) => <option key={row.name}>{row.name}</option>)}</select><ChevronDown size={13} aria-hidden="true" /></label>
+          <label className="tr-filter"><span>Report Type: {category}</span><select aria-label="Filter by report type" value={category} onChange={(event) => setCategory(event.target.value)}><option>All Types</option>{categories.map((item) => <option key={item}>{item}</option>)}</select><ChevronDown size={13} aria-hidden="true" /></label>
+          <label className="tr-filter"><span>Status: {status}</span><select aria-label="Filter by status" value={status} onChange={(event) => setStatus(event.target.value)}><option>All</option><option>Filed</option><option>Closed</option><option>In Review</option></select><ChevronDown size={13} aria-hidden="true" /></label>
         </div>
 
         <section className="cl-panel tr-panel" aria-label="Staff reports">
