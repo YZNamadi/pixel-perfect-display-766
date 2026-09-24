@@ -134,7 +134,6 @@ const events: Event[] = [
 ];
 
 function AuditLogPage() {
-  const [deleteEvent, setDeleteEvent] = useState<string | null>(null);
 
   return (
     <div className="po-shell">
