@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AddSiteRouteImport } from './routes/add-site'
 import { Route as AddTaskRouteImport } from './routes/add-task'
 import { Route as AssetsRouteImport } from './routes/assets'
 import { Route as AuditLogRouteImport } from './routes/audit-log'
@@ -39,6 +40,11 @@ import { Route as TrainingRouteImport } from './routes/training'
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AddSiteRoute = AddSiteRouteImport.update({
+  id: '/add-site',
+  path: '/add-site',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AddTaskRoute = AddTaskRouteImport.update({
@@ -169,6 +175,7 @@ const TrainingRoute = TrainingRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/add-site': typeof AddSiteRoute
   '/add-task': typeof AddTaskRoute
   '/assets': typeof AssetsRoute
   '/audit-log': typeof AuditLogRoute
@@ -197,6 +204,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/add-site': typeof AddSiteRoute
   '/add-task': typeof AddTaskRoute
   '/assets': typeof AssetsRoute
   '/audit-log': typeof AuditLogRoute
@@ -226,6 +234,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/add-site': typeof AddSiteRoute
   '/add-task': typeof AddTaskRoute
   '/assets': typeof AssetsRoute
   '/audit-log': typeof AuditLogRoute
@@ -256,6 +265,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/add-site'
     | '/add-task'
     | '/assets'
     | '/audit-log'
@@ -284,6 +294,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/add-site'
     | '/add-task'
     | '/assets'
     | '/audit-log'
@@ -312,6 +323,7 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/add-site'
     | '/add-task'
     | '/assets'
     | '/audit-log'
@@ -341,6 +353,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AddSiteRoute: typeof AddSiteRoute
   AddTaskRoute: typeof AddTaskRoute
   AssetsRoute: typeof AssetsRoute
   AuditLogRoute: typeof AuditLogRoute
@@ -375,6 +388,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/add-site': {
+      id: '/add-site'
+      path: '/add-site'
+      fullPath: '/add-site'
+      preLoaderRoute: typeof AddSiteRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/add-task': {
@@ -557,6 +577,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AddSiteRoute: AddSiteRoute,
   AddTaskRoute: AddTaskRoute,
   AssetsRoute: AssetsRoute,
   AuditLogRoute: AuditLogRoute,

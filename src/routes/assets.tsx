@@ -129,7 +129,7 @@ function BuildingsPage() {
               <input type="search" placeholder="Search..." aria-label="Search buildings" />
             </div>
             <span className="po-chip">Jul 2024</span>
-            <Link to="/site" className="po-download">
+            <Link to="/add-site" className="po-download">
               Add Site
             </Link>
           </div>
