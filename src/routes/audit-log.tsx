@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import {
   LayoutDashboard,
@@ -15,8 +14,6 @@ import {
   ChevronDown,
   Eye,
   BadgeCheck,
-  X,
-  AlertTriangle,
   Stethoscope,
 } from "lucide-react";
 
@@ -136,7 +133,6 @@ const events: Event[] = [
 ];
 
 function AuditLogPage() {
-  const [deleteEvent, setDeleteEvent] = useState<string | null>(null);
 
   return (
     <div className="po-shell">
@@ -247,16 +243,10 @@ function AuditLogPage() {
                     <td className="cl-name">{e.entity}</td>
                     <td>
                       {e.pending ? (
-                        <span className="rp-actions">
-                          <button type="button" className="rp-btn tone-blue">
-                            <BadgeCheck size={13} aria-hidden="true" />
-                            Review
-                          </button>
-                          <button type="button" className="rp-btn tone-red" onClick={() => setDeleteEvent(e.time)}>
-                            <X size={13} aria-hidden="true" />
-                            Delete
-                          </button>
-                        </span>
+                        <button type="button" className="rp-btn tone-blue">
+                          <BadgeCheck size={13} aria-hidden="true" />
+                          Review
+                        </button>
                       ) : (
                         <button type="button" className="rp-btn">
                           <Eye size={13} aria-hidden="true" />
@@ -283,40 +273,6 @@ function AuditLogPage() {
           </div>
         </section>
       </main>
-
-      {deleteEvent && (
-        <div className="cp-overlay" role="presentation" onClick={() => setDeleteEvent(null)}>
-          <div
-            className="cp-modal"
-            role="alertdialog"
-            aria-modal="true"
-            aria-labelledby="al-modal-title"
-            onClick={(event) => event.stopPropagation()}
-          >
-            <div className="cp-modal-head">
-              <span className="cp-modal-icon" aria-hidden="true">
-                <AlertTriangle size={26} />
-              </span>
-              <h2 className="cp-modal-title" id="al-modal-title">
-                Delete Event
-              </h2>
-            </div>
-            <p className="cp-modal-text">
-              Are you sure you want to delete the audit event from {deleteEvent}?
-              <br />
-              This action cannot be undone.
-            </p>
-            <div className="cp-modal-actions">
-              <button type="button" className="cp-modal-cancel" onClick={() => setDeleteEvent(null)}>
-                Cancel
-              </button>
-              <button type="button" className="cp-modal-delete" onClick={() => setDeleteEvent(null)}>
-                Delete
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   );
 }
