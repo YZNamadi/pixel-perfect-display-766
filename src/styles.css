@@ -6300,3 +6300,22 @@ a.am-menu-item { text-decoration: none; }
 .em-dd-check { color: #2C7A53; flex-shrink: 0; }
 @media (max-width: 1024px) { .em-layout { grid-template-columns: 1fr; } }
 @media (max-width: 640px) { .em-grid { grid-template-columns: 1fr; } }
+
+/* Operational status dropdown — spec tokens */
+.em-dd-trigger { position: relative; padding: 0.6rem 2.5rem 0.6rem 0.85rem; border-radius: 8px; border: 1px solid #D1D5DB; background: #fff; transition: border-color 200ms, box-shadow 200ms; }
+.em-dd-trigger:hover, .em-dd-trigger[aria-expanded="true"] { border-color: #15803D; box-shadow: 0 0 0 1px #15803D; }
+.em-dd-chevron { position: absolute; right: 12px; color: #6B7280; }
+.em-dd-pill { font-size: 0.82rem; font-weight: 600; padding: 0.3rem 0.75rem; border-radius: 12px; animation: em-dd-badge 200ms cubic-bezier(0.34,1.56,0.64,1); }
+.em-dd-pill--green { background: #DCFCE7; color: #15803D; }
+.em-dd-pill--red { background: #FEE2E2; color: #DC2626; }
+.em-dd-pill--blue { background: #F3F4F6; color: #6B7280; }
+.em-dd-pill--yellow { background: #FEF3C7; color: #D97706; }
+.em-dd-menu { margin-top: 6px; background: #fff; border: 1px solid #E5E7EB; border-radius: 10px; box-shadow: 0 10px 40px rgba(0,0,0,0.12), 0 4px 12px rgba(0,0,0,0.06); z-index: 100; padding: 0.5rem 0; display: flex; flex-direction: column; gap: 0.25rem; transform-origin: top center; animation: em-dd-open 200ms cubic-bezier(0.16,1,0.3,1); }
+.em-dd-option { padding: 0.65rem 1rem; background: #fff; transition: background-color 100ms; }
+.em-dd-option:hover { background: #F9FAFB; }
+.em-dd-option.is-selected { background: #F9FAFB; }
+.em-dd-option.is-selected:hover { background: #F3F4F6; }
+.em-dd-check { color: #15803D; animation: em-dd-check 250ms cubic-bezier(0.34,1.56,0.64,1); }
+@keyframes em-dd-open { from { opacity: 0; transform: scaleY(0.95) translateY(-4px); } to { opacity: 1; transform: none; } }
+@keyframes em-dd-badge { from { opacity: 0.7; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+@keyframes em-dd-check { from { opacity: 0; transform: scale(0.5); } to { opacity: 1; transform: scale(1); } }
