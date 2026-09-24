@@ -19,7 +19,7 @@ import {
   X,
 } from "lucide-react";
 
-export const Route = createFileRoute("/training")({
+export const Route = createFileRoute("/staff-records")({
   head: () => ({
     meta: [
       { title: "Kearly | Staff Records" },
@@ -142,7 +142,7 @@ function StaffRecordsPage() {
         <div className="rr-tabs" role="tablist" aria-label="Report sections">
           <Link to="/reports" role="tab" aria-selected={false} className="rr-tab">Reports</Link>
           <Link to="/documents" role="tab" aria-selected={false} className="rr-tab">Documents</Link>
-          <Link to="/training" role="tab" aria-selected className="rr-tab is-active">Staff Report</Link>
+          <Link to="/staff-records" role="tab" aria-selected className="rr-tab is-active">Staff Report</Link>
         </div>
 
         <div className="dc-filters tr-filters">

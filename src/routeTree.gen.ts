@@ -33,9 +33,9 @@ import { Route as ScheduleRouteImport } from './routes/schedule'
 import { Route as SettingsRouteImport } from './routes/settings'
 import { Route as SignupRouteImport } from './routes/signup'
 import { Route as SiteRouteImport } from './routes/site'
+import { Route as StaffRecordsRouteImport } from './routes/staff-records'
 import { Route as TeamRouteImport } from './routes/team'
 import { Route as TeamMembersRouteImport } from './routes/team-members'
-import { Route as TrainingRouteImport } from './routes/training'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -157,6 +157,11 @@ const SiteRoute = SiteRouteImport.update({
   path: '/site',
   getParentRoute: () => rootRouteImport,
 } as any)
+const StaffRecordsRoute = StaffRecordsRouteImport.update({
+  id: '/staff-records',
+  path: '/staff-records',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const TeamRoute = TeamRouteImport.update({
   id: '/team',
   path: '/team',
@@ -165,11 +170,6 @@ const TeamRoute = TeamRouteImport.update({
 const TeamMembersRoute = TeamMembersRouteImport.update({
   id: '/team-members',
   path: '/team-members',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const TrainingRoute = TrainingRouteImport.update({
-  id: '/training',
-  path: '/training',
   getParentRoute: () => rootRouteImport,
 } as any)
 
@@ -198,9 +198,9 @@ export interface FileRoutesByFullPath {
   '/settings': typeof SettingsRoute
   '/signup': typeof SignupRoute
   '/site': typeof SiteRoute
+  '/staff-records': typeof StaffRecordsRoute
   '/team': typeof TeamRoute
   '/team-members': typeof TeamMembersRoute
-  '/training': typeof TrainingRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -227,9 +227,9 @@ export interface FileRoutesByTo {
   '/settings': typeof SettingsRoute
   '/signup': typeof SignupRoute
   '/site': typeof SiteRoute
+  '/staff-records': typeof StaffRecordsRoute
   '/team': typeof TeamRoute
   '/team-members': typeof TeamMembersRoute
-  '/training': typeof TrainingRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -257,9 +257,9 @@ export interface FileRoutesById {
   '/settings': typeof SettingsRoute
   '/signup': typeof SignupRoute
   '/site': typeof SiteRoute
+  '/staff-records': typeof StaffRecordsRoute
   '/team': typeof TeamRoute
   '/team-members': typeof TeamMembersRoute
-  '/training': typeof TrainingRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -288,9 +288,9 @@ export interface FileRouteTypes {
     | '/settings'
     | '/signup'
     | '/site'
+    | '/staff-records'
     | '/team'
     | '/team-members'
-    | '/training'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -317,9 +317,9 @@ export interface FileRouteTypes {
     | '/settings'
     | '/signup'
     | '/site'
+    | '/staff-records'
     | '/team'
     | '/team-members'
-    | '/training'
   id:
     | '__root__'
     | '/'
@@ -346,9 +346,9 @@ export interface FileRouteTypes {
     | '/settings'
     | '/signup'
     | '/site'
+    | '/staff-records'
     | '/team'
     | '/team-members'
-    | '/training'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -376,9 +376,9 @@ export interface RootRouteChildren {
   SettingsRoute: typeof SettingsRoute
   SignupRoute: typeof SignupRoute
   SiteRoute: typeof SiteRoute
+  StaffRecordsRoute: typeof StaffRecordsRoute
   TeamRoute: typeof TeamRoute
   TeamMembersRoute: typeof TeamMembersRoute
-  TrainingRoute: typeof TrainingRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -551,6 +551,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SiteRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/staff-records': {
+      id: '/staff-records'
+      path: '/staff-records'
+      fullPath: '/staff-records'
+      preLoaderRoute: typeof StaffRecordsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/team': {
       id: '/team'
       path: '/team'
@@ -563,13 +570,6 @@ declare module '@tanstack/react-router' {
       path: '/team-members'
       fullPath: '/team-members'
       preLoaderRoute: typeof TeamMembersRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/training': {
-      id: '/training'
-      path: '/training'
-      fullPath: '/training'
-      preLoaderRoute: typeof TrainingRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
@@ -600,9 +600,9 @@ const rootRouteChildren: RootRouteChildren = {
   SettingsRoute: SettingsRoute,
   SignupRoute: SignupRoute,
   SiteRoute: SiteRoute,
+  StaffRecordsRoute: StaffRecordsRoute,
   TeamRoute: TeamRoute,
   TeamMembersRoute: TeamMembersRoute,
-  TrainingRoute: TrainingRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
