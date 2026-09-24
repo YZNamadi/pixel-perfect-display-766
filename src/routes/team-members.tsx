@@ -183,9 +183,9 @@ function TeamPage() {
                     </td>
                     <td>
                       <div className="cl-row-actions">
-                        <button type="button" className="cl-icon-btn" aria-label={`Edit ${c.name}`}>
+                        <Link to="/edit-member" className="cl-icon-btn" aria-label={`Edit ${c.name}`}>
                           <Pencil size={15} aria-hidden="true" />
-                        </button>
+                        </Link>
                       </div>
                     </td>
                   </tr>
