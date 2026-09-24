@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import {
   LayoutDashboard,
@@ -14,9 +14,6 @@ import {
   Calendar,
   ChevronLeft,
   ChevronRight,
-  Pencil,
-  Trash2,
-  MoreVertical,
   X,
   XCircle,
   UploadCloud,
@@ -122,7 +119,7 @@ const categoryForDay = (day: number): Category => categories[(day - 1) % categor
 const iso = (d: Date) =>
   `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
 
-type Cell = { key: string; day: number; muted: boolean };
+type Cell = { key: string; day: number; muted: boolean; date: Date };
 
 function buildCells(year: number, month: number): Cell[] {
   const first = new Date(year, month, 1);
@@ -131,7 +128,7 @@ function buildCells(year: number, month: number): Cell[] {
   const out: Cell[] = [];
   for (let i = 0; i < 42; i += 1) {
     const day = new Date(start.getFullYear(), start.getMonth(), start.getDate() + i);
-    out.push({ key: iso(day), day: day.getDate(), muted: day.getMonth() !== month });
+    out.push({ key: iso(day), day: day.getDate(), muted: day.getMonth() !== month, date: day });
     if (i >= 27 && day.getDay() === 0) {
       const next = new Date(day.getFullYear(), day.getMonth(), day.getDate() + 1);
       if (next.getMonth() !== month) break;
@@ -140,13 +137,47 @@ function buildCells(year: number, month: number): Cell[] {
   return out;
 }
 
+function buildWeekCells(anchor: Date): Cell[] {
+  const offset = (anchor.getDay() + 6) % 7;
+  const monday = new Date(anchor.getFullYear(), anchor.getMonth(), anchor.getDate() - offset);
+  return Array.from({ length: 7 }, (_, index) => {
+    const date = new Date(monday.getFullYear(), monday.getMonth(), monday.getDate() + index);
+    return { key: iso(date), day: date.getDate(), muted: false, date };
+  });
+}
+
+type EventStatus = "allocated" | "completed" | "due" | "approaching" | "failed";
+type CalendarEvent = { category: Category; status: EventStatus };
+
+const julyEvents: Record<number, CalendarEvent[]> = {
+  1: [{ category: categories[0]!, status: "due" }, { category: categories[1]!, status: "approaching" }],
+  2: [{ category: { ...categories[0]!, title: "Water Temp Log Check" }, status: "completed" }, { category: { ...categories[1]!, title: "Monthly Emergency Light" }, status: "completed" }],
+  3: [{ category: categories[1]!, status: "approaching" }],
+  4: [{ category: categories[2]!, status: "failed" }],
+  5: [{ category: categories[3]!, status: "due" }],
+  6: [{ category: categories[4]!, status: "allocated" }],
+  7: [{ category: categories[5]!, status: "allocated" }],
+};
+
+const statusCycle: EventStatus[] = ["failed", "approaching", "failed", "due", "allocated", "allocated"];
+
+function eventsForDate(date: Date): CalendarEvent[] {
+  if (date.getFullYear() === 2024 && date.getMonth() === 6 && julyEvents[date.getDate()]) {
+    return julyEvents[date.getDate()]!;
+  }
+  const day = date.getDate();
+  return [{ category: categoryForDay(day), status: statusCycle[(day - 1) % statusCycle.length]! }];
+}
+
 const views = ["Month", "Week", "Day"] as const;
 
 function SchedulePage() {
   const today = new Date();
   const todayKey = iso(today);
   const [view, setView] = useState<(typeof views)[number]>("Month");
-  const [cursor, setCursor] = useState(() => new Date(today.getFullYear(), today.getMonth(), 1));
+  const [cursor, setCursor] = useState(() => new Date(2024, 6, 1));
+  const [datePickerOpen, setDatePickerOpen] = useState(false);
+  const [jumpDate, setJumpDate] = useState("2024-07-01");
   const [selected, setSelected] = useState<{ key: string; event: Category } | null>(null);
   const [addOpen, setAddOpen] = useState(false);
   const [priority, setPriority] = useState<"Low" | "Medium" | "High">("High");
@@ -155,13 +186,29 @@ function SchedulePage() {
   const [editPriority, setEditPriority] = useState<"Low" | "Medium" | "High">("Medium");
   const [editTag, setEditTag] = useState("Water Safety");
   const [editNotice, setEditNotice] = useState(7);
+  const datePickerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const closePicker = (event: MouseEvent) => {
+      if (datePickerRef.current && !datePickerRef.current.contains(event.target as Node)) setDatePickerOpen(false);
+    };
+    document.addEventListener("mousedown", closePicker);
+    return () => document.removeEventListener("mousedown", closePicker);
+  }, []);
 
 
   const year = cursor.getFullYear();
   const month = cursor.getMonth();
-  const cells = buildCells(year, month);
+  const cells = view === "Month" ? buildCells(year, month) : view === "Week" ? buildWeekCells(cursor) : [{ key: iso(cursor), day: cursor.getDate(), muted: false, date: cursor }];
   const monthLabel = `${monthNames[month]} ${year}`;
-  const shiftMonth = (delta: number) => setCursor(new Date(year, month + delta, 1));
+  const visibleWeekdays = view === "Month" ? weekdays : cells.map((cell) => weekdays[(cell.date.getDay() + 6) % 7]!);
+
+  const goToDate = () => {
+    const [targetYear, targetMonth, targetDay] = jumpDate.split("-").map(Number);
+    if (!targetYear || !targetMonth || !targetDay) return;
+    setCursor(new Date(targetYear, targetMonth - 1, targetDay));
+    setDatePickerOpen(false);
+  };
 
   return (
     <div className="po-shell">
@@ -221,27 +268,43 @@ function SchedulePage() {
             <h1 className="po-title">Schedule</h1>
             <p className="po-subtitle">Monthly Compliance Event Planner</p>
           </div>
-          <div className="po-topbar-actions">
+          <div className="po-topbar-actions sc-toolbar">
             <div className="po-search">
               <Search size={15} aria-hidden="true" />
               <input type="search" placeholder="Search..." aria-label="Search events" />
             </div>
-            <span className="sc-month-chip">
-              <button type="button" className="sc-arrow" aria-label="Previous month" onClick={() => shiftMonth(-1)}>
-                <ChevronLeft size={14} aria-hidden="true" />
-              </button>
+            <div className="sc-date-picker" ref={datePickerRef}>
               <button
                 type="button"
-                className="sc-month-label"
-                onClick={() => setCursor(new Date(today.getFullYear(), today.getMonth(), 1))}
-                title="Jump to today"
+                className="sc-month-button"
+                onClick={() => setDatePickerOpen((open) => !open)}
+                aria-haspopup="dialog"
+                aria-expanded={datePickerOpen}
               >
+                <Calendar size={14} aria-hidden="true" />
                 {monthLabel}
               </button>
-              <button type="button" className="sc-arrow" aria-label="Next month" onClick={() => shiftMonth(1)}>
-                <ChevronRight size={14} aria-hidden="true" />
-              </button>
-            </span>
+              {datePickerOpen && (
+                <div className="sc-date-popover" role="dialog" aria-label="Go to any date">
+                  <label htmlFor="sc-jump-date">Go to date</label>
+                  <input id="sc-jump-date" type="date" value={jumpDate} onChange={(event) => setJumpDate(event.target.value)} />
+                  <div className="sc-date-actions">
+                    <button
+                      type="button"
+                      className="sc-date-today"
+                      onClick={() => {
+                        setJumpDate(todayKey);
+                        setCursor(new Date(today.getFullYear(), today.getMonth(), today.getDate()));
+                        setDatePickerOpen(false);
+                      }}
+                    >
+                      Today
+                    </button>
+                    <button type="button" className="sc-date-go" onClick={goToDate}>Go</button>
+                  </div>
+                </div>
+              )}
+            </div>
             <span className="po-chip">
               <Calendar size={14} aria-hidden="true" />
               All buildings
@@ -266,15 +329,23 @@ function SchedulePage() {
           </div>
         </header>
 
-        <section className="sc-calendar" aria-label={`${monthLabel} schedule`}>
+        <div className="sc-legend" aria-label="Event status legend">
+          <span className="is-allocated">Allocated</span>
+          <span className="is-completed">Completed</span>
+          <span className="is-due">Due</span>
+          <span className="is-approaching">Approaching</span>
+          <span className="is-failed">Failed</span>
+        </div>
+
+        <section className={`sc-calendar is-${view.toLowerCase()}`} aria-label={`${monthLabel} schedule`}>
           <div className="sc-week-head">
-            {weekdays.map((day) => (
-              <span key={day}>{day}</span>
+            {visibleWeekdays.map((day, index) => (
+              <span key={`${day}-${index}`}>{day}</span>
             ))}
           </div>
           <div className="sc-grid">
             {cells.map((cell) => {
-              const category = cell.muted ? null : categoryForDay(cell.day);
+              const events = cell.muted ? [] : eventsForDate(cell.date);
               return (
                 <div
                   key={cell.key}
@@ -282,36 +353,19 @@ function SchedulePage() {
                 >
                   {!cell.muted && (
                     <>
-                      <div className="sc-cell-head">
-                        <span className="sc-date">{cell.day}</span>
-                        {category && <span className={`sc-tag is-${category.tone}`}>{category.tag}</span>}
-                      </div>
-                      {category && (
+                      <div className="sc-cell-head"><span className="sc-date">{cell.day}</span></div>
+                      {events.map(({ category, status }, eventIndex) => (
                         <button
                           type="button"
-                          className={`sc-event is-${category.tone}`}
+                          key={`${cell.key}-${category.title}-${eventIndex}`}
+                          className={`sc-event is-${status}`}
                           onClick={() =>
-                            setSelected(selected?.key === cell.key ? null : { key: cell.key, event: category })
+                            setSelected(selected?.key === `${cell.key}-${eventIndex}` ? null : { key: `${cell.key}-${eventIndex}`, event: category })
                           }
                         >
                           {category.title}
                         </button>
-                      )}
-                      {cell.day % 7 === 2 && category && (
-                        <button
-                          type="button"
-                          className={`sc-event is-${categoryForDay(cell.day + 1).tone}`}
-                          onClick={() =>
-                            setSelected(
-                              selected?.key === `${cell.key}-b`
-                                ? null
-                                : { key: `${cell.key}-b`, event: categoryForDay(cell.day + 1) },
-                            )
-                          }
-                        >
-                          {categoryForDay(cell.day + 1).title}
-                        </button>
-                      )}
+                      ))}
                     </>
                   )}
                 </div>
