@@ -55,11 +55,12 @@ const contractors = [
 ];
 
 const internalTeam = [
-  { name: "Alex Rowe", email: "alex.rowe@kearlycompliance.com", role: "Portfolio Compliance Administrator", active: true },
-  { name: "Sarah Connor", email: "s.connor@kearlycompliance.com", role: "Repairs Manager", active: true },
-  { name: "Marcus Wright", email: "m.wright@kearlycompliance.com", role: "Contractor Coordinator", active: true },
-  { name: "Kyle Reese", email: "k.reese@kearlycompliance.com", role: "Site Inspector", active: true },
-  { name: "John Connor", email: "j.connor@kearlycompliance.com", role: "Viewer / Auditor", active: false },
+  { name: "Alex Rowe", company: "Kearly Operations", active: true, tickets: 12, documents: 5 },
+  { name: "Maya Patel", company: "Kearly Operations", active: true, tickets: 8, documents: 4 },
+  { name: "Daniel Kim", company: "Kearly Operations", active: false, tickets: 0, documents: 3 },
+  { name: "Priya Nair", company: "Kearly Operations", active: true, tickets: 6, documents: 4 },
+  { name: "Ethan Brooks", company: "Kearly Operations", active: true, tickets: 3, documents: 2 },
+  { name: "Sofia Martinez", company: "Kearly Operations", active: false, tickets: 0, documents: 1 },
 ];
 
 const initials = (n: string) => n.split(" ").map((p) => p[0]).join("");
@@ -156,7 +157,7 @@ function TeamPage() {
           ) : (
             <Link to="/team" className="se-primary se-team-add">
               <Plus size={15} aria-hidden="true" />
-              Send Invite
+              Add Team Member
             </Link>
           )}
         </div>
@@ -196,23 +197,26 @@ function TeamPage() {
             <table className="cl-table">
               <thead>
                 <tr>
-                  <th>NAME</th><th>EMAIL</th><th>ROLE / PERMISSIONS</th><th>STATUS</th><th>ACTION</th>
+                  <th>NAME</th><th>COMPANY</th><th>STATUS</th><th>ASSIGNED TICKETS</th><th>DOCUMENTS</th><th>ACTION</th>
                 </tr>
               </thead>
               <tbody>
                 {internalTeam.map((m) => (
-                  <tr key={m.email}>
+                  <tr key={m.name}>
                     <td><Person name={m.name} /></td>
-                    <td className="al-details">{m.email}</td>
-                    <td className="al-details">{m.role}</td>
+                    <td className="al-details">{m.company}</td>
                     <td>
                       <span className={`dc-expiry ${m.active ? "tone-green" : "tone-muted"}`}>{m.active ? "Active" : "Inactive"}</span>
                     </td>
+                    <td className="al-details">{m.tickets} active tickets</td>
+                    <td>
+                      <span className="tr-cert"><FileText size={14} aria-hidden="true" />{m.documents} Verified</span>
+                    </td>
                     <td>
                       <div className="cl-row-actions">
-                        <button type="button" className="cl-icon-btn" aria-label={`Edit ${m.name}`}>
+                        <Link to="/edit-member" className="cl-icon-btn" aria-label={`Edit ${m.name}`}>
                           <Pencil size={15} aria-hidden="true" />
-                        </button>
+                        </Link>
                       </div>
                     </td>
                   </tr>
