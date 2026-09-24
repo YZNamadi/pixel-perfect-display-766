@@ -157,14 +157,24 @@ const julyEvents: Record<number, CalendarEvent[]> = {
   7: [{ category: categories[5]!, status: "allocated" }],
 };
 
-const statusCycle: EventStatus[] = ["failed", "approaching", "failed", "due", "allocated", "allocated"];
+const TOLERANCE_DAYS = 7;
+
+function statusForDate(date: Date, eventIndex = 0): EventStatus {
+  const startOfToday = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+  const diffDays = Math.round((new Date(date.getFullYear(), date.getMonth(), date.getDate()).getTime() - startOfToday.getTime()) / 86_400_000);
+  if (diffDays < 0) return Math.abs(diffDays) % 4 === 0 ? "failed" : "completed";
+  if (diffDays === 0) return eventIndex === 0 ? "due" : "approaching";
+  if (diffDays <= TOLERANCE_DAYS) return "approaching";
+  return "allocated";
+}
 
 function eventsForDate(date: Date): CalendarEvent[] {
   if (date.getFullYear() === 2024 && date.getMonth() === 6 && julyEvents[date.getDate()]) {
     return julyEvents[date.getDate()]!;
   }
   const day = date.getDate();
-  return [{ category: categoryForDay(day), status: statusCycle[(day - 1) % statusCycle.length]! }];
+  const category = categoryForDay(day);
+  return [{ category, status: statusForDate(date) }];
 }
 
 const views = ["Month", "Week", "Day"] as const;
