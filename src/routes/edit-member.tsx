@@ -195,11 +195,7 @@ function EditMemberPage() {
             <section className="em-card">
               <h2 className="em-h2">Account &amp; Safety Status</h2>
               <label className="em-field">Operational Status
-                <select className="em-input em-edit em-status" defaultValue="active">
-                  <option value="active">Active Contractor</option>
-                  <option value="inactive">Inactive</option>
-                  <option value="suspended">Suspended</option>
-                </select>
+                <StatusDropdown />
               </label>
               <label className="em-field">Active Tickets Limit<input className="em-input em-edit" defaultValue="4 Active Tickets Assigned" /></label>
               <div className="em-field">Verified Safety Documents
