@@ -19,6 +19,7 @@ import { Route as CompleteTicketRouteImport } from './routes/complete-ticket'
 import { Route as ComplianceRouteImport } from './routes/compliance'
 import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as DocumentsRouteImport } from './routes/documents'
+import { Route as EditMemberRouteImport } from './routes/edit-member'
 import { Route as EditTaskRouteImport } from './routes/edit-task'
 import { Route as EquipmentRouteImport } from './routes/equipment'
 import { Route as FacilityRouteImport } from './routes/facility'
@@ -83,6 +84,11 @@ const DashboardRoute = DashboardRouteImport.update({
 const DocumentsRoute = DocumentsRouteImport.update({
   id: '/documents',
   path: '/documents',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EditMemberRoute = EditMemberRouteImport.update({
+  id: '/edit-member',
+  path: '/edit-member',
   getParentRoute: () => rootRouteImport,
 } as any)
 const EditTaskRoute = EditTaskRouteImport.update({
@@ -172,6 +178,7 @@ export interface FileRoutesByFullPath {
   '/compliance': typeof ComplianceRoute
   '/dashboard': typeof DashboardRoute
   '/documents': typeof DocumentsRoute
+  '/edit-member': typeof EditMemberRoute
   '/edit-task': typeof EditTaskRoute
   '/equipment': typeof EquipmentRoute
   '/facility': typeof FacilityRoute
@@ -199,6 +206,7 @@ export interface FileRoutesByTo {
   '/compliance': typeof ComplianceRoute
   '/dashboard': typeof DashboardRoute
   '/documents': typeof DocumentsRoute
+  '/edit-member': typeof EditMemberRoute
   '/edit-task': typeof EditTaskRoute
   '/equipment': typeof EquipmentRoute
   '/facility': typeof FacilityRoute
@@ -227,6 +235,7 @@ export interface FileRoutesById {
   '/compliance': typeof ComplianceRoute
   '/dashboard': typeof DashboardRoute
   '/documents': typeof DocumentsRoute
+  '/edit-member': typeof EditMemberRoute
   '/edit-task': typeof EditTaskRoute
   '/equipment': typeof EquipmentRoute
   '/facility': typeof FacilityRoute
@@ -256,6 +265,7 @@ export interface FileRouteTypes {
     | '/compliance'
     | '/dashboard'
     | '/documents'
+    | '/edit-member'
     | '/edit-task'
     | '/equipment'
     | '/facility'
@@ -283,6 +293,7 @@ export interface FileRouteTypes {
     | '/compliance'
     | '/dashboard'
     | '/documents'
+    | '/edit-member'
     | '/edit-task'
     | '/equipment'
     | '/facility'
@@ -310,6 +321,7 @@ export interface FileRouteTypes {
     | '/compliance'
     | '/dashboard'
     | '/documents'
+    | '/edit-member'
     | '/edit-task'
     | '/equipment'
     | '/facility'
@@ -338,6 +350,7 @@ export interface RootRouteChildren {
   ComplianceRoute: typeof ComplianceRoute
   DashboardRoute: typeof DashboardRoute
   DocumentsRoute: typeof DocumentsRoute
+  EditMemberRoute: typeof EditMemberRoute
   EditTaskRoute: typeof EditTaskRoute
   EquipmentRoute: typeof EquipmentRoute
   FacilityRoute: typeof FacilityRoute
@@ -425,6 +438,13 @@ declare module '@tanstack/react-router' {
       path: '/documents'
       fullPath: '/documents'
       preLoaderRoute: typeof DocumentsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/edit-member': {
+      id: '/edit-member'
+      path: '/edit-member'
+      fullPath: '/edit-member'
+      preLoaderRoute: typeof EditMemberRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/edit-task': {
@@ -546,6 +566,7 @@ const rootRouteChildren: RootRouteChildren = {
   ComplianceRoute: ComplianceRoute,
   DashboardRoute: DashboardRoute,
   DocumentsRoute: DocumentsRoute,
+  EditMemberRoute: EditMemberRoute,
   EditTaskRoute: EditTaskRoute,
   EquipmentRoute: EquipmentRoute,
   FacilityRoute: FacilityRoute,
