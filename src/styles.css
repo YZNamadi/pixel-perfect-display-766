@@ -6265,5 +6265,38 @@ a.am-menu-item { text-decoration: none; }
 .em-save, .em-cancel { display: block; text-align: center; padding: 0.7rem; border-radius: 6px; font-size: 0.85rem; font-weight: 600; text-decoration: none; }
 .em-save { background: #15803D; color: #fff; margin-top: -0.4rem; }
 .em-cancel { background: #fff; border: 1px solid #E5E7EB; color: #374151; margin-top: -0.7rem; }
+
+/* Custom Status Dropdown */
+.em-dropdown { position: relative; }
+.em-dd-trigger {
+  display: flex; align-items: center; justify-content: space-between; gap: 0.5rem;
+  width: 100%; background: #fff; border: 1px solid #517064; border-radius: 8px;
+  padding: 0.5rem 0.7rem; cursor: pointer; font: inherit; transition: border-color 0.15s;
+}
+.em-dd-trigger:hover { border-color: #15803D; }
+.em-dd-chevron { color: #A3ACB8; flex-shrink: 0; transition: transform 0.2s; }
+.em-dd-chevron.is-open { transform: rotate(180deg); }
+.em-dd-pill {
+  display: inline-flex; align-items: center; font-size: 0.78rem; font-weight: 600;
+  padding: 0.25rem 0.65rem; border-radius: 999px; white-space: nowrap; line-height: 1.4;
+}
+.em-dd-pill--green { background: #E6F7ED; color: #2C7A53; }
+.em-dd-pill--red { background: #FEEBEB; color: #9A323B; }
+.em-dd-pill--blue { background: #F0F1F7; color: #465471; }
+.em-dd-pill--yellow { background: #FFF7E1; color: #C08229; }
+.em-dd-menu {
+  position: absolute; top: calc(100% + 0.4rem); left: 0; right: 0; z-index: 50;
+  background: #fff; border: 1px solid #E5E7EB; border-radius: 10px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1); padding: 0.5rem;
+  display: flex; flex-direction: column; gap: 0.2rem;
+}
+.em-dd-option {
+  display: flex; align-items: center; justify-content: space-between; gap: 0.5rem;
+  padding: 0.45rem 0.5rem; border: none; background: transparent; border-radius: 6px;
+  cursor: pointer; font: inherit; text-align: left; transition: background 0.12s;
+}
+.em-dd-option:hover { background: #F8FAFC; }
+.em-dd-option.is-selected { background: #F8FAFC; }
+.em-dd-check { color: #2C7A53; flex-shrink: 0; }
 @media (max-width: 1024px) { .em-layout { grid-template-columns: 1fr; } }
 @media (max-width: 640px) { .em-grid { grid-template-columns: 1fr; } }
