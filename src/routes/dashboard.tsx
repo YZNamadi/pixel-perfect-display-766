@@ -12,7 +12,6 @@ import {
   Users,
   Search,
   Download,
-  Calendar,
   Check,
   ChevronRight,
   Stethoscope,
