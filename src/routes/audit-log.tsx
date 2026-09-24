@@ -15,8 +15,6 @@ import {
   ChevronDown,
   Eye,
   BadgeCheck,
-  X,
-  AlertTriangle,
   Stethoscope,
 } from "lucide-react";
 
