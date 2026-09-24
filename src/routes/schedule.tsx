@@ -160,7 +160,8 @@ const julyEvents: Record<number, CalendarEvent[]> = {
 const TOLERANCE_DAYS = 7;
 
 function statusForDate(date: Date, eventIndex = 0): EventStatus {
-  const startOfToday = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+  const now = new Date();
+  const startOfToday = new Date(now.getFullYear(), now.getMonth(), now.getDate());
   const diffDays = Math.round((new Date(date.getFullYear(), date.getMonth(), date.getDate()).getTime() - startOfToday.getTime()) / 86_400_000);
   if (diffDays < 0) return Math.abs(diffDays) % 4 === 0 ? "failed" : "completed";
   if (diffDays === 0) return eventIndex === 0 ? "due" : "approaching";
