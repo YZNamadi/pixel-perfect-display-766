@@ -157,14 +157,25 @@ const julyEvents: Record<number, CalendarEvent[]> = {
   7: [{ category: categories[5]!, status: "allocated" }],
 };
 
-const statusCycle: EventStatus[] = ["failed", "approaching", "failed", "due", "allocated", "allocated"];
+const TOLERANCE_DAYS = 7;
+
+function statusForDate(date: Date, eventIndex = 0): EventStatus {
+  const now = new Date();
+  const startOfToday = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  const diffDays = Math.round((new Date(date.getFullYear(), date.getMonth(), date.getDate()).getTime() - startOfToday.getTime()) / 86_400_000);
+  if (diffDays < 0) return Math.abs(diffDays) % 4 === 0 ? "failed" : "completed";
+  if (diffDays === 0) return eventIndex === 0 ? "due" : "approaching";
+  if (diffDays <= TOLERANCE_DAYS) return "approaching";
+  return "allocated";
+}
 
 function eventsForDate(date: Date): CalendarEvent[] {
   if (date.getFullYear() === 2024 && date.getMonth() === 6 && julyEvents[date.getDate()]) {
     return julyEvents[date.getDate()]!;
   }
   const day = date.getDate();
-  return [{ category: categoryForDay(day), status: statusCycle[(day - 1) % statusCycle.length]! }];
+  const category = categoryForDay(day);
+  return [{ category, status: statusForDate(date) }];
 }
 
 const views = ["Month", "Week", "Day"] as const;
@@ -333,11 +344,11 @@ function SchedulePage() {
         </header>
 
         <div className="sc-legend" aria-label="Event status legend">
-          <span className="is-allocated">Allocated</span>
-          <span className="is-completed">Completed</span>
-          <span className="is-due">Due</span>
-          <span className="is-approaching">Approaching</span>
-          <span className="is-failed">Failed</span>
+          <span className="is-allocated" title="Green — allocated">Allocated</span>
+          <span className="is-completed" title="Blue — completed">Completed</span>
+          <span className="is-due" title="Gray — due but not yet allocated">Due</span>
+          <span className="is-approaching" title="Amber — approaching tolerance deadline">Approaching</span>
+          <span className="is-failed" title="Red — failed / not completed">Failed</span>
         </div>
 
         <section className={`sc-calendar is-${view.toLowerCase()}`} aria-label={`${monthLabel} schedule`}>
