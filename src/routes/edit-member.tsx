@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useState } from "react";
-import { LayoutDashboard, ShieldCheck, Wrench, Building2, BarChart3, ScrollText, Settings, CreditCard, Users, Stethoscope, FileText } from "lucide-react";
+import { useState, useRef, useEffect } from "react";
+import { LayoutDashboard, ShieldCheck, Wrench, Building2, BarChart3, ScrollText, Settings, CreditCard, Users, Stethoscope, FileText, Check, ChevronDown } from "lucide-react";
 
 export const Route = createFileRoute("/edit-member")({
   head: () => ({
