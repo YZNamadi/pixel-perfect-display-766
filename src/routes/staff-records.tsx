@@ -19,7 +19,7 @@ import {
   X,
 } from "lucide-react";
 
-export const Route = createFileRoute("/training")({
+export const Route = createFileRoute("/staff-records")({
   head: () => ({
     meta: [
       { title: "Kearly | Staff Records" },
