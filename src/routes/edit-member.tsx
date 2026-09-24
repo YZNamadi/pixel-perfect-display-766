@@ -194,9 +194,9 @@ function EditMemberPage() {
           <div className="em-col">
             <section className="em-card">
               <h2 className="em-h2">Account &amp; Safety Status</h2>
-              <label className="em-field">Operational Status
+              <div className="em-field">Operational Status
                 <StatusDropdown />
-              </label>
+              </div>
               <label className="em-field">Active Tickets Limit<input className="em-input em-edit" defaultValue="4 Active Tickets Assigned" /></label>
               <div className="em-field">Verified Safety Documents
                 <span className="em-input em-edit em-docs"><FileText size={14} aria-hidden="true" />3 Verified / Up to date</span>
