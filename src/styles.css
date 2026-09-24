@@ -6319,3 +6319,32 @@ a.am-menu-item { text-decoration: none; }
 @keyframes em-dd-open { from { opacity: 0; transform: scaleY(0.95) translateY(-4px); } to { opacity: 1; transform: none; } }
 @keyframes em-dd-badge { from { opacity: 0.7; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
 @keyframes em-dd-check { from { opacity: 0; transform: scale(0.5); } to { opacity: 1; transform: scale(1); } }
+
+/* Primary service role dropdown */
+.em-role-trigger {
+  position: relative; display: flex; align-items: center; justify-content: space-between;
+  width: 100%; min-height: 40px; padding: 0.55rem 2.4rem 0.55rem 0.7rem;
+  border: 1px solid #D1D5DB; border-radius: 8px; background: #fff;
+  color: #111827; cursor: pointer; font: inherit; font-size: 0.82rem; font-weight: 400;
+  text-align: left; transition: border-color 200ms, box-shadow 200ms;
+}
+.em-role-trigger:hover, .em-role-trigger[aria-expanded="true"] {
+  border-color: #15803D; box-shadow: 0 0 0 1px #15803D;
+}
+.em-role-trigger .em-dd-chevron { position: absolute; right: 12px; }
+.em-role-menu {
+  position: absolute; top: calc(100% + 0.4rem); left: 0; right: 0; z-index: 110;
+  display: flex; flex-direction: column; padding: 0.4rem; background: #fff;
+  border: 1px solid #E5E7EB; border-radius: 8px;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.12), 0 4px 12px rgba(0,0,0,0.06);
+  transform-origin: top center; animation: em-dd-open 200ms cubic-bezier(0.16,1,0.3,1);
+}
+.em-role-option {
+  display: flex; align-items: center; justify-content: space-between; gap: 0.75rem;
+  min-height: 38px; padding: 0.55rem 0.65rem; border: 0; border-radius: 6px;
+  background: #fff; color: #1F2937; cursor: pointer; font: inherit;
+  font-size: 0.82rem; font-weight: 400; text-align: left;
+}
+.em-role-option:hover { background: #F8FAFC; }
+.em-role-option.is-selected { background: #EAF7FC; color: #0284C7; font-weight: 600; }
+.em-role-option.is-selected svg { color: #0284C7; flex-shrink: 0; }

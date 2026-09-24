@@ -37,11 +37,17 @@ const taskList = [
 
 const statusOptions = [
   { value: "active", label: "Active Contractor", tone: "green" },
-  { value: "leave", label: "On Leave", tone: "red" },
-  { value: "suspended", label: "Suspended", tone: "red" },
-  { value: "offduty", label: "Off-Duty", tone: "blue" },
-  { value: "inactive", label: "Inactive", tone: "blue" },
+  { value: "leave", label: "On Leave / Suspended", tone: "red" },
+  { value: "offduty", label: "Off-Duty / Inactive", tone: "blue" },
   { value: "pending", label: "Pending Verification", tone: "yellow" },
+] as const;
+
+const serviceRoleOptions = [
+  { value: "gas", label: "Gas & Heating Engineer" },
+  { value: "water", label: "Water Hygiene Specialist" },
+  { value: "electrical", label: "Electrical PAT Tester" },
+  { value: "maintenance", label: "General Maintenance Technician" },
+  { value: "fire", label: "Fire Safety Inspector" },
 ] as const;
 
 function StatusDropdown() {
@@ -87,6 +93,57 @@ function StatusDropdown() {
             >
               <span className={`em-dd-pill em-dd-pill--${opt.tone}`}>{opt.label}</span>
               {opt.value === selected && <Check size={15} className="em-dd-check" aria-hidden="true" />}
+            </button>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
+function ServiceRoleDropdown() {
+  const [open, setOpen] = useState(false);
+  const [selected, setSelected] = useState("gas");
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handler = (event: MouseEvent) => {
+      if (ref.current && !ref.current.contains(event.target as Node)) setOpen(false);
+    };
+    document.addEventListener("mousedown", handler);
+    return () => document.removeEventListener("mousedown", handler);
+  }, []);
+
+  const current = serviceRoleOptions.find((option) => option.value === selected) ?? serviceRoleOptions[0];
+
+  return (
+    <div className="em-dropdown em-role-dropdown" ref={ref}>
+      <button
+        type="button"
+        className="em-role-trigger"
+        onClick={() => setOpen((value) => !value)}
+        aria-haspopup="listbox"
+        aria-expanded={open}
+      >
+        <span>{current.label}</span>
+        <ChevronDown size={16} className={`em-dd-chevron ${open ? "is-open" : ""}`} aria-hidden="true" />
+      </button>
+      {open && (
+        <div className="em-role-menu" role="listbox">
+          {serviceRoleOptions.map((option) => (
+            <button
+              key={option.value}
+              type="button"
+              role="option"
+              aria-selected={option.value === selected}
+              className={`em-role-option ${option.value === selected ? "is-selected" : ""}`}
+              onClick={() => {
+                setSelected(option.value);
+                setOpen(false);
+              }}
+            >
+              <span>{option.label}</span>
+              {option.value === selected && <Check size={15} aria-hidden="true" />}
             </button>
           ))}
         </div>
@@ -161,14 +218,9 @@ function EditMemberPage() {
               <p className="em-group">Member Management Settings</p>
               <p className="em-muted em-group-sub">Editable settings for this team member</p>
               <div className="em-grid">
-                <label className="em-field">Primary Service Role
-                  <select className="em-input em-edit" defaultValue="gas">
-                    <option value="gas">Gas &amp; Heating Engineer</option>
-                    <option value="elec">Electrical Engineer</option>
-                    <option value="water">Water Hygiene Specialist</option>
-                    <option value="fire">Fire Safety Technician</option>
-                  </select>
-                </label>
+                <div className="em-field">Primary Service Role
+                  <ServiceRoleDropdown />
+                </div>
                 <label className="em-field">Work Zone Authorization
                   <select className="em-input em-edit" defaultValue="clinical">
                     <option value="clinical">Outpatient &amp; Clinical Areas</option>
