@@ -1,4 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { useEffect, useRef, useState } from "react";
 import {
   LayoutDashboard,
   ShieldCheck,
@@ -11,7 +12,7 @@ import {
   Users,
   Search,
   Download,
-  Calendar,
+  Check,
   ChevronRight,
   Stethoscope,
 } from "lucide-react";
@@ -76,12 +77,12 @@ const attention = [
 ];
 
 const buildings = [
-  { name: "Northgate House", city: "London", score: 96 },
-  { name: "Kingsway Tower", city: "Manchester", score: 88 },
-  { name: "Riverside Court", city: "Leeds", score: 72 },
-  { name: "Elmwood Court", city: "Bristol", score: 91 },
-  { name: "Maple Business Park", city: "Birmingham", score: 84 },
-  { name: "Victoria Wharf", city: "Liverpool", score: 79 },
+  { name: "Northgate House", city: "London", score: 96, units: 12 },
+  { name: "Kingsway Tower", city: "Manchester", score: 88, units: 8 },
+  { name: "Riverside Court", city: "Leeds", score: 72, units: 14 },
+  { name: "Elmwood Court", city: "Bristol", score: 91, units: 4 },
+  { name: "Maple Business Park", city: "Birmingham", score: 84, units: 9 },
+  { name: "Victoria Wharf", city: "Liverpool", score: 79, units: 6 },
 ];
 
 const upcoming = [
@@ -105,6 +106,18 @@ function scoreTone(score: number) {
 }
 
 function DashboardPage() {
+  const [buildingOpen, setBuildingOpen] = useState(false);
+  const [selectedBuilding, setSelectedBuilding] = useState("All buildings");
+  const buildingRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const closeMenu = (event: MouseEvent) => {
+      if (buildingRef.current && !buildingRef.current.contains(event.target as Node)) setBuildingOpen(false);
+    };
+    document.addEventListener("mousedown", closeMenu);
+    return () => document.removeEventListener("mousedown", closeMenu);
+  }, []);
+
   return (
     <div className="po-shell">
       <aside className="po-sidebar">
@@ -169,10 +182,67 @@ function DashboardPage() {
               <input type="search" placeholder="Search buildings, jobs..." aria-label="Search" />
             </div>
             <span className="po-chip">Wed 2 Jul</span>
-            <span className="po-chip">
-              <Calendar size={14} aria-hidden="true" />
-              All buildings
-            </span>
+            <div className="po-building-select" ref={buildingRef}>
+              <button
+                type="button"
+                className="po-chip po-chip-trigger"
+                onClick={() => setBuildingOpen((open) => !open)}
+                aria-haspopup="listbox"
+                aria-expanded={buildingOpen}
+              >
+                <Building2 size={14} aria-hidden="true" />
+                {selectedBuilding}
+              </button>
+              {buildingOpen && (
+                <div className="po-building-menu" role="listbox" aria-label="Select building">
+                  <p className="po-building-menu-label">Select building</p>
+                  <button
+                    type="button"
+                    role="option"
+                    aria-selected={selectedBuilding === "All buildings"}
+                    className={`po-building-option ${selectedBuilding === "All buildings" ? "is-selected" : ""}`}
+                    onClick={() => {
+                      setSelectedBuilding("All buildings");
+                      setBuildingOpen(false);
+                    }}
+                  >
+                    <span className="po-building-ico" aria-hidden="true">
+                      <Building2 size={16} />
+                    </span>
+                    <span className="po-building-text">
+                      <span className="po-building-label">All buildings</span>
+                      <span className="po-building-sub">{buildings.length} locations</span>
+                    </span>
+                    {selectedBuilding === "All buildings" && <Check size={16} className="po-building-check" aria-hidden="true" />}
+                  </button>
+                  {buildings.map((building) => {
+                    const isSelected = selectedBuilding === building.name;
+                    return (
+                      <button
+                        type="button"
+                        key={building.name}
+                        role="option"
+                        aria-selected={isSelected}
+                        className={`po-building-option ${isSelected ? "is-selected" : ""}`}
+                        onClick={() => {
+                          setSelectedBuilding(building.name);
+                          setBuildingOpen(false);
+                        }}
+                      >
+                        <span className="po-building-ico" aria-hidden="true">
+                          <Building2 size={16} />
+                        </span>
+                        <span className="po-building-text">
+                          <span className="po-building-label">{building.name}</span>
+                          <span className="po-building-sub">{building.units} units</span>
+                        </span>
+                        {isSelected && <Check size={16} className="po-building-check" aria-hidden="true" />}
+                      </button>
+                    );
+                  })}
+                </div>
+              )}
+            </div>
             <button type="button" className="po-download">
               <Download size={15} aria-hidden="true" />
               Download pack
