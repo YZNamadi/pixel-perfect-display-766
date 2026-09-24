@@ -6235,3 +6235,35 @@ a.am-menu-item { text-decoration: none; }
   color: #9ca3af;
   font-size: 0.85rem;
 }
+
+/* ===== Edit Team Member (em-) ===== */
+.em-crumbs { display: flex; gap: 0.5rem; font-size: 0.8rem; color: #9CA3AF; margin-bottom: 0.75rem; }
+.em-crumbs a { color: #9CA3AF; text-decoration: none; }
+.em-crumb-current { color: #374151; }
+.em-layout { display: grid; grid-template-columns: 1fr 310px; gap: 1.25rem; margin-top: 1.25rem; align-items: start; }
+.em-col { display: flex; flex-direction: column; gap: 1.25rem; }
+.em-card { background: #fff; border: 1px solid #E5E7EB; border-radius: 10px; padding: 1.25rem; }
+.em-person { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1.25rem; }
+.em-avatar { width: 40px; height: 40px; border-radius: 50%; background: #DCFCE7; color: #15803D; display: grid; place-items: center; font-weight: 700; font-size: 0.85rem; }
+.em-name { margin: 0; font-weight: 700; color: #111827; }
+.em-muted { margin: 0; font-size: 0.75rem; color: #9CA3AF; }
+.em-group { margin: 0.5rem 0 0.15rem; font-size: 0.78rem; font-weight: 600; color: #374151; }
+.em-group-sub { margin-bottom: 1rem; }
+.em-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.9rem 0.8rem; margin-bottom: 1rem; }
+.em-field { display: flex; flex-direction: column; gap: 0.4rem; font-size: 0.75rem; font-weight: 600; color: #374151; margin-bottom: 0.9rem; }
+.em-grid .em-field { margin-bottom: 0; }
+.em-input { font: inherit; font-weight: 400; font-size: 0.82rem; color: #111827; background: #F3F4F6; border: 1px solid #E5E7EB; border-radius: 6px; padding: 0.55rem 0.7rem; }
+.em-edit { background: #fff; }
+.em-status { color: #15803D; font-weight: 600; }
+.em-docs { display: flex; align-items: center; gap: 0.4rem; }
+.em-h2 { margin: 0 0 0.9rem; font-size: 1rem; font-weight: 700; color: #111827; }
+.em-card .em-h2 + .em-group-sub { margin-top: -0.7rem; }
+.em-check { display: flex; align-items: center; gap: 0.6rem; font-size: 0.82rem; color: #374151; margin-top: 0.75rem; cursor: pointer; }
+.em-check input { accent-color: #15803D; width: 16px; height: 16px; }
+.em-meta { display: flex; justify-content: space-between; font-size: 0.75rem; color: #9CA3AF; margin-top: 0.6rem; }
+.em-meta span:last-child { color: #374151; }
+.em-save, .em-cancel { display: block; text-align: center; padding: 0.7rem; border-radius: 6px; font-size: 0.85rem; font-weight: 600; text-decoration: none; }
+.em-save { background: #15803D; color: #fff; margin-top: -0.4rem; }
+.em-cancel { background: #fff; border: 1px solid #E5E7EB; color: #374151; margin-top: -0.7rem; }
+@media (max-width: 1024px) { .em-layout { grid-template-columns: 1fr; } }
+@media (max-width: 640px) { .em-grid { grid-template-columns: 1fr; } }
