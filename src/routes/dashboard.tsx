@@ -1,4 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { useEffect, useRef, useState } from "react";
 import {
   LayoutDashboard,
   ShieldCheck,
@@ -12,6 +13,7 @@ import {
   Search,
   Download,
   Calendar,
+  Check,
   ChevronRight,
   Stethoscope,
 } from "lucide-react";
@@ -76,12 +78,12 @@ const attention = [
 ];
 
 const buildings = [
-  { name: "Northgate House", city: "London", score: 96 },
-  { name: "Kingsway Tower", city: "Manchester", score: 88 },
-  { name: "Riverside Court", city: "Leeds", score: 72 },
-  { name: "Elmwood Court", city: "Bristol", score: 91 },
-  { name: "Maple Business Park", city: "Birmingham", score: 84 },
-  { name: "Victoria Wharf", city: "Liverpool", score: 79 },
+  { name: "Northgate House", city: "London", score: 96, units: 12 },
+  { name: "Kingsway Tower", city: "Manchester", score: 88, units: 8 },
+  { name: "Riverside Court", city: "Leeds", score: 72, units: 14 },
+  { name: "Elmwood Court", city: "Bristol", score: 91, units: 4 },
+  { name: "Maple Business Park", city: "Birmingham", score: 84, units: 9 },
+  { name: "Victoria Wharf", city: "Liverpool", score: 79, units: 6 },
 ];
 
 const upcoming = [
