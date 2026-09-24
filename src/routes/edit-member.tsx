@@ -35,6 +35,66 @@ const taskList = [
   "Electrical Safety Testing (Fixed Wire PAT Testing)",
 ];
 
+const statusOptions = [
+  { value: "active", label: "Active Contractor", tone: "green" },
+  { value: "leave", label: "On Leave", tone: "red" },
+  { value: "suspended", label: "Suspended", tone: "red" },
+  { value: "offduty", label: "Off-Duty", tone: "blue" },
+  { value: "inactive", label: "Inactive", tone: "blue" },
+  { value: "pending", label: "Pending Verification", tone: "yellow" },
+] as const;
+
+function StatusDropdown() {
+  const [open, setOpen] = useState(false);
+  const [selected, setSelected] = useState("active");
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handler = (e: MouseEvent) => {
+      if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
+    };
+    document.addEventListener("mousedown", handler);
+    return () => document.removeEventListener("mousedown", handler);
+  }, []);
+
+  const current = statusOptions.find((s) => s.value === selected) ?? statusOptions[0];
+
+  return (
+    <div className="em-dropdown" ref={ref}>
+      <button
+        type="button"
+        className="em-dd-trigger"
+        onClick={() => setOpen((v) => !v)}
+        aria-haspopup="listbox"
+        aria-expanded={open}
+      >
+        <span className={`em-dd-pill em-dd-pill--${current.tone}`}>{current.label}</span>
+        <ChevronDown size={16} className={`em-dd-chevron ${open ? "is-open" : ""}`} aria-hidden="true" />
+      </button>
+      {open && (
+        <div className="em-dd-menu" role="listbox">
+          {statusOptions.map((opt) => (
+            <button
+              key={opt.value}
+              type="button"
+              role="option"
+              aria-selected={opt.value === selected}
+              className={`em-dd-option ${opt.value === selected ? "is-selected" : ""}`}
+              onClick={() => {
+                setSelected(opt.value);
+                setOpen(false);
+              }}
+            >
+              <span className={`em-dd-pill em-dd-pill--${opt.tone}`}>{opt.label}</span>
+              {opt.value === selected && <Check size={15} className="em-dd-check" aria-hidden="true" />}
+            </button>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
 function EditMemberPage() {
   const [tasks, setTasks] = useState([true, true, false]);
   return (
