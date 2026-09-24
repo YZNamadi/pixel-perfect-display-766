@@ -5756,12 +5756,53 @@ a.am-menu-item { text-decoration: none; }
 .sa-delete:hover { background: #FECACA; }
 
 /* ============ Training records (tr-) ============ */
+.tr-page .po-main {
+  background-color: #f8fafb;
+  background-image: radial-gradient(circle at 72% 7%, rgba(229, 236, 234, 0.5) 0, rgba(229, 236, 234, 0.5) 170px, transparent 171px);
+}
+.tr-building { cursor: pointer; font: inherit; }
+.tr-filters { margin-top: 0.15rem; }
+.tr-filter {
+  position: relative; display: inline-flex; align-items: center; gap: 0.25rem;
+  min-width: 134px; border: 1px solid #E5E7EB; border-radius: 8px; background: #FFFFFF;
+  padding: 0.45rem 1.8rem 0.45rem 0.7rem; color: #374151; font-size: 0.78rem; font-weight: 500;
+}
+.tr-filter select {
+  position: absolute; inset: 0; width: 100%; opacity: 0; cursor: pointer;
+}
+.tr-filter svg { position: absolute; right: 0.55rem; pointer-events: none; }
+.tr-panel { padding: 0; overflow: hidden; }
+.tr-table { min-width: 980px; table-layout: fixed; }
+.tr-table th:nth-child(1) { width: 16%; }
+.tr-table th:nth-child(2) { width: 21%; }
+.tr-table th:nth-child(3) { width: 14%; }
+.tr-table th:nth-child(4), .tr-table th:nth-child(5) { width: 10.5%; }
+.tr-table th:nth-child(6) { width: 9%; }
+.tr-table th:nth-child(7) { width: 10%; }
+.tr-table th:nth-child(8) { width: 8%; text-align: center; }
+.tr-table td { padding-top: 0.78rem; padding-bottom: 0.78rem; }
+.tr-table td:last-child { text-align: center; }
 .tr-staff { display: flex; flex-direction: column; line-height: 1.25; }
 .tr-staff-name { font-size: 0.82rem; font-weight: 700; color: #111827; }
 .tr-staff-role { font-size: 0.68rem; color: #9CA3AF; }
+.tr-avatar { width: 28px; height: 28px; box-shadow: inset 0 0 0 2px rgba(255,255,255,0.32); }
+.tr-report-name { white-space: normal; line-height: 1.25; }
 .tr-cert {
-  display: inline-flex; align-items: center; gap: 0.3rem;
-  font-size: 0.75rem; font-weight: 600; color: #374151;
+  display: inline-flex; align-items: center; gap: 0.3rem; border: 0; background: transparent;
+  padding: 0; font: inherit; font-size: 0.75rem; font-weight: 500; color: #6B7280; cursor: pointer;
+}
+.tr-file-icon { display: inline-flex; align-items: center; justify-content: center; width: 22px; height: 22px; border: 1px solid #E5E7EB; border-radius: 6px; color: #475569; background: #FFFFFF; }
+.tr-action { border: 1px solid #E5E7EB; background: #FFFFFF; color: #475569; }
+.tr-empty { text-align: center; color: #9CA3AF; padding: 2rem !important; }
+.tr-modal { width: min(460px, 94vw); padding: 1.5rem; border-radius: 10px; background: #FFFFFF; box-shadow: 0 24px 60px rgba(15, 32, 25, 0.2); }
+.tr-modal-head { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 1.25rem; }
+.tr-modal-head h2 { margin: 0; color: #111827; font-size: 1.2rem; }
+.tr-modal-head p { margin: 0.25rem 0 0; color: #9CA3AF; font-size: 0.78rem; }
+.tr-modal label { display: flex; flex-direction: column; gap: 0.4rem; margin-top: 1rem; color: #374151; font-size: 0.8rem; font-weight: 600; }
+.tr-modal input, .tr-modal select { border: 1px solid #D1D5DB; border-radius: 8px; padding: 0.65rem 0.75rem; background: #FFFFFF; color: #111827; font: inherit; }
+.tr-modal-actions { display: flex; justify-content: flex-end; gap: 0.6rem; margin-top: 1.5rem; }
+@media (max-width: 1100px) {
+  .tr-table { table-layout: fixed; }
 }
 
 /* ============ Settings: contractors ============ */
