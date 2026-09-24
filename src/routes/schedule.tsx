@@ -344,11 +344,11 @@ function SchedulePage() {
         </header>
 
         <div className="sc-legend" aria-label="Event status legend">
-          <span className="is-allocated">Allocated</span>
-          <span className="is-completed">Completed</span>
-          <span className="is-due">Due</span>
-          <span className="is-approaching">Approaching</span>
-          <span className="is-failed">Failed</span>
+          <span className="is-allocated" title="Green — allocated">Allocated</span>
+          <span className="is-completed" title="Blue — completed">Completed</span>
+          <span className="is-due" title="Gray — due but not yet allocated">Due</span>
+          <span className="is-approaching" title="Amber — approaching tolerance deadline">Approaching</span>
+          <span className="is-failed" title="Red — failed / not completed">Failed</span>
         </div>
 
         <section className={`sc-calendar is-${view.toLowerCase()}`} aria-label={`${monthLabel} schedule`}>
