@@ -13,10 +13,6 @@ import {
   User,
   Bell,
   Stethoscope,
-  Plus,
-  Pencil,
-  FileText,
-
 } from "lucide-react";
 
 export const Route = createFileRoute("/settings")({
@@ -57,41 +53,17 @@ const governanceNav = [
 const sections = [
   { label: "Profile", icon: User },
   { label: "Notifications", icon: Bell },
-  { label: "Teams", icon: Users },
   { label: "Billing", icon: CreditCard },
 ] as const;
 
+
 type Section = (typeof sections)[number]["label"];
-
-const contractors = [
-  { name: "John Davis", company: "Apex Gas & Heating Ltd", active: true, tickets: 4, documents: 3 },
-  { name: "Sarah Jenkins", company: "Metro Electrical Services", active: true, tickets: 2, documents: 4 },
-  { name: "Robert Vance", company: "Vance Refrigeration", active: false, tickets: 0, documents: 2 },
-  { name: "Clara Oswald", company: "L8 Water Safety Pros", active: true, tickets: 5, documents: 3 },
-  { name: "Liam Neeson", company: "Guardian Security Systems", active: true, tickets: 1, documents: 5 },
-  { name: "Michael Scott", company: "Scranton Paper Fire Alarms", active: false, tickets: 0, documents: 1 },
-];
-
-const internalTeam = [
-  {
-    name: "Alex Rowe",
-    email: "alex.rowe@kearlycompliance.com",
-    role: "Portfolio Compliance Administrator",
-    active: true,
-  },
-  { name: "Sarah Connor", email: "s.connor@kearlycompliance.com", role: "Repairs Manager", active: true },
-  { name: "Marcus Wright", email: "m.wright@kearlycompliance.com", role: "Contractor Coordinator", active: true },
-  { name: "Kyle Reese", email: "k.reese@kearlycompliance.com", role: "Site Inspector", active: true },
-  { name: "John Connor", email: "j.connor@kearlycompliance.com", role: "Viewer / Auditor", active: false },
-];
-
 
 function SettingsPage() {
   const [digest, setDigest] = useState(true);
   const [reminders, setReminders] = useState(true);
   const [sms, setSms] = useState(true);
   const [section, setSection] = useState<Section>("Profile");
-  const [teamTab, setTeamTab] = useState<"External Labour" | "Internal">("External Labour");
 
 
   return (
@@ -149,7 +121,7 @@ function SettingsPage() {
       <main className="po-main">
         <header className="se-head">
           <h1 className="po-title">Settings</h1>
-          <p className="po-subtitle">Manage your profile, system notification preferences, and team credentials</p>
+          <p className="po-subtitle">Manage your profile, system notification preferences and billing details</p>
         </header>
 
         <div className="se-layout">
@@ -302,124 +274,6 @@ function SettingsPage() {
                 </div>
               </>
             )}
-
-            {section === "Teams" && (
-              <>
-                <div className="se-team-head">
-                  <div className="se-team-tabs" role="tablist" aria-label="Team type">
-                    {(["External Labour", "Internal"] as const).map((tab) => (
-                      <button
-                        key={tab}
-                        type="button"
-                        role="tab"
-                        aria-selected={teamTab === tab}
-                        className={`se-team-tab ${teamTab === tab ? "is-active" : ""}`}
-                        onClick={() => setTeamTab(tab)}
-                      >
-                        {tab}
-                      </button>
-                    ))}
-                  </div>
-                  {teamTab === "External Labour" ? (
-                    <button type="button" className="se-primary se-team-add">
-                      <Plus size={15} aria-hidden="true" />
-                      Add Contractor
-                    </button>
-                  ) : (
-                    <div className="se-team-right">
-                      <span className="se-team-count-title">Internal Team</span>
-                      <span className="se-team-count">{internalTeam.length} members</span>
-                      <Link to="/team" className="se-primary se-team-add">
-                        <Plus size={15} aria-hidden="true" />
-                        Send Invite
-                      </Link>
-                    </div>
-                  )}
-
-                </div>
-
-                {teamTab === "External Labour" ? (
-                  <div className="cl-table-wrap">
-                    <table className="cl-table">
-                      <thead>
-                        <tr>
-                          <th>NAME</th>
-                          <th>COMPANY</th>
-                          <th>STATUS</th>
-                          <th>ASSIGNED TICKETS</th>
-                          <th>DOCUMENTS</th>
-                          <th>ACTION</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {contractors.map((c) => (
-                          <tr key={c.name}>
-                            <td className="cl-name">{c.name}</td>
-                            <td className="al-details">{c.company}</td>
-                            <td>
-                              <span className={`dc-expiry ${c.active ? "tone-green" : "tone-muted"}`}>
-                                {c.active ? "Active" : "Inactive"}
-                              </span>
-                            </td>
-                            <td className="al-details">{c.tickets} active tickets</td>
-                            <td>
-                              <span className="tr-cert">
-                                <FileText size={14} aria-hidden="true" />
-                                {c.documents} Verified
-                              </span>
-                            </td>
-                            <td>
-                              <div className="cl-row-actions">
-                                <button type="button" className="cl-icon-btn" aria-label={`Edit ${c.name}`}>
-                                  <Pencil size={15} aria-hidden="true" />
-                                </button>
-                              </div>
-                            </td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                  </div>
-                ) : (
-                  <div className="cl-table-wrap">
-                    <table className="cl-table">
-                      <thead>
-                        <tr>
-                          <th>NAME</th>
-                          <th>EMAIL</th>
-                          <th>ROLE / PERMISSIONS</th>
-                          <th>STATUS</th>
-                          <th>ACTION</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {internalTeam.map((member) => (
-                          <tr key={member.email}>
-                            <td className="cl-name">{member.name}</td>
-                            <td className="al-details se-team-email">{member.email}</td>
-                            <td className="al-details">{member.role}</td>
-                            <td>
-                              <span className={`dc-expiry ${member.active ? "tone-green" : "tone-muted"}`}>
-                                {member.active ? "Active" : "Inactive"}
-                              </span>
-                            </td>
-                            <td>
-                              <div className="cl-row-actions">
-                                <button type="button" className="cl-icon-btn" aria-label={`Edit ${member.name}`}>
-                                  <Pencil size={15} aria-hidden="true" />
-                                </button>
-                              </div>
-                            </td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                  </div>
-
-                )}
-              </>
-            )}
-
 
             {section === "Billing" && (
               <>
