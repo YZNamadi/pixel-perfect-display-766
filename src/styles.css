@@ -6498,3 +6498,28 @@ a.am-menu-item { text-decoration: none; }
 .qa-form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
 .cl-page:disabled, .cl-action:disabled { cursor: not-allowed; opacity: .42; }
 @media (max-width: 800px) { .qa-two-columns, .qa-form-grid { grid-template-columns: 1fr; } }
+
+/* Repairs row action kebab menu */
+.rp-actions-wrap { position: relative; display: inline-flex; }
+.rp-kebab {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 30px; height: 30px; border: 1px solid #E5E7EB; border-radius: 8px;
+  background: #fff; color: #6B7280; cursor: pointer;
+}
+.rp-kebab:hover { background: #F9FAFB; color: #111827; }
+.rp-menu {
+  position: absolute; top: calc(100% + 6px); right: 0; z-index: 100;
+  min-width: 152px; display: flex; flex-direction: column; gap: 2px;
+  padding: 6px; background: #fff; border: 1px solid #E5E7EB; border-radius: 10px;
+  box-shadow: 0 10px 25px rgba(15, 23, 42, .12);
+}
+.rp-menu-item {
+  display: inline-flex; align-items: center; gap: 8px; width: 100%;
+  padding: 8px 10px; border: 0; border-radius: 7px; background: transparent;
+  color: #111827; font: inherit; font-size: .82rem; text-align: left;
+  cursor: pointer; text-decoration: none; white-space: nowrap;
+}
+.rp-menu-item:hover { background: #F3F4F6; }
+.rp-menu-item.tone-green { color: #15803D; }
+.rp-menu-item.tone-blue { color: #2563EB; }
+.rp-menu-item.tone-red { color: #DC2626; }
