@@ -63,7 +63,7 @@ function ContractorProfilePage() {
 
           <form
             className="ct-card"
-            onSubmit={(e) => { e.preventDefault(); void navigate({ to: "/dashboard" }); }}
+            onSubmit={(e) => { e.preventDefault(); void navigate({ to: "/contractor-certificates" }); }}
           >
             <div className="ct-grid">
               <label className="ct-field">
@@ -99,7 +99,7 @@ function ContractorProfilePage() {
             </div>
             <div className="ct-actions">
               <button type="submit" className="ct-continue">Continue</button>
-              <Link to="/dashboard" className="ct-skip">Skip for now</Link>
+              <Link to="/contractor-certificates" className="ct-skip">Skip for now</Link>
             </div>
           </form>
         </div>

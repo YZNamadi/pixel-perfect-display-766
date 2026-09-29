@@ -6568,3 +6568,20 @@ a.am-menu-item { text-decoration: none; }
 .ct-continue { background: #15803D; color: #fff; border: 0; border-radius: 8px; padding: .65rem 1.3rem; font-weight: 600; font-size: .85rem; cursor: pointer; }
 .ct-skip { color: #6B7280; font-size: .8rem; text-decoration: none; }
 @media (max-width: 760px) { .ct-grid { grid-template-columns: 1fr; } }
+.ct-tabs { display: flex; gap: 1.4rem; border-bottom: 1px solid #E5E7EB; margin-bottom: 1.2rem; }
+.ct-tab { background: none; border: 0; border-bottom: 2px solid transparent; padding: 0 0 .6rem; font-size: .85rem; color: #9CA3AF; cursor: pointer; }
+.ct-tab.is-active { color: #15803D; font-weight: 600; border-bottom-color: #15803D; }
+.ct-drop { border: 1.5px dashed #CBD5E1; border-radius: 8px; background: #F8FAFC; padding: 3rem 1rem; text-align: center; cursor: pointer; }
+.ct-drop.is-dragging { border-color: #15803D; background: #F0FDF4; }
+.ct-drop-icon { color: #6B7280; margin: 0 auto .8rem; }
+.ct-drop-title { font-weight: 600; font-size: .9rem; color: #111827; margin: 0; }
+.ct-drop-sub { font-size: .78rem; color: #6B7280; margin: .3rem 0 1rem; }
+.ct-drop-hint { font-size: .68rem; color: #9CA3AF; margin: 0; }
+.ct-note { display: flex; align-items: center; gap: .5rem; background: #DCFCE7; color: #15803D; border-radius: 6px; padding: .75rem .9rem; font-size: .78rem; margin: 1.1rem 0 0; }
+.ct-files { list-style: none; padding: 0; margin: 1rem 0 0; display: flex; flex-direction: column; gap: .5rem; }
+.ct-files li { display: flex; align-items: center; gap: .6rem; border: 1px solid #E5E7EB; border-radius: 8px; padding: .55rem .8rem; font-size: .8rem; color: #111827; }
+.ct-file-name { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.ct-file-size { color: #6B7280; font-size: .72rem; }
+.ct-files button { background: none; border: 0; color: #6B7280; cursor: pointer; }
+.ct-empty { font-size: .85rem; color: #6B7280; padding: 1.5rem 0; margin: 0; }
+.ct-skip-btn { background: none; border: 0; cursor: pointer; font-size: .85rem; }
