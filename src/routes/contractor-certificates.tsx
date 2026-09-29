@@ -36,7 +36,7 @@ function ContractorCertificatesPage() {
     setFiles((prev) => [...prev, ...ok]);
   };
 
-  const next = () => (tab < 2 ? setTab(tab + 1) : void navigate({ to: "/dashboard" }));
+  const next = () => (tab < 2 ? setTab(tab + 1) : void navigate({ to: "/contractor-jobs" }));
 
   return (
     <main className="su-page ct-page">
@@ -109,7 +109,7 @@ function ContractorCertificatesPage() {
 
             <div className="ct-actions">
               <button type="button" className="ct-continue" onClick={next}>Continue</button>
-              <button type="button" className="ct-skip ct-skip-btn" onClick={() => void navigate({ to: "/dashboard" })}>Continue without uploading</button>
+              <button type="button" className="ct-skip ct-skip-btn" onClick={() => void navigate({ to: "/contractor-jobs" })}>Continue without uploading</button>
             </div>
           </div>
         </div>
