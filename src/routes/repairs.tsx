@@ -21,6 +21,8 @@ import {
   Stethoscope,
 } from "lucide-react";
 
+import { KearlyLogo } from "@/components/kearly-logo";
+
 export const Route = createFileRoute("/repairs")({
   head: () => ({
     meta: [
@@ -99,12 +101,7 @@ function RepairsPage() {
     <div className="po-shell">
       <aside className="po-sidebar">
         <Link to="/dashboard" className="po-logo" aria-label="Kearly">
-          <svg width="26" height="26" viewBox="0 0 100 100" aria-hidden="true">
-            <rect x="5" y="5" width="40" height="40" rx="10" fill="#15803D" />
-            <path d="M 55 5 L 95 5 L 95 45 Q 75 45 55 25 Z" fill="#15803D" />
-            <rect x="5" y="55" width="40" height="40" rx="10" fill="#15803D" />
-            <path d="M 55 55 Q 75 55 95 75 L 95 95 L 55 95 Z" fill="#15803D" />
-          </svg>
+          <KearlyLogo className="po-logo-mark" />
           <span className="po-logo-text">
             <span className="po-logo-name">KEARLY</span>
             <span className="po-logo-tag">Compliance. Automated &amp; Simplified.</span>

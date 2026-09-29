@@ -1,6 +1,8 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 
+import { KearlyLogo } from "@/components/kearly-logo";
+
 export const Route = createFileRoute("/login")({
   head: () => ({
     meta: [
@@ -61,12 +63,7 @@ function LoginPage() {
           }}
         >
           <div className="lg-brand">
-            <span className="lg-logo" role="img" aria-label="Kearly logo">
-              <span className="lg-petal lg-petal-one" />
-              <span className="lg-petal lg-petal-two" />
-              <span className="lg-petal lg-petal-three" />
-              <span className="lg-petal lg-petal-four" />
-            </span>
+            <KearlyLogo className="lg-logo" />
             <span className="lg-brand-name">Kearly</span>
           </div>
 

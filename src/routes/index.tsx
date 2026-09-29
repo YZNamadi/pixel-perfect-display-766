@@ -1,6 +1,8 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import type { CSSProperties } from "react";
 
+import { KearlyLogo } from "@/components/kearly-logo";
+
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
@@ -90,12 +92,7 @@ function Index() {
       </div>
 
       <header className="hp-brand">
-        <span className="hp-logo" role="img" aria-label="Kearly logo">
-          <span className="hp-petal hp-petal-one" />
-          <span className="hp-petal hp-petal-two" />
-          <span className="hp-petal hp-petal-three" />
-          <span className="hp-petal hp-petal-four" />
-        </span>
+        <KearlyLogo className="hp-logo" />
         <span className="hp-brand-name">Kearly</span>
       </header>
 
