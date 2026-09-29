@@ -3963,10 +3963,10 @@ a.am-menu-item { text-decoration: none; }
   }
 
   .hp-logo {
-    display: grid;
-    gap: 3px;
-    grid-template-columns: repeat(2, 9px);
-    grid-template-rows: repeat(2, 9px);
+    display: block;
+    height: 22px;
+    object-fit: contain;
+    width: 22px;
   }
 
   .hp-petal {
@@ -4571,9 +4571,7 @@ a.am-menu-item { text-decoration: none; }
 /* Login page (lg-) */
 .lg-brand { display: flex; align-items: center; gap: 0.6rem; margin-bottom: 1.25rem; }
 .lg-logo {
-  display: grid; gap: 3px;
-  grid-template-columns: repeat(2, 9px);
-  grid-template-rows: repeat(2, 9px);
+  display: block; height: 22px; object-fit: contain; width: 22px;
 }
 .lg-petal { background: #14544a; display: block; height: 9px; width: 9px; }
 .lg-petal-one { border-radius: 3px 3px 7px 3px; }
@@ -4672,6 +4670,7 @@ a.am-menu-item { text-decoration: none; }
   flex-direction: column;
 }
 .po-logo { display: flex; align-items: center; gap: 0.5rem; padding-left: 0.75rem; margin-bottom: 2rem; text-decoration: none; }
+.po-logo-mark { display: block; flex: 0 0 26px; height: 26px; object-fit: contain; width: 26px; }
 .po-logo-text { display: flex; flex-direction: column; }
 .po-logo-name { font-size: 1rem; font-weight: 800; color: #111827; letter-spacing: 0.05em; }
 .po-logo-tag { font-size: 0.45rem; color: #9CA3AF; }
