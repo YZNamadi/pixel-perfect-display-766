@@ -164,11 +164,11 @@ function EquipmentPage() {
               <Search size={15} aria-hidden="true" />
                <input type="search" placeholder="Search serial or name..." aria-label="Search equipment" value={query} onChange={(event) => { setQuery(event.target.value); setPage(1); }} />
             </div>
-             <label className="po-chip qa-select-chip">
+             <span className="po-chip">
               Jul 2024
               <Calendar size={14} aria-hidden="true" />
             </span>
-            <span className="po-chip">
+             <label className="po-chip qa-select-chip">
               <Building2 size={14} aria-hidden="true" />
                <select aria-label="Filter equipment by building" value={building} onChange={(event) => { setBuilding(event.target.value); setPage(1); }}><option>All buildings</option>{Array.from(new Set(rows.map((row) => row.site))).map((site) => <option key={site}>{site}</option>)}</select>
              </label>
