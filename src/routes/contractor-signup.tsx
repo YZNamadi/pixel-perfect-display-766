@@ -67,7 +67,7 @@ function ContractorSignupPage() {
           className="su-form ct-form"
           onSubmit={(event) => {
             event.preventDefault();
-            void navigate({ to: "/dashboard" });
+            void navigate({ to: "/contractor-profile" });
           }}
         >
           <h1 className="su-title">Create your account</h1>
