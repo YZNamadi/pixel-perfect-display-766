@@ -1,0 +1,3 @@
+import { createFileRoute } from "@tanstack/react-router";
+import { RecordForm } from "@/components/record-form";
+export const Route = createFileRoute("/add-equipment")({ head: () => ({ meta: [{ title: "Add Equipment | Kearly" }, { name: "description", content: "Register medical equipment in Kearly." }, { property: "og:title", content: "Add Equipment | Kearly" }, { property: "og:description", content: "Register medical equipment in Kearly." }, { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary_large_image" }] }), component: () => <RecordForm kind="equipment" /> });
