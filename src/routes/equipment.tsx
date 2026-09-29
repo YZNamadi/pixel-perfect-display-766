@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import {
   LayoutDashboard,
@@ -57,7 +57,7 @@ const governanceNav = [
   { label: "Reports", icon: BarChart3, to: "/reports" as const },
   { label: "Team", icon: Users, to: "/team-members" as const },
   { label: "Audit log", icon: ScrollText, to: "/audit-log" as const },
-  { label: "Billing", icon: CreditCard, to: "/settings" as const },
+  { label: "Billing", icon: CreditCard, to: "/billing" as const },
 ];
 
 const tabs = [
@@ -97,6 +97,11 @@ const statusTone = (status: Row["status"]) =>
 function EquipmentPage() {
   const [activeTab, setActiveTab] = useState("all");
   const [pendingDelete, setPendingDelete] = useState<string | null>(null);
+  const [query, setQuery] = useState("");
+  const [building, setBuilding] = useState("All buildings");
+  const [page, setPage] = useState(1);
+  const filteredRows = useMemo(() => rows.filter((row) => (activeTab === "all" || (activeTab === "active" && row.status === "Active") || (activeTab === "maintenance" && row.status === "Under Maintenance") || (activeTab === "decommissioned" && row.status === "Decommissioned")) && (building === "All buildings" || row.site === building) && (!query.trim() || `${row.name} ${row.serial} ${row.category}`.toLowerCase().includes(query.toLowerCase()))), [activeTab, building, query]);
+  const pageRows = filteredRows.slice((page - 1) * 4, page * 4);
 
   return (
     <div className="po-shell">
@@ -157,17 +162,17 @@ function EquipmentPage() {
           <div className="po-topbar-actions">
             <div className="po-search">
               <Search size={15} aria-hidden="true" />
-              <input type="search" placeholder="Search serial or name..." aria-label="Search equipment" />
+               <input type="search" placeholder="Search serial or name..." aria-label="Search equipment" value={query} onChange={(event) => { setQuery(event.target.value); setPage(1); }} />
             </div>
-            <span className="po-chip">
+             <span className="po-chip">
               Jul 2024
               <Calendar size={14} aria-hidden="true" />
             </span>
-            <span className="po-chip">
+             <label className="po-chip qa-select-chip">
               <Building2 size={14} aria-hidden="true" />
-              All buildings
-            </span>
-            <Link to="/add-task" className="po-download">
+               <select aria-label="Filter equipment by building" value={building} onChange={(event) => { setBuilding(event.target.value); setPage(1); }}><option>All buildings</option>{Array.from(new Set(rows.map((row) => row.site))).map((site) => <option key={site}>{site}</option>)}</select>
+             </label>
+             <Link to="/add-equipment" className="po-download">
               <Plus size={15} aria-hidden="true" />
               Add Equipment
             </Link>
@@ -182,7 +187,7 @@ function EquipmentPage() {
               role="tab"
               aria-selected={activeTab === key}
               className={`cl-tab ${activeTab === key ? "is-active" : ""}`}
-              onClick={() => setActiveTab(key)}
+               onClick={() => { setActiveTab(key); setPage(1); }}
             >
               {label}
             </button>
@@ -206,7 +211,7 @@ function EquipmentPage() {
                 </tr>
               </thead>
               <tbody>
-                {rows.map((row) => (
+                 {pageRows.map((row) => (
                   <tr key={row.serial}>
                     <td className="cl-name">{row.name}</td>
                     <td>
@@ -238,7 +243,7 @@ function EquipmentPage() {
                     </td>
                     <td>
                       <span className="cl-row-actions">
-                        <Link to="/edit-task" className="cl-icon-btn" aria-label={`Edit ${row.name}`}>
+                         <Link to="/edit-equipment" className="cl-icon-btn" aria-label={`Edit ${row.name}`}>
                           <Pencil size={15} aria-hidden="true" />
                         </Link>
                         <button
@@ -258,12 +263,12 @@ function EquipmentPage() {
           </div>
 
           <div className="cl-foot">
-            <small>Showing 1-8 of 48 active medical assets</small>
+             <small>Showing {filteredRows.length ? (page - 1) * 4 + 1 : 0}-{Math.min(page * 4, filteredRows.length)} of {filteredRows.length} medical assets</small>
             <div className="cl-pager">
-              <button type="button" className="cl-page">
+               <button type="button" className="cl-page" disabled={page === 1} onClick={() => setPage((value) => Math.max(1, value - 1))}>
                 Previous
               </button>
-              <button type="button" className="cl-page is-current">
+               <button type="button" className="cl-page is-current" disabled={page * 4 >= filteredRows.length} onClick={() => setPage((value) => value + 1)}>
                 Next
               </button>
             </div>

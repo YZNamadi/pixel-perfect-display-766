@@ -10,3 +10,4 @@
 <!-- LOVABLE:END -->
 
 - Render the supplied Kearly logo through the shared `KearlyLogo` component so every brand placement stays visually consistent.
+- Use the shared `AppShell` for new authenticated product pages so navigation, branding, and active states remain consistent.

@@ -10,23 +10,28 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AddEquipmentRouteImport } from './routes/add-equipment'
 import { Route as AddSiteRouteImport } from './routes/add-site'
 import { Route as AddTaskRouteImport } from './routes/add-task'
 import { Route as AssetsRouteImport } from './routes/assets'
 import { Route as AuditLogRouteImport } from './routes/audit-log'
+import { Route as BillingRouteImport } from './routes/billing'
 import { Route as BuildingRouteImport } from './routes/building'
 import { Route as CompleteRouteImport } from './routes/complete'
 import { Route as CompleteTicketRouteImport } from './routes/complete-ticket'
 import { Route as ComplianceRouteImport } from './routes/compliance'
 import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as DocumentsRouteImport } from './routes/documents'
+import { Route as EditEquipmentRouteImport } from './routes/edit-equipment'
 import { Route as EditMemberRouteImport } from './routes/edit-member'
+import { Route as EditSiteRouteImport } from './routes/edit-site'
 import { Route as EditTaskRouteImport } from './routes/edit-task'
 import { Route as EquipmentRouteImport } from './routes/equipment'
 import { Route as FacilityRouteImport } from './routes/facility'
 import { Route as GoogleSignInRouteImport } from './routes/google-sign-in'
 import { Route as ImportRouteImport } from './routes/import'
 import { Route as LoginRouteImport } from './routes/login'
+import { Route as NewTicketRouteImport } from './routes/new-ticket'
 import { Route as RepairsRouteImport } from './routes/repairs'
 import { Route as ReportsRouteImport } from './routes/reports'
 import { Route as ScheduleRouteImport } from './routes/schedule'
@@ -40,6 +45,11 @@ import { Route as TeamMembersRouteImport } from './routes/team-members'
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AddEquipmentRoute = AddEquipmentRouteImport.update({
+  id: '/add-equipment',
+  path: '/add-equipment',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AddSiteRoute = AddSiteRouteImport.update({
@@ -60,6 +70,11 @@ const AssetsRoute = AssetsRouteImport.update({
 const AuditLogRoute = AuditLogRouteImport.update({
   id: '/audit-log',
   path: '/audit-log',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BillingRoute = BillingRouteImport.update({
+  id: '/billing',
+  path: '/billing',
   getParentRoute: () => rootRouteImport,
 } as any)
 const BuildingRoute = BuildingRouteImport.update({
@@ -92,9 +107,19 @@ const DocumentsRoute = DocumentsRouteImport.update({
   path: '/documents',
   getParentRoute: () => rootRouteImport,
 } as any)
+const EditEquipmentRoute = EditEquipmentRouteImport.update({
+  id: '/edit-equipment',
+  path: '/edit-equipment',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const EditMemberRoute = EditMemberRouteImport.update({
   id: '/edit-member',
   path: '/edit-member',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EditSiteRoute = EditSiteRouteImport.update({
+  id: '/edit-site',
+  path: '/edit-site',
   getParentRoute: () => rootRouteImport,
 } as any)
 const EditTaskRoute = EditTaskRouteImport.update({
@@ -125,6 +150,11 @@ const ImportRoute = ImportRouteImport.update({
 const LoginRoute = LoginRouteImport.update({
   id: '/login',
   path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const NewTicketRoute = NewTicketRouteImport.update({
+  id: '/new-ticket',
+  path: '/new-ticket',
   getParentRoute: () => rootRouteImport,
 } as any)
 const RepairsRoute = RepairsRouteImport.update({
@@ -175,23 +205,28 @@ const TeamMembersRoute = TeamMembersRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/add-equipment': typeof AddEquipmentRoute
   '/add-site': typeof AddSiteRoute
   '/add-task': typeof AddTaskRoute
   '/assets': typeof AssetsRoute
   '/audit-log': typeof AuditLogRoute
+  '/billing': typeof BillingRoute
   '/building': typeof BuildingRoute
   '/complete': typeof CompleteRoute
   '/complete-ticket': typeof CompleteTicketRoute
   '/compliance': typeof ComplianceRoute
   '/dashboard': typeof DashboardRoute
   '/documents': typeof DocumentsRoute
+  '/edit-equipment': typeof EditEquipmentRoute
   '/edit-member': typeof EditMemberRoute
+  '/edit-site': typeof EditSiteRoute
   '/edit-task': typeof EditTaskRoute
   '/equipment': typeof EquipmentRoute
   '/facility': typeof FacilityRoute
   '/google-sign-in': typeof GoogleSignInRoute
   '/import': typeof ImportRoute
   '/login': typeof LoginRoute
+  '/new-ticket': typeof NewTicketRoute
   '/repairs': typeof RepairsRoute
   '/reports': typeof ReportsRoute
   '/schedule': typeof ScheduleRoute
@@ -204,23 +239,28 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/add-equipment': typeof AddEquipmentRoute
   '/add-site': typeof AddSiteRoute
   '/add-task': typeof AddTaskRoute
   '/assets': typeof AssetsRoute
   '/audit-log': typeof AuditLogRoute
+  '/billing': typeof BillingRoute
   '/building': typeof BuildingRoute
   '/complete': typeof CompleteRoute
   '/complete-ticket': typeof CompleteTicketRoute
   '/compliance': typeof ComplianceRoute
   '/dashboard': typeof DashboardRoute
   '/documents': typeof DocumentsRoute
+  '/edit-equipment': typeof EditEquipmentRoute
   '/edit-member': typeof EditMemberRoute
+  '/edit-site': typeof EditSiteRoute
   '/edit-task': typeof EditTaskRoute
   '/equipment': typeof EquipmentRoute
   '/facility': typeof FacilityRoute
   '/google-sign-in': typeof GoogleSignInRoute
   '/import': typeof ImportRoute
   '/login': typeof LoginRoute
+  '/new-ticket': typeof NewTicketRoute
   '/repairs': typeof RepairsRoute
   '/reports': typeof ReportsRoute
   '/schedule': typeof ScheduleRoute
@@ -234,23 +274,28 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/add-equipment': typeof AddEquipmentRoute
   '/add-site': typeof AddSiteRoute
   '/add-task': typeof AddTaskRoute
   '/assets': typeof AssetsRoute
   '/audit-log': typeof AuditLogRoute
+  '/billing': typeof BillingRoute
   '/building': typeof BuildingRoute
   '/complete': typeof CompleteRoute
   '/complete-ticket': typeof CompleteTicketRoute
   '/compliance': typeof ComplianceRoute
   '/dashboard': typeof DashboardRoute
   '/documents': typeof DocumentsRoute
+  '/edit-equipment': typeof EditEquipmentRoute
   '/edit-member': typeof EditMemberRoute
+  '/edit-site': typeof EditSiteRoute
   '/edit-task': typeof EditTaskRoute
   '/equipment': typeof EquipmentRoute
   '/facility': typeof FacilityRoute
   '/google-sign-in': typeof GoogleSignInRoute
   '/import': typeof ImportRoute
   '/login': typeof LoginRoute
+  '/new-ticket': typeof NewTicketRoute
   '/repairs': typeof RepairsRoute
   '/reports': typeof ReportsRoute
   '/schedule': typeof ScheduleRoute
@@ -265,23 +310,28 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/add-equipment'
     | '/add-site'
     | '/add-task'
     | '/assets'
     | '/audit-log'
+    | '/billing'
     | '/building'
     | '/complete'
     | '/complete-ticket'
     | '/compliance'
     | '/dashboard'
     | '/documents'
+    | '/edit-equipment'
     | '/edit-member'
+    | '/edit-site'
     | '/edit-task'
     | '/equipment'
     | '/facility'
     | '/google-sign-in'
     | '/import'
     | '/login'
+    | '/new-ticket'
     | '/repairs'
     | '/reports'
     | '/schedule'
@@ -294,23 +344,28 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/add-equipment'
     | '/add-site'
     | '/add-task'
     | '/assets'
     | '/audit-log'
+    | '/billing'
     | '/building'
     | '/complete'
     | '/complete-ticket'
     | '/compliance'
     | '/dashboard'
     | '/documents'
+    | '/edit-equipment'
     | '/edit-member'
+    | '/edit-site'
     | '/edit-task'
     | '/equipment'
     | '/facility'
     | '/google-sign-in'
     | '/import'
     | '/login'
+    | '/new-ticket'
     | '/repairs'
     | '/reports'
     | '/schedule'
@@ -323,23 +378,28 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/add-equipment'
     | '/add-site'
     | '/add-task'
     | '/assets'
     | '/audit-log'
+    | '/billing'
     | '/building'
     | '/complete'
     | '/complete-ticket'
     | '/compliance'
     | '/dashboard'
     | '/documents'
+    | '/edit-equipment'
     | '/edit-member'
+    | '/edit-site'
     | '/edit-task'
     | '/equipment'
     | '/facility'
     | '/google-sign-in'
     | '/import'
     | '/login'
+    | '/new-ticket'
     | '/repairs'
     | '/reports'
     | '/schedule'
@@ -353,23 +413,28 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AddEquipmentRoute: typeof AddEquipmentRoute
   AddSiteRoute: typeof AddSiteRoute
   AddTaskRoute: typeof AddTaskRoute
   AssetsRoute: typeof AssetsRoute
   AuditLogRoute: typeof AuditLogRoute
+  BillingRoute: typeof BillingRoute
   BuildingRoute: typeof BuildingRoute
   CompleteRoute: typeof CompleteRoute
   CompleteTicketRoute: typeof CompleteTicketRoute
   ComplianceRoute: typeof ComplianceRoute
   DashboardRoute: typeof DashboardRoute
   DocumentsRoute: typeof DocumentsRoute
+  EditEquipmentRoute: typeof EditEquipmentRoute
   EditMemberRoute: typeof EditMemberRoute
+  EditSiteRoute: typeof EditSiteRoute
   EditTaskRoute: typeof EditTaskRoute
   EquipmentRoute: typeof EquipmentRoute
   FacilityRoute: typeof FacilityRoute
   GoogleSignInRoute: typeof GoogleSignInRoute
   ImportRoute: typeof ImportRoute
   LoginRoute: typeof LoginRoute
+  NewTicketRoute: typeof NewTicketRoute
   RepairsRoute: typeof RepairsRoute
   ReportsRoute: typeof ReportsRoute
   ScheduleRoute: typeof ScheduleRoute
@@ -388,6 +453,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/add-equipment': {
+      id: '/add-equipment'
+      path: '/add-equipment'
+      fullPath: '/add-equipment'
+      preLoaderRoute: typeof AddEquipmentRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/add-site': {
@@ -416,6 +488,13 @@ declare module '@tanstack/react-router' {
       path: '/audit-log'
       fullPath: '/audit-log'
       preLoaderRoute: typeof AuditLogRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/billing': {
+      id: '/billing'
+      path: '/billing'
+      fullPath: '/billing'
+      preLoaderRoute: typeof BillingRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/building': {
@@ -460,11 +539,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DocumentsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/edit-equipment': {
+      id: '/edit-equipment'
+      path: '/edit-equipment'
+      fullPath: '/edit-equipment'
+      preLoaderRoute: typeof EditEquipmentRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/edit-member': {
       id: '/edit-member'
       path: '/edit-member'
       fullPath: '/edit-member'
       preLoaderRoute: typeof EditMemberRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/edit-site': {
+      id: '/edit-site'
+      path: '/edit-site'
+      fullPath: '/edit-site'
+      preLoaderRoute: typeof EditSiteRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/edit-task': {
@@ -507,6 +600,13 @@ declare module '@tanstack/react-router' {
       path: '/login'
       fullPath: '/login'
       preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/new-ticket': {
+      id: '/new-ticket'
+      path: '/new-ticket'
+      fullPath: '/new-ticket'
+      preLoaderRoute: typeof NewTicketRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/repairs': {
@@ -577,23 +677,28 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AddEquipmentRoute: AddEquipmentRoute,
   AddSiteRoute: AddSiteRoute,
   AddTaskRoute: AddTaskRoute,
   AssetsRoute: AssetsRoute,
   AuditLogRoute: AuditLogRoute,
+  BillingRoute: BillingRoute,
   BuildingRoute: BuildingRoute,
   CompleteRoute: CompleteRoute,
   CompleteTicketRoute: CompleteTicketRoute,
   ComplianceRoute: ComplianceRoute,
   DashboardRoute: DashboardRoute,
   DocumentsRoute: DocumentsRoute,
+  EditEquipmentRoute: EditEquipmentRoute,
   EditMemberRoute: EditMemberRoute,
+  EditSiteRoute: EditSiteRoute,
   EditTaskRoute: EditTaskRoute,
   EquipmentRoute: EquipmentRoute,
   FacilityRoute: FacilityRoute,
   GoogleSignInRoute: GoogleSignInRoute,
   ImportRoute: ImportRoute,
   LoginRoute: LoginRoute,
+  NewTicketRoute: NewTicketRoute,
   RepairsRoute: RepairsRoute,
   ReportsRoute: ReportsRoute,
   ScheduleRoute: ScheduleRoute,

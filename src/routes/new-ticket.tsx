@@ -1,0 +1,3 @@
+import { createFileRoute } from "@tanstack/react-router";
+import { RecordForm } from "@/components/record-form";
+export const Route = createFileRoute("/new-ticket")({ head: () => ({ meta: [{ title: "New Repair Ticket | Kearly" }, { name: "description", content: "Create a reactive maintenance ticket in Kearly." }, { property: "og:title", content: "New Repair Ticket | Kearly" }, { property: "og:description", content: "Create a reactive maintenance ticket in Kearly." }, { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary_large_image" }] }), component: () => <RecordForm kind="repair" /> });

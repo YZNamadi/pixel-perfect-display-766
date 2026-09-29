@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import {
   LayoutDashboard,
@@ -57,7 +57,7 @@ const governanceNav = [
   { label: "Reports", icon: BarChart3, to: "/reports" as const },
   { label: "Team", icon: Users, to: "/team-members" as const },
   { label: "Audit log", icon: ScrollText, to: "/audit-log" as const },
-  { label: "Billing", icon: CreditCard, to: "/settings" as const },
+  { label: "Billing", icon: CreditCard, to: "/billing" as const },
 ];
 
 const tabs = [
@@ -96,6 +96,14 @@ const statusTone = (s: Ticket["status"]) =>
 function RepairsPage() {
   const [activeTab, setActiveTab] = useState("all");
   const [deleteTicket, setDeleteTicket] = useState<Ticket | null>(null);
+  const [selectedTicket, setSelectedTicket] = useState<Ticket | null>(null);
+  const [query, setQuery] = useState("");
+  const [priority, setPriority] = useState("All");
+  const [site, setSite] = useState("All");
+  const [assignee, setAssignee] = useState("All");
+  const [page, setPage] = useState(1);
+  const filteredTickets = useMemo(() => tickets.filter((ticket) => (activeTab === "all" || ticket.status.toLowerCase().replace(" ", "") === activeTab) && (priority === "All" || ticket.priority === priority) && (site === "All" || ticket.site === site) && (assignee === "All" || ticket.assignee === assignee) && (!query.trim() || `${ticket.id} ${ticket.title} ${ticket.site} ${ticket.assignee}`.toLowerCase().includes(query.toLowerCase()))), [activeTab, priority, site, assignee, query]);
+  const pageRows = filteredTickets.slice((page - 1) * 3, page * 3);
 
   return (
     <div className="po-shell">
@@ -153,14 +161,14 @@ function RepairsPage() {
           <div className="po-topbar-actions">
             <div className="po-search">
               <Search size={15} aria-hidden="true" />
-              <input type="search" placeholder="Search..." aria-label="Search tickets" />
+               <input type="search" placeholder="Search..." aria-label="Search tickets" value={query} onChange={(event) => { setQuery(event.target.value); setPage(1); }} />
             </div>
             <span className="po-chip">Jul 2024</span>
-            <span className="po-chip">
+             <label className="po-chip qa-select-chip">
               <Calendar size={14} aria-hidden="true" />
-              All buildings
-            </span>
-            <Link to="/add-task" className="po-download">
+               <select aria-label="Filter repair tickets by building" value={site} onChange={(event) => { setSite(event.target.value); setPage(1); }}><option>All</option>{Array.from(new Set(tickets.map((ticket) => ticket.site))).map((item) => <option key={item}>{item}</option>)}</select>
+             </label>
+             <Link to="/new-ticket" className="po-download">
               New Ticket
             </Link>
           </div>
@@ -174,7 +182,7 @@ function RepairsPage() {
               role="tab"
               aria-selected={activeTab === key}
               className={`cl-tab ${activeTab === key ? "is-active" : ""}`}
-              onClick={() => setActiveTab(key)}
+               onClick={() => { setActiveTab(key); setPage(1); }}
             >
               {label}
             </button>
@@ -182,15 +190,9 @@ function RepairsPage() {
         </div>
 
         <div className="rp-filters">
-          <button type="button" className="rp-filter is-active">
-            Priority: All
-          </button>
-          <button type="button" className="rp-filter">
-            Site: All
-          </button>
-          <button type="button" className="rp-filter">
-            Assignee: All
-          </button>
+           <label className="rp-filter qa-filter-select">Priority: <select aria-label="Filter by priority" value={priority} onChange={(event) => { setPriority(event.target.value); setPage(1); }}><option>All</option><option>P1</option><option>P2</option><option>P3</option></select></label>
+           <label className="rp-filter qa-filter-select">Site: <select aria-label="Filter by site" value={site} onChange={(event) => { setSite(event.target.value); setPage(1); }}><option>All</option>{Array.from(new Set(tickets.map((ticket) => ticket.site))).map((item) => <option key={item}>{item}</option>)}</select></label>
+           <label className="rp-filter qa-filter-select">Assignee: <select aria-label="Filter by assignee" value={assignee} onChange={(event) => { setAssignee(event.target.value); setPage(1); }}><option>All</option>{Array.from(new Set(tickets.map((ticket) => ticket.assignee))).map((item) => <option key={item}>{item}</option>)}</select></label>
         </div>
 
         <section className="cl-panel" aria-label="Repair tickets">
@@ -210,7 +212,7 @@ function RepairsPage() {
                 </tr>
               </thead>
               <tbody>
-                {tickets.map((t) => (
+                 {pageRows.map((t) => (
                   <tr key={t.id}>
                     <td className="rp-id">{t.id}</td>
                     <td className="cl-name">{t.title}</td>
@@ -225,32 +227,26 @@ function RepairsPage() {
                     <td className="rp-created">{t.created}</td>
                     <td className={t.slaTone === "red" ? "rp-sla-red" : undefined}>{t.sla}</td>
                     <td>
-                      {t.status === "Open" ? (
-                        <span className="rp-actions">
-                          <Link to="/edit-task" className="rp-btn">
+                       <span className="rp-actions">
+                           <button type="button" className="rp-btn" onClick={() => setSelectedTicket(t)}><Eye size={13} aria-hidden="true" />View</button>
+                           {t.status !== "Closed" && <Link to="/edit-task" className="rp-btn">
                             <Pencil size={13} aria-hidden="true" />
                             Edit
-                          </Link>
-                          <Link to="/complete-ticket" className="rp-btn tone-green">
+                           </Link>}
+                           {t.status !== "Closed" && <Link to="/complete-ticket" className="rp-btn tone-green">
                             <Check size={13} aria-hidden="true" />
                             Complete
-                          </Link>
+                           </Link>}
 
-                          <button type="button" className="rp-btn tone-blue">
+                           <button type="button" className="rp-btn tone-blue" onClick={() => setSelectedTicket(t)}>
                             <BadgeCheck size={13} aria-hidden="true" />
                             Review
                           </button>
-                          <button type="button" className="rp-btn tone-red" onClick={() => setDeleteTicket(t)}>
+                           {t.status !== "Closed" && <button type="button" className="rp-btn tone-red" onClick={() => setDeleteTicket(t)}>
                             <X size={13} aria-hidden="true" />
                             Delete
-                          </button>
-                        </span>
-                      ) : (
-                        <button type="button" className="rp-btn">
-                          <Eye size={13} aria-hidden="true" />
-                          View
-                        </button>
-                      )}
+                           </button>}
+                         </span>
                     </td>
                   </tr>
                 ))}
@@ -259,12 +255,12 @@ function RepairsPage() {
           </div>
 
           <div className="cl-foot">
-            <small>Showing 1-6 of 12 tickets</small>
+             <small>Showing {filteredTickets.length ? (page - 1) * 3 + 1 : 0}-{Math.min(page * 3, filteredTickets.length)} of {filteredTickets.length} tickets</small>
             <div className="cl-pager">
-              <button type="button" className="cl-page">
+               <button type="button" className="cl-page" disabled={page === 1} onClick={() => setPage((value) => Math.max(1, value - 1))}>
                 Previous
               </button>
-              <button type="button" className="cl-page is-current">
+               <button type="button" className="cl-page is-current" disabled={page * 3 >= filteredTickets.length} onClick={() => setPage((value) => value + 1)}>
                 Next
               </button>
             </div>
@@ -310,6 +306,7 @@ function RepairsPage() {
           </div>
         </div>
       )}
+      {selectedTicket && <div className="cp-overlay" role="presentation" onClick={() => setSelectedTicket(null)}><div className="cp-modal" role="dialog" aria-modal="true" aria-labelledby="rp-view-title" onClick={(event) => event.stopPropagation()}><h2 className="cp-modal-title" id="rp-view-title">{selectedTicket.id} · {selectedTicket.title}</h2><p className="cp-modal-text">{selectedTicket.site}<br />{selectedTicket.priority} priority · {selectedTicket.status}<br />Assigned to {selectedTicket.assignee}<br />SLA: {selectedTicket.sla || "Awaiting assessment"}</p><div className="cp-modal-actions"><button type="button" className="cp-modal-cancel" onClick={() => setSelectedTicket(null)}>Close</button></div></div></div>}
 
     </div>
   );

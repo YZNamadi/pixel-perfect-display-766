@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import {
   LayoutDashboard,
@@ -16,7 +16,7 @@ import {
   Pencil,
   Check,
   Eye,
-  AlertTriangle,
+  X,
   Stethoscope,
 } from "lucide-react";
 
@@ -56,7 +56,7 @@ const governanceNav = [
   { label: "Reports", icon: BarChart3, to: "/reports" as const },
   { label: "Team", icon: Users, to: "/team-members" as const },
   { label: "Audit log", icon: ScrollText, to: "/audit-log" as const },
-  { label: "Billing", icon: CreditCard, to: "/settings" as const },
+  { label: "Billing", icon: CreditCard, to: "/billing" as const },
 ];
 
 const tabs = [
@@ -75,7 +75,7 @@ type Row = {
   assignee: string;
   initials: string;
   avatarTone: string;
-  status: "Overdue" | "Due Soon" | "On Track";
+  status: "Overdue" | "Due Soon" | "On Track" | "Completed";
 };
 
 const rows: Row[] = [
@@ -94,7 +94,13 @@ const statusTone = (status: Row["status"]) =>
 
 function CompliancePage() {
   const [activeTab, setActiveTab] = useState("all");
-  const [deactivate, setDeactivate] = useState<string | null>(null);
+  const [taskRows, setTaskRows] = useState(rows);
+  const [query, setQuery] = useState("");
+  const [building, setBuilding] = useState("All buildings");
+  const [selectedTask, setSelectedTask] = useState<Row | null>(null);
+  const [page, setPage] = useState(1);
+  const filteredRows = useMemo(() => taskRows.filter((row) => (activeTab === "all" || (activeTab === "due" && row.status === "Due Soon") || (activeTab === "overdue" && row.status === "Overdue") || (activeTab === "completed" && row.status === "Completed")) && (building === "All buildings" || row.site === building) && (!query.trim() || `${row.name} ${row.category} ${row.site} ${row.assignee}`.toLowerCase().includes(query.toLowerCase()))), [taskRows, activeTab, building, query]);
+  const pageRows = filteredRows.slice((page - 1) * 4, page * 4);
 
   return (
     <div className="po-shell">
@@ -152,16 +158,16 @@ function CompliancePage() {
           <div className="po-topbar-actions">
             <div className="po-search">
               <Search size={15} aria-hidden="true" />
-              <input type="search" placeholder="Search..." aria-label="Search tasks" />
+               <input type="search" placeholder="Search..." aria-label="Search tasks" value={query} onChange={(event) => { setQuery(event.target.value); setPage(1); }} />
             </div>
             <span className="po-chip">Jul 2024</span>
-            <span className="po-chip">
+             <label className="po-chip qa-select-chip">
               <Calendar size={14} aria-hidden="true" />
-              All buildings
-            </span>
-            <button type="button" className="cl-outline">
+               <select aria-label="Filter compliance by building" value={building} onChange={(event) => { setBuilding(event.target.value); setPage(1); }}><option>All buildings</option>{Array.from(new Set(taskRows.map((row) => row.site))).map((site) => <option key={site}>{site}</option>)}</select>
+             </label>
+             <Link to="/equipment" className="cl-outline">
               Medical Equipment
-            </button>
+             </Link>
             <Link to="/schedule" className="cl-outline">
               View Calendar
             </Link>
@@ -180,7 +186,7 @@ function CompliancePage() {
               role="tab"
               aria-selected={activeTab === key}
               className={`cl-tab ${activeTab === key ? "is-active" : ""}`}
-              onClick={() => setActiveTab(key)}
+               onClick={() => { setActiveTab(key); setPage(1); }}
             >
               {label}
             </button>
@@ -203,7 +209,7 @@ function CompliancePage() {
                 </tr>
               </thead>
               <tbody>
-                {rows.map((row) => (
+                 {pageRows.map((row) => (
                   <tr key={row.name}>
                     <td className="cl-name">{row.name}</td>
                     <td className="cl-cat">{row.category}</td>
@@ -230,7 +236,8 @@ function CompliancePage() {
                           type="button"
                           className="cl-icon-btn"
                           aria-label={`Mark ${row.name} complete`}
-                          onClick={() => setDeactivate(null)}
+                           disabled={row.status === "Completed"}
+                           onClick={() => setTaskRows((current) => current.map((task) => task.name === row.name ? { ...task, status: "Completed" } : task))}
                         >
                           <Check size={15} aria-hidden="true" />
                         </button>
@@ -238,7 +245,7 @@ function CompliancePage() {
                           type="button"
                           className="cl-icon-btn"
                           aria-label={`View ${row.name}`}
-                          onClick={() => setDeactivate(row.name)}
+                           onClick={() => setSelectedTask(row)}
                         >
                           <Eye size={15} aria-hidden="true" />
                         </button>
@@ -251,12 +258,12 @@ function CompliancePage() {
           </div>
 
           <div className="cl-foot">
-            <small>Showing 1-8 of 12 compliance tasks</small>
+             <small>Showing {filteredRows.length ? (page - 1) * 4 + 1 : 0}-{Math.min(page * 4, filteredRows.length)} of {filteredRows.length} compliance tasks</small>
             <div className="cl-pager">
-              <button type="button" className="cl-page">
+               <button type="button" className="cl-page" disabled={page === 1} onClick={() => setPage((current) => Math.max(1, current - 1))}>
                 Previous
               </button>
-              <button type="button" className="cl-page is-current">
+               <button type="button" className="cl-page is-current" disabled={page * 4 >= filteredRows.length} onClick={() => setPage((current) => current + 1)}>
                 Next
               </button>
             </div>
@@ -264,35 +271,27 @@ function CompliancePage() {
         </section>
       </main>
 
-      {deactivate && (
-        <div className="cp-overlay" role="presentation" onClick={() => setDeactivate(null)}>
+       {selectedTask && (
+         <div className="cp-overlay" role="presentation" onClick={() => setSelectedTask(null)}>
           <div
             className="cp-modal"
-            role="alertdialog"
+             role="dialog"
             aria-modal="true"
             aria-labelledby="cp-modal-title"
             onClick={(event) => event.stopPropagation()}
           >
             <div className="cp-modal-head">
-              <span className="cp-modal-icon" aria-hidden="true">
-                <AlertTriangle size={26} />
-              </span>
               <h2 className="cp-modal-title" id="cp-modal-title">
-                Deactivate Task
+                 {selectedTask.name}
               </h2>
+               <button className="cl-icon-btn" type="button" aria-label="Close task details" onClick={() => setSelectedTask(null)}><X size={18} /></button>
             </div>
             <p className="cp-modal-text">
-              Are you sure you want to deactivate {deactivate}?
-              <br />
-              This action cannot be undone.
+               {selectedTask.category} · {selectedTask.site}<br />Due {selectedTask.due} · {selectedTask.frequency}<br />Assigned to {selectedTask.assignee}
             </p>
             <div className="cp-modal-actions">
-              <button type="button" className="cp-modal-cancel" onClick={() => setDeactivate(null)}>
-                Cancel
-              </button>
-              <button type="button" className="cp-modal-delete" onClick={() => setDeactivate(null)}>
-                Deactivate
-              </button>
+               <button type="button" className="cp-modal-cancel" onClick={() => setSelectedTask(null)}>Close</button>
+               <Link to="/edit-task" className="at-next">Edit Task</Link>
             </div>
           </div>
         </div>

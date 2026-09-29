@@ -1,4 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { useState } from "react";
 import {
   LayoutDashboard,
   ShieldCheck,
@@ -50,7 +51,7 @@ const governanceNav = [
   { label: "Reports", icon: BarChart3, to: "/reports" as const },
   { label: "Team", icon: Users, to: "/team-members" as const },
   { label: "Audit log", icon: ScrollText, to: "/audit-log" as const },
-  { label: "Billing", icon: CreditCard, to: "/settings" as const },
+  { label: "Billing", icon: CreditCard, to: "/billing" as const },
 ];
 
 const breakdown = [
@@ -87,6 +88,7 @@ const team = [
 ];
 
 function BuildingPage() {
+  const [taskChoiceOpen, setTaskChoiceOpen] = useState(false);
   return (
     <div className="po-shell">
       <aside className="po-sidebar">
@@ -150,13 +152,13 @@ function BuildingPage() {
             <p className="po-subtitle">NHS Outpatient &amp; Rehabilitation Center • London</p>
           </div>
           <div className="bd-head-actions">
-            <Link to="/site" className="cl-outline">
+             <Link to="/edit-site" className="cl-outline">
               Edit Details
             </Link>
-            <Link to="/add-task" className="po-download">
+             <button type="button" className="po-download" onClick={() => setTaskChoiceOpen(true)}>
               <Plus size={15} aria-hidden="true" />
               New Task
-            </Link>
+             </button>
           </div>
         </header>
 
@@ -273,7 +275,7 @@ function BuildingPage() {
             <section className="bd-card" aria-label="Assigned team">
               <div className="bd-card-head">
                 <h2 className="bd-card-title">Assigned Team</h2>
-                <Link to="/settings" className="bd-manage">
+                 <Link to="/team-members" className="bd-manage">
                   Manage
                 </Link>
               </div>
@@ -294,6 +296,7 @@ function BuildingPage() {
           </div>
         </div>
       </main>
+      {taskChoiceOpen && <div className="cp-overlay" role="presentation" onClick={() => setTaskChoiceOpen(false)}><div className="cp-modal" role="dialog" aria-modal="true" aria-labelledby="task-choice-title" onClick={(event) => event.stopPropagation()}><h2 className="cp-modal-title" id="task-choice-title">Choose task type</h2><p className="cp-modal-text">What would you like to create for Northgate House?</p><div className="qa-choice-grid"><Link to="/add-task" className="cl-outline">Compliance task</Link><Link to="/new-ticket" className="cl-outline">Repair ticket</Link><Link to="/add-equipment" className="cl-outline">Equipment record</Link></div><div className="cp-modal-actions"><button type="button" className="cp-modal-cancel" onClick={() => setTaskChoiceOpen(false)}>Cancel</button></div></div></div>}
     </div>
   );
 }

@@ -47,7 +47,7 @@ const governanceNav = [
   { label: "Reports", icon: BarChart3, to: "/reports" as const, active: true },
   { label: "Team", icon: Users, to: "/team-members" as const },
   { label: "Audit log", icon: ScrollText, to: "/audit-log" as const },
-  { label: "Billing", icon: CreditCard, to: "/settings" as const },
+  { label: "Billing", icon: CreditCard, to: "/billing" as const },
 ];
 
 type StaffReport = {
@@ -178,7 +178,11 @@ function StaffRecordsPage() {
           <form className="tr-modal" onSubmit={(event) => { event.preventDefault(); setAdding(false); setEditing(null); }} onClick={(event) => event.stopPropagation()}>
             <div className="tr-modal-head"><div><h2>{editing ? "Edit Training Record" : "Add Training Record"}</h2><p>{editing ? editing.name : "Create a new staff report"}</p></div><button type="button" className="cl-icon-btn" aria-label="Close" onClick={() => { setAdding(false); setEditing(null); }}><X size={18} /></button></div>
             <label>Report name<input required defaultValue={editing?.report ?? ""} placeholder="Enter report name" /></label>
+            <label>Staff name<select defaultValue={editing?.name ?? "Alex Rowe"}>{Array.from(new Set(records.map((row) => row.name))).map((name) => <option key={name}>{name}</option>)}</select></label>
             <label>Category<select defaultValue={editing?.category ?? "Health & Safety"}>{categories.map((item) => <option key={item}>{item}</option>)}</select></label>
+            <div className="qa-form-grid"><label>Date filed<input type="date" required /></label><label>Due date<input type="date" required /></label></div>
+            <label>Status<select defaultValue={editing?.status ?? "Filed"}><option>Filed</option><option>In Review</option><option>Closed</option></select></label>
+            <label>Document upload<input type="file" accept=".pdf,.png,.jpg,.jpeg" required={!editing} /></label>
             <div className="tr-modal-actions"><button type="button" className="cl-page" onClick={() => { setAdding(false); setEditing(null); }}>Cancel</button><button type="submit" className="po-download">Save Record</button></div>
           </form>
         </div>
