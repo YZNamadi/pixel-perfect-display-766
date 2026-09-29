@@ -6585,3 +6585,19 @@ a.am-menu-item { text-decoration: none; }
 .ct-files button { background: none; border: 0; color: #6B7280; cursor: pointer; }
 .ct-empty { font-size: .85rem; color: #6B7280; padding: 1.5rem 0; margin: 0; }
 .ct-skip-btn { background: none; border: 0; cursor: pointer; font-size: .85rem; }
+
+/* Contractor jobs step */
+.cj-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: .75rem; }
+.cj-job { display: flex; align-items: center; gap: 1rem; border: 1px solid #E5E7EB; border-radius: 10px; padding: 1.4rem 1rem; }
+.cj-icon { width: 66px; height: 66px; flex: none; border-radius: 8px; background: #F3F4F6; color: #9CA3AF; display: grid; place-items: center; }
+.cj-body { flex: 1; min-width: 0; }
+.cj-title { margin: 0; font-size: .95rem; font-weight: 700; color: #111827; }
+.cj-site { margin: .1rem 0 .35rem; font-size: .85rem; font-weight: 500; color: #0E7C6F; }
+.cj-desc { margin: 0 0 .45rem; font-size: .85rem; color: #6B7280; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.cj-meta { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem; font-size: .75rem; color: #6B7280; }
+.cj-tag { background: #F3F4F6; color: #4B5563; font-size: .72rem; font-weight: 500; padding: .2rem .5rem; border-radius: 4px; }
+.cj-mi { display: inline-flex; align-items: center; gap: .3rem; margin-left: .2rem; }
+.cj-view { flex: none; background: #E6F4F1; color: #0E7C6F; border: 0; border-radius: 6px; padding: .55rem 1rem; font-size: .82rem; font-weight: 600; cursor: pointer; }
+.cj-view:hover { background: #D1EBE6; }
+.cj-info { display: flex; align-items: flex-start; gap: .5rem; font-size: .78rem; color: #6B7280; margin: 1.1rem 0 0; }
+.cj-info svg { flex: none; margin-top: 1px; }
