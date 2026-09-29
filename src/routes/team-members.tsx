@@ -14,6 +14,7 @@ import {
   Plus,
   Pencil,
   FileText,
+  X,
 } from "lucide-react";
 
 import { KearlyLogo } from "@/components/kearly-logo";
@@ -44,7 +45,7 @@ const governanceNav = [
   { label: "Reports", icon: BarChart3, to: "/reports" as const },
   { label: "Team", icon: Users, to: "/team-members" as const, active: true },
   { label: "Audit log", icon: ScrollText, to: "/audit-log" as const },
-  { label: "Billing", icon: CreditCard, to: "/settings" as const },
+  { label: "Billing", icon: CreditCard, to: "/billing" as const },
 ];
 
 const contractors = [
@@ -78,6 +79,7 @@ function Person({ name }: { name: string }) {
 
 function TeamPage() {
   const [tab, setTab] = useState<"External Labour" | "Internal">("External Labour");
+  const [adding, setAdding] = useState<"contractor" | "member" | null>(null);
 
   return (
     <div className="po-shell">
@@ -147,15 +149,15 @@ function TeamPage() {
             ))}
           </div>
           {tab === "External Labour" ? (
-            <button type="button" className="se-primary se-team-add">
+             <button type="button" className="se-primary se-team-add" onClick={() => setAdding("contractor")}>
               <Plus size={15} aria-hidden="true" />
               Add Contractor
             </button>
           ) : (
-            <Link to="/team" className="se-primary se-team-add">
+             <button type="button" className="se-primary se-team-add" onClick={() => setAdding("member")}>
               <Plus size={15} aria-hidden="true" />
               Add Team Member
-            </Link>
+             </button>
           )}
         </div>
 
@@ -223,6 +225,7 @@ function TeamPage() {
           )}
         </div>
       </main>
+      {adding && <div className="cp-overlay" role="presentation" onClick={() => setAdding(null)}><form className="tr-modal" onSubmit={(event) => { event.preventDefault(); setAdding(null); }} onClick={(event) => event.stopPropagation()}><div className="tr-modal-head"><div><h2>{adding === "contractor" ? "Add Contractor" : "Add Team Member"}</h2><p>Add this person to the operational team</p></div><button type="button" className="cl-icon-btn" aria-label="Close" onClick={() => setAdding(null)}><X size={18} /></button></div><label>Full name<input required /></label><label>Email address<input type="email" required /></label>{adding === "contractor" && <label>Company<input required /></label>}<label>Primary role<select><option>Facility Manager</option><option>Compliance Officer</option><option>Maintenance Engineer</option><option>External Contractor</option></select></label><label>Work zone<select><option>All buildings</option><option>Northgate House</option><option>Riverside Court</option></select></label><div className="tr-modal-actions"><button type="button" className="cl-page" onClick={() => setAdding(null)}>Cancel</button><button type="submit" className="po-download">Add {adding === "contractor" ? "Contractor" : "Team Member"}</button></div></form></div>}
     </div>
   );
 }

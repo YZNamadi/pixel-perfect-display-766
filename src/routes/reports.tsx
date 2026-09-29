@@ -1,4 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { useMemo, useState } from "react";
 import {
   LayoutDashboard,
   ShieldCheck,
@@ -16,6 +17,7 @@ import {
 } from "lucide-react";
 
 import { KearlyLogo } from "@/components/kearly-logo";
+import { downloadCsv } from "@/lib/download";
 
 export const Route = createFileRoute("/reports")({
   head: () => ({
@@ -51,7 +53,7 @@ const governanceNav = [
   { label: "Reports", icon: BarChart3, to: "/reports" as const, active: true },
   { label: "Team", icon: Users, to: "/team-members" as const },
   { label: "Audit log", icon: ScrollText, to: "/audit-log" as const },
-  { label: "Billing", icon: CreditCard, to: "/settings" as const },
+  { label: "Billing", icon: CreditCard, to: "/billing" as const },
 ];
 
 const stats = [
@@ -84,6 +86,10 @@ const statusTone = (s: Report["status"]) =>
   s === "Complete" ? "tone-green" : s === "Pending Review" ? "tone-amber" : "tone-red";
 
 function ReportsPage() {
+  const [building, setBuilding] = useState("All buildings");
+  const [page, setPage] = useState(1);
+  const visibleReports = useMemo(() => reports.filter((report) => building === "All buildings" || report.name.includes(building)), [building]);
+  const pageReports = visibleReports.slice((page - 1) * 4, page * 4);
   return (
     <div className="po-shell">
       <aside className="po-sidebar">
@@ -146,12 +152,12 @@ function ReportsPage() {
               <label htmlFor="rr-to">To:</label>
               <input id="rr-to" type="text" defaultValue="31 Dec 2024" />
             </span>
-            <span className="po-chip">
+             <label className="po-chip qa-select-chip">
               <Calendar size={14} aria-hidden="true" />
-              All buildings
+               <select aria-label="Filter reports by building" value={building} onChange={(event) => { setBuilding(event.target.value); setPage(1); }}><option>All buildings</option><option>Riverside Court</option><option>Elmwood Court</option><option>Northgate House</option></select>
               <ChevronDown size={13} aria-hidden="true" />
-            </span>
-            <button type="button" className="po-download">
+             </label>
+             <button type="button" className="po-download" onClick={() => downloadCsv("kearly-cqc-reports.csv", [["Date", "Report", "Type", "Period", "Status"], ...visibleReports.map((report) => [report.date, report.name, report.type, report.period, report.status])])}>
               Export CQC Report
             </button>
           </div>
@@ -192,7 +198,7 @@ function ReportsPage() {
                 </tr>
               </thead>
               <tbody>
-                {reports.map((r) => (
+                 {pageReports.map((r) => (
                   <tr key={r.name}>
                     <td className="rp-created">{r.date}</td>
                     <td className="cl-name">{r.name}</td>
@@ -202,7 +208,7 @@ function ReportsPage() {
                       <span className={`rp-status ${statusTone(r.status)}`}>{r.status}</span>
                     </td>
                     <td>
-                      <button type="button" className="rr-dl" aria-label={`Download ${r.name}`}>
+                       <button type="button" className="rr-dl" aria-label={`Download ${r.name}`} onClick={() => downloadCsv(`${r.name.replaceAll(" ", "-")}.csv`, [["Date", "Report", "Type", "Period", "Status"], [r.date, r.name, r.type, r.period, r.status]])}>
                         <Download size={15} aria-hidden="true" />
                       </button>
                     </td>
@@ -213,12 +219,12 @@ function ReportsPage() {
           </div>
 
           <div className="cl-foot">
-            <small>Showing 1-8 of 142 reports</small>
+             <small>Showing {visibleReports.length ? (page - 1) * 4 + 1 : 0}-{Math.min(page * 4, visibleReports.length)} of {visibleReports.length} reports</small>
             <div className="cl-pager">
-              <button type="button" className="cl-page">
+               <button type="button" className="cl-page" disabled={page === 1} onClick={() => setPage((value) => Math.max(1, value - 1))}>
                 Previous
               </button>
-              <button type="button" className="cl-page is-current">
+               <button type="button" className="cl-page is-current" disabled={page * 4 >= visibleReports.length} onClick={() => setPage((value) => value + 1)}>
                 Next
               </button>
             </div>

@@ -1,4 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { useMemo, useState } from "react";
 import {
   LayoutDashboard,
   ShieldCheck,
@@ -18,6 +19,7 @@ import {
 } from "lucide-react";
 
 import { KearlyLogo } from "@/components/kearly-logo";
+import { downloadCsv } from "@/lib/download";
 
 export const Route = createFileRoute("/audit-log")({
   head: () => ({
@@ -53,7 +55,7 @@ const governanceNav = [
   { label: "Reports", icon: BarChart3, to: "/reports" as const },
   { label: "Team", icon: Users, to: "/team-members" as const },
   { label: "Audit log", icon: ScrollText, to: "/audit-log" as const, active: true },
-  { label: "Billing", icon: CreditCard, to: "/settings" as const },
+  { label: "Billing", icon: CreditCard, to: "/billing" as const },
 ];
 
 type Event = {
@@ -135,6 +137,14 @@ const events: Event[] = [
 ];
 
 function AuditLogPage() {
+  const [query, setQuery] = useState("");
+  const [user, setUser] = useState("All Users");
+  const [action, setAction] = useState("All Actions");
+  const [building, setBuilding] = useState("All buildings");
+  const [page, setPage] = useState(1);
+  const [selected, setSelected] = useState<Event | null>(null);
+  const filtered = useMemo(() => events.filter((event) => (user === "All Users" || event.user === user) && (action === "All Actions" || event.action === action) && (building === "All buildings" || event.entity === building) && (!query.trim() || `${event.user} ${event.action} ${event.details} ${event.entity}`.toLowerCase().includes(query.toLowerCase()))), [query, user, action, building]);
+  const pageRows = filtered.slice((page - 1) * 4, page * 4);
 
   return (
     <div className="po-shell">
@@ -192,29 +202,27 @@ function AuditLogPage() {
           <div className="po-topbar-actions">
             <div className="po-search">
               <Search size={15} aria-hidden="true" />
-              <input type="search" placeholder="Search..." aria-label="Search audit events" />
+               <input type="search" placeholder="Search..." aria-label="Search audit events" value={query} onChange={(event) => { setQuery(event.target.value); setPage(1); }} />
             </div>
             <span className="po-chip">Jul 2024</span>
-            <span className="po-chip">
+             <label className="po-chip qa-select-chip">
               <Calendar size={14} aria-hidden="true" />
-              All buildings
+               <select aria-label="Filter audit log by building" value={building} onChange={(event) => { setBuilding(event.target.value); setPage(1); }}><option>All buildings</option>{Array.from(new Set(events.map((event) => event.entity).filter(Boolean))).map((item) => <option key={item}>{item}</option>)}</select>
               <ChevronDown size={13} aria-hidden="true" />
-            </span>
-            <button type="button" className="po-download">
+             </label>
+             <button type="button" className="po-download" onClick={() => downloadCsv("kearly-audit-log.csv", [["Timestamp", "User", "Action", "Details", "Entity"], ...filtered.map((event) => [event.time, event.user, event.action, event.details, event.entity])])}>
               Export CSV
             </button>
           </div>
         </header>
 
         <div className="rp-filters">
-          <button type="button" className="rp-filter">
-            User: All Users
+           <label className="rp-filter qa-filter-select">User: <select aria-label="Filter audit log by user" value={user} onChange={(event) => { setUser(event.target.value); setPage(1); }}><option>All Users</option>{Array.from(new Set(events.map((event) => event.user))).map((item) => <option key={item}>{item}</option>)}</select>
             <ChevronDown size={13} aria-hidden="true" />
-          </button>
-          <button type="button" className="rp-filter">
-            Action Type: All Actions
+           </label>
+           <label className="rp-filter qa-filter-select">Action Type: <select aria-label="Filter audit log by action" value={action} onChange={(event) => { setAction(event.target.value); setPage(1); }}><option>All Actions</option>{Array.from(new Set(events.map((event) => event.action))).map((item) => <option key={item}>{item}</option>)}</select>
             <ChevronDown size={13} aria-hidden="true" />
-          </button>
+           </label>
         </div>
 
         <section className="cl-panel" aria-label="Audit events">
@@ -231,7 +239,7 @@ function AuditLogPage() {
                 </tr>
               </thead>
               <tbody>
-                {events.map((e) => (
+                 {pageRows.map((e) => (
                   <tr key={e.id}>
                     <td className="rp-created">{e.time}</td>
                     <td className="cl-name">{e.user}</td>
@@ -240,12 +248,12 @@ function AuditLogPage() {
                     <td className="cl-name">{e.entity}</td>
                     <td>
                       {e.pending ? (
-                        <button type="button" className="rp-btn tone-blue">
+                         <button type="button" className="rp-btn tone-blue" onClick={() => setSelected(e)}>
                           <BadgeCheck size={13} aria-hidden="true" />
                           Review
                         </button>
                       ) : (
-                        <button type="button" className="rp-btn">
+                         <button type="button" className="rp-btn" onClick={() => setSelected(e)}>
                           <Eye size={13} aria-hidden="true" />
                           View
                         </button>
@@ -258,18 +266,19 @@ function AuditLogPage() {
           </div>
 
           <div className="cl-foot">
-            <small>Showing 1-8 of 142 events</small>
+             <small>Showing {filtered.length ? (page - 1) * 4 + 1 : 0}-{Math.min(page * 4, filtered.length)} of {filtered.length} events</small>
             <div className="cl-pager">
-              <button type="button" className="cl-page">
+               <button type="button" className="cl-page" disabled={page === 1} onClick={() => setPage((value) => Math.max(1, value - 1))}>
                 Previous
               </button>
-              <button type="button" className="cl-page is-current">
+               <button type="button" className="cl-page is-current" disabled={page * 4 >= filtered.length} onClick={() => setPage((value) => value + 1)}>
                 Next
               </button>
             </div>
           </div>
         </section>
       </main>
+      {selected && <div className="cp-overlay" role="presentation" onClick={() => setSelected(null)}><div className="cp-modal" role="dialog" aria-modal="true" aria-labelledby="audit-detail-title" onClick={(event) => event.stopPropagation()}><h2 className="cp-modal-title" id="audit-detail-title">{selected.action}</h2><p className="cp-modal-text">{selected.details}<br />{selected.entity || "Portfolio-wide"}<br />{selected.user} · {selected.time}</p><div className="cp-modal-actions"><button type="button" className="cp-modal-cancel" onClick={() => setSelected(null)}>{selected.pending ? "Mark reviewed" : "Close"}</button></div></div></div>}
     </div>
   );
 }
