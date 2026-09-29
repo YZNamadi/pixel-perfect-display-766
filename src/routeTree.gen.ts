@@ -20,6 +20,7 @@ import { Route as BuildingRouteImport } from './routes/building'
 import { Route as CompleteRouteImport } from './routes/complete'
 import { Route as CompleteTicketRouteImport } from './routes/complete-ticket'
 import { Route as ComplianceRouteImport } from './routes/compliance'
+import { Route as ContractorProfileRouteImport } from './routes/contractor-profile'
 import { Route as ContractorSignupRouteImport } from './routes/contractor-signup'
 import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as DocumentsRouteImport } from './routes/documents'
@@ -96,6 +97,11 @@ const CompleteTicketRoute = CompleteTicketRouteImport.update({
 const ComplianceRoute = ComplianceRouteImport.update({
   id: '/compliance',
   path: '/compliance',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ContractorProfileRoute = ContractorProfileRouteImport.update({
+  id: '/contractor-profile',
+  path: '/contractor-profile',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ContractorSignupRoute = ContractorSignupRouteImport.update({
@@ -221,6 +227,7 @@ export interface FileRoutesByFullPath {
   '/complete': typeof CompleteRoute
   '/complete-ticket': typeof CompleteTicketRoute
   '/compliance': typeof ComplianceRoute
+  '/contractor-profile': typeof ContractorProfileRoute
   '/contractor-signup': typeof ContractorSignupRoute
   '/dashboard': typeof DashboardRoute
   '/documents': typeof DocumentsRoute
@@ -256,6 +263,7 @@ export interface FileRoutesByTo {
   '/complete': typeof CompleteRoute
   '/complete-ticket': typeof CompleteTicketRoute
   '/compliance': typeof ComplianceRoute
+  '/contractor-profile': typeof ContractorProfileRoute
   '/contractor-signup': typeof ContractorSignupRoute
   '/dashboard': typeof DashboardRoute
   '/documents': typeof DocumentsRoute
@@ -292,6 +300,7 @@ export interface FileRoutesById {
   '/complete': typeof CompleteRoute
   '/complete-ticket': typeof CompleteTicketRoute
   '/compliance': typeof ComplianceRoute
+  '/contractor-profile': typeof ContractorProfileRoute
   '/contractor-signup': typeof ContractorSignupRoute
   '/dashboard': typeof DashboardRoute
   '/documents': typeof DocumentsRoute
@@ -329,6 +338,7 @@ export interface FileRouteTypes {
     | '/complete'
     | '/complete-ticket'
     | '/compliance'
+    | '/contractor-profile'
     | '/contractor-signup'
     | '/dashboard'
     | '/documents'
@@ -364,6 +374,7 @@ export interface FileRouteTypes {
     | '/complete'
     | '/complete-ticket'
     | '/compliance'
+    | '/contractor-profile'
     | '/contractor-signup'
     | '/dashboard'
     | '/documents'
@@ -399,6 +410,7 @@ export interface FileRouteTypes {
     | '/complete'
     | '/complete-ticket'
     | '/compliance'
+    | '/contractor-profile'
     | '/contractor-signup'
     | '/dashboard'
     | '/documents'
@@ -435,6 +447,7 @@ export interface RootRouteChildren {
   CompleteRoute: typeof CompleteRoute
   CompleteTicketRoute: typeof CompleteTicketRoute
   ComplianceRoute: typeof ComplianceRoute
+  ContractorProfileRoute: typeof ContractorProfileRoute
   ContractorSignupRoute: typeof ContractorSignupRoute
   DashboardRoute: typeof DashboardRoute
   DocumentsRoute: typeof DocumentsRoute
@@ -536,6 +549,13 @@ declare module '@tanstack/react-router' {
       path: '/compliance'
       fullPath: '/compliance'
       preLoaderRoute: typeof ComplianceRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/contractor-profile': {
+      id: '/contractor-profile'
+      path: '/contractor-profile'
+      fullPath: '/contractor-profile'
+      preLoaderRoute: typeof ContractorProfileRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/contractor-signup': {
@@ -707,6 +727,7 @@ const rootRouteChildren: RootRouteChildren = {
   CompleteRoute: CompleteRoute,
   CompleteTicketRoute: CompleteTicketRoute,
   ComplianceRoute: ComplianceRoute,
+  ContractorProfileRoute: ContractorProfileRoute,
   ContractorSignupRoute: ContractorSignupRoute,
   DashboardRoute: DashboardRoute,
   DocumentsRoute: DocumentsRoute,
