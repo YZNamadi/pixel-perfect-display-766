@@ -21,6 +21,7 @@ import { Route as CompleteRouteImport } from './routes/complete'
 import { Route as CompleteTicketRouteImport } from './routes/complete-ticket'
 import { Route as ComplianceRouteImport } from './routes/compliance'
 import { Route as ContractorCertificatesRouteImport } from './routes/contractor-certificates'
+import { Route as ContractorJobsRouteImport } from './routes/contractor-jobs'
 import { Route as ContractorProfileRouteImport } from './routes/contractor-profile'
 import { Route as ContractorSignupRouteImport } from './routes/contractor-signup'
 import { Route as DashboardRouteImport } from './routes/dashboard'
@@ -103,6 +104,11 @@ const ComplianceRoute = ComplianceRouteImport.update({
 const ContractorCertificatesRoute = ContractorCertificatesRouteImport.update({
   id: '/contractor-certificates',
   path: '/contractor-certificates',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ContractorJobsRoute = ContractorJobsRouteImport.update({
+  id: '/contractor-jobs',
+  path: '/contractor-jobs',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ContractorProfileRoute = ContractorProfileRouteImport.update({
@@ -234,6 +240,7 @@ export interface FileRoutesByFullPath {
   '/complete-ticket': typeof CompleteTicketRoute
   '/compliance': typeof ComplianceRoute
   '/contractor-certificates': typeof ContractorCertificatesRoute
+  '/contractor-jobs': typeof ContractorJobsRoute
   '/contractor-profile': typeof ContractorProfileRoute
   '/contractor-signup': typeof ContractorSignupRoute
   '/dashboard': typeof DashboardRoute
@@ -271,6 +278,7 @@ export interface FileRoutesByTo {
   '/complete-ticket': typeof CompleteTicketRoute
   '/compliance': typeof ComplianceRoute
   '/contractor-certificates': typeof ContractorCertificatesRoute
+  '/contractor-jobs': typeof ContractorJobsRoute
   '/contractor-profile': typeof ContractorProfileRoute
   '/contractor-signup': typeof ContractorSignupRoute
   '/dashboard': typeof DashboardRoute
@@ -309,6 +317,7 @@ export interface FileRoutesById {
   '/complete-ticket': typeof CompleteTicketRoute
   '/compliance': typeof ComplianceRoute
   '/contractor-certificates': typeof ContractorCertificatesRoute
+  '/contractor-jobs': typeof ContractorJobsRoute
   '/contractor-profile': typeof ContractorProfileRoute
   '/contractor-signup': typeof ContractorSignupRoute
   '/dashboard': typeof DashboardRoute
@@ -348,6 +357,7 @@ export interface FileRouteTypes {
     | '/complete-ticket'
     | '/compliance'
     | '/contractor-certificates'
+    | '/contractor-jobs'
     | '/contractor-profile'
     | '/contractor-signup'
     | '/dashboard'
@@ -385,6 +395,7 @@ export interface FileRouteTypes {
     | '/complete-ticket'
     | '/compliance'
     | '/contractor-certificates'
+    | '/contractor-jobs'
     | '/contractor-profile'
     | '/contractor-signup'
     | '/dashboard'
@@ -422,6 +433,7 @@ export interface FileRouteTypes {
     | '/complete-ticket'
     | '/compliance'
     | '/contractor-certificates'
+    | '/contractor-jobs'
     | '/contractor-profile'
     | '/contractor-signup'
     | '/dashboard'
@@ -460,6 +472,7 @@ export interface RootRouteChildren {
   CompleteTicketRoute: typeof CompleteTicketRoute
   ComplianceRoute: typeof ComplianceRoute
   ContractorCertificatesRoute: typeof ContractorCertificatesRoute
+  ContractorJobsRoute: typeof ContractorJobsRoute
   ContractorProfileRoute: typeof ContractorProfileRoute
   ContractorSignupRoute: typeof ContractorSignupRoute
   DashboardRoute: typeof DashboardRoute
@@ -569,6 +582,13 @@ declare module '@tanstack/react-router' {
       path: '/contractor-certificates'
       fullPath: '/contractor-certificates'
       preLoaderRoute: typeof ContractorCertificatesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/contractor-jobs': {
+      id: '/contractor-jobs'
+      path: '/contractor-jobs'
+      fullPath: '/contractor-jobs'
+      preLoaderRoute: typeof ContractorJobsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/contractor-profile': {
@@ -748,6 +768,7 @@ const rootRouteChildren: RootRouteChildren = {
   CompleteTicketRoute: CompleteTicketRoute,
   ComplianceRoute: ComplianceRoute,
   ContractorCertificatesRoute: ContractorCertificatesRoute,
+  ContractorJobsRoute: ContractorJobsRoute,
   ContractorProfileRoute: ContractorProfileRoute,
   ContractorSignupRoute: ContractorSignupRoute,
   DashboardRoute: DashboardRoute,
