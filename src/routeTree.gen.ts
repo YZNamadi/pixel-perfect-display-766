@@ -20,6 +20,7 @@ import { Route as BuildingRouteImport } from './routes/building'
 import { Route as CompleteRouteImport } from './routes/complete'
 import { Route as CompleteTicketRouteImport } from './routes/complete-ticket'
 import { Route as ComplianceRouteImport } from './routes/compliance'
+import { Route as ContractorCertificatesRouteImport } from './routes/contractor-certificates'
 import { Route as ContractorProfileRouteImport } from './routes/contractor-profile'
 import { Route as ContractorSignupRouteImport } from './routes/contractor-signup'
 import { Route as DashboardRouteImport } from './routes/dashboard'
@@ -97,6 +98,11 @@ const CompleteTicketRoute = CompleteTicketRouteImport.update({
 const ComplianceRoute = ComplianceRouteImport.update({
   id: '/compliance',
   path: '/compliance',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ContractorCertificatesRoute = ContractorCertificatesRouteImport.update({
+  id: '/contractor-certificates',
+  path: '/contractor-certificates',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ContractorProfileRoute = ContractorProfileRouteImport.update({
@@ -227,6 +233,7 @@ export interface FileRoutesByFullPath {
   '/complete': typeof CompleteRoute
   '/complete-ticket': typeof CompleteTicketRoute
   '/compliance': typeof ComplianceRoute
+  '/contractor-certificates': typeof ContractorCertificatesRoute
   '/contractor-profile': typeof ContractorProfileRoute
   '/contractor-signup': typeof ContractorSignupRoute
   '/dashboard': typeof DashboardRoute
@@ -263,6 +270,7 @@ export interface FileRoutesByTo {
   '/complete': typeof CompleteRoute
   '/complete-ticket': typeof CompleteTicketRoute
   '/compliance': typeof ComplianceRoute
+  '/contractor-certificates': typeof ContractorCertificatesRoute
   '/contractor-profile': typeof ContractorProfileRoute
   '/contractor-signup': typeof ContractorSignupRoute
   '/dashboard': typeof DashboardRoute
@@ -300,6 +308,7 @@ export interface FileRoutesById {
   '/complete': typeof CompleteRoute
   '/complete-ticket': typeof CompleteTicketRoute
   '/compliance': typeof ComplianceRoute
+  '/contractor-certificates': typeof ContractorCertificatesRoute
   '/contractor-profile': typeof ContractorProfileRoute
   '/contractor-signup': typeof ContractorSignupRoute
   '/dashboard': typeof DashboardRoute
@@ -338,6 +347,7 @@ export interface FileRouteTypes {
     | '/complete'
     | '/complete-ticket'
     | '/compliance'
+    | '/contractor-certificates'
     | '/contractor-profile'
     | '/contractor-signup'
     | '/dashboard'
@@ -374,6 +384,7 @@ export interface FileRouteTypes {
     | '/complete'
     | '/complete-ticket'
     | '/compliance'
+    | '/contractor-certificates'
     | '/contractor-profile'
     | '/contractor-signup'
     | '/dashboard'
@@ -410,6 +421,7 @@ export interface FileRouteTypes {
     | '/complete'
     | '/complete-ticket'
     | '/compliance'
+    | '/contractor-certificates'
     | '/contractor-profile'
     | '/contractor-signup'
     | '/dashboard'
@@ -447,6 +459,7 @@ export interface RootRouteChildren {
   CompleteRoute: typeof CompleteRoute
   CompleteTicketRoute: typeof CompleteTicketRoute
   ComplianceRoute: typeof ComplianceRoute
+  ContractorCertificatesRoute: typeof ContractorCertificatesRoute
   ContractorProfileRoute: typeof ContractorProfileRoute
   ContractorSignupRoute: typeof ContractorSignupRoute
   DashboardRoute: typeof DashboardRoute
@@ -549,6 +562,13 @@ declare module '@tanstack/react-router' {
       path: '/compliance'
       fullPath: '/compliance'
       preLoaderRoute: typeof ComplianceRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/contractor-certificates': {
+      id: '/contractor-certificates'
+      path: '/contractor-certificates'
+      fullPath: '/contractor-certificates'
+      preLoaderRoute: typeof ContractorCertificatesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/contractor-profile': {
@@ -727,6 +747,7 @@ const rootRouteChildren: RootRouteChildren = {
   CompleteRoute: CompleteRoute,
   CompleteTicketRoute: CompleteTicketRoute,
   ComplianceRoute: ComplianceRoute,
+  ContractorCertificatesRoute: ContractorCertificatesRoute,
   ContractorProfileRoute: ContractorProfileRoute,
   ContractorSignupRoute: ContractorSignupRoute,
   DashboardRoute: DashboardRoute,
