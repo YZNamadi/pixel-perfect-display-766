@@ -6475,3 +6475,26 @@ a.am-menu-item { text-decoration: none; }
 .ns-cancel{height:32px;display:flex;align-items:center;justify-content:center;border:1px solid #E5E7EB;border-radius:6px;background:#fff;color:#374151;font-size:.82rem;font-weight:500;text-decoration:none;margin-top:-.6rem}
 .ns-cancel:hover{background:#F9FAFB}
 @media (max-width:900px){.ns-grid{grid-template-columns:1fr}}
+
+/* QA remediation utilities */
+.qa-select-chip select,
+.qa-filter-select select {
+  appearance: none;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+}
+.qa-filter-select { display: inline-flex; align-items: center; gap: 4px; }
+.qa-page-head { margin-bottom: 22px; }
+.qa-two-columns { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+.qa-section { margin-top: 18px; }
+.qa-price { margin: 26px 0 4px; color: #17231d; font-size: 2.25rem; font-weight: 750; }
+.qa-price small { color: #68756e; font-size: .85rem; font-weight: 500; }
+.qa-choice-grid { display: grid; gap: 10px; margin: 18px 0; }
+.qa-choice-grid .cl-outline { justify-content: center; text-decoration: none; }
+.qa-form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.cl-page:disabled, .cl-action:disabled { cursor: not-allowed; opacity: .42; }
+@media (max-width: 800px) { .qa-two-columns, .qa-form-grid { grid-template-columns: 1fr; } }
