@@ -18,6 +18,7 @@ import {
 } from "lucide-react";
 
 import { KearlyLogo } from "@/components/kearly-logo";
+import { downloadCsv } from "@/lib/download";
 
 export const Route = createFileRoute("/dashboard")({
   head: () => ({
@@ -53,7 +54,7 @@ const governanceNav = [
   { label: "Reports", icon: BarChart3, to: "/reports" as const },
   { label: "Team", icon: Users, to: "/team-members" as const },
   { label: "Audit log", icon: ScrollText, to: "/audit-log" as const },
-  { label: "Billing", icon: CreditCard, to: "/settings" as const },
+  { label: "Billing", icon: CreditCard, to: "/billing" as const },
 ];
 
 const stats = [
@@ -110,6 +111,8 @@ function scoreTone(score: number) {
 function DashboardPage() {
   const [buildingOpen, setBuildingOpen] = useState(false);
   const [selectedBuilding, setSelectedBuilding] = useState("All buildings");
+  const [query, setQuery] = useState("");
+  const [category, setCategory] = useState("All");
   const buildingRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -119,6 +122,16 @@ function DashboardPage() {
     document.addEventListener("mousedown", closeMenu);
     return () => document.removeEventListener("mousedown", closeMenu);
   }, []);
+
+  const visibleAttention = attention.filter((item) => {
+    const matchesBuilding = selectedBuilding === "All buildings" || item.site === selectedBuilding;
+    const term = query.trim().toLowerCase();
+    const matchesSearch = !term || `${item.title} ${item.site} ${item.tag}`.toLowerCase().includes(term);
+    const matchesCategory = category === "All" || item.title.toLowerCase().includes(category.toLowerCase()) || item.tag.toLowerCase().includes(category.toLowerCase());
+    return matchesBuilding && matchesSearch && matchesCategory;
+  });
+  const visibleBuildings = buildings.filter((building) => selectedBuilding === "All buildings" || building.name === selectedBuilding).filter((building) => !query.trim() || `${building.name} ${building.city}`.toLowerCase().includes(query.toLowerCase()));
+  const filteredUpcoming = upcoming.filter((item) => selectedBuilding === "All buildings" || item.site === selectedBuilding).filter((item) => !query.trim() || `${item.title} ${item.site}`.toLowerCase().includes(query.toLowerCase()));
 
   return (
     <div className="po-shell">
@@ -176,7 +189,7 @@ function DashboardPage() {
           <div className="po-topbar-actions">
             <div className="po-search">
               <Search size={15} aria-hidden="true" />
-              <input type="search" placeholder="Search buildings, jobs..." aria-label="Search" />
+               <input type="search" placeholder="Search buildings, jobs..." aria-label="Search" value={query} onChange={(event) => setQuery(event.target.value)} />
             </div>
             <span className="po-chip">Wed 2 Jul</span>
             <div className="po-building-select" ref={buildingRef}>
@@ -240,7 +253,7 @@ function DashboardPage() {
                 </div>
               )}
             </div>
-            <button type="button" className="po-download">
+             <button type="button" className="po-download" onClick={() => downloadCsv("kearly-portfolio.csv", [["Item", "Building", "Status"], ...visibleAttention.map((item) => [item.title, item.site, item.status])])}>
               <Download size={15} aria-hidden="true" />
               Download pack
             </button>
@@ -273,11 +286,12 @@ function DashboardPage() {
             </header>
 
             <div className="po-filters">
-              {filters.map((filter, index) => (
+               {filters.map((filter) => (
                 <button
                   type="button"
                   key={filter}
-                  className={`po-filter ${index === 0 ? "is-active" : ""}`}
+                   className={`po-filter ${category === filter ? "is-active" : ""}`}
+                   onClick={() => setCategory(filter)}
                 >
                   {filter}
                 </button>
@@ -285,7 +299,7 @@ function DashboardPage() {
             </div>
 
             <ul className="po-list">
-              {attention.map((item) => (
+               {visibleAttention.map((item) => (
                 <li className="po-row" key={item.title + item.site}>
                   <span className={`po-dot tone-${item.dot}`} aria-hidden="true" />
                   <span className="po-tag">{item.tag}</span>
@@ -309,7 +323,7 @@ function DashboardPage() {
                 </Link>
               </header>
               <ul className="po-buildings">
-                {buildings.map((building) => (
+                 {visibleBuildings.map((building) => (
                   <li key={building.name}>
                     <div className="po-building-top">
                       <span className="po-building-name">
@@ -336,7 +350,7 @@ function DashboardPage() {
                 <span className="po-panel-note">NEXT 7 DAYS</span>
               </header>
               <ul className="po-upcoming">
-                {upcoming.map((item) => (
+                 {filteredUpcoming.map((item) => (
                   <li key={item.title}>
                     <span className="po-tag">{item.tag}</span>
                     <span className="po-row-text">
