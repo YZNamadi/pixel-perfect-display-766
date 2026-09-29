@@ -1,3 +1,10 @@
-- [x] Add Team invitation onboarding screen at `/team`
-- [x] Connect Import Continue to Team
-- [x] Match responsive stepper, watermark, form rows, and actions
+- [ ] Fix dashboard search, building filtering, category filters, and report download
+- [ ] Fix compliance search/status/building filters, task details/completion, table-calendar switching, and pagination
+- [ ] Add dedicated equipment creation/edit flows; fix equipment search, status/building filters, actions, and pagination
+- [ ] Add dedicated repair ticket creation/details flows; fix repair filters, row actions, and pagination
+- [ ] Fix building task category choice, team management, and edit-site routing
+- [ ] Complete report tabs, building filters, exports/downloads, and staff-record fields
+- [ ] Add working contractor and internal-member creation flows
+- [ ] Fix audit-log search/filters, review/details, export, and pagination
+- [ ] Add a dedicated billing route and point every Billing link to it
+- [ ] Verify all tracked workflows, metadata, responsive layouts, and preview diagnostics
