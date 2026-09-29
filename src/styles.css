@@ -6523,3 +6523,32 @@ a.am-menu-item { text-decoration: none; }
 .rp-menu-item.tone-green { color: #15803D; }
 .rp-menu-item.tone-blue { color: #2563EB; }
 .rp-menu-item.tone-red { color: #DC2626; }
+
+/* Contractor sign up */
+:root { --ct-teal: #0E7C6F; --ct-teal-dark: #0B6B5E; --ct-green-deep: #095F53; --ct-mint: #A7F3D0; }
+.ct-panel { background: var(--ct-teal) !important; display: flex; flex-direction: column; justify-content: space-between; padding: 3rem 4rem; position: relative; overflow: hidden; color: #fff; }
+.ct-circle { position: absolute; border-radius: 50%; }
+.ct-circle-one { top: 190px; right: -120px; width: 300px; height: 300px; background: var(--ct-teal-dark); opacity: .85; }
+.ct-circle-two { bottom: -180px; right: -80px; width: 560px; height: 560px; background: #16704A; opacity: .9; }
+.ct-circle-three { bottom: -100px; left: -120px; width: 340px; height: 340px; background: #0A6558; opacity: .75; }
+.ct-logo, .ct-panel-body, .ct-trusted { position: relative; z-index: 2; }
+.ct-logo { display: flex; align-items: center; gap: .6rem; }
+.ct-logo-mark { width: 30px; height: 30px; object-fit: contain; }
+.ct-logo-text { display: flex; flex-direction: column; }
+.ct-logo-name { font-weight: 700; font-size: .85rem; letter-spacing: .02em; }
+.ct-logo-tag { font-size: .45rem; opacity: .75; }
+.ct-panel-body { margin-top: -30vh; }
+.ct-panel-title { font-size: 2.1rem; line-height: 1.2; font-weight: 700; max-width: 300px; margin: 0 0 1.4rem; }
+.ct-panel-text { color: var(--ct-mint); font-size: .9rem; line-height: 1.6; max-width: 320px; }
+.ct-trusted-label { font-size: .65rem; text-transform: uppercase; letter-spacing: .04em; color: var(--ct-mint); margin-bottom: .6rem; }
+.ct-trusted-list { display: flex; gap: 1.4rem; list-style: none; padding: 0; margin: 0; font-weight: 600; opacity: .8; }
+.ct-form-side { position: relative; }
+.ct-steps { position: absolute; top: 0; left: 0; right: 0; display: flex; list-style: none; margin: 0; padding: 1.2rem 3rem; border-bottom: 1px solid #E5E7EB; gap: 0; }
+.ct-step { display: flex; align-items: center; gap: .5rem; flex: 1; font-size: .8rem; color: #6B7280; }
+.ct-step:last-child { flex: 0; }
+.ct-step-num { width: 18px; height: 18px; border-radius: 50%; border: 1px solid #CBD5E1; display: grid; place-items: center; font-size: .65rem; }
+.ct-step.is-active { color: #111827; font-weight: 600; }
+.ct-step.is-active .ct-step-num { background: #15803D; border-color: #15803D; color: #fff; }
+.ct-step-line { flex: 1; height: 1px; background: #E5E7EB; margin: 0 .5rem; }
+.ct-submit { background: var(--ct-teal) !important; }
+.ct-link { color: var(--ct-teal) !important; font-weight: 600; }
