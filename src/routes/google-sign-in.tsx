@@ -1,6 +1,8 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { User } from "lucide-react";
 
+import { KearlyLogo } from "@/components/kearly-logo";
+
 export const Route = createFileRoute("/google-sign-in")({
   head: () => ({
     meta: [
@@ -60,12 +62,7 @@ function GoogleSignInPage() {
 
       <section className="gs-side">
         <div className="gs-brand">
-          <span className="lg-logo" role="img" aria-label="Kearly logo">
-            <span className="lg-petal lg-petal-one" />
-            <span className="lg-petal lg-petal-two" />
-            <span className="lg-petal lg-petal-three" />
-            <span className="lg-petal lg-petal-four" />
-          </span>
+          <KearlyLogo className="lg-logo" />
           <span className="gs-brand-text">
             <span className="gs-brand-name">KEARLY</span>
             <span className="gs-brand-tag">Compliance. Automated &amp; Simplified.</span>
