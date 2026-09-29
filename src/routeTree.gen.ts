@@ -15,6 +15,7 @@ import { Route as AddSiteRouteImport } from './routes/add-site'
 import { Route as AddTaskRouteImport } from './routes/add-task'
 import { Route as AssetsRouteImport } from './routes/assets'
 import { Route as AuditLogRouteImport } from './routes/audit-log'
+import { Route as BillingRouteImport } from './routes/billing'
 import { Route as BuildingRouteImport } from './routes/building'
 import { Route as CompleteRouteImport } from './routes/complete'
 import { Route as CompleteTicketRouteImport } from './routes/complete-ticket'
@@ -69,6 +70,11 @@ const AssetsRoute = AssetsRouteImport.update({
 const AuditLogRoute = AuditLogRouteImport.update({
   id: '/audit-log',
   path: '/audit-log',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BillingRoute = BillingRouteImport.update({
+  id: '/billing',
+  path: '/billing',
   getParentRoute: () => rootRouteImport,
 } as any)
 const BuildingRoute = BuildingRouteImport.update({
@@ -204,6 +210,7 @@ export interface FileRoutesByFullPath {
   '/add-task': typeof AddTaskRoute
   '/assets': typeof AssetsRoute
   '/audit-log': typeof AuditLogRoute
+  '/billing': typeof BillingRoute
   '/building': typeof BuildingRoute
   '/complete': typeof CompleteRoute
   '/complete-ticket': typeof CompleteTicketRoute
@@ -237,6 +244,7 @@ export interface FileRoutesByTo {
   '/add-task': typeof AddTaskRoute
   '/assets': typeof AssetsRoute
   '/audit-log': typeof AuditLogRoute
+  '/billing': typeof BillingRoute
   '/building': typeof BuildingRoute
   '/complete': typeof CompleteRoute
   '/complete-ticket': typeof CompleteTicketRoute
@@ -271,6 +279,7 @@ export interface FileRoutesById {
   '/add-task': typeof AddTaskRoute
   '/assets': typeof AssetsRoute
   '/audit-log': typeof AuditLogRoute
+  '/billing': typeof BillingRoute
   '/building': typeof BuildingRoute
   '/complete': typeof CompleteRoute
   '/complete-ticket': typeof CompleteTicketRoute
@@ -306,6 +315,7 @@ export interface FileRouteTypes {
     | '/add-task'
     | '/assets'
     | '/audit-log'
+    | '/billing'
     | '/building'
     | '/complete'
     | '/complete-ticket'
@@ -339,6 +349,7 @@ export interface FileRouteTypes {
     | '/add-task'
     | '/assets'
     | '/audit-log'
+    | '/billing'
     | '/building'
     | '/complete'
     | '/complete-ticket'
@@ -372,6 +383,7 @@ export interface FileRouteTypes {
     | '/add-task'
     | '/assets'
     | '/audit-log'
+    | '/billing'
     | '/building'
     | '/complete'
     | '/complete-ticket'
@@ -406,6 +418,7 @@ export interface RootRouteChildren {
   AddTaskRoute: typeof AddTaskRoute
   AssetsRoute: typeof AssetsRoute
   AuditLogRoute: typeof AuditLogRoute
+  BillingRoute: typeof BillingRoute
   BuildingRoute: typeof BuildingRoute
   CompleteRoute: typeof CompleteRoute
   CompleteTicketRoute: typeof CompleteTicketRoute
@@ -475,6 +488,13 @@ declare module '@tanstack/react-router' {
       path: '/audit-log'
       fullPath: '/audit-log'
       preLoaderRoute: typeof AuditLogRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/billing': {
+      id: '/billing'
+      path: '/billing'
+      fullPath: '/billing'
+      preLoaderRoute: typeof BillingRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/building': {
@@ -662,6 +682,7 @@ const rootRouteChildren: RootRouteChildren = {
   AddTaskRoute: AddTaskRoute,
   AssetsRoute: AssetsRoute,
   AuditLogRoute: AuditLogRoute,
+  BillingRoute: BillingRoute,
   BuildingRoute: BuildingRoute,
   CompleteRoute: CompleteRoute,
   CompleteTicketRoute: CompleteTicketRoute,
