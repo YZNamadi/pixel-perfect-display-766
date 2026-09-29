@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import {
   LayoutDashboard,
@@ -19,6 +19,7 @@ import {
   X,
   AlertTriangle,
   Stethoscope,
+  MoreVertical,
 } from "lucide-react";
 
 import { KearlyLogo } from "@/components/kearly-logo";
@@ -95,8 +96,19 @@ const statusTone = (s: Ticket["status"]) =>
 
 function RepairsPage() {
   const [activeTab, setActiveTab] = useState("all");
+  const [openMenu, setOpenMenu] = useState<string | null>(null);
   const [deleteTicket, setDeleteTicket] = useState<Ticket | null>(null);
   const [selectedTicket, setSelectedTicket] = useState<Ticket | null>(null);
+  const menuRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    if (!openMenu) return;
+    const onDown = (event: MouseEvent) => {
+      if (menuRef.current && !menuRef.current.contains(event.target as Node)) setOpenMenu(null);
+    };
+    document.addEventListener("mousedown", onDown);
+    return () => document.removeEventListener("mousedown", onDown);
+  }, [openMenu]);
   const [query, setQuery] = useState("");
   const [priority, setPriority] = useState("All");
   const [site, setSite] = useState("All");
@@ -227,26 +239,63 @@ function RepairsPage() {
                     <td className="rp-created">{t.created}</td>
                     <td className={t.slaTone === "red" ? "rp-sla-red" : undefined}>{t.sla}</td>
                     <td>
-                       <span className="rp-actions">
-                           <button type="button" className="rp-btn" onClick={() => setSelectedTicket(t)}><Eye size={13} aria-hidden="true" />View</button>
-                           {t.status !== "Closed" && <Link to="/edit-task" className="rp-btn">
-                            <Pencil size={13} aria-hidden="true" />
-                            Edit
-                           </Link>}
-                           {t.status !== "Closed" && <Link to="/complete-ticket" className="rp-btn tone-green">
-                            <Check size={13} aria-hidden="true" />
-                            Complete
-                           </Link>}
-
-                           <button type="button" className="rp-btn tone-blue" onClick={() => setSelectedTicket(t)}>
-                            <BadgeCheck size={13} aria-hidden="true" />
-                            Review
-                          </button>
-                           {t.status !== "Closed" && <button type="button" className="rp-btn tone-red" onClick={() => setDeleteTicket(t)}>
-                            <X size={13} aria-hidden="true" />
-                            Delete
-                           </button>}
-                         </span>
+                      <div
+                        className="rp-actions-wrap"
+                        ref={openMenu === t.id ? menuRef : undefined}
+                      >
+                        <button
+                          type="button"
+                          className="rp-kebab"
+                          aria-label={`Actions for ticket ${t.id}`}
+                          aria-expanded={openMenu === t.id}
+                          onClick={(event) => {
+                            event.stopPropagation();
+                            setOpenMenu((value) => (value === t.id ? null : t.id));
+                          }}
+                        >
+                          <MoreVertical size={16} aria-hidden="true" />
+                        </button>
+                        {openMenu === t.id && (
+                          <div className="rp-menu" role="menu" aria-label={`Ticket ${t.id} actions`}>
+                            <button
+                              type="button"
+                              role="menuitem"
+                              className="rp-menu-item"
+                              onClick={() => { setOpenMenu(null); setSelectedTicket(t); }}
+                            >
+                              <Eye size={13} aria-hidden="true" />View
+                            </button>
+                            {t.status !== "Closed" && (
+                              <Link to="/edit-task" role="menuitem" className="rp-menu-item" onClick={() => setOpenMenu(null)}>
+                                <Pencil size={13} aria-hidden="true" />Edit
+                              </Link>
+                            )}
+                            {t.status !== "Closed" && (
+                              <Link to="/complete-ticket" role="menuitem" className="rp-menu-item tone-green" onClick={() => setOpenMenu(null)}>
+                                <Check size={13} aria-hidden="true" />Complete
+                              </Link>
+                            )}
+                            <button
+                              type="button"
+                              role="menuitem"
+                              className="rp-menu-item tone-blue"
+                              onClick={() => { setOpenMenu(null); setSelectedTicket(t); }}
+                            >
+                              <BadgeCheck size={13} aria-hidden="true" />Review
+                            </button>
+                            {t.status !== "Closed" && (
+                              <button
+                                type="button"
+                                role="menuitem"
+                                className="rp-menu-item tone-red"
+                                onClick={() => { setOpenMenu(null); setDeleteTicket(t); }}
+                              >
+                                <X size={13} aria-hidden="true" />Delete
+                              </button>
+                            )}
+                          </div>
+                        )}
+                      </div>
                     </td>
                   </tr>
                 ))}
