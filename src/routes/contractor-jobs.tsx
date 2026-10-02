@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { Building2, Check, Clock, Info, Lightbulb, MapPin } from "lucide-react";
 
 import { KearlyLogo } from "@/components/kearly-logo";
+import { toast } from "sonner";
 
 export const Route = createFileRoute("/contractor-jobs")({
   head: () => ({
@@ -29,12 +30,13 @@ const jobs = [
 function ContractorJobsPage() {
   const navigate = useNavigate();
   const [open, setOpen] = useState<(typeof jobs)[number] | null>(null);
+  const [quote, setQuote] = useState<(typeof jobs)[number] | null>(null);
   useEffect(() => {
-    if (!open) return;
-    const k = (e: KeyboardEvent) => { if (e.key === "Escape") setOpen(null); };
+    if (!open && !quote) return;
+    const k = (e: KeyboardEvent) => { if (e.key === "Escape") { setOpen(null); setQuote(null); } };
     window.addEventListener("keydown", k);
     return () => window.removeEventListener("keydown", k);
-  }, [open]);
+  }, [open, quote]);
   return (
     <main className="su-page ct-page">
       <section className="su-panel ct-panel" aria-label="Kearly">
@@ -120,10 +122,44 @@ function ContractorJobsPage() {
               </div>
               <div className="jm-actions">
                 <button type="button" className="jm-close" onClick={() => setOpen(null)}>Close</button>
-                <button type="button" className="jm-submit" onClick={() => setOpen(null)}>Submit Quote</button>
+                <button type="button" className="jm-submit" onClick={() => { setQuote(open); setOpen(null); }}>Submit Quote</button>
               </div>
             </div>
           </div>
+        </div>
+      )}
+
+      {quote && (
+        <div className="jm-overlay" onClick={() => setQuote(null)}>
+          <form className="qm-card" role="dialog" aria-modal="true" aria-labelledby="qm-title" onClick={(e) => e.stopPropagation()}
+            onSubmit={(e) => { e.preventDefault(); toast.success("Quotation submitted"); setQuote(null); }}>
+            <div className="qm-head">
+              <h2 id="qm-title">Submit Your Quote</h2>
+              <p>For: {quote.title}</p>
+            </div>
+            <div className="qm-body">
+              <label className="qm-label" htmlFor="qm-amount">Your Quote (£) <span>*</span></label>
+              <div className="qm-money">
+                <input id="qm-amount" required inputMode="decimal" pattern="[0-9,]+(\.[0-9]{1,2})?" placeholder="e.g. 1,250.00" />
+                <span>GBP</span>
+              </div>
+              <label className="qm-label" htmlFor="qm-time">Estimated Timeline <span>*</span></label>
+              <select id="qm-time" required defaultValue="" className="qm-input">
+                <option value="" disabled>Select estimated timeframe</option>
+                <option>Within 1 day</option>
+                <option>2-3 days</option>
+                <option>Within 1 week</option>
+                <option>1-2 weeks</option>
+                <option>More than 2 weeks</option>
+              </select>
+              <label className="qm-label" htmlFor="qm-notes">Notes (Optional)</label>
+              <textarea id="qm-notes" className="qm-input qm-text" placeholder="Add any notes about your quote, availability, or approach..." />
+              <div className="qm-actions">
+                <button type="button" className="qm-cancel" onClick={() => setQuote(null)}>Cancel</button>
+                <button type="submit" className="qm-submit">Submit Quotation</button>
+              </div>
+            </div>
+          </form>
         </div>
       )}
     </main>
