@@ -6624,3 +6624,24 @@ a.am-menu-item { text-decoration: none; }
 @keyframes jm-fade { from { opacity: 0; } }
 @keyframes jm-pop { from { opacity: 0; transform: scale(.95) translateY(12px); } }
 @media (max-width: 640px) { .jm-actions { flex-direction: column-reverse; align-items: stretch; } }
+
+/* Submit quote modal */
+.qm-card { width: min(480px, 92vw); background: #fff; border-radius: 14px; box-shadow: 0 24px 60px rgba(15,23,42,.25); overflow: hidden; }
+.qm-head { padding: 20px 24px 10px; border-bottom: 1px solid #e5e7eb; }
+.qm-head h2 { font-size: 1.3rem; font-weight: 700; color: #0f172a; margin: 0; }
+.qm-head p { font-size: .82rem; color: #6b7280; margin: 4px 0 0; }
+.qm-body { padding: 22px 24px 22px; display: flex; flex-direction: column; }
+.qm-label { font-size: .85rem; font-weight: 600; color: #1f2937; margin: 0 0 8px; }
+.qm-label span { color: #dc2626; }
+.qm-money, .qm-input { width: 100%; border: 1px solid #cbd5e1; border-radius: 8px; background: #fff; font-size: .9rem; color: #111827; margin-bottom: 20px; }
+.qm-money { display: flex; align-items: center; padding: 0 12px; }
+.qm-money input { flex: 1; border: 0; outline: 0; padding: 11px 0; font-size: .9rem; background: transparent; }
+.qm-money span { font-size: .8rem; font-weight: 600; color: #475569; }
+.qm-input { padding: 11px 12px; outline: 0; }
+.qm-input:invalid { color: #6b7280; }
+.qm-money:focus-within, .qm-input:focus { border-color: #127566; box-shadow: 0 0 0 3px rgba(18,117,102,.12); }
+.qm-text { min-height: 90px; resize: vertical; font-family: inherit; }
+.qm-actions { display: flex; justify-content: flex-end; align-items: center; gap: 16px; border-top: 1px solid #e5e7eb; padding-top: 18px; }
+.qm-cancel { background: none; border: 0; color: #475569; font-weight: 500; cursor: pointer; }
+.qm-submit { background: #127566; color: #fff; border: 0; border-radius: 8px; padding: 10px 22px; font-weight: 600; cursor: pointer; }
+.qm-submit:hover { background: #0e5f53; }
