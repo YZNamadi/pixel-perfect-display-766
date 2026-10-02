@@ -1,5 +1,6 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
-import { Building2, Check, Clock, Info, MapPin } from "lucide-react";
+import { useEffect, useState } from "react";
+import { Building2, Check, Clock, Info, Lightbulb, MapPin } from "lucide-react";
 
 import { KearlyLogo } from "@/components/kearly-logo";
 
@@ -21,12 +22,19 @@ const trustedBy = ["NHS", "Bupa", "Spire", "UCLH", "Circle"];
 const steps = ["Account", "Profile", "Certificates", "Jobs"];
 const current = 3;
 const jobs = [
-  { title: "Emergency Lighting Check — Riverside Medical Centre", site: "Riverside Medical Centre (London)", desc: "Annual regulatory testing of emergency exit path lighting, backup batteries, and signage across all floors.", tags: ["Electrical", "PAT Testing"], loc: "London, SW1A 1AA", time: "2-3 days" },
-  { title: "Fire Alarm Inspection & Test", site: "St. Jude Family Practice (Kent)", desc: "Routine quarterly inspection, panel validation, and smoke sensor check across the practice.", tags: ["Fire Safety", "Commercial"], loc: "Kent, ME14 1XX", time: "1 day" },
+  { title: "Emergency Lighting Check — Riverside Medical Centre", site: "Riverside Medical Centre (London)", desc: "Annual regulatory testing of emergency exit path lighting, backup batteries, and signage across all floors.", tags: ["Electrical", "PAT Testing"], loc: "London, SW1A 1AA", time: "2-3 days", name: "Emergency Lighting Check", full: "Comprehensive regulatory inspection of emergency backup power systems, exit lighting luminaire testing, panel checks, and safety certificate filing. Task will cover the complete clinic, first-floor wards, and secondary emergency pathways.", equip: ["PAT Tester", "Ladder", "PPE"], posted: "12 May 2025", deadline: "24 May 2025", duration: "2-3 Days", address: "Riverside Clinic, 12 Parkside Road, London SW1A 1AA" },
+  { title: "Fire Alarm Inspection & Test", site: "St. Jude Family Practice (Kent)", desc: "Routine quarterly inspection, panel validation, and smoke sensor check across the practice.", tags: ["Fire Safety", "Commercial"], loc: "Kent, ME14 1XX", time: "1 day", name: "Fire Alarm Inspection & Test", full: "Routine quarterly inspection of the fire alarm panel, call points and smoke sensors, with full logbook update and certificate filing for the practice.", equip: ["Test Smoke Kit", "Ladder", "PPE"], posted: "14 May 2025", deadline: "28 May 2025", duration: "1 Day", address: "St. Jude Family Practice, 4 Week Street, Maidstone ME14 1XX" },
 ];
 
 function ContractorJobsPage() {
   const navigate = useNavigate();
+  const [open, setOpen] = useState<(typeof jobs)[number] | null>(null);
+  useEffect(() => {
+    if (!open) return;
+    const k = (e: KeyboardEvent) => { if (e.key === "Escape") setOpen(null); };
+    window.addEventListener("keydown", k);
+    return () => window.removeEventListener("keydown", k);
+  }, [open]);
   return (
     <main className="su-page ct-page">
       <section className="su-panel ct-panel" aria-label="Kearly">
@@ -79,7 +87,7 @@ function ContractorJobsPage() {
                       <span className="cj-mi"><Clock size={13} aria-hidden="true" />{j.time}</span>
                     </div>
                   </div>
-                  <button type="button" className="cj-view">View Details</button>
+                  <button type="button" className="cj-view" onClick={() => setOpen(j)}>View Details</button>
                 </li>
               ))}
             </ul>
@@ -91,6 +99,33 @@ function ContractorJobsPage() {
           </div>
         </div>
       </section>
+
+      {open && (
+        <div className="jm-overlay" onClick={() => setOpen(null)}>
+          <div className="jm-card" role="dialog" aria-modal="true" aria-labelledby="jm-title" onClick={(e) => e.stopPropagation()}>
+            <div className="jm-band"><Lightbulb size={26} strokeWidth={1.6} aria-hidden="true" /></div>
+            <div className="jm-body">
+              <h2 id="jm-title" className="jm-title">{open.name}</h2>
+              <p className="jm-site">{open.site}</p>
+              <p className="jm-desc">{open.full}</p>
+              <p className="jm-label">Equipment needed</p>
+              <div className="jm-tags">{open.equip.map((t) => <span key={t}>{t}</span>)}</div>
+              <div className="jm-info">
+                <div className="jm-row">
+                  <div><span>Date posted</span><strong>{open.posted}</strong></div>
+                  <div className="jm-mid"><span>Deadline</span><strong>{open.deadline}</strong></div>
+                  <div className="jm-end"><span>Duration</span><strong>{open.duration}</strong></div>
+                </div>
+                <div className="jm-loc"><span>Location</span><strong>{open.address}</strong></div>
+              </div>
+              <div className="jm-actions">
+                <button type="button" className="jm-close" onClick={() => setOpen(null)}>Close</button>
+                <button type="button" className="jm-submit" onClick={() => setOpen(null)}>Submit Quote</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </main>
   );
 }
