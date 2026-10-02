@@ -144,14 +144,7 @@ function ContractorJobsPage() {
                 <span>GBP</span>
               </div>
               <label className="qm-label" htmlFor="qm-time">Estimated Timeline <span>*</span></label>
-              <select id="qm-time" required defaultValue="" className="qm-input">
-                <option value="" disabled>Select estimated timeframe</option>
-                <option>Within 1 day</option>
-                <option>2-3 days</option>
-                <option>Within 1 week</option>
-                <option>1-2 weeks</option>
-                <option>More than 2 weeks</option>
-              </select>
+              <input id="qm-time" required className="qm-input" placeholder="e.g. 2-3 days" />
               <label className="qm-label" htmlFor="qm-notes">Notes (Optional)</label>
               <textarea id="qm-notes" className="qm-input qm-text" placeholder="Add any notes about your quote, availability, or approach..." />
               <div className="qm-actions">
