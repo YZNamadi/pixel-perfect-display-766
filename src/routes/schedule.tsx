@@ -317,10 +317,7 @@ function SchedulePage() {
                 </div>
               )}
             </div>
-            <span className="po-chip">
-              <Calendar size={14} aria-hidden="true" />
-              All buildings
-            </span>
+            <div className="po-chip qa-select-chip"><ProductSelect aria-label="Schedule buildings"><option>All buildings</option></ProductSelect></div>
             <div className="sc-views" role="tablist" aria-label="Calendar view">
               {views.map((item) => (
                 <button
