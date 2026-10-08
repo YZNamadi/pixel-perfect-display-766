@@ -7053,3 +7053,7 @@ button.product-select-trigger:hover, button.product-select-trigger[data-state="o
 .er-staff select{height:50px}.er-avatar{width:32px;height:32px;font-size:.7rem}.er-staff-text{left:52px}
 .er-staff-text b{font-size:.88rem}.er-staff-text small{font-size:.72rem}
 .er-h{font-size:.78rem;letter-spacing:.04em}
+/* Edit Report: keep icons and staff overlay clear of the select trigger */
+.er-icon-field .product-select-trigger{padding-left:34px;height:41px;font-size:.88rem;color:#111827}
+.er-staff .product-select-trigger{height:41px}
+.er-staff .product-select-trigger>span:first-child{visibility:hidden}
