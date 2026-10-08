@@ -1,3 +1,4 @@
+import { ProductSelect } from "@/components/product-select";
 import { forwardRef, useEffect, useRef, useState, type SelectHTMLAttributes } from "react";
 import { Button } from "@/components/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuRadioGroup, DropdownMenuRadioItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
@@ -30,7 +31,7 @@ export const ProductSelect = forwardRef<HTMLSelectElement, SelectHTMLAttributes<
 
     return (
       <span className="product-select-wrap">
-        <select {...props} className="product-select-native" tabIndex={-1} aria-hidden="true"
+        <ProductSelect {...props} className="product-select-native" tabIndex={-1} aria-hidden="true"
           ref={(element) => {
             nativeRef.current = element;
             if (typeof forwardedRef === "function") forwardedRef(element);
@@ -42,7 +43,7 @@ export const ProductSelect = forwardRef<HTMLSelectElement, SelectHTMLAttributes<
             triggerRef.current?.focus();
             setOpen(true);
           }}
-        >{children}</select>
+        >{children}</ProductSelect>
         <DropdownMenu open={open} onOpenChange={setOpen}>
           <DropdownMenuTrigger asChild>
             <Button ref={triggerRef} type="button" variant="outline" className={`product-select-trigger ${className ?? ""}`} style={style}

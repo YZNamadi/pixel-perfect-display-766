@@ -1,3 +1,4 @@
+import { ProductSelect } from "@/components/product-select";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { Check, Info } from "lucide-react";
@@ -150,7 +151,7 @@ function SitePage() {
                 <label className="fp-label" htmlFor="hours-from">
                   Operating Hours From
                 </label>
-                <select
+                <ProductSelect
                   id="hours-from"
                   name="hoursFrom"
                   className="fp-input fp-select"
@@ -161,13 +162,13 @@ function SitePage() {
                       {hour}
                     </option>
                   ))}
-                </select>
+                </ProductSelect>
               </div>
               <div className="fp-field">
                 <label className="fp-label" htmlFor="hours-to">
                   Operating Hours To
                 </label>
-                <select
+                <ProductSelect
                   id="hours-to"
                   name="hoursTo"
                   className="fp-input fp-select"
@@ -178,7 +179,7 @@ function SitePage() {
                       {hour}
                     </option>
                   ))}
-                </select>
+                </ProductSelect>
               </div>
             </div>
 

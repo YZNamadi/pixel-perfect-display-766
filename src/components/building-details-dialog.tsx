@@ -1,3 +1,4 @@
+import { ProductSelect } from "@/components/product-select";
 import * as Dialog from "@radix-ui/react-dialog";
 import { ChevronDown, CircleX } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -38,18 +39,18 @@ export function BuildingDetailsDialog({ open, onOpenChange, details, onSave }: {
             onOpenChange(false);
           }}>
             <label className="bt-field bt-full"><span>Facility Name <em>*</em></span><input name="name" required defaultValue={details.name} /></label>
-            <label className="bt-field bt-full"><span>Facility Type <em>*</em></span><div className="bt-select"><select name="type" required defaultValue={details.type}>
+            <label className="bt-field bt-full"><span>Facility Type <em>*</em></span><div className="bt-select"><ProductSelect name="type" required defaultValue={details.type}>
               <option>{details.type}</option>
               {["Hospital", "Medical Center", "Residential Care Facility", "Commercial Building"].filter((type) => type !== details.type).map((type) => <option key={type}>{type}</option>)}
-            </select><ChevronDown size={14} /></div></label>
+            </ProductSelect><ChevronDown size={14} /></div></label>
             <label className="bt-field bt-full"><span>Full Address <em>*</em></span><input name="address" required defaultValue={details.address} /></label>
             <label className="bt-field"><span>Contact Phone <em>*</em></span><input name="phone" type="tel" required defaultValue={details.phone} /></label>
             <label className="bt-field"><span>Gross Internal Area <em>*</em></span><input name="area" required defaultValue={details.area} /></label>
             <label className="bt-field"><span>Primary Use Type <em>*</em></span><input name="use" required defaultValue={details.use} /></label>
             <label className="bt-field"><span>Year Constructed <em>*</em></span><input name="year" required defaultValue={details.year} /></label>
-            <label className="bt-field bt-full"><span>Site Manager <em>*</em></span><div className="bt-select"><select name="manager" required defaultValue={details.manager}>
+            <label className="bt-field bt-full"><span>Site Manager <em>*</em></span><div className="bt-select"><ProductSelect name="manager" required defaultValue={details.manager}>
               {[details.manager, "Alex Rowe (Portfolio Admin)", "Sarah Jenkins", "James Carter", "Clara Oswald"].filter((manager, index, all) => all.indexOf(manager) === index).map((manager) => <option key={manager}>{manager}</option>)}
-            </select><ChevronDown size={14} /></div></label>
+            </ProductSelect><ChevronDown size={14} /></div></label>
             <footer className="bt-actions bt-full">
               <Dialog.Close asChild><Button type="button" variant="outline" className="bt-cancel">Cancel</Button></Dialog.Close>
               <Button type="submit" className="bt-save">Save Changes</Button>

@@ -1,3 +1,4 @@
+import { ProductSelect } from "@/components/product-select";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Check } from "lucide-react";
 
@@ -112,7 +113,7 @@ function FacilityPage() {
               <label className="fp-label" htmlFor="region">
                 Region
               </label>
-              <select
+              <ProductSelect
                 id="region"
                 name="region"
                 className="fp-input fp-select"
@@ -125,7 +126,7 @@ function FacilityPage() {
                 <option value="scotland">Scotland</option>
                 <option value="wales">Wales</option>
                 <option value="northern-ireland">Northern Ireland</option>
-              </select>
+              </ProductSelect>
             </div>
 
             <div className="fp-grid">

@@ -1,3 +1,4 @@
+import { ProductSelect } from "@/components/product-select";
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 import {
@@ -152,10 +153,10 @@ function AddSitePage() {
                 <label className="ns-field">
                   <span>Primary Use Type</span>
                   <div className="ns-select">
-                    <select defaultValue="">
+                    <ProductSelect defaultValue="">
                       <option value="" disabled>Select clinical or office use</option>
                       {useTypes.map((t) => <option key={t}>{t}</option>)}
-                    </select>
+                    </ProductSelect>
                     <ChevronDown size={14} aria-hidden="true" />
                   </div>
                 </label>
@@ -193,10 +194,10 @@ function AddSitePage() {
               <label className="ns-field">
                 <span>Assigned Site Manager</span>
                 <div className="ns-select">
-                  <select defaultValue="">
+                  <ProductSelect defaultValue="">
                     <option value="" disabled>Select from team members</option>
                     {managers.map((m) => <option key={m}>{m}</option>)}
-                  </select>
+                  </ProductSelect>
                   <ChevronDown size={14} aria-hidden="true" />
                 </div>
               </label>

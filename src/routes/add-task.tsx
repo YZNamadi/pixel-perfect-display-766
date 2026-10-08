@@ -1,3 +1,4 @@
+import { ProductSelect } from "@/components/product-select";
 import { useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 
@@ -162,7 +163,7 @@ function AddTaskPage() {
 
               <label className="at-field">
                 <span className="at-label">Category</span>
-                <select className="at-input" defaultValue="fire">
+                <ProductSelect className="at-input" defaultValue="fire">
                   <option value="fire">Fire &amp; General Safety</option>
                   <option value="electrical">Electrical Systems</option>
                   <option value="hvac">HVAC &amp; Ventilation</option>
@@ -171,7 +172,7 @@ function AddTaskPage() {
                   <option value="lifts">Lifts &amp; Escalators</option>
                   <option value="gas">Gas &amp; Boiler Systems</option>
                   <option value="lighting">Emergency Lighting</option>
-                </select>
+                </ProductSelect>
               </label>
 
               <label className="at-field">
@@ -203,7 +204,7 @@ function AddTaskPage() {
 
               <label className="at-field">
                 <span className="at-label">Frequency</span>
-                <select className="at-input" defaultValue="annually">
+                <ProductSelect className="at-input" defaultValue="annually">
                   <option value="monthly">Monthly</option>
                   <option value="quarterly">Quarterly</option>
                   <option value="biannually">Bi-Annually</option>
@@ -211,7 +212,7 @@ function AddTaskPage() {
                   <option value="5years">5 Years</option>
                   <option value="custom">Custom</option>
 
-                </select>
+                </ProductSelect>
               </label>
 
               <label className="at-field">
@@ -258,14 +259,14 @@ function AddTaskPage() {
 
               <label className="at-field">
                 <span className="at-label">Assign Role</span>
-                <select className="at-input" defaultValue="">
+                <ProductSelect className="at-input" defaultValue="">
                   <option value="">Select role</option>
                   <option value="admin">Portfolio Compliance Administrator</option>
                   <option value="repairs">Repairs Manager</option>
                   <option value="coordinator">Contractor Coordinator</option>
                   <option value="inspector">Site Inspector</option>
                   <option value="contractor">External Contractor</option>
-                </select>
+                </ProductSelect>
               </label>
 
               <div className="ct-toggle-row at-evidence">

@@ -1,3 +1,4 @@
+import { ProductSelect } from "@/components/product-select";
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { Check, ChevronDown } from "lucide-react";
 
@@ -77,14 +78,14 @@ function ContractorProfilePage() {
               <label className="ct-field">
                 <span>Trade / Specialty <span className="su-required">*</span></span>
                 <span className="ct-select-wrap">
-                  <select className="su-input ct-select" required defaultValue="">
+                  <ProductSelect className="su-input ct-select" required defaultValue="">
                     <option value="" disabled>Select your trade</option>
                     <option>Gas &amp; Heating Engineer</option>
                     <option>Water Hygiene Specialist</option>
                     <option>Electrical PAT Tester</option>
                     <option>General Maintenance Technician</option>
                     <option>Fire Safety Inspector</option>
-                  </select>
+                  </ProductSelect>
                   <ChevronDown size={16} className="ct-select-icon" aria-hidden="true" />
                 </span>
               </label>
