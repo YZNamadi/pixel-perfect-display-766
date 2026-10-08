@@ -31,6 +31,7 @@ import { Route as EditMemberRouteImport } from './routes/edit-member'
 import { Route as EditSiteRouteImport } from './routes/edit-site'
 import { Route as EditTaskRouteImport } from './routes/edit-task'
 import { Route as EquipmentRouteImport } from './routes/equipment'
+import { Route as EquipmentDetailRouteImport } from './routes/equipment-detail'
 import { Route as FacilityRouteImport } from './routes/facility'
 import { Route as GoogleSignInRouteImport } from './routes/google-sign-in'
 import { Route as ImportRouteImport } from './routes/import'
@@ -156,6 +157,11 @@ const EquipmentRoute = EquipmentRouteImport.update({
   path: '/equipment',
   getParentRoute: () => rootRouteImport,
 } as any)
+const EquipmentDetailRoute = EquipmentDetailRouteImport.update({
+  id: '/equipment-detail',
+  path: '/equipment-detail',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const FacilityRoute = FacilityRouteImport.update({
   id: '/facility',
   path: '/facility',
@@ -250,6 +256,7 @@ export interface FileRoutesByFullPath {
   '/edit-site': typeof EditSiteRoute
   '/edit-task': typeof EditTaskRoute
   '/equipment': typeof EquipmentRoute
+  '/equipment-detail': typeof EquipmentDetailRoute
   '/facility': typeof FacilityRoute
   '/google-sign-in': typeof GoogleSignInRoute
   '/import': typeof ImportRoute
@@ -288,6 +295,7 @@ export interface FileRoutesByTo {
   '/edit-site': typeof EditSiteRoute
   '/edit-task': typeof EditTaskRoute
   '/equipment': typeof EquipmentRoute
+  '/equipment-detail': typeof EquipmentDetailRoute
   '/facility': typeof FacilityRoute
   '/google-sign-in': typeof GoogleSignInRoute
   '/import': typeof ImportRoute
@@ -327,6 +335,7 @@ export interface FileRoutesById {
   '/edit-site': typeof EditSiteRoute
   '/edit-task': typeof EditTaskRoute
   '/equipment': typeof EquipmentRoute
+  '/equipment-detail': typeof EquipmentDetailRoute
   '/facility': typeof FacilityRoute
   '/google-sign-in': typeof GoogleSignInRoute
   '/import': typeof ImportRoute
@@ -367,6 +376,7 @@ export interface FileRouteTypes {
     | '/edit-site'
     | '/edit-task'
     | '/equipment'
+    | '/equipment-detail'
     | '/facility'
     | '/google-sign-in'
     | '/import'
@@ -405,6 +415,7 @@ export interface FileRouteTypes {
     | '/edit-site'
     | '/edit-task'
     | '/equipment'
+    | '/equipment-detail'
     | '/facility'
     | '/google-sign-in'
     | '/import'
@@ -443,6 +454,7 @@ export interface FileRouteTypes {
     | '/edit-site'
     | '/edit-task'
     | '/equipment'
+    | '/equipment-detail'
     | '/facility'
     | '/google-sign-in'
     | '/import'
@@ -482,6 +494,7 @@ export interface RootRouteChildren {
   EditSiteRoute: typeof EditSiteRoute
   EditTaskRoute: typeof EditTaskRoute
   EquipmentRoute: typeof EquipmentRoute
+  EquipmentDetailRoute: typeof EquipmentDetailRoute
   FacilityRoute: typeof FacilityRoute
   GoogleSignInRoute: typeof GoogleSignInRoute
   ImportRoute: typeof ImportRoute
@@ -654,6 +667,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof EquipmentRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/equipment-detail': {
+      id: '/equipment-detail'
+      path: '/equipment-detail'
+      fullPath: '/equipment-detail'
+      preLoaderRoute: typeof EquipmentDetailRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/facility': {
       id: '/facility'
       path: '/facility'
@@ -778,6 +798,7 @@ const rootRouteChildren: RootRouteChildren = {
   EditSiteRoute: EditSiteRoute,
   EditTaskRoute: EditTaskRoute,
   EquipmentRoute: EquipmentRoute,
+  EquipmentDetailRoute: EquipmentDetailRoute,
   FacilityRoute: FacilityRoute,
   GoogleSignInRoute: GoogleSignInRoute,
   ImportRoute: ImportRoute,
