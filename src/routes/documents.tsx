@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import {
   LayoutDashboard,
@@ -14,7 +14,7 @@ import {
   Building,
   ChevronDown,
   UploadCloud,
-  Eye,
+  MoreVertical,
   Download,
   Trash2,
   AlertTriangle,
@@ -199,6 +199,18 @@ function DocumentFilter({ label, value, options, onChange }: {
 function DocumentsPage() {
   const [pending, setPending] = useState<Doc | null>(null);
   const [viewing, setViewing] = useState<Doc | null>(null);
+  const [openMenu, setOpenMenu] = useState<string | null>(null);
+  const menuRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    if (!openMenu) return;
+    const onDown = (event: MouseEvent) => {
+      if (menuRef.current && !menuRef.current.contains(event.target as Node)) setOpenMenu(null);
+    };
+    document.addEventListener("mousedown", onDown);
+    return () => document.removeEventListener("mousedown", onDown);
+  }, [openMenu]);
+
   const [documentType, setDocumentType] = useState("All Types");
   const [property, setProperty] = useState("All Properties");
   const [expiryStatus, setExpiryStatus] = useState("All");
@@ -327,7 +339,9 @@ function DocumentsPage() {
               <tbody>
                 {visibleDocuments.map((doc) => (
                   <tr key={doc.name}>
-                    <td className="cl-name dc-doc-name">{doc.name}</td>
+                    <td className="cl-name dc-doc-name">
+                      <button type="button" className="dc-doc-link" onClick={() => setViewing(doc)}>{doc.name}</button>
+                    </td>
                     <td className="al-details">{doc.property}</td>
                     <td className="al-details">{doc.type}</td>
                     <td className="rp-created">{doc.uploaded}</td>
@@ -339,21 +353,34 @@ function DocumentsPage() {
                       <span className="eq-cat">{doc.tag}</span>
                     </td>
                     <td>
-                      <div className="cl-row-actions">
-                        <button type="button" className="cl-icon-btn" aria-label={`View ${doc.name}`} onClick={() => setViewing(doc)}>
-                          <Eye size={15} aria-hidden="true" />
-                        </button>
-                        <button type="button" className="cl-icon-btn" aria-label={`Download ${doc.name}`}>
-                          <Download size={15} aria-hidden="true" />
-                        </button>
+                      <div
+                        className="rp-actions-wrap"
+                        ref={openMenu === doc.name ? menuRef : undefined}
+                      >
                         <button
                           type="button"
-                          className="cl-icon-btn dc-del"
-                          aria-label={`Delete ${doc.name}`}
-                          onClick={() => setPending(doc)}
+                          className="rp-kebab"
+                          aria-label={`Actions for ${doc.name}`}
+                          aria-expanded={openMenu === doc.name}
+                          onClick={() => setOpenMenu((value) => (value === doc.name ? null : doc.name))}
                         >
-                          <Trash2 size={15} aria-hidden="true" />
+                          <MoreVertical size={16} aria-hidden="true" />
                         </button>
+                        {openMenu === doc.name && (
+                          <div className="rp-menu" role="menu" aria-label={`${doc.name} actions`}>
+                            <button type="button" role="menuitem" className="rp-menu-item" onClick={() => setOpenMenu(null)}>
+                              <Download size={13} aria-hidden="true" />Download
+                            </button>
+                            <button
+                              type="button"
+                              role="menuitem"
+                              className="rp-menu-item tone-red"
+                              onClick={() => { setOpenMenu(null); setPending(doc); }}
+                            >
+                              <Trash2 size={13} aria-hidden="true" />Delete
+                            </button>
+                          </div>
+                        )}
                       </div>
                     </td>
                   </tr>

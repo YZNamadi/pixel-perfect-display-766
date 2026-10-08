@@ -5690,6 +5690,12 @@ a.am-menu-item { text-decoration: none; }
 .dc-filter-option[data-state="checked"] { font-weight: 600; }
 .dc-filter-option[data-state="checked"] .dc-filter-dot { background: var(--document-filter-green); border-color: var(--document-filter-green); }
 .dc-doc-name { max-width: 240px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.dc-doc-link {
+  display: block; max-width: 240px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  padding: 0; border: 0; background: transparent; color: #111827; font: inherit; font-weight: 600;
+  text-align: left; cursor: pointer;
+}
+.dc-doc-link:hover { color: #15803D; text-decoration: underline; }
 .dc-expiry {
   display: inline-block; font-size: 0.74rem; font-weight: 600;
   padding: 0.25rem 0.5rem; border-radius: 6px;
