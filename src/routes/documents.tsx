@@ -339,7 +339,9 @@ function DocumentsPage() {
               <tbody>
                 {visibleDocuments.map((doc) => (
                   <tr key={doc.name}>
-                    <td className="cl-name dc-doc-name">{doc.name}</td>
+                    <td className="cl-name dc-doc-name">
+                      <button type="button" className="dc-doc-link" onClick={() => setViewing(doc)}>{doc.name}</button>
+                    </td>
                     <td className="al-details">{doc.property}</td>
                     <td className="al-details">{doc.type}</td>
                     <td className="rp-created">{doc.uploaded}</td>
