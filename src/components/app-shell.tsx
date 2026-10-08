@@ -19,7 +19,7 @@ const governance = [
   { label: "Audit log", icon: ScrollText, to: "/audit-log" as const },
 ];
 
-function NavLink({ label, icon: Icon, to, active, badge }: { label: string; icon: LucideIcon; to: "/dashboard" | "/compliance" | "/equipment" | "/repairs" | "/assets" | "/reports" | "/team-members" | "/audit-log" | "/billing"; active?: boolean; badge?: string }) {
+function NavLink({ label, icon: Icon, to, active, badge }: { label: string; icon: LucideIcon; to: "/dashboard" | "/compliance" | "/equipment" | "/repairs" | "/assets" | "/reports" | "/team-members" | "/audit-log"; active?: boolean; badge?: string }) {
   return <Link to={to} className={`po-nav-item ${active ? "is-active" : ""}`}><Icon size={17} aria-hidden="true" /><span>{label}</span>{badge ? <span className="po-nav-badge">{badge}</span> : null}</Link>;
 }
 
