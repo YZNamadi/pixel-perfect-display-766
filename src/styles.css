@@ -5658,12 +5658,37 @@ a.am-menu-item { text-decoration: none; }
 }
 .dc-drop-hint { font-size: 0.72rem; color: #9CA3AF; }
 .dc-filters { display: flex; gap: 0.6rem; flex-wrap: wrap; margin-bottom: 1rem; }
+:root {
+  --document-filter-surface: #FFFFFF;
+  --document-filter-text: #425570;
+  --document-filter-border: #E5EDF5;
+  --document-filter-selected: #F0FDF4;
+  --document-filter-green: #15803D;
+  --document-filter-shadow: 0 7px 16px #0F172A14;
+}
 .dc-filter {
   display: inline-flex; align-items: center; gap: 0.35rem; font: inherit; font-size: 0.78rem;
-  font-weight: 500; color: #374151; background: #FFFFFF; border: 1px solid #E5E7EB;
-  border-radius: 8px; padding: 0.45rem 0.7rem; cursor: pointer;
+  font-weight: 400; color: var(--document-filter-text); background: var(--document-filter-surface); border: 1px solid var(--document-filter-border);
+  border-radius: 6px; padding: 0.45rem 0.7rem; cursor: pointer; height: auto; box-shadow: none;
 }
-.dc-filter:hover { background: #F9FAFB; }
+.dc-filter:hover, .dc-filter[data-state="open"] { background: var(--document-filter-surface); color: var(--document-filter-text); }
+.dc-filter-menu {
+  width: 208px; min-width: 208px; padding: 0; border-radius: 6px;
+  border: 1px solid var(--document-filter-border); background: var(--document-filter-surface);
+  color: var(--document-filter-text); box-shadow: var(--document-filter-shadow);
+}
+.dc-filter-option {
+  min-height: 34px; padding: 8px 12px; gap: 10px; border-radius: 0; font-size: 12px;
+  line-height: 17px; font-weight: 400; cursor: pointer;
+}
+.dc-filter-option + .dc-filter-option { border-top: 1px solid var(--document-filter-border); }
+.dc-filter-option > span:first-child { display: none; }
+.dc-filter-dot { width: 5px; height: 5px; flex-shrink: 0; border-radius: 50%; border: 1px solid var(--document-filter-border); }
+.dc-filter-option[data-state="checked"], .dc-filter-option[data-highlighted] {
+  background: var(--document-filter-selected); color: var(--document-filter-green);
+}
+.dc-filter-option[data-state="checked"] { font-weight: 600; }
+.dc-filter-option[data-state="checked"] .dc-filter-dot { background: var(--document-filter-green); border-color: var(--document-filter-green); }
 .dc-doc-name { max-width: 240px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .dc-expiry {
   display: inline-block; font-size: 0.74rem; font-weight: 600;
