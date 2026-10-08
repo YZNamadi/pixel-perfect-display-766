@@ -22,6 +22,14 @@ import {
 } from "lucide-react";
 
 import { KearlyLogo } from "@/components/kearly-logo";
+import { Button } from "@/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuRadioGroup,
+  DropdownMenuRadioItem,
+} from "@/components/ui/dropdown-menu";
 
 export const Route = createFileRoute("/documents")({
   head: () => ({
@@ -154,10 +162,50 @@ const documents: Doc[] = [
   },
 ];
 
-const filters = ["Doc Type: All Types", "Property: All Properties", "Expiry Status: All"];
+const documentTypes = ["All Types", "Gas Certificate", "Electrical Cert", "Fire Risk Assessment", "EPC", "Water Hygiene", "Passenger Lift Cert", "Asbestos Survey", "Insurance Cert"];
+const properties = ["All Properties", "Riverside Court", "Elmwood Court", "Victoria Wharf", "Northgate House"];
+const expiryStatuses = ["All", "Valid", "Expiring Soon", "Expired"];
+
+function DocumentFilter({ label, value, options, onChange }: {
+  label: string;
+  value: string;
+  options: string[];
+  onChange: (value: string) => void;
+}) {
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button variant="outline" className="dc-filter">
+          {label}: {value}
+          <ChevronDown size={13} aria-hidden="true" />
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="start" sideOffset={14} className="dc-filter-menu" aria-label={label}>
+        <DropdownMenuRadioGroup value={value} onValueChange={onChange}>
+          {options.map((option) => (
+            <DropdownMenuRadioItem key={option} value={option} className="dc-filter-option">
+              <span className="dc-filter-dot" aria-hidden="true" />
+              {option}
+            </DropdownMenuRadioItem>
+          ))}
+        </DropdownMenuRadioGroup>
+      </DropdownMenuContent>
+    </DropdownMenu>
+  );
+}
 
 function DocumentsPage() {
   const [pending, setPending] = useState<Doc | null>(null);
+  const [documentType, setDocumentType] = useState("All Types");
+  const [property, setProperty] = useState("All Properties");
+  const [expiryStatus, setExpiryStatus] = useState("All");
+  const visibleDocuments = documents.filter((doc) => {
+    const type = doc.type === "Fire Risk Ass." ? "Fire Risk Assessment" : doc.type === "Water Hygiene L8" ? "Water Hygiene" : doc.type;
+    const status = doc.expiryTone === "tone-green" ? "Valid" : doc.expiryTone === "tone-amber" ? "Expiring Soon" : "Expired";
+    return (documentType === "All Types" || documentType === type)
+      && (property === "All Properties" || property === doc.property)
+      && (expiryStatus === "All" || expiryStatus === status);
+  });
 
   return (
     <div className="po-shell">
@@ -253,12 +301,9 @@ function DocumentsPage() {
         </div>
 
         <div className="dc-filters">
-          {filters.map((f) => (
-            <button type="button" className="dc-filter" key={f}>
-              {f}
-              <ChevronDown size={13} aria-hidden="true" />
-            </button>
-          ))}
+          <DocumentFilter label="Doc Type" value={documentType} options={documentTypes} onChange={setDocumentType} />
+          <DocumentFilter label="Property" value={property} options={properties} onChange={setProperty} />
+          <DocumentFilter label="Expiry Status" value={expiryStatus} options={expiryStatuses} onChange={setExpiryStatus} />
         </div>
 
         <section className="cl-panel" aria-label="Compliance documents">
@@ -277,7 +322,7 @@ function DocumentsPage() {
                 </tr>
               </thead>
               <tbody>
-                {documents.map((doc) => (
+                {visibleDocuments.map((doc) => (
                   <tr key={doc.name}>
                     <td className="cl-name dc-doc-name">{doc.name}</td>
                     <td className="al-details">{doc.property}</td>
@@ -310,12 +355,15 @@ function DocumentsPage() {
                     </td>
                   </tr>
                 ))}
+                {visibleDocuments.length === 0 && (
+                  <tr><td colSpan={8}>No documents match these filters.</td></tr>
+                )}
               </tbody>
             </table>
           </div>
 
           <div className="cl-foot">
-            <small>Showing 1-8 of 64 documents</small>
+            <small>{visibleDocuments.length ? `Showing 1-${visibleDocuments.length} of ${visibleDocuments.length} documents` : "Showing 0 documents"}</small>
             <div className="cl-pager">
               <button type="button" className="cl-page">
                 Previous
