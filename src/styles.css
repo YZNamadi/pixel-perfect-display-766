@@ -7042,3 +7042,14 @@ button.product-select-trigger:hover, button.product-select-trigger[data-state="o
 .er-actions{display:flex;justify-content:space-between;align-items:center}
 .er-delete{display:inline-flex;align-items:center;gap:6px;border:0;background:none;color:#ef4444;font:inherit;font-size:.8rem;font-weight:500;cursor:pointer}
 @media (max-width:720px){.er-grid3{grid-template-columns:1fr}}
+/* Edit Report spec tuning */
+.er-page{padding:24px 40px 32px;max-width:none}
+.er-back{color:#6b7280;font-size:.85rem;font-weight:500;margin-bottom:12px}.er-back:hover{color:#15803d}
+.er-title{font-size:1.5rem;font-weight:800}.er-sub{font-size:.88rem;color:#9ca3af;margin-bottom:24px}
+.er-page .atr-card{padding:32px;gap:20px}
+.er-page .atr-grid label,.er-page .atr-field{font-size:.85rem;color:#374151;gap:6px}
+.er-page input,.er-page select{border-color:#d1d5db!important;font-size:.88rem!important}
+.er-page input{padding:11px 16px}
+.er-staff select{height:50px}.er-avatar{width:32px;height:32px;font-size:.7rem}.er-staff-text{left:52px}
+.er-staff-text b{font-size:.88rem}.er-staff-text small{font-size:.72rem}
+.er-h{font-size:.78rem;letter-spacing:.04em}
