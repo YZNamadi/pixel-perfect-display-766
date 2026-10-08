@@ -334,6 +334,9 @@ function SchedulePage() {
                 </button>
               ))}
             </div>
+            <Link to="/compliance" className="sc-view-ppm">
+              View PPM
+            </Link>
             <button type="button" className="po-download" onClick={() => setAddOpen(true)}>
               Add Event
             </button>
