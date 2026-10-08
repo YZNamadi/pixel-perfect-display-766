@@ -1,3 +1,4 @@
+- [ ] Standardize product dropdowns using the Documents template and verify selectors and menus
 - [ ] Fix dashboard search, building filtering, category filters, and report download
 - [ ] Fix compliance search/status/building filters, task details/completion, table-calendar switching, and pagination
 - [ ] Add dedicated equipment creation/edit flows; fix equipment search, status/building filters, actions, and pagination
