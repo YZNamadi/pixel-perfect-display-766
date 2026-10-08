@@ -99,3 +99,39 @@ export function CategoryDropdown({ value, onChange }: { value: string; onChange:
     </div>
   );
 }
+
+export const statusOptions = [
+  { label: "Draft", tone: "draft" },
+  { label: "In Review", tone: "review" },
+  { label: "Filed", tone: "filed" },
+  { label: "Approved", tone: "approved" },
+  { label: "Archived", tone: "archived" },
+];
+
+export function StatusDropdown({ value, onChange }: { value: string; onChange: (v: string) => void }) {
+  const [open, setOpen] = useState(false);
+  const ref = useDismiss(open, () => setOpen(false));
+  const current = statusOptions.find((s) => s.label === value) ?? statusOptions[2]!;
+  return (
+    <div className="rdd" ref={ref}>
+      <button type="button" className={`rdd-trigger${open ? " is-open" : ""}`} aria-haspopup="listbox" aria-expanded={open} aria-label="Status" onClick={() => setOpen((o) => !o)}>
+        <span className={`rdd-dot rdd-dot-${current.tone}`} aria-hidden="true" />
+        <span className="rdd-label">{current.label}</span>
+        <ChevronUp size={16} className="rdd-chev" aria-hidden="true" />
+      </button>
+      {open && (
+        <ul role="listbox" className="rdd-menu rdd-list">
+          {statusOptions.map((s) => (
+            <li key={s.label} role="option" aria-selected={s.label === value}>
+              <button type="button" className={`rdd-opt${s.label === value ? " is-sel" : ""}`} onClick={() => { onChange(s.label); setOpen(false); }}>
+                <span className={`rdd-dot rdd-dot-${s.tone}`} aria-hidden="true" />
+                <span className="rdd-label">{s.label}</span>
+                {s.label === value && <Check size={16} className="rdd-check" aria-hidden="true" />}
+              </button>
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  );
+}
