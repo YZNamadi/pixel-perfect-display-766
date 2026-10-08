@@ -275,10 +275,11 @@ function RepairsPage() {
                                 <X size={13} aria-hidden="true" />Delete
                               </button>
                             )}
-                          </div>
-                        )}
-                      </div>
-                    </td>
+                             </div>
+                           )}
+                         </div>
+                       )}
+                     </td>
                   </tr>
                 ))}
               </tbody>
