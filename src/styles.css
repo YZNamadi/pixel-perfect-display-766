@@ -7085,3 +7085,9 @@ button.product-select-trigger:hover, button.product-select-trigger[data-state="o
 .rdd-opt .rdd-ico { color: var(--color-foreground); }
 .rdd-check { margin-left: auto; color: var(--color-primary); flex-shrink: 0; }
 .rdd-empty { padding: 0.75rem; font-size: 0.85rem; color: var(--color-muted-foreground); }
+.rdd-dot { width: 8px; height: 8px; border-radius: 999px; flex-shrink: 0; }
+.rdd-dot-draft { background: oklch(0.71 0.03 255); }
+.rdd-dot-review { background: oklch(0.77 0.16 70); }
+.rdd-dot-filed { background: var(--color-primary); }
+.rdd-dot-approved { background: oklch(0.62 0.19 256); }
+.rdd-dot-archived { background: oklch(0.37 0.03 257); }

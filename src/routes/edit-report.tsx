@@ -1,10 +1,9 @@
 import { useRef, useState } from "react";
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
-import { ArrowLeft, Calendar, CircleCheck, FileText, Trash2, Upload } from "lucide-react";
+import { ArrowLeft, Calendar, FileText, Trash2, Upload } from "lucide-react";
 
 import { AppShell } from "@/components/app-shell";
-import { ProductSelect } from "@/components/product-select";
-import { CategoryDropdown, StaffDropdown, categoryOptions, staffOptions } from "@/components/report-dropdowns";
+import { CategoryDropdown, StaffDropdown, StatusDropdown, categoryOptions, staffOptions } from "@/components/report-dropdowns";
 import { initialRecords } from "@/lib/staff-records";
 
 export const Route = createFileRoute("/edit-report")({
@@ -30,6 +29,7 @@ function EditReportPage() {
   const fileRef = useRef<HTMLInputElement>(null);
   const [staff, setStaff] = useState(staffOptions.some((s) => s.name === rec.name) ? rec.name : staffOptions[0]!.name);
   const [category, setCategory] = useState(categoryOptions.some((c) => c.label === rec.category) ? rec.category : categoryOptions[0]!.label);
+  const [status, setStatus] = useState<string>(rec.status);
   const [fileName, setFileName] = useState(`${rec.report.replace(/[^A-Za-z0-9]+/g, "_")}_${rec.filed.slice(-4)}.pdf`);
   const back = () => navigate({ to: "/staff-records" });
 
@@ -51,7 +51,7 @@ function EditReportPage() {
           <div className="er-grid3">
             <label className="atr-field">Date Filed<span className="er-icon-field"><Calendar size={15} aria-hidden="true" /><input defaultValue={rec.filed} /></span></label>
             <label className="atr-field">Due Date<span className="er-icon-field"><Calendar size={15} aria-hidden="true" /><input defaultValue={rec.due} /></span></label>
-            <label className="atr-field">Status<span className="er-icon-field"><CircleCheck size={15} aria-hidden="true" /><ProductSelect defaultValue={rec.status}><option>Filed</option><option>In Review</option><option>Closed</option></ProductSelect></span></label>
+            <div className="atr-field"><span>Status</span><StatusDropdown value={status} onChange={setStatus} /></div>
           </div>
           <hr className="er-rule" />
           <h2 className="er-h">DOCUMENT ATTACHMENT</h2>
