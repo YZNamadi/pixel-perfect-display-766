@@ -11,3 +11,4 @@
 
 - Render the supplied Kearly logo through the shared `KearlyLogo` component so every brand placement stays visually consistent.
 - Use the shared `AppShell` for new authenticated product pages so navigation, branding, and active states remain consistent.
+- Keep equipment detail views in dedicated routes linked from the registry and styled within the shared shell to preserve product navigation.

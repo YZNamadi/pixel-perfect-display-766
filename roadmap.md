@@ -8,3 +8,4 @@
 - [ ] Fix audit-log search/filters, review/details, export, and pagination
 - [ ] Add a dedicated billing route and point every Billing link to it
 - [ ] Verify all tracked workflows, metadata, responsive layouts, and preview diagnostics
+- [x] Add and verify the supplied equipment detail page and its registry, edit, fault-report, and back links

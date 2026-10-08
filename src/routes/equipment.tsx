@@ -213,7 +213,7 @@ function EquipmentPage() {
               <tbody>
                  {pageRows.map((row) => (
                   <tr key={row.serial}>
-                    <td className="cl-name">{row.name}</td>
+                    <td className="cl-name">{row.name === "Defibrillator AED Plus" ? <Link to="/equipment-detail">{row.name}</Link> : row.name}</td>
                     <td>
                       <span className="eq-serial">
                         <Barcode size={15} aria-hidden="true" />
