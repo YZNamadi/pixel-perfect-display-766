@@ -16,6 +16,8 @@ import {
 } from "lucide-react";
 
 import { KearlyLogo } from "@/components/kearly-logo";
+import { Button } from "@/components/ui/button";
+import { BuildingTaskDialog, type BuildingTask } from "@/components/building-task-dialog";
 
 export const Route = createFileRoute("/building")({
   head: () => ({
@@ -89,6 +91,7 @@ const team = [
 
 function BuildingPage() {
   const [taskChoiceOpen, setTaskChoiceOpen] = useState(false);
+  const [buildingTasks, setBuildingTasks] = useState<BuildingTask[]>(tasks);
   return (
     <div className="po-shell">
       <aside className="po-sidebar">
@@ -155,10 +158,10 @@ function BuildingPage() {
              <Link to="/edit-site" className="cl-outline">
               Edit Details
             </Link>
-             <button type="button" className="po-download" onClick={() => setTaskChoiceOpen(true)}>
+             <Button type="button" className="po-download" onClick={() => setTaskChoiceOpen(true)}>
               <Plus size={15} aria-hidden="true" />
               New Task
-             </button>
+             </Button>
           </div>
         </header>
 
@@ -212,8 +215,8 @@ function BuildingPage() {
                     </tr>
                   </thead>
                   <tbody>
-                    {tasks.map((task) => (
-                      <tr key={task.name}>
+                    {buildingTasks.map((task, index) => (
+                      <tr key={`${task.name}-${index}`}>
                         <td className="cl-name">{task.name}</td>
                         <td>{task.system}</td>
                         <td>{task.due}</td>
@@ -296,7 +299,7 @@ function BuildingPage() {
           </div>
         </div>
       </main>
-      {taskChoiceOpen && <div className="cp-overlay" role="presentation" onClick={() => setTaskChoiceOpen(false)}><div className="cp-modal" role="dialog" aria-modal="true" aria-labelledby="task-choice-title" onClick={(event) => event.stopPropagation()}><h2 className="cp-modal-title" id="task-choice-title">Choose task type</h2><p className="cp-modal-text">What would you like to create for Northgate House?</p><div className="qa-choice-grid"><Link to="/add-task" className="cl-outline">Compliance task</Link><Link to="/new-ticket" className="cl-outline">Repair ticket</Link><Link to="/add-equipment" className="cl-outline">Equipment record</Link></div><div className="cp-modal-actions"><button type="button" className="cp-modal-cancel" onClick={() => setTaskChoiceOpen(false)}>Cancel</button></div></div></div>}
+      <BuildingTaskDialog open={taskChoiceOpen} onOpenChange={setTaskChoiceOpen} onSave={(task) => setBuildingTasks((current) => [...current, task])} />
     </div>
   );
 }

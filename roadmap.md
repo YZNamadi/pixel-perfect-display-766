@@ -10,3 +10,4 @@
 - [ ] Verify all tracked workflows, metadata, responsive layouts, and preview diagnostics
 - [x] Add and verify the supplied equipment detail page and its registry, edit, fault-report, and back links
 - [x] Match Edit Equipment to the supplied reference and verify editable fields and detail-page navigation
+- [ ] Match the building New Task dialog and verify opening, fields, save and dismissal
