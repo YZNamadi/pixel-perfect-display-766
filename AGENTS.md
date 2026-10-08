@@ -14,3 +14,4 @@
 - Keep equipment detail views in dedicated routes linked from the registry and styled within the shared shell to preserve product navigation.
 - Maintain the equipment edit screen as a dedicated sectioned form rather than the generic record form, so asset-specific fields and detail-page navigation stay intact.
 - Building New Task opens a dedicated accessible dialog in place rather than a task-type chooser or separate wizard, preserving the building context.
+- Building Edit Details opens a dedicated accessible site-details dialog and updates the current building view; no separate edit-site route is retained, preserving building context.

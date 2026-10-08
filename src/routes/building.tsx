@@ -18,6 +18,7 @@ import {
 import { KearlyLogo } from "@/components/kearly-logo";
 import { Button } from "@/components/ui/button";
 import { BuildingTaskDialog, type BuildingTask } from "@/components/building-task-dialog";
+import { BuildingDetailsDialog, type SiteDetails } from "@/components/building-details-dialog";
 
 export const Route = createFileRoute("/building")({
   head: () => ({
@@ -73,14 +74,16 @@ const tasks = [
 const priorityTone = (p: string) =>
   p === "High" ? "bd-pri-high" : p === "Medium" ? "bd-pri-med" : "bd-pri-low";
 
-const specs = [
-  { label: "FULL ADDRESS", value: "Northgate House, 15-17 Tottenham Court Rd, London W1T 1BJ" },
-  { label: "SITE MANAGER", value: "Alex Rowe (Portfolio Admin)" },
-  { label: "CONTACT PHONE", value: "+44 (0) 20 7946 0192" },
-  { label: "GROSS INTERNAL AREA", value: "4,250 m²" },
-  { label: "PRIMARY USE TYPE", value: "Clinical / NHS Rehabilitation" },
-  { label: "YEAR CONSTRUCTED", value: "1998 (Refurbished 2019)" },
-];
+const initialDetails: SiteDetails = {
+  name: "Northgate House",
+  type: "NHS Outpatient & Rehabilitation Center",
+  address: "Northgate House, 15-17 Tottenham Court Rd, London W1T 1BJ",
+  manager: "Alex Rowe (Portfolio Admin)",
+  phone: "+44 (0) 20 7946 0192",
+  area: "4,250 m²",
+  use: "Clinical / NHS Rehabilitation",
+  year: "1998 (Refurbished 2019)",
+};
 
 const team = [
   { name: "Alex Rowe", role: "Portfolio Lead Admin", initials: "AR", tone: "green" },
@@ -92,6 +95,16 @@ const team = [
 function BuildingPage() {
   const [taskChoiceOpen, setTaskChoiceOpen] = useState(false);
   const [buildingTasks, setBuildingTasks] = useState<BuildingTask[]>(tasks);
+  const [detailsOpen, setDetailsOpen] = useState(false);
+  const [siteDetails, setSiteDetails] = useState(initialDetails);
+  const specs = [
+    { label: "FULL ADDRESS", value: siteDetails.address },
+    { label: "SITE MANAGER", value: siteDetails.manager },
+    { label: "CONTACT PHONE", value: siteDetails.phone },
+    { label: "GROSS INTERNAL AREA", value: siteDetails.area },
+    { label: "PRIMARY USE TYPE", value: siteDetails.use },
+    { label: "YEAR CONSTRUCTED", value: siteDetails.year },
+  ];
   return (
     <div className="po-shell">
       <aside className="po-sidebar">
@@ -143,21 +156,21 @@ function BuildingPage() {
         <nav className="et-crumbs" aria-label="Breadcrumb">
           <Link to="/assets">Buildings &amp; Sites</Link>
           <span aria-hidden="true">/</span>
-          <span className="et-crumb-current">Northgate House</span>
+          <span className="et-crumb-current">{siteDetails.name}</span>
         </nav>
 
         <header className="bd-head">
           <div>
             <div className="bd-title-row">
-              <h1 className="po-title">Northgate House</h1>
+              <h1 className="po-title">{siteDetails.name}</h1>
               <span className="bd-pill">96% Compliant</span>
             </div>
-            <p className="po-subtitle">NHS Outpatient &amp; Rehabilitation Center • London</p>
+            <p className="po-subtitle">{siteDetails.type} • London</p>
           </div>
           <div className="bd-head-actions">
-             <Link to="/edit-site" className="cl-outline">
+             <Button type="button" variant="outline" className="cl-outline" onClick={() => setDetailsOpen(true)}>
               Edit Details
-            </Link>
+            </Button>
              <Button type="button" className="po-download" onClick={() => setTaskChoiceOpen(true)}>
               <Plus size={15} aria-hidden="true" />
               New Task
@@ -253,7 +266,7 @@ function BuildingPage() {
                 </span>
                 <p className="bd-empty-title">All Systems Operational</p>
                 <p className="bd-empty-text">
-                  No active repairs or structural hazards reported for Northgate House.
+                  No active repairs or structural hazards reported for {siteDetails.name}.
                 </p>
                 <Link to="/add-task" className="cl-outline">
                   Log Repair Item
@@ -300,6 +313,7 @@ function BuildingPage() {
         </div>
       </main>
       <BuildingTaskDialog open={taskChoiceOpen} onOpenChange={setTaskChoiceOpen} onSave={(task) => setBuildingTasks((current) => [...current, task])} />
+      <BuildingDetailsDialog open={detailsOpen} onOpenChange={setDetailsOpen} details={siteDetails} onSave={setSiteDetails} />
     </div>
   );
 }
