@@ -18,6 +18,7 @@ import {
   AlertTriangle,
   Stethoscope,
   MoreVertical,
+  Eye,
 } from "lucide-react";
 
 import { KearlyLogo } from "@/components/kearly-logo";
@@ -260,6 +261,9 @@ function RepairsPage() {
                             </Link>
                             <Link to="/complete-ticket" role="menuitem" className="rp-menu-item tone-green" onClick={() => setOpenMenu(null)}>
                               <Check size={13} aria-hidden="true" />Complete
+                            </Link>
+                            <Link to="/review-ticket" role="menuitem" className="rp-menu-item" onClick={() => setOpenMenu(null)}>
+                              <Eye size={13} aria-hidden="true" />Review
                             </Link>
                             <button
                               type="button"

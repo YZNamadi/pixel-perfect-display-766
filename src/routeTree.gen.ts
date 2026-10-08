@@ -39,6 +39,7 @@ import { Route as LoginRouteImport } from './routes/login'
 import { Route as NewTicketRouteImport } from './routes/new-ticket'
 import { Route as RepairsRouteImport } from './routes/repairs'
 import { Route as ReportsRouteImport } from './routes/reports'
+import { Route as ReviewTicketRouteImport } from './routes/review-ticket'
 import { Route as ScheduleRouteImport } from './routes/schedule'
 import { Route as SettingsRouteImport } from './routes/settings'
 import { Route as SignupRouteImport } from './routes/signup'
@@ -197,6 +198,11 @@ const ReportsRoute = ReportsRouteImport.update({
   path: '/reports',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ReviewTicketRoute = ReviewTicketRouteImport.update({
+  id: '/review-ticket',
+  path: '/review-ticket',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ScheduleRoute = ScheduleRouteImport.update({
   id: '/schedule',
   path: '/schedule',
@@ -264,6 +270,7 @@ export interface FileRoutesByFullPath {
   '/new-ticket': typeof NewTicketRoute
   '/repairs': typeof RepairsRoute
   '/reports': typeof ReportsRoute
+  '/review-ticket': typeof ReviewTicketRoute
   '/schedule': typeof ScheduleRoute
   '/settings': typeof SettingsRoute
   '/signup': typeof SignupRoute
@@ -303,6 +310,7 @@ export interface FileRoutesByTo {
   '/new-ticket': typeof NewTicketRoute
   '/repairs': typeof RepairsRoute
   '/reports': typeof ReportsRoute
+  '/review-ticket': typeof ReviewTicketRoute
   '/schedule': typeof ScheduleRoute
   '/settings': typeof SettingsRoute
   '/signup': typeof SignupRoute
@@ -343,6 +351,7 @@ export interface FileRoutesById {
   '/new-ticket': typeof NewTicketRoute
   '/repairs': typeof RepairsRoute
   '/reports': typeof ReportsRoute
+  '/review-ticket': typeof ReviewTicketRoute
   '/schedule': typeof ScheduleRoute
   '/settings': typeof SettingsRoute
   '/signup': typeof SignupRoute
@@ -384,6 +393,7 @@ export interface FileRouteTypes {
     | '/new-ticket'
     | '/repairs'
     | '/reports'
+    | '/review-ticket'
     | '/schedule'
     | '/settings'
     | '/signup'
@@ -423,6 +433,7 @@ export interface FileRouteTypes {
     | '/new-ticket'
     | '/repairs'
     | '/reports'
+    | '/review-ticket'
     | '/schedule'
     | '/settings'
     | '/signup'
@@ -462,6 +473,7 @@ export interface FileRouteTypes {
     | '/new-ticket'
     | '/repairs'
     | '/reports'
+    | '/review-ticket'
     | '/schedule'
     | '/settings'
     | '/signup'
@@ -502,6 +514,7 @@ export interface RootRouteChildren {
   NewTicketRoute: typeof NewTicketRoute
   RepairsRoute: typeof RepairsRoute
   ReportsRoute: typeof ReportsRoute
+  ReviewTicketRoute: typeof ReviewTicketRoute
   ScheduleRoute: typeof ScheduleRoute
   SettingsRoute: typeof SettingsRoute
   SignupRoute: typeof SignupRoute
@@ -723,6 +736,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ReportsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/review-ticket': {
+      id: '/review-ticket'
+      path: '/review-ticket'
+      fullPath: '/review-ticket'
+      preLoaderRoute: typeof ReviewTicketRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/schedule': {
       id: '/schedule'
       path: '/schedule'
@@ -806,6 +826,7 @@ const rootRouteChildren: RootRouteChildren = {
   NewTicketRoute: NewTicketRoute,
   RepairsRoute: RepairsRoute,
   ReportsRoute: ReportsRoute,
+  ReviewTicketRoute: ReviewTicketRoute,
   ScheduleRoute: ScheduleRoute,
   SettingsRoute: SettingsRoute,
   SignupRoute: SignupRoute,
