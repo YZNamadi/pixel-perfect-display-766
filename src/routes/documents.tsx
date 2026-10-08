@@ -24,6 +24,7 @@ import {
 import { KearlyLogo } from "@/components/kearly-logo";
 import { Button } from "@/components/ui/button";
 import { ProductSelect } from "@/components/product-select";
+import { DocumentDetailsDialog } from "@/components/document-details-dialog";
 import {
   DropdownMenu,
   DropdownMenuTrigger,
@@ -197,6 +198,7 @@ function DocumentFilter({ label, value, options, onChange }: {
 
 function DocumentsPage() {
   const [pending, setPending] = useState<Doc | null>(null);
+  const [viewing, setViewing] = useState<Doc | null>(null);
   const [documentType, setDocumentType] = useState("All Types");
   const [property, setProperty] = useState("All Properties");
   const [expiryStatus, setExpiryStatus] = useState("All");
@@ -338,7 +340,7 @@ function DocumentsPage() {
                     </td>
                     <td>
                       <div className="cl-row-actions">
-                        <button type="button" className="cl-icon-btn" aria-label={`View ${doc.name}`}>
+                        <button type="button" className="cl-icon-btn" aria-label={`View ${doc.name}`} onClick={() => setViewing(doc)}>
                           <Eye size={15} aria-hidden="true" />
                         </button>
                         <button type="button" className="cl-icon-btn" aria-label={`Download ${doc.name}`}>
@@ -377,6 +379,7 @@ function DocumentsPage() {
         </section>
       </main>
 
+      {viewing && <DocumentDetailsDialog doc={viewing} onClose={() => setViewing(null)} />}
       {pending && (
         <div className="cp-overlay" role="presentation" onClick={() => setPending(null)}>
           <div
