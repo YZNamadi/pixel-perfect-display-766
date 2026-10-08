@@ -7019,3 +7019,26 @@ button.product-select-trigger:hover, button.product-select-trigger[data-state="o
 .atr-cancel{padding:8px 16px;border:1px solid #e5e7eb;border-radius:8px;color:#334155;text-decoration:none;font-size:.82rem;font-weight:500}
 .atr-save{padding:8px 16px;border:0;border-radius:8px;background:#15803d;color:#fff;font-weight:600;font-size:.82rem;cursor:pointer}
 @media (max-width:720px){.atr-grid{grid-template-columns:1fr}}
+
+/* Edit Report */
+.er-page{max-width:940px}
+.er-back{display:inline-flex;align-items:center;gap:6px;font-size:.78rem;color:#334155;text-decoration:none;margin-bottom:8px}
+.er-title{margin-bottom:4px}.er-sub{font-size:.75rem;color:#94a3b8;margin:0}
+.er-h{font-size:.78rem;font-weight:700;color:#111827;margin:0;letter-spacing:.02em}
+.er-rule{border:0;border-top:1px solid #e5e7eb;margin:4px 0}
+.er-grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.er-icon-field,.er-staff{position:relative;display:flex;align-items:center}
+.er-icon-field>svg{position:absolute;left:11px;color:#475569;z-index:1;pointer-events:none}
+.er-icon-field input,.er-icon-field select{width:100%;padding-left:34px!important}
+.er-staff select{width:100%;height:36px;color:transparent!important;padding-left:0}
+.er-staff select option{color:#111827}
+.er-avatar{position:absolute;left:10px;width:24px;height:24px;border-radius:50%;background:#dcfce7;color:#15803d;font-size:.62rem;display:grid;place-items:center;z-index:1;pointer-events:none}
+.er-staff-text{position:absolute;left:42px;display:flex;flex-direction:column;line-height:1.2;pointer-events:none;z-index:1}
+.er-staff-text b{font-size:.78rem;color:#111827}.er-staff-text small{font-size:.65rem;color:#94a3b8;font-weight:400}
+.er-file{display:flex;align-items:center;gap:12px;padding:14px;border:1px solid #e5e7eb;border-radius:8px;background:#f8fafc}
+.er-file-icon{width:34px;height:34px;border:1px solid #e5e7eb;border-radius:8px;background:#fff;display:grid;place-items:center;color:#334155}
+.er-file-text{flex:1;display:flex;flex-direction:column;gap:2px}.er-file-text b{font-size:.82rem;color:#111827}.er-file-text small{font-size:.68rem;color:#94a3b8}
+.er-replace{display:inline-flex;align-items:center;gap:6px;padding:6px 10px;border:1px solid #e5e7eb;border-radius:6px;background:#fff;font:inherit;font-size:.75rem;color:#334155;cursor:pointer}
+.er-actions{display:flex;justify-content:space-between;align-items:center}
+.er-delete{display:inline-flex;align-items:center;gap:6px;border:0;background:none;color:#ef4444;font:inherit;font-size:.8rem;font-weight:500;cursor:pointer}
+@media (max-width:720px){.er-grid3{grid-template-columns:1fr}}
