@@ -236,11 +236,12 @@ function RepairsPage() {
                     <td className="rp-created">{t.created}</td>
                     <td className={t.slaTone === "red" ? "rp-sla-red" : undefined}>{t.sla}</td>
                     <td>
-                      <div
-                        className="rp-actions-wrap"
-                        ref={openMenu === t.id ? menuRef : undefined}
-                      >
-                        <button
+                      {t.status !== "Closed" && (
+                        <div
+                          className="rp-actions-wrap"
+                          ref={openMenu === t.id ? menuRef : undefined}
+                        >
+                          <button
                           type="button"
                           className="rp-kebab"
                           aria-label={`Actions for ticket ${t.id}`}
