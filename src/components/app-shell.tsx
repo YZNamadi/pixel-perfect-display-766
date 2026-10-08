@@ -17,7 +17,6 @@ const governance = [
   { label: "Reports", icon: BarChart3, to: "/reports" as const },
   { label: "Team", icon: Users, to: "/team-members" as const },
   { label: "Audit log", icon: ScrollText, to: "/audit-log" as const },
-  { label: "Billing", icon: CreditCard, to: "/billing" as const },
 ];
 
 function NavLink({ label, icon: Icon, to, active, badge }: { label: string; icon: LucideIcon; to: "/dashboard" | "/compliance" | "/equipment" | "/repairs" | "/assets" | "/reports" | "/team-members" | "/audit-log" | "/billing"; active?: boolean; badge?: string }) {
