@@ -7000,3 +7000,22 @@ button.product-select-trigger:hover, button.product-select-trigger[data-state="o
 .dd-download{background:#15803D;color:#fff}
 .dd-download:hover{background:#166534}
 @media (max-width:700px){.dd-body{grid-template-columns:1fr}.dd-preview{padding:16px}}
+
+/* Add Training Record */
+.atr-page{padding:28px 26px;max-width:760px}
+.atr-crumbs{display:flex;gap:6px;font-size:.72rem;color:#94a3b8;margin-bottom:4px}
+.atr-crumbs a{color:#94a3b8;text-decoration:none}.atr-crumbs strong{color:#334155;font-weight:500}
+.atr-title{font-size:1.4rem;font-weight:700;color:#111827;margin:0 0 18px}
+.atr-card{background:#fff;border:1px solid #e5e7eb;border-radius:12px;padding:24px;margin-top:16px;display:flex;flex-direction:column;gap:16px}
+.atr-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.atr-grid label,.atr-field{display:flex;flex-direction:column;gap:7px;font-size:.78rem;font-weight:600;color:#334155}
+.atr-grid i{color:#ef4444;font-style:normal}
+.atr-card input,.atr-card textarea{border:1px solid #e5e7eb;border-radius:8px;padding:9px 11px;font:inherit;font-weight:400;font-size:.82rem;color:#111827;background:#fff}
+.atr-card textarea{resize:vertical}
+.atr-card input:focus,.atr-card textarea:focus{outline:none;border-color:#15803d}
+.atr-drop{display:flex;flex-direction:column;align-items:center;gap:6px;padding:26px;border:1.5px dashed #e2e8f0;border-radius:8px;background:#f8fafc;color:#334155;cursor:pointer;font:inherit}
+.atr-drop strong{font-size:.82rem}.atr-drop small{font-size:.68rem;color:#94a3b8;font-weight:400}
+.atr-actions{display:flex;justify-content:flex-end;gap:10px}
+.atr-cancel{padding:8px 16px;border:1px solid #e5e7eb;border-radius:8px;color:#334155;text-decoration:none;font-size:.82rem;font-weight:500}
+.atr-save{padding:8px 16px;border:0;border-radius:8px;background:#15803d;color:#fff;font-weight:600;font-size:.82rem;cursor:pointer}
+@media (max-width:720px){.atr-grid{grid-template-columns:1fr}}

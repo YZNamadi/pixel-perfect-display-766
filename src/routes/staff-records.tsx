@@ -133,7 +133,7 @@ function StaffRecordsPage() {
           <div><h1 className="po-title">Staff Records</h1><p className="po-subtitle">Track staff training and certifications</p></div>
           <div className="po-topbar-actions">
             <div className="po-chip qa-select-chip tr-building"><ProductSelect aria-label="Staff records buildings"><option>All buildings</option></ProductSelect></div>
-            <button type="button" className="po-download" onClick={() => setAdding(true)}>Add Training Record</button>
+            <Link to="/add-training-record" className="po-download">Add Training Record</Link>
           </div>
         </header>
 
