@@ -185,17 +185,44 @@ function AuditLogPage() {
                     <td className="al-details">{e.details}</td>
                     <td className="cl-name">{e.entity}</td>
                     <td>
-                      {e.pending ? (
-                         <Link to="/audit-review" search={{ id: e.id }} className="rp-btn tone-blue">
-                          <BadgeCheck size={13} aria-hidden="true" />
-                          Review
-                        </Link>
-                      ) : (
-                         <button type="button" className="rp-btn" onClick={() => setSelected(e)}>
-                          <Eye size={13} aria-hidden="true" />
-                          View
+                      <div
+                        className="rp-actions-wrap"
+                        ref={openMenu === e.id ? menuRef : undefined}
+                      >
+                        <button
+                          type="button"
+                          className="rp-kebab"
+                          aria-label={`Actions for log entry ${e.id}`}
+                          aria-expanded={openMenu === e.id}
+                          onClick={(event) => {
+                            event.stopPropagation();
+                            setOpenMenu((value) => (value === e.id ? null : e.id));
+                          }}
+                        >
+                          <MoreVertical size={16} aria-hidden="true" />
                         </button>
-                      )}
+                        {openMenu === e.id && (
+                          <div className="rp-menu" role="menu" aria-label={`Log entry ${e.id} actions`}>
+                            <button
+                              type="button"
+                              role="menuitem"
+                              className="rp-menu-item"
+                              onClick={() => { setOpenMenu(null); setSelected(e); }}
+                            >
+                              <Eye size={13} aria-hidden="true" />View
+                            </button>
+                            <Link
+                              to="/audit-review"
+                              search={{ id: e.id }}
+                              role="menuitem"
+                              className="rp-menu-item tone-blue"
+                              onClick={() => setOpenMenu(null)}
+                            >
+                              <BadgeCheck size={13} aria-hidden="true" />Review
+                            </Link>
+                          </div>
+                        )}
+                      </div>
                     </td>
                   </tr>
                 ))}
