@@ -6826,3 +6826,8 @@ a.am-menu-item { text-decoration: none; }
 .bt-save { background: var(--task-primary); color: var(--task-surface); }
 .bt-save:hover { background: var(--task-primary); filter: brightness(.95); }
 @media (max-width: 420px) { .bt-dialog { padding: 18px; } .bt-form { grid-template-columns: minmax(0, 1fr); } }
+
+/* Building site-details reference dialog */
+.bs-dialog { width: min(480px, calc(100vw - 32px)); border-radius: 8px; }
+.bs-form { gap: 13px 10px; }
+.bs-form .bt-actions { margin-top: 13px; }

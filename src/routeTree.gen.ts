@@ -28,7 +28,6 @@ import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as DocumentsRouteImport } from './routes/documents'
 import { Route as EditEquipmentRouteImport } from './routes/edit-equipment'
 import { Route as EditMemberRouteImport } from './routes/edit-member'
-import { Route as EditSiteRouteImport } from './routes/edit-site'
 import { Route as EditTaskRouteImport } from './routes/edit-task'
 import { Route as EquipmentRouteImport } from './routes/equipment'
 import { Route as EquipmentDetailRouteImport } from './routes/equipment-detail'
@@ -143,11 +142,6 @@ const EditMemberRoute = EditMemberRouteImport.update({
   path: '/edit-member',
   getParentRoute: () => rootRouteImport,
 } as any)
-const EditSiteRoute = EditSiteRouteImport.update({
-  id: '/edit-site',
-  path: '/edit-site',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const EditTaskRoute = EditTaskRouteImport.update({
   id: '/edit-task',
   path: '/edit-task',
@@ -259,7 +253,6 @@ export interface FileRoutesByFullPath {
   '/documents': typeof DocumentsRoute
   '/edit-equipment': typeof EditEquipmentRoute
   '/edit-member': typeof EditMemberRoute
-  '/edit-site': typeof EditSiteRoute
   '/edit-task': typeof EditTaskRoute
   '/equipment': typeof EquipmentRoute
   '/equipment-detail': typeof EquipmentDetailRoute
@@ -299,7 +292,6 @@ export interface FileRoutesByTo {
   '/documents': typeof DocumentsRoute
   '/edit-equipment': typeof EditEquipmentRoute
   '/edit-member': typeof EditMemberRoute
-  '/edit-site': typeof EditSiteRoute
   '/edit-task': typeof EditTaskRoute
   '/equipment': typeof EquipmentRoute
   '/equipment-detail': typeof EquipmentDetailRoute
@@ -340,7 +332,6 @@ export interface FileRoutesById {
   '/documents': typeof DocumentsRoute
   '/edit-equipment': typeof EditEquipmentRoute
   '/edit-member': typeof EditMemberRoute
-  '/edit-site': typeof EditSiteRoute
   '/edit-task': typeof EditTaskRoute
   '/equipment': typeof EquipmentRoute
   '/equipment-detail': typeof EquipmentDetailRoute
@@ -382,7 +373,6 @@ export interface FileRouteTypes {
     | '/documents'
     | '/edit-equipment'
     | '/edit-member'
-    | '/edit-site'
     | '/edit-task'
     | '/equipment'
     | '/equipment-detail'
@@ -422,7 +412,6 @@ export interface FileRouteTypes {
     | '/documents'
     | '/edit-equipment'
     | '/edit-member'
-    | '/edit-site'
     | '/edit-task'
     | '/equipment'
     | '/equipment-detail'
@@ -462,7 +451,6 @@ export interface FileRouteTypes {
     | '/documents'
     | '/edit-equipment'
     | '/edit-member'
-    | '/edit-site'
     | '/edit-task'
     | '/equipment'
     | '/equipment-detail'
@@ -503,7 +491,6 @@ export interface RootRouteChildren {
   DocumentsRoute: typeof DocumentsRoute
   EditEquipmentRoute: typeof EditEquipmentRoute
   EditMemberRoute: typeof EditMemberRoute
-  EditSiteRoute: typeof EditSiteRoute
   EditTaskRoute: typeof EditTaskRoute
   EquipmentRoute: typeof EquipmentRoute
   EquipmentDetailRoute: typeof EquipmentDetailRoute
@@ -659,13 +646,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof EditMemberRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/edit-site': {
-      id: '/edit-site'
-      path: '/edit-site'
-      fullPath: '/edit-site'
-      preLoaderRoute: typeof EditSiteRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/edit-task': {
       id: '/edit-task'
       path: '/edit-task'
@@ -815,7 +795,6 @@ const rootRouteChildren: RootRouteChildren = {
   DocumentsRoute: DocumentsRoute,
   EditEquipmentRoute: EditEquipmentRoute,
   EditMemberRoute: EditMemberRoute,
-  EditSiteRoute: EditSiteRoute,
   EditTaskRoute: EditTaskRoute,
   EquipmentRoute: EquipmentRoute,
   EquipmentDetailRoute: EquipmentDetailRoute,
