@@ -255,31 +255,25 @@ function RepairsPage() {
                         </button>
                         {openMenu === t.id && (
                           <div className="rp-menu" role="menu" aria-label={`Ticket ${t.id} actions`}>
-                            {t.status !== "Closed" && (
-                              <Link to="/edit-task" role="menuitem" className="rp-menu-item" onClick={() => setOpenMenu(null)}>
-                                <Pencil size={13} aria-hidden="true" />Edit
-                              </Link>
-                            )}
-                            {t.status !== "Closed" && (
-                              <Link to="/complete-ticket" role="menuitem" className="rp-menu-item tone-green" onClick={() => setOpenMenu(null)}>
-                                <Check size={13} aria-hidden="true" />Complete
-                              </Link>
-                            )}
-                            {t.status !== "Closed" && (
-                              <button
-                                type="button"
-                                role="menuitem"
-                                className="rp-menu-item tone-red"
-                                onClick={() => { setOpenMenu(null); setDeleteTicket(t); }}
-                              >
-                                <X size={13} aria-hidden="true" />Delete
-                              </button>
-                            )}
-                             </div>
-                           )}
-                         </div>
-                       )}
-                     </td>
+                            <Link to="/edit-task" role="menuitem" className="rp-menu-item" onClick={() => setOpenMenu(null)}>
+                              <Pencil size={13} aria-hidden="true" />Edit
+                            </Link>
+                            <Link to="/complete-ticket" role="menuitem" className="rp-menu-item tone-green" onClick={() => setOpenMenu(null)}>
+                              <Check size={13} aria-hidden="true" />Complete
+                            </Link>
+                            <button
+                              type="button"
+                              role="menuitem"
+                              className="rp-menu-item tone-red"
+                              onClick={() => { setOpenMenu(null); setDeleteTicket(t); }}
+                            >
+                              <X size={13} aria-hidden="true" />Delete
+                            </button>
+                          </div>
+                        )}
+                      </div>
+                    )}
+                  </td>
                   </tr>
                 ))}
               </tbody>
