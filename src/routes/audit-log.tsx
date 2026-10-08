@@ -203,14 +203,15 @@ function AuditLogPage() {
                         </button>
                         {openMenu === e.id && (
                           <div className="rp-menu" role="menu" aria-label={`Log entry ${e.id} actions`}>
-                            <button
-                              type="button"
+                            <Link
+                              to="/audit-view"
+                              search={{ id: e.id }}
                               role="menuitem"
                               className="rp-menu-item"
-                              onClick={() => { setOpenMenu(null); setSelected(e); }}
+                              onClick={() => setOpenMenu(null)}
                             >
                               <Eye size={13} aria-hidden="true" />View
-                            </button>
+                            </Link>
                             <Link
                               to="/audit-review"
                               search={{ id: e.id }}
