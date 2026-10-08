@@ -4963,6 +4963,13 @@ a.am-menu-item { text-decoration: none; }
 
 /* ===== Schedule (sc-) : monthly compliance event planner ===== */
 .sc-toolbar { position: relative; }
+.sc-view-ppm {
+  display: inline-flex; align-items: center; justify-content: center;
+  background: #ffffff; color: #15803D; border: 1px solid #15803D; border-radius: 8px;
+  padding: 0.5rem 0.85rem; font: inherit; font-size: 0.8rem; font-weight: 600; cursor: pointer;
+  text-decoration: none;
+}
+.sc-view-ppm:hover { background: #F0FDF4; }
 .sc-date-picker { position: relative; }
 .sc-month-button {
   height: 36px; display: inline-flex; align-items: center; gap: 0.45rem; border: 1px solid #E5E7EB;
