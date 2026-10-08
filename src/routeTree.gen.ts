@@ -13,6 +13,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AddEquipmentRouteImport } from './routes/add-equipment'
 import { Route as AddSiteRouteImport } from './routes/add-site'
 import { Route as AddTaskRouteImport } from './routes/add-task'
+import { Route as AddTrainingRecordRouteImport } from './routes/add-training-record'
 import { Route as AssetsRouteImport } from './routes/assets'
 import { Route as AuditLogRouteImport } from './routes/audit-log'
 import { Route as AuditReviewRouteImport } from './routes/audit-review'
@@ -67,6 +68,11 @@ const AddSiteRoute = AddSiteRouteImport.update({
 const AddTaskRoute = AddTaskRouteImport.update({
   id: '/add-task',
   path: '/add-task',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AddTrainingRecordRoute = AddTrainingRecordRouteImport.update({
+  id: '/add-training-record',
+  path: '/add-training-record',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AssetsRoute = AssetsRouteImport.update({
@@ -250,6 +256,7 @@ export interface FileRoutesByFullPath {
   '/add-equipment': typeof AddEquipmentRoute
   '/add-site': typeof AddSiteRoute
   '/add-task': typeof AddTaskRoute
+  '/add-training-record': typeof AddTrainingRecordRoute
   '/assets': typeof AssetsRoute
   '/audit-log': typeof AuditLogRoute
   '/audit-review': typeof AuditReviewRoute
@@ -291,6 +298,7 @@ export interface FileRoutesByTo {
   '/add-equipment': typeof AddEquipmentRoute
   '/add-site': typeof AddSiteRoute
   '/add-task': typeof AddTaskRoute
+  '/add-training-record': typeof AddTrainingRecordRoute
   '/assets': typeof AssetsRoute
   '/audit-log': typeof AuditLogRoute
   '/audit-review': typeof AuditReviewRoute
@@ -333,6 +341,7 @@ export interface FileRoutesById {
   '/add-equipment': typeof AddEquipmentRoute
   '/add-site': typeof AddSiteRoute
   '/add-task': typeof AddTaskRoute
+  '/add-training-record': typeof AddTrainingRecordRoute
   '/assets': typeof AssetsRoute
   '/audit-log': typeof AuditLogRoute
   '/audit-review': typeof AuditReviewRoute
@@ -376,6 +385,7 @@ export interface FileRouteTypes {
     | '/add-equipment'
     | '/add-site'
     | '/add-task'
+    | '/add-training-record'
     | '/assets'
     | '/audit-log'
     | '/audit-review'
@@ -417,6 +427,7 @@ export interface FileRouteTypes {
     | '/add-equipment'
     | '/add-site'
     | '/add-task'
+    | '/add-training-record'
     | '/assets'
     | '/audit-log'
     | '/audit-review'
@@ -458,6 +469,7 @@ export interface FileRouteTypes {
     | '/add-equipment'
     | '/add-site'
     | '/add-task'
+    | '/add-training-record'
     | '/assets'
     | '/audit-log'
     | '/audit-review'
@@ -500,6 +512,7 @@ export interface RootRouteChildren {
   AddEquipmentRoute: typeof AddEquipmentRoute
   AddSiteRoute: typeof AddSiteRoute
   AddTaskRoute: typeof AddTaskRoute
+  AddTrainingRecordRoute: typeof AddTrainingRecordRoute
   AssetsRoute: typeof AssetsRoute
   AuditLogRoute: typeof AuditLogRoute
   AuditReviewRoute: typeof AuditReviewRoute
@@ -565,6 +578,13 @@ declare module '@tanstack/react-router' {
       path: '/add-task'
       fullPath: '/add-task'
       preLoaderRoute: typeof AddTaskRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/add-training-record': {
+      id: '/add-training-record'
+      path: '/add-training-record'
+      fullPath: '/add-training-record'
+      preLoaderRoute: typeof AddTrainingRecordRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/assets': {
@@ -820,6 +840,7 @@ const rootRouteChildren: RootRouteChildren = {
   AddEquipmentRoute: AddEquipmentRoute,
   AddSiteRoute: AddSiteRoute,
   AddTaskRoute: AddTaskRoute,
+  AddTrainingRecordRoute: AddTrainingRecordRoute,
   AssetsRoute: AssetsRoute,
   AuditLogRoute: AuditLogRoute,
   AuditReviewRoute: AuditReviewRoute,
