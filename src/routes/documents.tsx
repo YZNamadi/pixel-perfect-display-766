@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import {
   LayoutDashboard,
@@ -14,7 +14,7 @@ import {
   Building,
   ChevronDown,
   UploadCloud,
-  Eye,
+  MoreVertical,
   Download,
   Trash2,
   AlertTriangle,
@@ -199,6 +199,18 @@ function DocumentFilter({ label, value, options, onChange }: {
 function DocumentsPage() {
   const [pending, setPending] = useState<Doc | null>(null);
   const [viewing, setViewing] = useState<Doc | null>(null);
+  const [openMenu, setOpenMenu] = useState<string | null>(null);
+  const menuRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    if (!openMenu) return;
+    const onDown = (event: MouseEvent) => {
+      if (menuRef.current && !menuRef.current.contains(event.target as Node)) setOpenMenu(null);
+    };
+    document.addEventListener("mousedown", onDown);
+    return () => document.removeEventListener("mousedown", onDown);
+  }, [openMenu]);
+
   const [documentType, setDocumentType] = useState("All Types");
   const [property, setProperty] = useState("All Properties");
   const [expiryStatus, setExpiryStatus] = useState("All");
