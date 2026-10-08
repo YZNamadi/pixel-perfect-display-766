@@ -23,6 +23,7 @@ import {
 
 import { KearlyLogo } from "@/components/kearly-logo";
 import { Button } from "@/components/ui/button";
+import { ProductSelect } from "@/components/product-select";
 import {
   DropdownMenu,
   DropdownMenuTrigger,
@@ -279,11 +280,11 @@ function DocumentsPage() {
             <Search size={15} aria-hidden="true" />
             <input type="search" placeholder="Search documents..." aria-label="Search documents" />
           </div>
-          <span className="po-chip">
-            <Building size={14} aria-hidden="true" />
-            All buildings
-            <ChevronDown size={13} aria-hidden="true" />
-          </span>
+          <div className="po-chip qa-select-chip">
+            <ProductSelect aria-label="Filter documents by building" value={property} onChange={(event) => setProperty(event.target.value)}>
+              {properties.map((item) => <option key={item} value={item}>{item === "All Properties" ? "All buildings" : item}</option>)}
+            </ProductSelect>
+          </div>
           <button type="button" className="po-download">
             Upload Document
           </button>

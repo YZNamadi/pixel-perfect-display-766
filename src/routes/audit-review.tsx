@@ -1,3 +1,4 @@
+import { ProductSelect } from "@/components/product-select";
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 import { ChevronDown, ShieldCheck } from "lucide-react";
@@ -64,8 +65,8 @@ function AuditReviewPage() {
         <section className="ar-card">
           <h2 className="ar-card-title"><ShieldCheck size={16} aria-hidden="true" />Administrative Review &amp; Action</h2>
           <div className="ar-grid">
-            <label className="ar-field"><span>Review Status</span><span className="ar-select ar-select-dot"><select value={status} onChange={(e) => setStatus(e.target.value)}>{statuses.map((s) => <option key={s}>{s}</option>)}</select><ChevronDown size={14} aria-hidden="true" /></span></label>
-            <label className="ar-field"><span>Priority</span><span className="ar-select"><select value={priority} onChange={(e) => setPriority(e.target.value)}>{priorities.map((p) => <option key={p}>{p}</option>)}</select><ChevronDown size={14} aria-hidden="true" /></span></label>
+            <label className="ar-field"><span>Review Status</span><span className="ar-select ar-select-dot"><ProductSelect value={status} onChange={(e) => setStatus(e.target.value)}>{statuses.map((s) => <option key={s}>{s}</option>)}</ProductSelect><ChevronDown size={14} aria-hidden="true" /></span></label>
+            <label className="ar-field"><span>Priority</span><span className="ar-select"><ProductSelect value={priority} onChange={(e) => setPriority(e.target.value)}>{priorities.map((p) => <option key={p}>{p}</option>)}</ProductSelect><ChevronDown size={14} aria-hidden="true" /></span></label>
           </div>
           <label className="ar-field"><span>Reviewer Notes</span><textarea rows={4} placeholder="Add review notes..." value={notes} onChange={(e) => setNotes(e.target.value)} /></label>
           <div className="ar-actions">

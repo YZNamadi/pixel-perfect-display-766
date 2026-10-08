@@ -1,5 +1,6 @@
+import { ProductSelect } from "@/components/product-select";
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useState, useRef, useEffect } from "react";
+import { useState } from "react";
 import { LayoutDashboard, ShieldCheck, Wrench, Building2, BarChart3, ScrollText, Settings, CreditCard, Users, Stethoscope, FileText, Check, ChevronDown } from "lucide-react";
 
 import { KearlyLogo } from "@/components/kearly-logo";
@@ -53,105 +54,17 @@ const serviceRoleOptions = [
 ] as const;
 
 function StatusDropdown() {
-  const [open, setOpen] = useState(false);
   const [selected, setSelected] = useState("active");
-  const ref = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const handler = (e: MouseEvent) => {
-      if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
-    };
-    document.addEventListener("mousedown", handler);
-    return () => document.removeEventListener("mousedown", handler);
-  }, []);
-
-  const current = statusOptions.find((s) => s.value === selected) ?? statusOptions[0];
-
-  return (
-    <div className="em-dropdown" ref={ref}>
-      <button
-        type="button"
-        className="em-dd-trigger"
-        onClick={() => setOpen((v) => !v)}
-        aria-haspopup="listbox"
-        aria-expanded={open}
-      >
-        <span className={`em-dd-pill em-dd-pill--${current.tone}`}>{current.label}</span>
-        <ChevronDown size={16} className={`em-dd-chevron ${open ? "is-open" : ""}`} aria-hidden="true" />
-      </button>
-      {open && (
-        <div className="em-dd-menu" role="listbox">
-          {statusOptions.map((opt) => (
-            <button
-              key={opt.value}
-              type="button"
-              role="option"
-              aria-selected={opt.value === selected}
-              className={`em-dd-option ${opt.value === selected ? "is-selected" : ""}`}
-              onClick={() => {
-                setSelected(opt.value);
-                setOpen(false);
-              }}
-            >
-              <span className={`em-dd-pill em-dd-pill--${opt.tone}`}>{opt.label}</span>
-              {opt.value === selected && <Check size={15} className="em-dd-check" aria-hidden="true" />}
-            </button>
-          ))}
-        </div>
-      )}
-    </div>
-  );
+  return <ProductSelect aria-label="Operational Status" value={selected} onChange={(event) => setSelected(event.target.value)}>
+    {statusOptions.map((option) => <option key={option.value} value={option.value}>{option.label}</option>)}
+  </ProductSelect>;
 }
 
 function ServiceRoleDropdown() {
-  const [open, setOpen] = useState(false);
   const [selected, setSelected] = useState("gas");
-  const ref = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const handler = (event: MouseEvent) => {
-      if (ref.current && !ref.current.contains(event.target as Node)) setOpen(false);
-    };
-    document.addEventListener("mousedown", handler);
-    return () => document.removeEventListener("mousedown", handler);
-  }, []);
-
-  const current = serviceRoleOptions.find((option) => option.value === selected) ?? serviceRoleOptions[0];
-
-  return (
-    <div className="em-dropdown em-role-dropdown" ref={ref}>
-      <button
-        type="button"
-        className="em-role-trigger"
-        onClick={() => setOpen((value) => !value)}
-        aria-haspopup="listbox"
-        aria-expanded={open}
-      >
-        <span>{current.label}</span>
-        <ChevronDown size={16} className={`em-dd-chevron ${open ? "is-open" : ""}`} aria-hidden="true" />
-      </button>
-      {open && (
-        <div className="em-role-menu" role="listbox">
-          {serviceRoleOptions.map((option) => (
-            <button
-              key={option.value}
-              type="button"
-              role="option"
-              aria-selected={option.value === selected}
-              className={`em-role-option ${option.value === selected ? "is-selected" : ""}`}
-              onClick={() => {
-                setSelected(option.value);
-                setOpen(false);
-              }}
-            >
-              <span>{option.label}</span>
-              {option.value === selected && <Check size={15} aria-hidden="true" />}
-            </button>
-          ))}
-        </div>
-      )}
-    </div>
-  );
+  return <ProductSelect aria-label="Primary Service Role" value={selected} onChange={(event) => setSelected(event.target.value)}>
+    {serviceRoleOptions.map((option) => <option key={option.value} value={option.value}>{option.label}</option>)}
+  </ProductSelect>;
 }
 
 function EditMemberPage() {
@@ -219,11 +132,11 @@ function EditMemberPage() {
                   <ServiceRoleDropdown />
                 </div>
                 <label className="em-field">Work Zone Authorization
-                  <select className="em-input em-edit" defaultValue="clinical">
+                  <ProductSelect className="em-input em-edit" defaultValue="clinical">
                     <option value="clinical">Outpatient &amp; Clinical Areas</option>
                     <option value="plant">Plant Rooms Only</option>
                     <option value="all">All Areas</option>
-                  </select>
+                  </ProductSelect>
                 </label>
               </div>
             </section>

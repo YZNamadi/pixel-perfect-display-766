@@ -1,3 +1,4 @@
+import { ProductSelect } from "@/components/product-select";
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 import { ArrowLeft, Barcode, ChevronDown } from "lucide-react";
@@ -28,17 +29,17 @@ function EditEquipmentPage() {
           <label className="ee-field"><span>Equipment Name <em>*</em></span><input name="name" required defaultValue="Defibrillator AED Plus" /></label>
           <label className="ee-field"><span>Serial Number <em>*</em></span><input name="serial" required defaultValue="SN-DEF-2024-0847" /></label>
           <label className="ee-field"><span>Barcode</span><div className="ee-input-icon"><Barcode size={18} aria-hidden="true" /><input name="barcode" defaultValue="BC-DEF-0847-RC" /></div></label>
-          <label className="ee-field"><span>Category <em>*</em></span><div className="ee-select"><select name="category" required defaultValue="Emergency"><option>Emergency</option><option>Patient Handling</option><option>Respiratory</option><option>Diagnostics</option><option>Infusion</option><option>Ward Furniture</option><option>Furniture</option></select><ChevronDown size={17} aria-hidden="true" /></div></label>
+          <label className="ee-field"><span>Category <em>*</em></span><div className="ee-select"><ProductSelect name="category" required defaultValue="Emergency"><option>Emergency</option><option>Patient Handling</option><option>Respiratory</option><option>Diagnostics</option><option>Infusion</option><option>Ward Furniture</option><option>Furniture</option></ProductSelect><ChevronDown size={17} aria-hidden="true" /></div></label>
           <label className="ee-field"><span>Manufacturer</span><input name="manufacturer" defaultValue="Zoll Medical" /></label>
           <label className="ee-field"><span>Model</span><input name="model" defaultValue="AED Plus" /></label>
         </div></section>
         <section aria-labelledby="ee-location"><h2 id="ee-location">Location &amp; Assignment</h2><div className="ee-grid ee-grid-three">
-          <label className="ee-field"><span>Site <em>*</em></span><div className="ee-select"><select name="site" required defaultValue="Riverside Court">{["Riverside Court", "Victoria Wharf", "Maple Business Park", "Kingsway Tower", "Northgate House", "Elmwood Court"].map((site) => <option key={site}>{site}</option>)}</select><ChevronDown size={17} aria-hidden="true" /></div></label>
+          <label className="ee-field"><span>Site <em>*</em></span><div className="ee-select"><ProductSelect name="site" required defaultValue="Riverside Court">{["Riverside Court", "Victoria Wharf", "Maple Business Park", "Kingsway Tower", "Northgate House", "Elmwood Court"].map((site) => <option key={site}>{site}</option>)}</ProductSelect><ChevronDown size={17} aria-hidden="true" /></div></label>
           <label className="ee-field"><span>Floor / Ward</span><input name="floor" defaultValue="Ground Floor - Reception" /></label>
-          <label className="ee-field"><span>Assigned Technician</span><div className="ee-select"><select name="technician" defaultValue="Sarah Jones"><option>Sarah Jones</option><option>James Carter</option><option>David Vance</option><option>Michael Finch</option></select><ChevronDown size={17} aria-hidden="true" /></div></label>
+          <label className="ee-field"><span>Assigned Technician</span><div className="ee-select"><ProductSelect name="technician" defaultValue="Sarah Jones"><option>Sarah Jones</option><option>James Carter</option><option>David Vance</option><option>Michael Finch</option></ProductSelect><ChevronDown size={17} aria-hidden="true" /></div></label>
         </div></section>
         <section aria-labelledby="ee-ppm"><h2 id="ee-ppm">PPM Schedule</h2><div className="ee-grid">
-          <label className="ee-field"><span>PPM Frequency <em>*</em></span><div className="ee-select"><select name="frequency" required defaultValue="Quarterly"><option>Monthly</option><option>Quarterly</option><option>6 Months</option><option>Annually</option></select><ChevronDown size={17} aria-hidden="true" /></div></label>
+          <label className="ee-field"><span>PPM Frequency <em>*</em></span><div className="ee-select"><ProductSelect name="frequency" required defaultValue="Quarterly"><option>Monthly</option><option>Quarterly</option><option>6 Months</option><option>Annually</option></ProductSelect><ChevronDown size={17} aria-hidden="true" /></div></label>
           <label className="ee-field"><span>Next Due Date <em>*</em></span><input name="nextDue" required type="date" defaultValue="2024-07-15" /></label>
           <label className="ee-field ee-full"><span>Notes / Special Instructions</span><textarea name="notes" defaultValue="Wall-mounted unit near main entrance. Check pads expiry and battery level during each service." /></label>
         </div></section>

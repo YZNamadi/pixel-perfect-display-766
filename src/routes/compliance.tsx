@@ -1,3 +1,4 @@
+import { ProductSelect } from "@/components/product-select";
 import { useMemo, useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import {
@@ -163,7 +164,7 @@ function CompliancePage() {
             <span className="po-chip">Jul 2024</span>
              <label className="po-chip qa-select-chip">
               <Calendar size={14} aria-hidden="true" />
-               <select aria-label="Filter compliance by building" value={building} onChange={(event) => { setBuilding(event.target.value); setPage(1); }}><option>All buildings</option>{Array.from(new Set(taskRows.map((row) => row.site))).map((site) => <option key={site}>{site}</option>)}</select>
+               <ProductSelect aria-label="Filter compliance by building" value={building} onChange={(event) => { setBuilding(event.target.value); setPage(1); }}><option>All buildings</option>{Array.from(new Set(taskRows.map((row) => row.site))).map((site) => <option key={site}>{site}</option>)}</ProductSelect>
              </label>
              <Link to="/equipment" className="cl-outline">
               Medical Equipment

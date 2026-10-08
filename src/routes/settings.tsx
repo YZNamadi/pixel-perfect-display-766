@@ -1,3 +1,4 @@
+import { ProductSelect } from "@/components/product-select";
 import { useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import {
@@ -256,12 +257,12 @@ function SettingsPage() {
                 <p className="se-group-label">DELIVERY FREQUENCY</p>
                 <div className="se-field se-field-wide">
                   <label htmlFor="se-frequency">Customize Email Frequency</label>
-                  <select id="se-frequency" defaultValue="daily">
+                  <ProductSelect id="se-frequency" defaultValue="daily">
                     <option value="instant">Instant</option>
                     <option value="daily">Daily Digest</option>
                     <option value="weekly">Weekly Digest</option>
                     <option value="monthly">Monthly Summary</option>
-                  </select>
+                  </ProductSelect>
                 </div>
 
                 <div className="se-foot se-foot-divided">

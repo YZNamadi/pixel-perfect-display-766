@@ -1,3 +1,4 @@
+import { ProductSelect } from "@/components/product-select";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import {
@@ -176,7 +177,7 @@ function RepairsPage() {
             <span className="po-chip">Jul 2024</span>
              <label className="po-chip qa-select-chip">
               <Calendar size={14} aria-hidden="true" />
-               <select aria-label="Filter repair tickets by building" value={site} onChange={(event) => { setSite(event.target.value); setPage(1); }}><option>All</option>{Array.from(new Set(tickets.map((ticket) => ticket.site))).map((item) => <option key={item}>{item}</option>)}</select>
+               <ProductSelect aria-label="Filter repair tickets by building" value={site} onChange={(event) => { setSite(event.target.value); setPage(1); }}><option>All</option>{Array.from(new Set(tickets.map((ticket) => ticket.site))).map((item) => <option key={item}>{item}</option>)}</ProductSelect>
              </label>
              <Link to="/new-ticket" className="po-download">
               New Ticket
@@ -200,9 +201,9 @@ function RepairsPage() {
         </div>
 
         <div className="rp-filters">
-           <label className="rp-filter qa-filter-select">Priority: <select aria-label="Filter by priority" value={priority} onChange={(event) => { setPriority(event.target.value); setPage(1); }}><option>All</option><option>P1</option><option>P2</option><option>P3</option></select></label>
-           <label className="rp-filter qa-filter-select">Site: <select aria-label="Filter by site" value={site} onChange={(event) => { setSite(event.target.value); setPage(1); }}><option>All</option>{Array.from(new Set(tickets.map((ticket) => ticket.site))).map((item) => <option key={item}>{item}</option>)}</select></label>
-           <label className="rp-filter qa-filter-select">Assignee: <select aria-label="Filter by assignee" value={assignee} onChange={(event) => { setAssignee(event.target.value); setPage(1); }}><option>All</option>{Array.from(new Set(tickets.map((ticket) => ticket.assignee))).map((item) => <option key={item}>{item}</option>)}</select></label>
+           <label className="rp-filter qa-filter-select">Priority: <ProductSelect aria-label="Filter by priority" value={priority} onChange={(event) => { setPriority(event.target.value); setPage(1); }}><option>All</option><option>P1</option><option>P2</option><option>P3</option></ProductSelect></label>
+           <label className="rp-filter qa-filter-select">Site: <ProductSelect aria-label="Filter by site" value={site} onChange={(event) => { setSite(event.target.value); setPage(1); }}><option>All</option>{Array.from(new Set(tickets.map((ticket) => ticket.site))).map((item) => <option key={item}>{item}</option>)}</ProductSelect></label>
+           <label className="rp-filter qa-filter-select">Assignee: <ProductSelect aria-label="Filter by assignee" value={assignee} onChange={(event) => { setAssignee(event.target.value); setPage(1); }}><option>All</option>{Array.from(new Set(tickets.map((ticket) => ticket.assignee))).map((item) => <option key={item}>{item}</option>)}</ProductSelect></label>
         </div>
 
         <section className="cl-panel" aria-label="Repair tickets">

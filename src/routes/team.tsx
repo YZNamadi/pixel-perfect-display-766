@@ -1,3 +1,4 @@
+import { ProductSelect } from "@/components/product-select";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { Check, Plus } from "lucide-react";
@@ -115,7 +116,7 @@ function TeamPage() {
                   value={member.email}
                   onChange={(event) => update(index, { email: event.target.value })}
                 />
-                <select
+                <ProductSelect
                   className="fp-input fp-select"
                   aria-label={`Team member ${index + 1} role`}
                   value={member.role}
@@ -127,7 +128,7 @@ function TeamPage() {
                       {role}
                     </option>
                   ))}
-                </select>
+                </ProductSelect>
               </div>
             ))}
 

@@ -1,3 +1,4 @@
+import { ProductSelect } from "@/components/product-select";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import {
   LayoutDashboard,
@@ -161,31 +162,31 @@ function EditTicketPage() {
 
             <label className="at-field">
               <span className="at-label et-caps">PRIORITY</span>
-              <select className="at-input" defaultValue="p1">
+              <ProductSelect className="at-input" defaultValue="p1">
                 <option value="p1">P1 - Urgent SLA</option>
                 <option value="p2">P2 - High</option>
                 <option value="p3">P3 - Routine</option>
-              </select>
+              </ProductSelect>
             </label>
 
             <label className="at-field">
               <span className="at-label et-caps">STATUS</span>
-              <select className="at-input" defaultValue="progress">
+              <ProductSelect className="at-input" defaultValue="progress">
                 <option value="open">Open</option>
                 <option value="progress">In Progress</option>
                 <option value="closed">Closed</option>
-              </select>
+              </ProductSelect>
             </label>
 
             <label className="at-field">
               <span className="at-label et-caps">ASSIGNED TO</span>
-              <select className="at-input" defaultValue="michael">
+              <ProductSelect className="at-input" defaultValue="michael">
                 <option value="michael">Michael Finch</option>
                 <option value="sarah">Sarah Jones</option>
                 <option value="james">James Carter</option>
                 <option value="alex">Alex Rowe</option>
                 <option value="david">David Vance</option>
-              </select>
+              </ProductSelect>
             </label>
 
             <label className="at-field">

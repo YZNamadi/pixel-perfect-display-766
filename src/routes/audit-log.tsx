@@ -1,3 +1,4 @@
+import { ProductSelect } from "@/components/product-select";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useMemo, useRef, useState } from "react";
 import {
@@ -145,7 +146,7 @@ function AuditLogPage() {
             <span className="po-chip">Jul 2024</span>
              <label className="po-chip qa-select-chip">
               <Calendar size={14} aria-hidden="true" />
-               <select aria-label="Filter audit log by building" value={building} onChange={(event) => { setBuilding(event.target.value); setPage(1); }}><option>All buildings</option>{Array.from(new Set(events.map((event) => event.entity).filter(Boolean))).map((item) => <option key={item}>{item}</option>)}</select>
+               <ProductSelect aria-label="Filter audit log by building" value={building} onChange={(event) => { setBuilding(event.target.value); setPage(1); }}><option>All buildings</option>{Array.from(new Set(events.map((event) => event.entity).filter(Boolean))).map((item) => <option key={item}>{item}</option>)}</ProductSelect>
               <ChevronDown size={13} aria-hidden="true" />
              </label>
              <button type="button" className="po-download" onClick={() => downloadCsv("kearly-audit-log.csv", [["Timestamp", "User", "Action", "Details", "Entity"], ...filtered.map((event) => [event.time, event.user, event.action, event.details, event.entity])])}>
@@ -155,10 +156,10 @@ function AuditLogPage() {
         </header>
 
         <div className="rp-filters">
-           <label className="rp-filter qa-filter-select">User: <select aria-label="Filter audit log by user" value={user} onChange={(event) => { setUser(event.target.value); setPage(1); }}><option>All Users</option>{Array.from(new Set(events.map((event) => event.user))).map((item) => <option key={item}>{item}</option>)}</select>
+           <label className="rp-filter qa-filter-select">User: <ProductSelect aria-label="Filter audit log by user" value={user} onChange={(event) => { setUser(event.target.value); setPage(1); }}><option>All Users</option>{Array.from(new Set(events.map((event) => event.user))).map((item) => <option key={item}>{item}</option>)}</ProductSelect>
             <ChevronDown size={13} aria-hidden="true" />
            </label>
-           <label className="rp-filter qa-filter-select">Action Type: <select aria-label="Filter audit log by action" value={action} onChange={(event) => { setAction(event.target.value); setPage(1); }}><option>All Actions</option>{Array.from(new Set(events.map((event) => event.action))).map((item) => <option key={item}>{item}</option>)}</select>
+           <label className="rp-filter qa-filter-select">Action Type: <ProductSelect aria-label="Filter audit log by action" value={action} onChange={(event) => { setAction(event.target.value); setPage(1); }}><option>All Actions</option>{Array.from(new Set(events.map((event) => event.action))).map((item) => <option key={item}>{item}</option>)}</ProductSelect>
             <ChevronDown size={13} aria-hidden="true" />
            </label>
         </div>

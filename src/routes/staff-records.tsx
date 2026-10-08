@@ -1,3 +1,4 @@
+import { ProductSelect } from "@/components/product-select";
 import { useMemo, useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import {
@@ -131,7 +132,7 @@ function StaffRecordsPage() {
         <header className="po-topbar">
           <div><h1 className="po-title">Staff Records</h1><p className="po-subtitle">Track staff training and certifications</p></div>
           <div className="po-topbar-actions">
-            <button type="button" className="po-chip tr-building"><Building size={14} aria-hidden="true" />All buildings<ChevronDown size={13} aria-hidden="true" /></button>
+            <div className="po-chip qa-select-chip tr-building"><ProductSelect aria-label="Staff records buildings"><option>All buildings</option></ProductSelect></div>
             <button type="button" className="po-download" onClick={() => setAdding(true)}>Add Training Record</button>
           </div>
         </header>
@@ -143,9 +144,9 @@ function StaffRecordsPage() {
         </div>
 
         <div className="dc-filters tr-filters">
-          <label className="tr-filter"><span>Staff: {staff}</span><select aria-label="Filter by staff" value={staff} onChange={(event) => setStaff(event.target.value)}><option>All Staff</option>{records.map((row) => <option key={row.name}>{row.name}</option>)}</select><ChevronDown size={13} aria-hidden="true" /></label>
-          <label className="tr-filter"><span>Report Type: {category}</span><select aria-label="Filter by report type" value={category} onChange={(event) => setCategory(event.target.value)}><option>All Types</option>{categories.map((item) => <option key={item}>{item}</option>)}</select><ChevronDown size={13} aria-hidden="true" /></label>
-          <label className="tr-filter"><span>Status: {status}</span><select aria-label="Filter by status" value={status} onChange={(event) => setStatus(event.target.value)}><option>All</option><option>Filed</option><option>Closed</option><option>In Review</option></select><ChevronDown size={13} aria-hidden="true" /></label>
+          <label className="tr-filter">Staff: <ProductSelect aria-label="Filter by staff" value={staff} onChange={(event) => setStaff(event.target.value)}><option>All Staff</option>{records.map((row) => <option key={row.name}>{row.name}</option>)}</ProductSelect><ChevronDown size={13} aria-hidden="true" /></label>
+          <label className="tr-filter">Report Type: <ProductSelect aria-label="Filter by report type" value={category} onChange={(event) => setCategory(event.target.value)}><option>All Types</option>{categories.map((item) => <option key={item}>{item}</option>)}</ProductSelect><ChevronDown size={13} aria-hidden="true" /></label>
+          <label className="tr-filter">Status: <ProductSelect aria-label="Filter by status" value={status} onChange={(event) => setStatus(event.target.value)}><option>All</option><option>Filed</option><option>Closed</option><option>In Review</option></ProductSelect><ChevronDown size={13} aria-hidden="true" /></label>
         </div>
 
         <section className="cl-panel tr-panel" aria-label="Staff reports">
@@ -178,10 +179,10 @@ function StaffRecordsPage() {
           <form className="tr-modal" onSubmit={(event) => { event.preventDefault(); setAdding(false); setEditing(null); }} onClick={(event) => event.stopPropagation()}>
             <div className="tr-modal-head"><div><h2>{editing ? "Edit Training Record" : "Add Training Record"}</h2><p>{editing ? editing.name : "Create a new staff report"}</p></div><button type="button" className="cl-icon-btn" aria-label="Close" onClick={() => { setAdding(false); setEditing(null); }}><X size={18} /></button></div>
             <label>Report name<input required defaultValue={editing?.report ?? ""} placeholder="Enter report name" /></label>
-            <label>Staff name<select defaultValue={editing?.name ?? "Alex Rowe"}>{Array.from(new Set(records.map((row) => row.name))).map((name) => <option key={name}>{name}</option>)}</select></label>
-            <label>Category<select defaultValue={editing?.category ?? "Health & Safety"}>{categories.map((item) => <option key={item}>{item}</option>)}</select></label>
+            <label>Staff name<ProductSelect defaultValue={editing?.name ?? "Alex Rowe"}>{Array.from(new Set(records.map((row) => row.name))).map((name) => <option key={name}>{name}</option>)}</ProductSelect></label>
+            <label>Category<ProductSelect defaultValue={editing?.category ?? "Health & Safety"}>{categories.map((item) => <option key={item}>{item}</option>)}</ProductSelect></label>
             <div className="qa-form-grid"><label>Date filed<input type="date" required /></label><label>Due date<input type="date" required /></label></div>
-            <label>Status<select defaultValue={editing?.status ?? "Filed"}><option>Filed</option><option>In Review</option><option>Closed</option></select></label>
+            <label>Status<ProductSelect defaultValue={editing?.status ?? "Filed"}><option>Filed</option><option>In Review</option><option>Closed</option></ProductSelect></label>
             <label>Document upload<input type="file" accept=".pdf,.png,.jpg,.jpeg" required={!editing} /></label>
             <div className="tr-modal-actions"><button type="button" className="cl-page" onClick={() => { setAdding(false); setEditing(null); }}>Cancel</button><button type="submit" className="po-download">Save Record</button></div>
           </form>

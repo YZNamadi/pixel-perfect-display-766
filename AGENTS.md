@@ -15,3 +15,4 @@
 - Maintain the equipment edit screen as a dedicated sectioned form rather than the generic record form, so asset-specific fields and detail-page navigation stay intact.
 - Building New Task opens a dedicated accessible dialog in place rather than a task-type chooser or separate wizard, preserving the building context.
 - Building Edit Details opens a dedicated accessible site-details dialog and updates the current building view; no separate edit-site route is retained, preserving building context.
+- Use ProductSelect for native-style option fields and the shared product menu tokens for custom/action dropdowns; retain native form values and handlers so visual changes do not alter workflows.

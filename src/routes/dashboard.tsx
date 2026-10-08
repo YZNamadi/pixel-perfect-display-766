@@ -19,6 +19,7 @@ import {
 
 import { KearlyLogo } from "@/components/kearly-logo";
 import { downloadCsv } from "@/lib/download";
+import { ProductSelect } from "@/components/product-select";
 
 export const Route = createFileRoute("/dashboard")({
   head: () => ({
@@ -109,19 +110,9 @@ function scoreTone(score: number) {
 }
 
 function DashboardPage() {
-  const [buildingOpen, setBuildingOpen] = useState(false);
   const [selectedBuilding, setSelectedBuilding] = useState("All buildings");
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState("All");
-  const buildingRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const closeMenu = (event: MouseEvent) => {
-      if (buildingRef.current && !buildingRef.current.contains(event.target as Node)) setBuildingOpen(false);
-    };
-    document.addEventListener("mousedown", closeMenu);
-    return () => document.removeEventListener("mousedown", closeMenu);
-  }, []);
 
   const visibleAttention = attention.filter((item) => {
     const matchesBuilding = selectedBuilding === "All buildings" || item.site === selectedBuilding;
@@ -192,66 +183,11 @@ function DashboardPage() {
                <input type="search" placeholder="Search buildings, jobs..." aria-label="Search" value={query} onChange={(event) => setQuery(event.target.value)} />
             </div>
             <span className="po-chip">Wed 2 Jul</span>
-            <div className="po-building-select" ref={buildingRef}>
-              <button
-                type="button"
-                className="po-chip po-chip-trigger"
-                onClick={() => setBuildingOpen((open) => !open)}
-                aria-haspopup="listbox"
-                aria-expanded={buildingOpen}
-              >
-                <Building2 size={14} aria-hidden="true" />
-                {selectedBuilding}
-              </button>
-              {buildingOpen && (
-                <div className="po-building-menu" role="listbox" aria-label="Select building">
-                  <p className="po-building-menu-label">Select building</p>
-                  <button
-                    type="button"
-                    role="option"
-                    aria-selected={selectedBuilding === "All buildings"}
-                    className={`po-building-option ${selectedBuilding === "All buildings" ? "is-selected" : ""}`}
-                    onClick={() => {
-                      setSelectedBuilding("All buildings");
-                      setBuildingOpen(false);
-                    }}
-                  >
-                    <span className="po-building-ico" aria-hidden="true">
-                      <Building2 size={16} />
-                    </span>
-                    <span className="po-building-text">
-                      <span className="po-building-label">All buildings</span>
-                      <span className="po-building-sub">{buildings.length} locations</span>
-                    </span>
-                    {selectedBuilding === "All buildings" && <Check size={16} className="po-building-check" aria-hidden="true" />}
-                  </button>
-                  {buildings.map((building) => {
-                    const isSelected = selectedBuilding === building.name;
-                    return (
-                      <button
-                        type="button"
-                        key={building.name}
-                        role="option"
-                        aria-selected={isSelected}
-                        className={`po-building-option ${isSelected ? "is-selected" : ""}`}
-                        onClick={() => {
-                          setSelectedBuilding(building.name);
-                          setBuildingOpen(false);
-                        }}
-                      >
-                        <span className="po-building-ico" aria-hidden="true">
-                          <Building2 size={16} />
-                        </span>
-                        <span className="po-building-text">
-                          <span className="po-building-label">{building.name}</span>
-                          <span className="po-building-sub">{building.units} units</span>
-                        </span>
-                        {isSelected && <Check size={16} className="po-building-check" aria-hidden="true" />}
-                      </button>
-                    );
-                  })}
-                </div>
-              )}
+            <div className="po-building-select">
+              <ProductSelect aria-label="Select building" value={selectedBuilding} onChange={(event) => setSelectedBuilding(event.target.value)}>
+                <option value="All buildings">All buildings · {buildings.length} locations</option>
+                {buildings.map((building) => <option key={building.name} value={building.name}>{building.name} · {building.units} units</option>)}
+              </ProductSelect>
             </div>
              <button type="button" className="po-download" onClick={() => downloadCsv("kearly-portfolio.csv", [["Item", "Building", "Status"], ...visibleAttention.map((item) => [item.title, item.site, item.status])])}>
               <Download size={15} aria-hidden="true" />

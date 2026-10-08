@@ -1,3 +1,4 @@
+import { ProductSelect } from "@/components/product-select";
 import { useEffect, useRef, useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import {
@@ -316,10 +317,7 @@ function SchedulePage() {
                 </div>
               )}
             </div>
-            <span className="po-chip">
-              <Calendar size={14} aria-hidden="true" />
-              All buildings
-            </span>
+            <div className="po-chip qa-select-chip"><ProductSelect aria-label="Schedule buildings"><option>All buildings</option></ProductSelect></div>
             <div className="sc-views" role="tablist" aria-label="Calendar view">
               {views.map((item) => (
                 <button
@@ -660,13 +658,13 @@ function SchedulePage() {
                   <label className="sa-label" htmlFor="sa-type">
                     Event Type <span className="sa-req">*</span>
                   </label>
-                  <select id="sa-type" className="sa-input" defaultValue="Inspection">
+                  <ProductSelect id="sa-type" className="sa-input" defaultValue="Inspection">
                     <option>Inspection</option>
                     <option>Servicing</option>
                     <option>Certification</option>
                     <option>Testing</option>
                     <option>Audit</option>
-                  </select>
+                  </ProductSelect>
                 </div>
                 <div className="sa-field">
                   <label className="sa-label" htmlFor="sa-location">
@@ -687,13 +685,13 @@ function SchedulePage() {
                   <label className="sa-label" htmlFor="sa-time">
                     Time Range
                   </label>
-                  <select id="sa-time" className="sa-input" defaultValue="10:00 AM - 12:00 PM">
+                  <ProductSelect id="sa-time" className="sa-input" defaultValue="10:00 AM - 12:00 PM">
                     <option>08:00 AM - 10:00 AM</option>
                     <option>10:00 AM - 12:00 PM</option>
                     <option>01:00 PM - 03:00 PM</option>
                     <option>03:00 PM - 05:00 PM</option>
                     <option>All day</option>
-                  </select>
+                  </ProductSelect>
                 </div>
               </div>
 
@@ -702,25 +700,25 @@ function SchedulePage() {
                   <label className="sa-label" htmlFor="sa-recurrence">
                     Recurrence
                   </label>
-                  <select id="sa-recurrence" className="sa-input" defaultValue="Monthly">
+                  <ProductSelect id="sa-recurrence" className="sa-input" defaultValue="Monthly">
                     <option>Does not repeat</option>
                     <option>Weekly</option>
                     <option>Monthly</option>
                     <option>Quarterly</option>
                     <option>Bi-Annually</option>
                     <option>Annually</option>
-                  </select>
+                  </ProductSelect>
                 </div>
                 <div className="sa-field">
                   <label className="sa-label" htmlFor="sa-assign">
                     Assigned Team Member
                   </label>
-                  <select id="sa-assign" className="sa-input" defaultValue="Sarah Jenkins (Senior Inspector)">
+                  <ProductSelect id="sa-assign" className="sa-input" defaultValue="Sarah Jenkins (Senior Inspector)">
                     <option>Sarah Jenkins (Senior Inspector)</option>
                     <option>Alex Rowe</option>
                     <option>James Carter</option>
                     <option>Michael Finch</option>
-                  </select>
+                  </ProductSelect>
                 </div>
               </div>
 
@@ -823,13 +821,13 @@ function SchedulePage() {
                   <label className="sa-label" htmlFor="ed-assign">
                     Assign To
                   </label>
-                  <select id="ed-assign" className="sa-input" defaultValue="Marcus Aurelius (Lead Technician)">
+                  <ProductSelect id="ed-assign" className="sa-input" defaultValue="Marcus Aurelius (Lead Technician)">
                     <option>Marcus Aurelius (Lead Technician)</option>
                     <option>Alex Rowe</option>
                     <option>Sarah Jenkins</option>
                     <option>James Carter</option>
                     <option>Michael Finch</option>
-                  </select>
+                  </ProductSelect>
                 </div>
                 <div className="sa-field">
                   <label className="sa-label" htmlFor="ed-due">
@@ -843,13 +841,13 @@ function SchedulePage() {
                 <label className="sa-label" htmlFor="ed-frequency">
                   Frequency
                 </label>
-                <select id="ed-frequency" className="sa-input" defaultValue="Monthly">
+                <ProductSelect id="ed-frequency" className="sa-input" defaultValue="Monthly">
                   <option>Weekly</option>
                   <option>Monthly</option>
                   <option>Quarterly</option>
                   <option>Every 6 Months</option>
                   <option>Annually</option>
-                </select>
+                </ProductSelect>
               </div>
 
               <div className="sa-field">

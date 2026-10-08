@@ -1,3 +1,4 @@
+import { ProductSelect } from "@/components/product-select";
 import { useState } from "react";
 import * as Dialog from "@radix-ui/react-dialog";
 import { ChevronDown, CircleX } from "lucide-react";
@@ -67,16 +68,16 @@ export function BuildingTaskDialog({ open, onOpenChange, onSave }: {
             </label>
             <label className="bt-field">
               <span>System <em>*</em></span>
-              <div className="bt-select"><select name="system" defaultValue="Electrical" required>
+              <div className="bt-select"><ProductSelect name="system" defaultValue="Electrical" required>
                 <option>Electrical</option><option>Water Hygiene</option><option>Fire Safety</option><option>Gas Safety</option><option>Lifts & Lifting Gear</option>
-              </select><ChevronDown size={14} /></div>
+              </ProductSelect><ChevronDown size={14} /></div>
             </label>
             <label className="bt-field">
               <span>Assign To <em>*</em></span>
-              <div className="bt-select"><select name="assignee" defaultValue="" required>
+              <div className="bt-select"><ProductSelect name="assignee" defaultValue="" required>
                 <option value="" disabled>Select team member</option>
                 <option>Alex Rowe</option><option>Sarah Jenkins</option><option>James Carter</option><option>Clara Oswald</option>
-              </select><ChevronDown size={14} /></div>
+              </ProductSelect><ChevronDown size={14} /></div>
             </label>
             <label className="bt-field">
               <span>Due Date <em>*</em></span>
@@ -84,9 +85,9 @@ export function BuildingTaskDialog({ open, onOpenChange, onSave }: {
             </label>
             <label className="bt-field">
               <span>Frequency <em>*</em></span>
-              <div className="bt-select"><select name="frequency" defaultValue="Monthly" required>
+              <div className="bt-select"><ProductSelect name="frequency" defaultValue="Monthly" required>
                 <option>Monthly</option><option>Weekly</option><option>Quarterly</option><option>Annually</option><option>One-off</option>
-              </select><ChevronDown size={14} /></div>
+              </ProductSelect><ChevronDown size={14} /></div>
             </label>
             <fieldset className="bt-full bt-options">
               <legend>Priority Level</legend>

@@ -6903,3 +6903,44 @@ a.am-menu-item { text-decoration: none; }
 .av-footer { margin-top: auto; padding-top: 2rem; }
 .av-back { display: inline-flex; align-items: center; padding: .55rem 1rem; border: 1px solid #e5e7eb; border-radius: 8px; background: #fff; color: #111827; font-size: .82rem; font-weight: 500; text-decoration: none; }
 .av-back:hover { background: #f9fafb; }
+
+/* Shared product dropdown treatment, based on Documents. */
+.product-select-wrap { position: relative; display: inline-flex; min-width: 0; width: 100%; vertical-align: middle; }
+.product-select-native { position: absolute !important; width: 1px !important; height: 1px !important; padding: 0 !important; opacity: 0; clip-path: inset(50%); pointer-events: none; }
+button.product-select-trigger {
+  width: 100%; min-width: 0; height: 38px; display: flex; justify-content: space-between;
+  gap: 10px; padding: 8px 12px; border-radius: 6px; font-size: 12px; font-weight: 400;
+  line-height: 18px; color: var(--document-filter-text); background: var(--document-filter-surface);
+  border: 1px solid var(--document-filter-border); box-shadow: none; text-align: left; background-image: none;
+}
+button.product-select-trigger:hover, button.product-select-trigger[data-state="open"] {
+  background: var(--document-filter-surface); color: var(--document-filter-text); border-color: var(--document-filter-border);
+}
+.product-select-trigger > span:first-child { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.product-select-chevron { width: 5px; height: 5px; border-right: 1px solid currentColor; border-bottom: 1px solid currentColor; transform: rotate(45deg); flex-shrink: 0; margin: -3px 2px 0 4px; }
+.product-select-menu { width: max(208px, var(--radix-dropdown-menu-trigger-width)); max-width: calc(100vw - 24px); z-index: 300; }
+.product-select-menu .dc-filter-option { white-space: normal; overflow-wrap: anywhere; }
+.product-select-wrap + svg { display: none; }
+.qa-select-chip:has(.product-select-wrap), .qa-filter-select:has(.product-select-wrap), .tr-filter:has(.product-select-wrap) {
+  padding: 0; border: 0; background: transparent; gap: 6px; color: var(--document-filter-text);
+}
+.qa-select-chip > svg { display: none; }
+.qa-select-chip .product-select-wrap, .qa-filter-select .product-select-wrap, .tr-filter .product-select-wrap { width: auto; }
+.qa-select-chip button.product-select-trigger, .qa-filter-select button.product-select-trigger, .tr-filter button.product-select-trigger { height: 32px; }
+.bt-field button.product-select-trigger { height: 31px; padding: 6px 10px; font-size: 11px; }
+.ar-select-dot:has(.product-select-wrap)::before { display: none; }
+.rp-menu {
+  min-width: 160px; padding: 0; border-radius: 6px; overflow: hidden;
+  background: var(--document-filter-surface); border: 1px solid var(--document-filter-border); box-shadow: var(--document-filter-shadow);
+}
+.rp-menu-item { min-height: 34px; padding: 8px 12px; border-radius: 0; font-size: 12px; color: var(--document-filter-text); }
+.rp-menu-item + .rp-menu-item { border-top: 1px solid var(--document-filter-border); }
+.rp-menu-item:hover, .rp-menu-item:focus-visible { background: var(--document-filter-selected); color: var(--document-filter-green); }
+.rp-menu-item.tone-green, .rp-menu-item.tone-blue { color: var(--document-filter-text); }
+.rp-menu-item.tone-red { color: var(--destructive); }
+.sc-date-popover { background: var(--document-filter-surface); border-color: var(--document-filter-border); border-radius: 6px; box-shadow: var(--document-filter-shadow); }
+[data-product-menu] { border-radius: 6px; padding: 0; background: var(--document-filter-surface); border-color: var(--document-filter-border); color: var(--document-filter-text); box-shadow: var(--document-filter-shadow); }
+[data-product-menu-item] { min-height: 34px; border-radius: 0; padding: 8px 12px; font-size: 12px; }
+[data-product-menu-item] + [data-product-menu-item] { border-top: 1px solid var(--document-filter-border); }
+[data-product-menu-item][data-highlighted] { background: var(--document-filter-selected); color: var(--document-filter-green); }
+.tr-filter:has(.product-select-wrap) { min-width: 0; }

@@ -1,3 +1,4 @@
+import { ProductSelect } from "@/components/product-select";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
 import {
@@ -154,7 +155,7 @@ function ReportsPage() {
             </span>
              <label className="po-chip qa-select-chip">
               <Calendar size={14} aria-hidden="true" />
-               <select aria-label="Filter reports by building" value={building} onChange={(event) => { setBuilding(event.target.value); setPage(1); }}><option>All buildings</option><option>Riverside Court</option><option>Elmwood Court</option><option>Northgate House</option></select>
+               <ProductSelect aria-label="Filter reports by building" value={building} onChange={(event) => { setBuilding(event.target.value); setPage(1); }}><option>All buildings</option><option>Riverside Court</option><option>Elmwood Court</option><option>Northgate House</option></ProductSelect>
               <ChevronDown size={13} aria-hidden="true" />
              </label>
              <button type="button" className="po-download" onClick={() => downloadCsv("kearly-cqc-reports.csv", [["Date", "Report", "Type", "Period", "Status"], ...visibleReports.map((report) => [report.date, report.name, report.type, report.period, report.status])])}>
