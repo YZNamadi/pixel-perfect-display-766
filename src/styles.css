@@ -3904,53 +3904,6 @@ a.am-menu-item { text-decoration: none; }
     position: relative;
   }
 
-  .hp-decor {
-    inset: 0;
-    pointer-events: none;
-    position: absolute;
-    z-index: 0;
-  }
-
-  .hp-decor > span {
-    position: absolute;
-  }
-
-  .hp-circle {
-    border-radius: 50%;
-  }
-
-  .hp-pill {
-    border-radius: 999px;
-  }
-
-  .hp-blob {
-    border-radius: 2.5rem;
-  }
-
-  .hp-mint-soft {
-    background: #e2f4ef;
-  }
-
-  .hp-mint {
-    background: #b8e8dc;
-  }
-
-  .hp-mint-strong {
-    background: #6fcfb5;
-  }
-
-  .hp-dark {
-    background: #0f5d4c;
-  }
-
-  .hp-dark-soft {
-    background: #2f9077;
-  }
-
-  .hp-ring {
-    border: 3px solid #6fcfb5;
-    border-radius: 50%;
-  }
 
   .hp-brand {
     align-items: center;
@@ -4076,11 +4029,6 @@ a.am-menu-item { text-decoration: none; }
   }
 }
 
-@media (max-width: 900px) {
-  .hp-decor {
-    opacity: 0.55;
-  }
-}
 
 @media (max-width: 640px) {
   .hp-page {
