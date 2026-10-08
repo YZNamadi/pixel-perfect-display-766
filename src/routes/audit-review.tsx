@@ -7,7 +7,7 @@ import { AppShell } from "@/components/app-shell";
 import { auditEvents } from "@/lib/audit-events";
 
 export const Route = createFileRoute("/audit-review")({
-  validateSearch: (search: Record<string, unknown>) => ({ id: typeof search.id === "string" ? search.id : "e1" }),
+  validateSearch: (search: Record<string, unknown>) => ({ id: typeof search["id"] === "string" ? search["id"] : "e1" }),
   head: () => ({
     meta: [
       { title: "Kearly | Review Audit Entry" },
@@ -27,7 +27,7 @@ const priorities = ["Low", "Normal", "High", "Critical"];
 function AuditReviewPage() {
   const { id } = Route.useSearch();
   const navigate = useNavigate();
-  const entry = auditEvents.find((e) => e.id === id) ?? auditEvents[0];
+  const entry = auditEvents.find((e) => e.id === id) ?? auditEvents[0]!;
   const [status, setStatus] = useState("Pending Review");
   const [priority, setPriority] = useState("Normal");
   const [notes, setNotes] = useState("");
