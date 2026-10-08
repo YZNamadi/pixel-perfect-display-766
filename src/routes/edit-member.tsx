@@ -1,7 +1,7 @@
 import { ProductSelect } from "@/components/product-select";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
-import { LayoutDashboard, ShieldCheck, Wrench, Building2, BarChart3, ScrollText, Settings, CreditCard, Users, Stethoscope, FileText, Check, ChevronDown } from "lucide-react";
+import { LayoutDashboard, ShieldCheck, Wrench, Building2, BarChart3, ScrollText, Settings, Users, Stethoscope, FileText, Check, ChevronDown } from "lucide-react";
 
 import { KearlyLogo } from "@/components/kearly-logo";
 

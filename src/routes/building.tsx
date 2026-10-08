@@ -9,7 +9,6 @@ import {
   BarChart3,
   ScrollText,
   Settings,
-  CreditCard,
   Users,
   Plus,
   CheckCircle2,

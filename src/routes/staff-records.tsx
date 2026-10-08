@@ -6,7 +6,6 @@ import {
   Building,
   Building2,
   ChevronDown,
-  CreditCard,
   FileText,
   LayoutDashboard,
   Pencil,

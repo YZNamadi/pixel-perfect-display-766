@@ -1,7 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import type { ReactNode } from "react";
 import type { LucideIcon } from "lucide-react";
-import { BarChart3, Building2, CreditCard, LayoutDashboard, ScrollText, Settings, ShieldCheck, Stethoscope, Users, Wrench } from "lucide-react";
+import { BarChart3, Building2, LayoutDashboard, ScrollText, Settings, ShieldCheck, Stethoscope, Users, Wrench } from "lucide-react";
 
 import { KearlyLogo } from "@/components/kearly-logo";
 

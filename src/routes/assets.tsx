@@ -7,7 +7,6 @@ import {
   BarChart3,
   ScrollText,
   Settings,
-  CreditCard,
   Users,
   Search,
   ArrowRight,
