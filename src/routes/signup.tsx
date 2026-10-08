@@ -103,6 +103,19 @@ function SignupPage() {
             </button>
           </div>
 
+          <div className="su-contractor">
+            <span className="su-contractor-title">Contractor</span>
+            <label className="su-contractor-check" htmlFor="su-contractor">
+              <input
+                id="su-contractor"
+                type="checkbox"
+                checked={isContractor}
+                onChange={(event) => setIsContractor(event.target.checked)}
+              />
+              I am a contractor
+            </label>
+          </div>
+
           <button className="su-submit" type="submit">
             Create Account
           </button>
