@@ -19,7 +19,7 @@ export const auditEvents: AuditEvent[] = [
     details: "Compliance task Fire Risk Assessment created",
     ip: "192.168.1.45",
     session: "sess_a8f3k2m1",
-    entity: "",
+    entity: "Riverside Court",
     pending: true,
   },
   {
