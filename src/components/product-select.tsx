@@ -1,4 +1,3 @@
-import { ProductSelect } from "@/components/product-select";
 import { forwardRef, useEffect, useRef, useState, type SelectHTMLAttributes } from "react";
 import { Button } from "@/components/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuRadioGroup, DropdownMenuRadioItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
@@ -31,7 +30,7 @@ export const ProductSelect = forwardRef<HTMLSelectElement, SelectHTMLAttributes<
 
     return (
       <span className="product-select-wrap">
-        <ProductSelect {...props} className="product-select-native" tabIndex={-1} aria-hidden="true"
+        <select {...props} id={undefined} className="product-select-native" tabIndex={-1} aria-hidden="true"
           ref={(element) => {
             nativeRef.current = element;
             if (typeof forwardedRef === "function") forwardedRef(element);
@@ -43,10 +42,10 @@ export const ProductSelect = forwardRef<HTMLSelectElement, SelectHTMLAttributes<
             triggerRef.current?.focus();
             setOpen(true);
           }}
-        >{children}</ProductSelect>
+        >{children}</select>
         <DropdownMenu open={open} onOpenChange={setOpen}>
           <DropdownMenuTrigger asChild>
-            <Button ref={triggerRef} type="button" variant="outline" className={`product-select-trigger ${className ?? ""}`} style={style}
+            <Button ref={triggerRef} id={props.id} type="button" variant="outline" className={`product-select-trigger ${className ?? ""}`} style={style}
               disabled={props.disabled} aria-label={props["aria-label"]} aria-labelledby={props["aria-labelledby"]}
               aria-required={props.required}>
               <span>{options.find((option) => option.value === selected)?.label ?? selected}</span>
