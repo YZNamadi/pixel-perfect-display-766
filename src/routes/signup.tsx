@@ -29,6 +29,7 @@ const trustedBy = ["NHS", "Bupa", "Spire", "UCLH", "Circle"];
 function SignupPage() {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
+  const [isContractor, setIsContractor] = useState(false);
 
   return (
     <main className="su-page">
@@ -57,7 +58,7 @@ function SignupPage() {
           className="su-form"
           onSubmit={(event) => {
             event.preventDefault();
-            void navigate({ to: "/facility" });
+            void navigate({ to: isContractor ? "/contractor-signup" : "/facility" });
           }}
         >
           <h1 className="su-title">Create your account</h1>
@@ -100,6 +101,19 @@ function SignupPage() {
             >
               {showPassword ? <Eye size={16} aria-hidden="true" /> : <EyeOff size={16} aria-hidden="true" />}
             </button>
+          </div>
+
+          <div className="su-contractor">
+            <span className="su-contractor-title">Contractor</span>
+            <label className="su-contractor-check" htmlFor="su-contractor">
+              <input
+                id="su-contractor"
+                type="checkbox"
+                checked={isContractor}
+                onChange={(event) => setIsContractor(event.target.checked)}
+              />
+              I am a contractor
+            </label>
           </div>
 
           <button className="su-submit" type="submit">
