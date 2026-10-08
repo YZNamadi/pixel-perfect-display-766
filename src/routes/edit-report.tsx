@@ -1,9 +1,10 @@
 import { useRef, useState } from "react";
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
-import { ArrowLeft, Calendar, CircleCheck, FileText, Shield, Trash2, Upload } from "lucide-react";
+import { ArrowLeft, Calendar, CircleCheck, FileText, Trash2, Upload } from "lucide-react";
 
 import { AppShell } from "@/components/app-shell";
 import { ProductSelect } from "@/components/product-select";
+import { CategoryDropdown, StaffDropdown, categoryOptions, staffOptions } from "@/components/report-dropdowns";
 import { initialRecords } from "@/lib/staff-records";
 
 export const Route = createFileRoute("/edit-report")({
@@ -21,17 +22,15 @@ export const Route = createFileRoute("/edit-report")({
   component: EditReportPage,
 });
 
-const categories = ["Health & Safety", "Clinical", "Facilities", "Governance", "Safeguarding", "Operations", "HR"];
 
 function EditReportPage() {
   const { id } = Route.useSearch();
   const rec = initialRecords[id] ?? initialRecords[0]!;
   const navigate = useNavigate();
   const fileRef = useRef<HTMLInputElement>(null);
-  const [staff, setStaff] = useState(rec.name);
+  const [staff, setStaff] = useState(staffOptions.some((s) => s.name === rec.name) ? rec.name : staffOptions[0]!.name);
+  const [category, setCategory] = useState(categoryOptions.some((c) => c.label === rec.category) ? rec.category : categoryOptions[0]!.label);
   const [fileName, setFileName] = useState(`${rec.report.replace(/[^A-Za-z0-9]+/g, "_")}_${rec.filed.slice(-4)}.pdf`);
-  const role = initialRecords.find((r) => r.name === staff)?.role ?? "";
-  const initials = staff.split(" ").map((p) => p[0]).join("");
   const back = () => navigate({ to: "/staff-records" });
 
   return (
@@ -43,8 +42,8 @@ function EditReportPage() {
         <form className="atr-card" onSubmit={(e) => { e.preventDefault(); back(); }}>
           <h2 className="er-h">STAFF ASSIGNMENT</h2>
           <div className="atr-grid">
-            <label>Staff Member<span className="er-staff"><span className="er-avatar" aria-hidden="true">{initials}</span><span className="er-staff-text"><b>{staff}</b><small>{role}</small></span><ProductSelect aria-label="Staff member" value={staff} onChange={(e) => setStaff(e.target.value)}>{initialRecords.map((r) => <option key={r.name}>{r.name}</option>)}</ProductSelect></span></label>
-            <label>Category<span className="er-icon-field"><Shield size={15} aria-hidden="true" /><ProductSelect defaultValue={rec.category}>{categories.map((c) => <option key={c}>{c}</option>)}</ProductSelect></span></label>
+            <div className="atr-field"><span>Staff Member</span><StaffDropdown value={staff} onChange={setStaff} /></div>
+            <div className="atr-field"><span>Category</span><CategoryDropdown value={category} onChange={setCategory} /></div>
           </div>
           <hr className="er-rule" />
           <h2 className="er-h">REPORT INFORMATION</h2>

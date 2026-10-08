@@ -7057,3 +7057,31 @@ button.product-select-trigger:hover, button.product-select-trigger[data-state="o
 .er-icon-field .product-select-trigger{padding-left:34px;height:41px;font-size:.88rem;color:#111827}
 .er-staff .product-select-trigger{height:41px}
 .er-staff .product-select-trigger>span:first-child{visibility:hidden}
+
+/* Edit Report custom dropdowns */
+.rdd { position: relative; width: 100%; font-weight: 400; }
+.rdd-trigger { display: flex; align-items: center; gap: 0.6rem; width: 100%; min-height: 2.6rem; padding: 0.5rem 0.85rem; background: var(--color-card); border: 1px solid var(--color-border); border-radius: 8px; text-align: left; color: var(--color-foreground); cursor: pointer; transition: border-color .15s; }
+.rdd-trigger.rdd-tall { min-height: 3rem; padding: 0.4rem 0.75rem; }
+.rdd-trigger:hover, .rdd-trigger.is-open { border-color: var(--color-primary); }
+.rdd-trigger.is-open { box-shadow: 0 0 0 1px var(--color-primary); }
+.rdd-chev { margin-left: auto; color: var(--color-primary); transition: transform .15s; transform: rotate(180deg); flex-shrink: 0; }
+.rdd-trigger.is-open .rdd-chev { transform: none; }
+.rdd-avatar { width: 2rem; height: 2rem; border-radius: 999px; background: var(--color-secondary); color: var(--color-primary); display: grid; place-items: center; font-size: 0.72rem; font-weight: 700; flex-shrink: 0; }
+.rdd-two { display: flex; flex-direction: column; line-height: 1.2; min-width: 0; }
+.rdd-two b { font-size: 0.88rem; font-weight: 600; color: var(--color-foreground); }
+.rdd-two small { font-size: 0.75rem; color: var(--color-muted-foreground); }
+.rdd-ico { display: inline-flex; color: var(--color-muted-foreground); }
+.rdd-label { font-size: 0.9rem; color: var(--color-foreground); }
+.rdd-menu { position: absolute; top: calc(100% + 6px); left: 0; right: 0; z-index: 100; background: var(--color-popover); border: 1px solid var(--color-border); border-radius: 10px; box-shadow: 0 12px 28px -8px oklch(0.2 0.03 255 / 0.18); padding: 0.4rem; list-style: none; margin: 0; }
+.rdd-search { display: flex; align-items: center; gap: 0.5rem; padding: 0.5rem 0.75rem; margin-bottom: 0.4rem; border: 1px solid var(--color-border); border-radius: 8px; background: var(--color-muted); color: var(--color-muted-foreground); }
+.rdd-search input { flex: 1; border: 0; background: transparent; outline: none; font-size: 0.88rem; color: var(--color-foreground); padding: 0; min-height: 0; box-shadow: none; }
+.rdd-search button { display: inline-flex; background: none; border: 0; color: var(--color-muted-foreground); cursor: pointer; padding: 0; }
+.rdd-list { list-style: none; margin: 0; padding: 0; max-height: 22rem; overflow-y: auto; }
+.rdd-search + .rdd-list { border-top: 1px solid var(--color-border); padding-top: 0.3rem; }
+.rdd-opt { display: flex; align-items: center; gap: 0.75rem; width: 100%; padding: 0.6rem 0.75rem; border: 0; background: transparent; border-radius: 6px; cursor: pointer; text-align: left; }
+.rdd-opt-tall { padding: 0.45rem 0.75rem; }
+.rdd-opt:hover { background: var(--color-muted); }
+.rdd-opt.is-sel .rdd-label { font-weight: 600; }
+.rdd-opt .rdd-ico { color: var(--color-foreground); }
+.rdd-check { margin-left: auto; color: var(--color-primary); flex-shrink: 0; }
+.rdd-empty { padding: 0.75rem; font-size: 0.85rem; color: var(--color-muted-foreground); }
