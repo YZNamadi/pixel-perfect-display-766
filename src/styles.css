@@ -5000,7 +5000,7 @@ a.am-menu-item { text-decoration: none; }
 .sc-view:hover { color: #111827; }
 .sc-view.is-active { background: #15803D; color: #fff; }
 
-.sc-legend { display: flex; align-items: center; justify-content: center; gap: 0.35rem; margin: -0.2rem 0 0.65rem; }
+.sc-legend { display: flex; align-items: center; justify-content: center; gap: 0.35rem; margin: 0 0 1rem; }
 .sc-legend span { display: inline-flex; align-items: center; gap: 0.3rem; padding: 0.28rem 0.55rem; border-radius: 5px; font-size: 0.64rem; font-weight: 700; }
 .sc-legend span::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
 .sc-legend .is-allocated { color: #15803D; background: #DCFCE7; }
