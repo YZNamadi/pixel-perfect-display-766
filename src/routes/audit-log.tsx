@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import {
   LayoutDashboard,
   ShieldCheck,
@@ -15,6 +15,7 @@ import {
   ChevronDown,
   Eye,
   BadgeCheck,
+  MoreVertical,
   Stethoscope,
 } from "lucide-react";
 
@@ -69,6 +70,17 @@ function AuditLogPage() {
   const [building, setBuilding] = useState("All buildings");
   const [page, setPage] = useState(1);
   const [selected, setSelected] = useState<Event | null>(null);
+  const [openMenu, setOpenMenu] = useState<string | null>(null);
+  const menuRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    if (!openMenu) return;
+    const onDown = (event: MouseEvent) => {
+      if (menuRef.current && !menuRef.current.contains(event.target as Node)) setOpenMenu(null);
+    };
+    document.addEventListener("mousedown", onDown);
+    return () => document.removeEventListener("mousedown", onDown);
+  }, [openMenu]);
   const filtered = useMemo(() => events.filter((event) => (user === "All Users" || event.user === user) && (action === "All Actions" || event.action === action) && (building === "All buildings" || event.entity === building) && (!query.trim() || `${event.user} ${event.action} ${event.details} ${event.entity}`.toLowerCase().includes(query.toLowerCase()))), [query, user, action, building]);
   const pageRows = filtered.slice((page - 1) * 4, page * 4);
 
@@ -173,17 +185,44 @@ function AuditLogPage() {
                     <td className="al-details">{e.details}</td>
                     <td className="cl-name">{e.entity}</td>
                     <td>
-                      {e.pending ? (
-                         <Link to="/audit-review" search={{ id: e.id }} className="rp-btn tone-blue">
-                          <BadgeCheck size={13} aria-hidden="true" />
-                          Review
-                        </Link>
-                      ) : (
-                         <button type="button" className="rp-btn" onClick={() => setSelected(e)}>
-                          <Eye size={13} aria-hidden="true" />
-                          View
+                      <div
+                        className="rp-actions-wrap"
+                        ref={openMenu === e.id ? menuRef : undefined}
+                      >
+                        <button
+                          type="button"
+                          className="rp-kebab"
+                          aria-label={`Actions for log entry ${e.id}`}
+                          aria-expanded={openMenu === e.id}
+                          onClick={(event) => {
+                            event.stopPropagation();
+                            setOpenMenu((value) => (value === e.id ? null : e.id));
+                          }}
+                        >
+                          <MoreVertical size={16} aria-hidden="true" />
                         </button>
-                      )}
+                        {openMenu === e.id && (
+                          <div className="rp-menu" role="menu" aria-label={`Log entry ${e.id} actions`}>
+                            <button
+                              type="button"
+                              role="menuitem"
+                              className="rp-menu-item"
+                              onClick={() => { setOpenMenu(null); setSelected(e); }}
+                            >
+                              <Eye size={13} aria-hidden="true" />View
+                            </button>
+                            <Link
+                              to="/audit-review"
+                              search={{ id: e.id }}
+                              role="menuitem"
+                              className="rp-menu-item tone-blue"
+                              onClick={() => setOpenMenu(null)}
+                            >
+                              <BadgeCheck size={13} aria-hidden="true" />Review
+                            </Link>
+                          </div>
+                        )}
+                      </div>
                     </td>
                   </tr>
                 ))}
