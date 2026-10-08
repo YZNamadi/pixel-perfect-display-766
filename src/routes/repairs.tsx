@@ -12,10 +12,8 @@ import {
   Users,
   Search,
   Calendar,
-  Eye,
   Pencil,
   Check,
-  BadgeCheck,
   X,
   AlertTriangle,
   Stethoscope,
@@ -98,7 +96,6 @@ function RepairsPage() {
   const [activeTab, setActiveTab] = useState("all");
   const [openMenu, setOpenMenu] = useState<string | null>(null);
   const [deleteTicket, setDeleteTicket] = useState<Ticket | null>(null);
-  const [selectedTicket, setSelectedTicket] = useState<Ticket | null>(null);
   const menuRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
@@ -257,14 +254,6 @@ function RepairsPage() {
                         </button>
                         {openMenu === t.id && (
                           <div className="rp-menu" role="menu" aria-label={`Ticket ${t.id} actions`}>
-                            <button
-                              type="button"
-                              role="menuitem"
-                              className="rp-menu-item"
-                              onClick={() => { setOpenMenu(null); setSelectedTicket(t); }}
-                            >
-                              <Eye size={13} aria-hidden="true" />View
-                            </button>
                             {t.status !== "Closed" && (
                               <Link to="/edit-task" role="menuitem" className="rp-menu-item" onClick={() => setOpenMenu(null)}>
                                 <Pencil size={13} aria-hidden="true" />Edit
@@ -275,14 +264,6 @@ function RepairsPage() {
                                 <Check size={13} aria-hidden="true" />Complete
                               </Link>
                             )}
-                            <button
-                              type="button"
-                              role="menuitem"
-                              className="rp-menu-item tone-blue"
-                              onClick={() => { setOpenMenu(null); setSelectedTicket(t); }}
-                            >
-                              <BadgeCheck size={13} aria-hidden="true" />Review
-                            </button>
                             {t.status !== "Closed" && (
                               <button
                                 type="button"
@@ -355,7 +336,6 @@ function RepairsPage() {
           </div>
         </div>
       )}
-      {selectedTicket && <div className="cp-overlay" role="presentation" onClick={() => setSelectedTicket(null)}><div className="cp-modal" role="dialog" aria-modal="true" aria-labelledby="rp-view-title" onClick={(event) => event.stopPropagation()}><h2 className="cp-modal-title" id="rp-view-title">{selectedTicket.id} · {selectedTicket.title}</h2><p className="cp-modal-text">{selectedTicket.site}<br />{selectedTicket.priority} priority · {selectedTicket.status}<br />Assigned to {selectedTicket.assignee}<br />SLA: {selectedTicket.sla || "Awaiting assessment"}</p><div className="cp-modal-actions"><button type="button" className="cp-modal-cancel" onClick={() => setSelectedTicket(null)}>Close</button></div></div></div>}
 
     </div>
   );
