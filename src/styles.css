@@ -6944,3 +6944,53 @@ button.product-select-trigger:hover, button.product-select-trigger[data-state="o
 [data-product-menu-item] + [data-product-menu-item] { border-top: 1px solid var(--document-filter-border); }
 [data-product-menu-item][data-highlighted] { background: var(--document-filter-selected); color: var(--document-filter-green); }
 .tr-filter:has(.product-select-wrap) { min-width: 0; }
+
+/* Document details dialog */
+.dd-modal{width:min(766px,94vw);max-height:92vh;overflow:auto;background:#fff;border-radius:14px;box-shadow:0 24px 60px rgba(15,23,42,.25);font-family:Inter,system-ui,sans-serif}
+.dd-head{display:flex;justify-content:space-between;align-items:center;padding:16px 19px;border-bottom:1px solid #E5E7EB}
+.dd-head h2{font-size:15px;font-weight:700;color:#111827;margin:0}
+.dd-head p{font-size:10px;color:#9CA3AF;margin:2px 0 0}
+.dd-head-btn{width:26px;height:26px;border-radius:6px;background:#F3F4F6;display:grid;place-items:center;color:#374151;transform:rotate(0)}
+.dd-body{display:grid;grid-template-columns:1fr 1fr;min-height:452px}
+.dd-preview{background:#F1F5F9;padding:20px 45px;border-right:1px solid #E5E7EB;display:flex}
+.dd-paper{flex:1;background:#fff;border:1px solid #E5E7EB;border-radius:8px;box-shadow:0 2px 8px rgba(15,23,42,.06);padding:26px 25px 22px;display:flex;flex-direction:column;font-size:8px;color:#374151}
+.dd-paper-top{display:flex;justify-content:space-between;align-items:center;padding-bottom:16px;border-bottom:1px solid #E5E7EB;margin-bottom:18px}
+.dd-paper-top strong{display:block;color:#15803D;font-size:11px;letter-spacing:.06em}
+.dd-paper-top small{font-size:7px;color:#6B7280}
+.dd-seal{width:32px;height:32px;border-radius:50%;border:1.5px solid #F59E0B;color:#F59E0B;display:grid;place-items:center}
+.dd-sec{font-size:6.5px;font-weight:600;color:#6B7280;margin:0 0 6px}
+.dd-box{background:#F8FAFC;border-radius:4px;padding:7px 6px;margin-bottom:14px;display:flex;flex-direction:column;gap:2px}
+.dd-box b,.dd-paper-foot b{font-size:7.5px;color:#111827}
+.dd-box small,.dd-box-row small,.dd-paper-foot small{font-size:6px;color:#9CA3AF}
+.dd-box-row{flex-direction:row;justify-content:space-between}
+.dd-box-row>div,.dd-paper-foot>div{display:flex;flex-direction:column;gap:2px}
+.dd-right{text-align:right;align-items:flex-end}
+.dd-table{width:100%;border:1px solid #E5E7EB;border-radius:4px;border-collapse:separate;border-spacing:0;font-size:6.5px}
+.dd-table th{background:#F8FAFC;text-align:left;padding:5px;font-weight:600;color:#111827}
+.dd-table td{padding:5px;border-top:1px solid #E5E7EB}
+.dd-table th:last-child,.dd-table td:last-child{text-align:right}
+.dd-yes{color:#16A34A;font-weight:600}.dd-none{color:#9CA3AF}
+.dd-paper-foot{margin-top:auto;display:flex;justify-content:space-between}
+.dd-sign{color:#15803D!important;font-style:italic}
+.dd-info{padding:20px 19px 19px;display:flex;flex-direction:column}
+.dd-info hr{border:0;border-top:1px solid #E5E7EB;margin:12px 0}
+.dd-field{display:flex;flex-direction:column;gap:3px}
+.dd-field small{font-size:9px;font-weight:500;color:#6B7280;letter-spacing:.03em}
+.dd-field b{font-size:12px;color:#111827}
+.dd-field span{font-size:12px;color:#111827}
+.dd-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px 16px}
+.dd-ppm{color:#15803D!important;font-weight:600}
+.dd-status{display:flex;gap:10px;align-items:flex-start;border-radius:6px;padding:9px 12px;margin:8px 0 16px}
+.dd-status div{display:flex;flex-direction:column}
+.dd-status b{font-size:12px}.dd-status small{font-size:10px;color:#374151}
+.dd-status.tone-green{background:#DCFCE7;color:#15803D}
+.dd-status.tone-amber{background:#FEF3C7;color:#B45309}
+.dd-status.tone-red{background:#FEE2E2;color:#B91C1C}
+.dd-tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
+.dd-tags span{background:#F1F5F9;border-radius:4px;padding:4px 9px;font-size:10px;font-weight:500;color:#374151}
+.dd-actions{margin-top:auto;padding-top:24px;display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.dd-close,.dd-download{height:33px;border-radius:6px;font-size:11px;font-weight:600}
+.dd-close{border:1px solid #D1D5DB;background:#fff;color:#374151}
+.dd-download{background:#15803D;color:#fff}
+.dd-download:hover{background:#166534}
+@media (max-width:700px){.dd-body{grid-template-columns:1fr}.dd-preview{padding:16px}}
