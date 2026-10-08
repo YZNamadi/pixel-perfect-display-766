@@ -1,7 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import type { ReactNode } from "react";
 import type { LucideIcon } from "lucide-react";
-import { BarChart3, Building2, CreditCard, LayoutDashboard, ScrollText, Settings, ShieldCheck, Stethoscope, Users, Wrench } from "lucide-react";
+import { BarChart3, Building2, LayoutDashboard, ScrollText, Settings, ShieldCheck, Stethoscope, Users, Wrench } from "lucide-react";
 
 import { KearlyLogo } from "@/components/kearly-logo";
 
@@ -17,10 +17,9 @@ const governance = [
   { label: "Reports", icon: BarChart3, to: "/reports" as const },
   { label: "Team", icon: Users, to: "/team-members" as const },
   { label: "Audit log", icon: ScrollText, to: "/audit-log" as const },
-  { label: "Billing", icon: CreditCard, to: "/billing" as const },
 ];
 
-function NavLink({ label, icon: Icon, to, active, badge }: { label: string; icon: LucideIcon; to: "/dashboard" | "/compliance" | "/equipment" | "/repairs" | "/assets" | "/reports" | "/team-members" | "/audit-log" | "/billing"; active?: boolean; badge?: string }) {
+function NavLink({ label, icon: Icon, to, active, badge }: { label: string; icon: LucideIcon; to: "/dashboard" | "/compliance" | "/equipment" | "/repairs" | "/assets" | "/reports" | "/team-members" | "/audit-log"; active?: boolean; badge?: string }) {
   return <Link to={to} className={`po-nav-item ${active ? "is-active" : ""}`}><Icon size={17} aria-hidden="true" /><span>{label}</span>{badge ? <span className="po-nav-badge">{badge}</span> : null}</Link>;
 }
 

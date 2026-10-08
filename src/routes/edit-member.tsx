@@ -1,7 +1,7 @@
 import { ProductSelect } from "@/components/product-select";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
-import { LayoutDashboard, ShieldCheck, Wrench, Building2, BarChart3, ScrollText, Settings, CreditCard, Users, Stethoscope, FileText, Check, ChevronDown } from "lucide-react";
+import { LayoutDashboard, ShieldCheck, Wrench, Building2, BarChart3, ScrollText, Settings, Users, Stethoscope, FileText, Check, ChevronDown } from "lucide-react";
 
 import { KearlyLogo } from "@/components/kearly-logo";
 
@@ -30,7 +30,6 @@ const governanceNav = [
   { label: "Reports", icon: BarChart3, to: "/reports" as const },
   { label: "Team", icon: Users, to: "/team-members" as const, active: true },
   { label: "Audit log", icon: ScrollText, to: "/audit-log" as const },
-  { label: "Billing", icon: CreditCard, to: "/billing" as const },
 ];
 const taskList = [
   "Gas Safety Inspections & Annual Certification",

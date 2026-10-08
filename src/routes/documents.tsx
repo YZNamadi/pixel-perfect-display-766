@@ -8,7 +8,6 @@ import {
   BarChart3,
   ScrollText,
   Settings,
-  CreditCard,
   Users,
   Search,
   Building,
@@ -67,7 +66,6 @@ const governanceNav = [
   { label: "Reports", icon: BarChart3, to: "/reports" as const, active: true },
   { label: "Team", icon: Users, to: "/team-members" as const },
   { label: "Audit log", icon: ScrollText, to: "/audit-log" as const },
-  { label: "Billing", icon: CreditCard, to: "/billing" as const },
 ];
 
 type Doc = {

@@ -7,7 +7,7 @@
 - [ ] Complete report tabs, building filters, exports/downloads, and staff-record fields
 - [ ] Add working contractor and internal-member creation flows
 - [ ] Fix audit-log search/filters, review/details, export, and pagination
-- [ ] Add a dedicated billing route and point every Billing link to it
+- [x] Remove Billing from the sidebar everywhere; billing lives in Settings, and the standalone billing page is no longer linked
 - [ ] Verify all tracked workflows, metadata, responsive layouts, and preview diagnostics
 - [x] Add and verify the supplied equipment detail page and its registry, edit, fault-report, and back links
 - [x] Match Edit Equipment to the supplied reference and verify editable fields and detail-page navigation

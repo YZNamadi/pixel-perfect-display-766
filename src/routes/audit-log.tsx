@@ -9,7 +9,6 @@ import {
   BarChart3,
   ScrollText,
   Settings,
-  CreditCard,
   Users,
   Search,
   Calendar,
@@ -58,7 +57,6 @@ const governanceNav = [
   { label: "Reports", icon: BarChart3, to: "/reports" as const },
   { label: "Team", icon: Users, to: "/team-members" as const },
   { label: "Audit log", icon: ScrollText, to: "/audit-log" as const, active: true },
-  { label: "Billing", icon: CreditCard, to: "/billing" as const },
 ];
 
 type Event = AuditEvent;
