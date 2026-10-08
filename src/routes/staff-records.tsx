@@ -21,6 +21,7 @@ import {
 } from "lucide-react";
 
 import { KearlyLogo } from "@/components/kearly-logo";
+import { initialRecords, type StaffReport } from "@/lib/staff-records";
 
 export const Route = createFileRoute("/staff-records")({
   head: () => ({
@@ -49,29 +50,6 @@ const governanceNav = [
   { label: "Team", icon: Users, to: "/team-members" as const },
   { label: "Audit log", icon: ScrollText, to: "/audit-log" as const },
   { label: "Billing", icon: CreditCard, to: "/billing" as const },
-];
-
-type StaffReport = {
-  name: string;
-  role: string;
-  initials: string;
-  tone: "red" | "blue" | "green" | "purple" | "teal";
-  report: string;
-  category: string;
-  filed: string;
-  due: string;
-  status: "Filed" | "Closed" | "In Review";
-};
-
-const initialRecords: StaffReport[] = [
-  { name: "Alex Rowe", role: "Facility Lead", initials: "AR", tone: "green", report: "Monthly Fire Safety Report", category: "Health & Safety", filed: "15 Jan 2024", due: "15 Jan 2025", status: "Filed" },
-  { name: "Sarah Jones", role: "Care Administrator", initials: "SJ", tone: "blue", report: "Incident Report - Resident Fall", category: "Clinical", filed: "22 Mar 2024", due: "22 Mar 2027", status: "Filed" },
-  { name: "David Finch", role: "Maintenance Engineer", initials: "DF", tone: "purple", report: "Water Hygiene Monitoring Report", category: "Facilities", filed: "10 Jun 2024", due: "10 Jun 2026", status: "Filed" },
-  { name: "James Carter", role: "Compliance Officer", initials: "JC", tone: "teal", report: "CQC Readiness Audit Report", category: "Governance", filed: "02 Feb 2024", due: "02 Feb 2025", status: "Filed" },
-  { name: "Emma Watson", role: "Support Worker", initials: "EW", tone: "red", report: "Safeguarding Concern Report", category: "Safeguarding", filed: "14 Jul 2022", due: "14 Jul 2024", status: "Closed" },
-  { name: "Robert Vance", role: "Facilities Team", initials: "RV", tone: "blue", report: "Equipment Maintenance Log", category: "Operations", filed: "05 Sep 2023", due: "05 Sep 2024", status: "In Review" },
-  { name: "Clara Oswald", role: "Site Supervisor", initials: "CO", tone: "purple", report: "COSHH Chemical Register", category: "Health & Safety", filed: "18 Nov 2023", due: "18 Nov 2024", status: "Filed" },
-  { name: "Marcus Brody", role: "Operations Admin", initials: "MB", tone: "green", report: "Staff Incident Report", category: "HR", filed: "30 Jan 2024", due: "30 Jan 2025", status: "Filed" },
 ];
 
 const statusTone: Record<StaffReport["status"], string> = {
@@ -163,7 +141,7 @@ function StaffRecordsPage() {
                     <td className="rp-created">{row.due}</td>
                     <td><button type="button" className="tr-cert" aria-label={`Open ${row.report} PDF`}><span className="tr-file-icon"><FileText size={13} aria-hidden="true" /></span>PDF</button></td>
                     <td><span className={`dc-expiry ${statusTone[row.status]}`}>{row.status}</span></td>
-                    <td><div className="cl-row-actions"><button type="button" className="cl-icon-btn tr-action" aria-label={`Edit ${row.report}`} onClick={() => setEditing(row)}><Pencil size={14} aria-hidden="true" /></button><button type="button" className="cl-icon-btn tr-action dc-del" aria-label={`Delete ${row.report}`} onClick={() => setPendingDelete(row)}><Trash2 size={14} aria-hidden="true" /></button></div></td>
+                    <td><div className="cl-row-actions"><Link to="/edit-report" search={{ id: initialRecords.findIndex((r) => r.report === row.report) }} className="cl-icon-btn tr-action" aria-label={`Edit ${row.report}`}><Pencil size={14} aria-hidden="true" /></Link><button type="button" className="cl-icon-btn tr-action dc-del" aria-label={`Delete ${row.report}`} onClick={() => setPendingDelete(row)}><Trash2 size={14} aria-hidden="true" /></button></div></td>
                   </tr>
                 ))}
                 {visibleRecords.length === 0 ? <tr><td colSpan={8} className="tr-empty">No staff reports match these filters.</td></tr> : null}
