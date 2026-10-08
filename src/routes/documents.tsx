@@ -353,21 +353,34 @@ function DocumentsPage() {
                       <span className="eq-cat">{doc.tag}</span>
                     </td>
                     <td>
-                      <div className="cl-row-actions">
-                        <button type="button" className="cl-icon-btn" aria-label={`View ${doc.name}`} onClick={() => setViewing(doc)}>
-                          <Eye size={15} aria-hidden="true" />
-                        </button>
-                        <button type="button" className="cl-icon-btn" aria-label={`Download ${doc.name}`}>
-                          <Download size={15} aria-hidden="true" />
-                        </button>
+                      <div
+                        className="rp-actions-wrap"
+                        ref={openMenu === doc.name ? menuRef : undefined}
+                      >
                         <button
                           type="button"
-                          className="cl-icon-btn dc-del"
-                          aria-label={`Delete ${doc.name}`}
-                          onClick={() => setPending(doc)}
+                          className="rp-kebab"
+                          aria-label={`Actions for ${doc.name}`}
+                          aria-expanded={openMenu === doc.name}
+                          onClick={() => setOpenMenu((value) => (value === doc.name ? null : doc.name))}
                         >
-                          <Trash2 size={15} aria-hidden="true" />
+                          <MoreVertical size={16} aria-hidden="true" />
                         </button>
+                        {openMenu === doc.name && (
+                          <div className="rp-menu" role="menu" aria-label={`${doc.name} actions`}>
+                            <button type="button" role="menuitem" className="rp-menu-item" onClick={() => setOpenMenu(null)}>
+                              <Download size={13} aria-hidden="true" />Download
+                            </button>
+                            <button
+                              type="button"
+                              role="menuitem"
+                              className="rp-menu-item tone-red"
+                              onClick={() => { setOpenMenu(null); setPending(doc); }}
+                            >
+                              <Trash2 size={13} aria-hidden="true" />Delete
+                            </button>
+                          </div>
+                        )}
                       </div>
                     </td>
                   </tr>
