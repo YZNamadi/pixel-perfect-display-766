@@ -75,6 +75,7 @@ const attention = [
   { dot: "amber", tag: "EM-LT", title: "Emergency Lighting Test", site: "Northgate House", status: "Due in 5d", tone: "amber" },
   { dot: "amber", tag: "LIFTS", title: "Lift LOLER Inspection", site: "Elmwood Court", status: "Due in 6d", tone: "amber" },
   { dot: "amber", tag: "ASB", title: "Asbestos Re-inspection", site: "Maple Business Park", status: "Due in 8d", tone: "amber" },
+  { dot: "amber", tag: "EQUIP", title: "Patient Hoist (Ceiling) LOLER service", site: "Victoria Wharf", status: "Due in 9d", tone: "amber" },
   { dot: "red", tag: "P1", title: "Communal heating failure", site: "Riverside Court", status: "P1 · SLA 4h", tone: "red" },
 ];
 
@@ -95,10 +96,12 @@ const upcoming = [
 ];
 
 const activity = [
-  "Gas safety cert uploaded for Northgate House by MB · 38 min ago",
-  "Repair job #4821 raised for communal heating at Riverside Court · 1h ago",
-  "EICR overdue escalation sent to Victoria Wharf team · 2h ago",
-  "Asbestos report approved for Elmwood Court by JG · 3h ago",
+  { site: "Northgate House", text: "Gas safety cert uploaded for Northgate House by MB · 38 min ago" },
+  { site: "Riverside Court", text: "Repair job #4821 raised for communal heating at Riverside Court · 1h ago" },
+  { site: "Victoria Wharf", text: "EICR overdue escalation sent to Victoria Wharf team · 2h ago" },
+  { site: "Elmwood Court", text: "Asbestos report approved for Elmwood Court by JG · 3h ago" },
+  { site: "Kingsway Tower", text: "LGSR engineer visit booked for Kingsway Tower · 5h ago" },
+  { site: "Maple Business Park", text: "Legionella sampling results logged for Maple Business Park · 6h ago" },
 ];
 
 function scoreTone(score: number) {
@@ -120,6 +123,20 @@ function DashboardPage() {
     return matchesBuilding && matchesSearch && matchesCategory;
   });
   const visibleBuildings = buildings.filter((building) => selectedBuilding === "All buildings" || building.name === selectedBuilding).filter((building) => !query.trim() || `${building.name} ${building.city}`.toLowerCase().includes(query.toLowerCase()));
+  const scoped = attention.filter((item) => selectedBuilding === "All buildings" || item.site === selectedBuilding);
+  const overdueCount = scoped.filter((item) => item.status.startsWith("Overdue")).length;
+  const dueCount = scoped.filter((item) => item.status.startsWith("Due")).length;
+  const repairCount = scoped.filter((item) => item.tag === "P1").length;
+  const scopeBuildings = buildings.filter((building) => selectedBuilding === "All buildings" || building.name === selectedBuilding);
+  const compliance = Math.round(scopeBuildings.reduce((sum, building) => sum + building.score, 0) / Math.max(1, scopeBuildings.length));
+  const liveStats = [
+    { ...stats[0], value: `${compliance}%` },
+    { ...stats[1], value: String(overdueCount), note: overdueCount ? "Action required" : "Nothing overdue" },
+    { ...stats[2], value: String(dueCount) },
+    { ...stats[3], value: String(selectedBuilding === "All buildings" ? 12 : repairCount), note: `${repairCount} P1 priority` },
+    { ...stats[4], value: String(repairCount), note: repairCount ? "Next breach in 4h" : "No SLA risk" },
+  ];
+  const visibleActivity = activity.filter((entry) => selectedBuilding === "All buildings" || entry.site === selectedBuilding).filter((entry) => !query.trim() || entry.text.toLowerCase().includes(query.toLowerCase()));
   const filteredUpcoming = upcoming.filter((item) => selectedBuilding === "All buildings" || item.site === selectedBuilding).filter((item) => !query.trim() || `${item.title} ${item.site}`.toLowerCase().includes(query.toLowerCase()));
 
   return (
@@ -173,12 +190,12 @@ function DashboardPage() {
         <header className="po-topbar">
           <div>
             <h1 className="po-title">Portfolio overview</h1>
-            <p className="po-subtitle">6 buildings · updated 2 min ago</p>
+            <p className="po-subtitle">{selectedBuilding === "All buildings" ? `${buildings.length} buildings` : selectedBuilding} · updated 2 min ago</p>
           </div>
           <div className="po-topbar-actions">
             <div className="po-search">
               <Search size={15} aria-hidden="true" />
-               <input type="search" placeholder="Search buildings, jobs..." aria-label="Search" value={query} onChange={(event) => setQuery(event.target.value)} />
+               <input type="search" placeholder="Search buildings, jobs..." aria-label="Search" onKeyDown={(event) => { if (event.key === "Enter") event.preventDefault(); }} value={query} onChange={(event) => setQuery(event.target.value)} />
             </div>
             <span className="po-chip">Wed 2 Jul</span>
             <div className="po-building-select">
@@ -187,7 +204,7 @@ function DashboardPage() {
                 {buildings.map((building) => <option key={building.name} value={building.name}>{building.name} · {building.units} units</option>)}
               </ProductSelect>
             </div>
-             <button type="button" className="po-download" onClick={() => downloadCsv("kearly-portfolio.csv", [["Item", "Building", "Status"], ...visibleAttention.map((item) => [item.title, item.site, item.status])])}>
+             <button type="button" className="po-download" onClick={() => downloadCsv(`kearly-portfolio-${selectedBuilding.toLowerCase().replaceAll(" ", "-")}.csv`, [["Section", "Item", "Building", "Status / Score"], ...liveStats.map((stat) => ["KPI", stat.label, selectedBuilding, stat.value]), ...visibleAttention.map((item) => ["Needs attention", item.title, item.site, item.status]), ...visibleBuildings.map((building) => ["Compliance", building.name, building.city, `${building.score}%`]), ...filteredUpcoming.map((item) => ["Upcoming PPM", item.title, item.site, item.day])])}>
               <Download size={15} aria-hidden="true" />
               Download pack
             </button>
@@ -195,7 +212,7 @@ function DashboardPage() {
         </header>
 
         <section className="po-stats" aria-label="Portfolio statistics">
-          {stats.map((stat) => (
+          {liveStats.map((stat) => (
             <article className="po-stat" key={stat.label}>
               <p className="po-stat-label">{stat.label}</p>
               <p className={`po-stat-value tone-${stat.tone}`}>{stat.value}</p>
@@ -212,10 +229,10 @@ function DashboardPage() {
                 Needs attention
               </h2>
               <div className="po-tabs">
-                <span className="po-tab is-active">All 12</span>
-                <span className="po-tab">Overdue 3</span>
-                <span className="po-tab">Due soon 5</span>
-                <span className="po-tab">Repairs 4</span>
+                <span className="po-tab is-active">All {visibleAttention.length}</span>
+                <span className="po-tab">Overdue {visibleAttention.filter((item) => item.status.startsWith("Overdue")).length}</span>
+                <span className="po-tab">Due soon {visibleAttention.filter((item) => item.status.startsWith("Due")).length}</span>
+                <span className="po-tab">Repairs {visibleAttention.filter((item) => item.tag === "P1").length}</span>
               </div>
             </header>
 
@@ -245,6 +262,7 @@ function DashboardPage() {
                   <ChevronRight size={16} className="po-row-chevron" aria-hidden="true" />
                 </li>
               ))}
+              {visibleAttention.length === 0 ? <li className="po-row"><span className="po-row-site">No items match “{query || category}”.</span></li> : null}
             </ul>
           </section>
 
@@ -302,9 +320,10 @@ function DashboardPage() {
                 <h2 className="po-panel-title">Recent activity</h2>
               </header>
               <ul className="po-activity">
-                {activity.map((entry) => (
-                  <li key={entry}>{entry}</li>
+                {visibleActivity.map((entry) => (
+                  <li key={entry.text}>{entry.text}</li>
                 ))}
+                {visibleActivity.length === 0 ? <li>No recent activity for this selection.</li> : null}
               </ul>
             </section>
           </div>

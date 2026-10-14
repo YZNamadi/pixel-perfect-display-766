@@ -4,6 +4,8 @@ export function downloadCsv(filename: string, rows: Array<Array<string | number>
   const anchor = document.createElement("a");
   anchor.href = url;
   anchor.download = filename;
+  document.body.appendChild(anchor);
   anchor.click();
-  URL.revokeObjectURL(url);
+  anchor.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 30_000);
 }

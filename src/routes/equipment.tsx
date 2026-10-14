@@ -60,11 +60,12 @@ const governanceNav = [
 ];
 
 const tabs = [
-  { label: "All Equipment (48)", key: "all" },
-  { label: "Active (42)", key: "active" },
-  { label: "Under Maintenance (4)", key: "maintenance" },
-  { label: "Decommissioned (2)", key: "decommissioned" },
+  { label: "All Equipment", key: "all" },
+  { label: "Active", key: "active" },
+  { label: "Under Maintenance", key: "maintenance" },
+  { label: "Decommissioned", key: "decommissioned" },
 ];
+const tabStatus: Record<string, string | null> = { all: null, active: "Active", maintenance: "Under Maintenance", decommissioned: "Decommissioned" };
 
 type Row = {
   name: string;
@@ -99,8 +100,9 @@ function EquipmentPage() {
   const [query, setQuery] = useState("");
   const [building, setBuilding] = useState("All buildings");
   const [page, setPage] = useState(1);
-  const filteredRows = useMemo(() => rows.filter((row) => (activeTab === "all" || (activeTab === "active" && row.status === "Active") || (activeTab === "maintenance" && row.status === "Under Maintenance") || (activeTab === "decommissioned" && row.status === "Decommissioned")) && (building === "All buildings" || row.site === building) && (!query.trim() || `${row.name} ${row.serial} ${row.category}`.toLowerCase().includes(query.toLowerCase()))), [activeTab, building, query]);
+  const filteredRows = useMemo(() => rows.filter((row) => (activeTab === "all" || (activeTab === "active" && row.status === "Active") || (activeTab === "maintenance" && row.status === "Under Maintenance") || (activeTab === "decommissioned" && row.status === "Decommissioned")) && (building === "All buildings" || row.site === building) && (!query.trim() || `${row.name} ${row.serial} ${row.category} ${row.site}`.toLowerCase().includes(query.toLowerCase()))), [activeTab, building, query]);
   const pageRows = filteredRows.slice((page - 1) * 4, page * 4);
+  const tabCount = (key: string) => rows.filter((row) => (building === "All buildings" || row.site === building) && (!query.trim() || `${row.name} ${row.serial} ${row.category} ${row.site}`.toLowerCase().includes(query.toLowerCase())) && (!tabStatus[key] || row.status === tabStatus[key])).length;
 
   return (
     <div className="po-shell">
@@ -212,7 +214,7 @@ function EquipmentPage() {
               <tbody>
                  {pageRows.map((row) => (
                   <tr key={row.serial}>
-                    <td className="cl-name">{row.name === "Defibrillator AED Plus" ? <Link to="/equipment-detail">{row.name}</Link> : row.name}</td>
+                    <td className="cl-name"><Link to="/equipment-detail" search={{ id: row.serial }}>{row.name}</Link></td>
                     <td>
                       <span className="eq-serial">
                         <Barcode size={15} aria-hidden="true" />
@@ -242,7 +244,7 @@ function EquipmentPage() {
                     </td>
                     <td>
                       <span className="cl-row-actions">
-                         <Link to="/edit-equipment" className="cl-icon-btn" aria-label={`Edit ${row.name}`}>
+                         <Link to="/edit-equipment" search={{ id: row.serial }} className="cl-icon-btn" aria-label={`Edit ${row.name}`}>
                           <Pencil size={15} aria-hidden="true" />
                         </Link>
                         <button
