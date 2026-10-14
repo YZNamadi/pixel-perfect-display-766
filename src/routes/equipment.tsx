@@ -190,7 +190,7 @@ function EquipmentPage() {
               className={`cl-tab ${activeTab === key ? "is-active" : ""}`}
                onClick={() => { setActiveTab(key); setPage(1); }}
             >
-              {label}
+              {label} ({tabCount(key)})
             </button>
           ))}
         </div>
@@ -259,6 +259,7 @@ function EquipmentPage() {
                     </td>
                   </tr>
                 ))}
+                {pageRows.length === 0 ? <tr><td colSpan={9}>No equipment matches these filters.</td></tr> : null}
               </tbody>
             </table>
           </div>
