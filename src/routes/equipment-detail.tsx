@@ -12,7 +12,7 @@ export const Route = createFileRoute("/equipment-detail")({
     { property: "og:description", content: "Asset information, preventative maintenance history and breakdown records for Defibrillator AED Plus." },
     { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary_large_image" },
   ] }),
-  validateSearch: (search: Record<string, unknown>) => ({ id: typeof search.id === "string" ? search.id : undefined }),
+  validateSearch: (search: Record<string, unknown>) => ({ id: typeof search["id"] === "string" ? (search["id"] as string) : undefined }) as { id?: string },
   component: EquipmentDetailPage,
 });
 

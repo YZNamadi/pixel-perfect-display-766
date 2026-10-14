@@ -38,7 +38,7 @@ export const Route = createFileRoute("/building")({
       { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
-  validateSearch: (search: Record<string, unknown>) => ({ site: typeof search.site === "string" ? search.site : undefined }),
+  validateSearch: (search: Record<string, unknown>) => ({ site: typeof search["site"] === "string" ? (search["site"] as string) : undefined }) as { site?: string },
   component: BuildingPage,
 });
 

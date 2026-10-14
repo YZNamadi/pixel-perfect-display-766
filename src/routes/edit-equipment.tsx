@@ -15,7 +15,7 @@ export const Route = createFileRoute("/edit-equipment")({
     { property: "og:description", content: "Edit medical equipment asset information and its PPM schedule in Kearly." },
     { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary_large_image" },
   ] }),
-  validateSearch: (search: Record<string, unknown>) => ({ id: typeof search.id === "string" ? search.id : undefined }),
+  validateSearch: (search: Record<string, unknown>) => ({ id: typeof search["id"] === "string" ? (search["id"] as string) : undefined }) as { id?: string },
   component: EditEquipmentPage,
 });
 

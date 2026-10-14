@@ -38,7 +38,7 @@ export const Route = createFileRoute("/add-task")({
       { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
-  validateSearch: (search: Record<string, unknown>) => ({ task: typeof search.task === "string" ? search.task : undefined }),
+  validateSearch: (search: Record<string, unknown>) => ({ task: typeof search["task"] === "string" ? (search["task"] as string) : undefined }) as { task?: string },
   component: AddTaskPage,
 });
 

@@ -130,11 +130,11 @@ function DashboardPage() {
   const scopeBuildings = buildings.filter((building) => selectedBuilding === "All buildings" || building.name === selectedBuilding);
   const compliance = Math.round(scopeBuildings.reduce((sum, building) => sum + building.score, 0) / Math.max(1, scopeBuildings.length));
   const liveStats = [
-    { ...stats[0], value: `${compliance}%` },
-    { ...stats[1], value: String(overdueCount), note: overdueCount ? "Action required" : "Nothing overdue" },
-    { ...stats[2], value: String(dueCount) },
-    { ...stats[3], value: String(selectedBuilding === "All buildings" ? 12 : repairCount), note: `${repairCount} P1 priority` },
-    { ...stats[4], value: String(repairCount), note: repairCount ? "Next breach in 4h" : "No SLA risk" },
+    { ...stats[0]!, value: `${compliance}%` },
+    { ...stats[1]!, value: String(overdueCount), note: overdueCount ? "Action required" : "Nothing overdue" },
+    { ...stats[2]!, value: String(dueCount) },
+    { ...stats[3]!, value: String(selectedBuilding === "All buildings" ? 12 : repairCount), note: `${repairCount} P1 priority` },
+    { ...stats[4]!, value: String(repairCount), note: repairCount ? "Next breach in 4h" : "No SLA risk" },
   ];
   const visibleActivity = activity.filter((entry) => selectedBuilding === "All buildings" || entry.site === selectedBuilding).filter((entry) => !query.trim() || entry.text.toLowerCase().includes(query.toLowerCase()));
   const filteredUpcoming = upcoming.filter((item) => selectedBuilding === "All buildings" || item.site === selectedBuilding).filter((item) => !query.trim() || `${item.title} ${item.site}`.toLowerCase().includes(query.toLowerCase()));

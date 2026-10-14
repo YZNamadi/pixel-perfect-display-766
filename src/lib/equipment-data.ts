@@ -24,7 +24,7 @@ export const equipmentRows: EquipmentRow[] = [
 
 
 export function findEquipment(id?: string) {
-  return equipmentRows.find((row) => row.serial === id) ?? equipmentRows[0];
+  return equipmentRows.find((row) => row.serial === id) ?? equipmentRows[0]!;
 }
 
 const titleCase = (value: string) => value.toLowerCase().replace(/\b\w/g, (c) => c.toUpperCase());
