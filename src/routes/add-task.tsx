@@ -38,6 +38,7 @@ export const Route = createFileRoute("/add-task")({
       { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
+  validateSearch: (search: Record<string, unknown>) => ({ task: typeof search["task"] === "string" ? (search["task"] as string) : undefined }) as { task?: string },
   component: AddTaskPage,
 });
 
@@ -67,6 +68,7 @@ function AddTaskPage() {
   const [step, setStep] = useState(1);
   const [evidence, setEvidence] = useState(false);
   const [notice, setNotice] = useState(7);
+  const { task } = Route.useSearch();
 
   return (
 
@@ -122,7 +124,7 @@ function AddTaskPage() {
             <Link to="/compliance" className="at-back" aria-label="Back to compliance">
               <ChevronLeft size={20} aria-hidden="true" />
             </Link>
-            <h1 className="po-title">Add PPM Task</h1>
+            <h1 className="po-title">{task ? "Edit PPM Task" : "Add PPM Task"}</h1>
             <p className="po-subtitle">Create a scheduled recurring compliance task</p>
           </div>
           <div className="po-topbar-actions">
@@ -156,7 +158,7 @@ function AddTaskPage() {
 
               <label className="at-field">
                 <span className="at-label">Task Title</span>
-                <input className="at-input" type="text" placeholder="e.g. Annual Fire Risk Assessment" />
+                <input className="at-input" type="text" placeholder="e.g. Annual Fire Risk Assessment" defaultValue={task ?? ""} />
               </label>
 
               <label className="at-field">

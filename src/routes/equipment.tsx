@@ -60,35 +60,14 @@ const governanceNav = [
 ];
 
 const tabs = [
-  { label: "All Equipment (48)", key: "all" },
-  { label: "Active (42)", key: "active" },
-  { label: "Under Maintenance (4)", key: "maintenance" },
-  { label: "Decommissioned (2)", key: "decommissioned" },
+  { label: "All Equipment", key: "all" },
+  { label: "Active", key: "active" },
+  { label: "Under Maintenance", key: "maintenance" },
+  { label: "Decommissioned", key: "decommissioned" },
 ];
+const tabStatus: Record<string, string | null> = { all: null, active: "Active", maintenance: "Under Maintenance", decommissioned: "Decommissioned" };
 
-type Row = {
-  name: string;
-  serial: string;
-  category: string;
-  site: string;
-  initials: string;
-  avatarTone: string;
-  schedule: string;
-  due: string;
-  incidents: number;
-  status: "Active" | "Under Maintenance" | "Decommissioned";
-};
-
-const rows: Row[] = [
-  { name: "Defibrillator AED Plus", serial: "SN-DEF-2024-084", category: "EMERGENCY", site: "Riverside Court", initials: "RC", avatarTone: "red", schedule: "Quarterly", due: "15 Jul 2024", incidents: 0, status: "Active" },
-  { name: "Patient Hoist (Ceiling)", serial: "SN-HST-2023-120", category: "PATIENT HANDLING", site: "Victoria Wharf", initials: "VW", avatarTone: "blue", schedule: "6 Months", due: "22 Jul 2024", incidents: 2, status: "Active" },
-  { name: "Oxygen Concentrator", serial: "SN-OXY-2024-039", category: "RESPIRATORY", site: "Maple Business Park", initials: "MB", avatarTone: "green", schedule: "Monthly", due: "01 Aug 2024", incidents: 1, status: "Active" },
-  { name: "Suction Unit (Portable)", serial: "SN-SUC-2023-075", category: "EMERGENCY", site: "Kingsway Tower", initials: "KT", avatarTone: "purple", schedule: "Quarterly", due: "28 Jul 2024", incidents: 0, status: "Active" },
-  { name: "Bed (Profiling Electric)", serial: "SN-BED-2022-158", category: "WARD FURNITURE", site: "Northgate House", initials: "NH", avatarTone: "teal", schedule: "Annually", due: "10 Sep 2024", incidents: 3, status: "Under Maintenance" },
-  { name: "Blood Pressure Monitor", serial: "SN-BPM-2024-011", category: "DIAGNOSTICS", site: "Elmwood Court", initials: "EC", avatarTone: "green", schedule: "6 Months", due: "05 Aug 2024", incidents: 0, status: "Active" },
-  { name: "Syringe Driver", serial: "SN-SYR-2023-062", category: "INFUSION", site: "Riverside Court", initials: "RC", avatarTone: "red", schedule: "Monthly", due: "18 Jul 2024", incidents: 1, status: "Active" },
-  { name: "Examination Couch", serial: "SN-EXC-2021-029", category: "FURNITURE", site: "Victoria Wharf", initials: "VW", avatarTone: "blue", schedule: "Annually", due: "30 Nov 2024", incidents: 0, status: "Decommissioned" },
-];
+import { equipmentRows as rows, type EquipmentRow as Row } from "@/lib/equipment-data";
 
 const statusTone = (status: Row["status"]) =>
   status === "Active" ? "tone-green" : status === "Under Maintenance" ? "tone-amber" : "tone-muted";
@@ -99,8 +78,9 @@ function EquipmentPage() {
   const [query, setQuery] = useState("");
   const [building, setBuilding] = useState("All buildings");
   const [page, setPage] = useState(1);
-  const filteredRows = useMemo(() => rows.filter((row) => (activeTab === "all" || (activeTab === "active" && row.status === "Active") || (activeTab === "maintenance" && row.status === "Under Maintenance") || (activeTab === "decommissioned" && row.status === "Decommissioned")) && (building === "All buildings" || row.site === building) && (!query.trim() || `${row.name} ${row.serial} ${row.category}`.toLowerCase().includes(query.toLowerCase()))), [activeTab, building, query]);
+  const filteredRows = useMemo(() => rows.filter((row) => (activeTab === "all" || (activeTab === "active" && row.status === "Active") || (activeTab === "maintenance" && row.status === "Under Maintenance") || (activeTab === "decommissioned" && row.status === "Decommissioned")) && (building === "All buildings" || row.site === building) && (!query.trim() || `${row.name} ${row.serial} ${row.category} ${row.site}`.toLowerCase().includes(query.toLowerCase()))), [activeTab, building, query]);
   const pageRows = filteredRows.slice((page - 1) * 4, page * 4);
+  const tabCount = (key: string) => rows.filter((row) => (building === "All buildings" || row.site === building) && (!query.trim() || `${row.name} ${row.serial} ${row.category} ${row.site}`.toLowerCase().includes(query.toLowerCase())) && (!tabStatus[key] || row.status === tabStatus[key])).length;
 
   return (
     <div className="po-shell">
@@ -188,7 +168,7 @@ function EquipmentPage() {
               className={`cl-tab ${activeTab === key ? "is-active" : ""}`}
                onClick={() => { setActiveTab(key); setPage(1); }}
             >
-              {label}
+              {label} ({tabCount(key)})
             </button>
           ))}
         </div>
@@ -212,7 +192,7 @@ function EquipmentPage() {
               <tbody>
                  {pageRows.map((row) => (
                   <tr key={row.serial}>
-                    <td className="cl-name">{row.name === "Defibrillator AED Plus" ? <Link to="/equipment-detail">{row.name}</Link> : row.name}</td>
+                    <td className="cl-name"><Link to="/equipment-detail" search={{ id: row.serial }}>{row.name}</Link></td>
                     <td>
                       <span className="eq-serial">
                         <Barcode size={15} aria-hidden="true" />
@@ -242,7 +222,7 @@ function EquipmentPage() {
                     </td>
                     <td>
                       <span className="cl-row-actions">
-                         <Link to="/edit-equipment" className="cl-icon-btn" aria-label={`Edit ${row.name}`}>
+                         <Link to="/edit-equipment" search={{ id: row.serial }} className="cl-icon-btn" aria-label={`Edit ${row.name}`}>
                           <Pencil size={15} aria-hidden="true" />
                         </Link>
                         <button
@@ -257,6 +237,7 @@ function EquipmentPage() {
                     </td>
                   </tr>
                 ))}
+                {pageRows.length === 0 ? <tr><td colSpan={9}>No equipment matches these filters.</td></tr> : null}
               </tbody>
             </table>
           </div>

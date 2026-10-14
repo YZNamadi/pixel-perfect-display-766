@@ -60,10 +60,10 @@ const governanceNav = [
 ];
 
 const tabs = [
-  { key: "all", label: "All Tickets (12)" },
-  { key: "open", label: "Open (2)" },
-  { key: "progress", label: "In Progress (6)" },
-  { key: "closed", label: "Closed (4)" },
+  { key: "all", label: "All Tickets" },
+  { key: "open", label: "Open" },
+  { key: "inprogress", label: "In Progress" },
+  { key: "closed", label: "Closed" },
 ];
 
 type Ticket = {
@@ -111,8 +111,9 @@ function RepairsPage() {
   const [site, setSite] = useState("All");
   const [assignee, setAssignee] = useState("All");
   const [page, setPage] = useState(1);
-  const filteredTickets = useMemo(() => tickets.filter((ticket) => (activeTab === "all" || ticket.status.toLowerCase().replace(" ", "") === activeTab) && (priority === "All" || ticket.priority === priority) && (site === "All" || ticket.site === site) && (assignee === "All" || ticket.assignee === assignee) && (!query.trim() || `${ticket.id} ${ticket.title} ${ticket.site} ${ticket.assignee}`.toLowerCase().includes(query.toLowerCase()))), [activeTab, priority, site, assignee, query]);
+  const filteredTickets = useMemo(() => tickets.filter((ticket) => (activeTab === "all" || ticket.status.toLowerCase().replace(" ", "") === activeTab) && (priority === "All" || ticket.priority === priority) && (site === "All" || ticket.site === site) && (assignee === "All" || ticket.assignee === assignee) && (!query.trim() || `${ticket.id} ${ticket.title} ${ticket.site} ${ticket.assignee} ${ticket.priority} ${ticket.status}`.toLowerCase().includes(query.trim().toLowerCase()))), [activeTab, priority, site, assignee, query]);
   const pageRows = filteredTickets.slice((page - 1) * 3, page * 3);
+  const tabCount = (key: string) => tickets.filter((ticket) => (key === "all" || ticket.status.toLowerCase().replace(" ", "") === key) && (priority === "All" || ticket.priority === priority) && (site === "All" || ticket.site === site) && (assignee === "All" || ticket.assignee === assignee) && (!query.trim() || `${ticket.id} ${ticket.title} ${ticket.site} ${ticket.assignee} ${ticket.priority} ${ticket.status}`.toLowerCase().includes(query.trim().toLowerCase()))).length;
 
   return (
     <div className="po-shell">
@@ -193,7 +194,7 @@ function RepairsPage() {
               className={`cl-tab ${activeTab === key ? "is-active" : ""}`}
                onClick={() => { setActiveTab(key); setPage(1); }}
             >
-              {label}
+              {label} ({tabCount(key)})
             </button>
           ))}
         </div>
@@ -279,6 +280,7 @@ function RepairsPage() {
                   </td>
                   </tr>
                 ))}
+                {pageRows.length === 0 ? <tr><td colSpan={9}>No tickets match these filters.</td></tr> : null}
               </tbody>
             </table>
           </div>

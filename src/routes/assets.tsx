@@ -165,7 +165,7 @@ function BuildingsPage() {
                     </span>
                   ))}
                 </span>
-                <Link to="/building" className="bs-manage">
+                <Link to="/building" search={{ site: b.name }} className="bs-manage">
                   Manage Site
                   <ArrowRight size={14} aria-hidden="true" />
                 </Link>

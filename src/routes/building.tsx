@@ -38,6 +38,7 @@ export const Route = createFileRoute("/building")({
       { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
+  validateSearch: (search: Record<string, unknown>) => ({ site: typeof search["site"] === "string" ? (search["site"] as string) : undefined }) as { site?: string },
   component: BuildingPage,
 });
 
@@ -94,7 +95,8 @@ function BuildingPage() {
   const [taskChoiceOpen, setTaskChoiceOpen] = useState(false);
   const [buildingTasks, setBuildingTasks] = useState<BuildingTask[]>(tasks);
   const [detailsOpen, setDetailsOpen] = useState(false);
-  const [siteDetails, setSiteDetails] = useState(initialDetails);
+  const { site } = Route.useSearch();
+  const [siteDetails, setSiteDetails] = useState<SiteDetails>(() => site && site !== initialDetails.name ? { ...initialDetails, name: site, address: `${site}, United Kingdom` } : initialDetails);
   const specs = [
     { label: "FULL ADDRESS", value: siteDetails.address },
     { label: "SITE MANAGER", value: siteDetails.manager },

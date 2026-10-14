@@ -59,11 +59,12 @@ const governanceNav = [
 ];
 
 const tabs = [
-  { label: "All Tasks (12)", key: "all" },
-  { label: "Due Soon (5)", key: "due" },
-  { label: "Overdue (3)", key: "overdue" },
-  { label: "Completed (4)", key: "completed" },
+  { label: "All Tasks", key: "all" },
+  { label: "Due Soon", key: "due" },
+  { label: "Overdue", key: "overdue" },
+  { label: "Completed", key: "completed" },
 ];
+const tabStatus: Record<string, Row["status"] | null> = { all: null, due: "Due Soon", overdue: "Overdue", completed: "Completed" };
 
 type Row = {
   name: string;
@@ -100,6 +101,8 @@ function CompliancePage() {
   const [page, setPage] = useState(1);
   const filteredRows = useMemo(() => taskRows.filter((row) => (activeTab === "all" || (activeTab === "due" && row.status === "Due Soon") || (activeTab === "overdue" && row.status === "Overdue") || (activeTab === "completed" && row.status === "Completed")) && (building === "All buildings" || row.site === building) && (!query.trim() || `${row.name} ${row.category} ${row.site} ${row.assignee}`.toLowerCase().includes(query.toLowerCase()))), [taskRows, activeTab, building, query]);
   const pageRows = filteredRows.slice((page - 1) * 4, page * 4);
+  const scopedRows = taskRows.filter((row) => (building === "All buildings" || row.site === building) && (!query.trim() || `${row.name} ${row.category} ${row.site} ${row.assignee}`.toLowerCase().includes(query.toLowerCase())));
+  const tabCount = (key: string) => scopedRows.filter((row) => !tabStatus[key] || row.status === tabStatus[key]).length;
 
   return (
     <div className="po-shell">
@@ -187,7 +190,7 @@ function CompliancePage() {
               className={`cl-tab ${activeTab === key ? "is-active" : ""}`}
                onClick={() => { setActiveTab(key); setPage(1); }}
             >
-              {label}
+              {label} ({tabCount(key)})
             </button>
           ))}
         </div>
@@ -228,7 +231,7 @@ function CompliancePage() {
                     </td>
                     <td>
                       <span className="cl-row-actions">
-                        <Link to="/edit-task" className="cl-icon-btn" aria-label={`Edit ${row.name}`}>
+                        <Link to="/add-task" search={{ task: row.name }} className="cl-icon-btn" aria-label={`Edit ${row.name}`}>
                           <Pencil size={15} aria-hidden="true" />
                         </Link>
                         <button
@@ -252,6 +255,7 @@ function CompliancePage() {
                     </td>
                   </tr>
                 ))}
+                {pageRows.length === 0 ? <tr><td colSpan={8}>No compliance tasks match these filters.</td></tr> : null}
               </tbody>
             </table>
           </div>
@@ -290,7 +294,7 @@ function CompliancePage() {
             </p>
             <div className="cp-modal-actions">
                <button type="button" className="cp-modal-cancel" onClick={() => setSelectedTask(null)}>Close</button>
-               <Link to="/edit-task" className="at-next">Edit Task</Link>
+               <Link to="/add-task" search={{ task: selectedTask.name }} className="at-next">Edit Task</Link>
             </div>
           </div>
         </div>
