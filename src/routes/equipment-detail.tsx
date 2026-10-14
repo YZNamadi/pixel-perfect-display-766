@@ -38,7 +38,7 @@ function EquipmentDetailPage() {
   const { id } = Route.useSearch();
   const item = findEquipment(id);
   const overrides: Record<string, string> = { CATEGORY: equipmentCategory(item), SITE: item.site, "PPM SCHEDULE": item.schedule, "NEXT DUE": item.due };
-  const info = information.map(([label, value]) => [label, overrides[label] ?? value]);
+  const info = information.map(([label, value]) => [label, overrides[label ?? ""] ?? value]);
   return <AppShell active="Equipment"><div className="ed-page">
     <Link to="/equipment" className="ed-back"><ArrowLeft size={14} aria-hidden="true" />Back to Medical Equipment</Link>
     <header className="ed-header"><div><div className="ed-heading"><h1>{item.name}</h1><span className={`ed-badge ${item.status === "Active" ? "ed-success" : "ed-warning"}`}>{item.status}</span></div><p className="ed-serial">{item.serial}</p></div><div className="ed-actions"><Button asChild variant="outline" className="ed-edit"><Link to="/edit-equipment" search={{ id: item.serial }}>Edit Equipment</Link></Button><Button asChild className="ed-report"><Link to="/new-ticket">Report Fault</Link></Button></div></header>
