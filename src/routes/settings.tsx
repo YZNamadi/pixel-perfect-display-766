@@ -64,11 +64,84 @@ const sections = [
 
 type Section = (typeof sections)[number]["label"];
 
+type ProfileForm = { name: string; email: string; phone: string; role: string };
+type NotificationPrefs = { digest: boolean; reminders: boolean; sms: boolean; frequency: string };
+
+const demoProfile: ProfileForm = {
+  name: "Alex Rowe",
+  email: "alex.rowe@kearlycompliance.com",
+  phone: "+44 7700 900077",
+  role: "Portfolio Compliance Administrator",
+};
+const demoPrefs: NotificationPrefs = { digest: true, reminders: true, sms: true, frequency: "daily" };
+
 function SettingsPage() {
-  const [digest, setDigest] = useState(true);
-  const [reminders, setReminders] = useState(true);
-  const [sms, setSms] = useState(true);
+  const [profile, setProfile] = useState<ProfileForm>(demoProfile);
+  const [prefs, setPrefs] = useState<NotificationPrefs>(demoPrefs);
   const [section, setSection] = useState<Section>("Profile");
+  const [signedIn, setSignedIn] = useState(false);
+  const [saving, setSaving] = useState(false);
+
+  useEffect(() => {
+    supabase.auth.getSession().then(async ({ data: { session } }) => {
+      if (!session?.user) return;
+      setSignedIn(true);
+      const userId = session.user.id;
+      const [{ data: prof }, { data: settings }] = await Promise.all([
+        supabase.from("profiles").select("full_name,email,phone,role_label").eq("id", userId).single(),
+        supabase.from("app_settings").select("data").eq("owner_id", userId).maybeSingle(),
+      ]);
+      if (prof) {
+        setProfile({
+          name: prof.full_name || demoProfile.name,
+          email: prof.email || session.user.email || demoProfile.email,
+          phone: prof.phone || "",
+          role: prof.role_label || demoProfile.role,
+        });
+      }
+      const stored = (settings?.data as { notifications?: NotificationPrefs } | null)?.notifications;
+      if (stored) setPrefs({ ...demoPrefs, ...stored });
+    });
+  }, []);
+
+  async function saveProfile() {
+    if (!signedIn) {
+      toast.error("Log in to save your profile");
+      return;
+    }
+    setSaving(true);
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) {
+      setSaving(false);
+      toast.error("Session expired, please log in again");
+      return;
+    }
+    const { error } = await supabase
+      .from("profiles")
+      .update({ full_name: profile.name, phone: profile.phone, role_label: profile.role })
+      .eq("id", user.id);
+    setSaving(false);
+    if (error) {
+      toast.error(error.message);
+      return;
+    }
+    toast.success("Profile saved");
+  }
+
+  async function saveNotifications(next: NotificationPrefs) {
+    setPrefs(next);
+    if (!signedIn) return;
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) return;
+    const { error } = await supabase
+      .from("app_settings")
+      .upsert({ owner_id: user.id, data: { notifications: next }, updated_at: new Date().toISOString() });
+    if (error) {
+      toast.error(error.message);
+      return;
+    }
+    toast.success("Notification preferences saved");
+  }
 
 
   return (
