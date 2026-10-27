@@ -1,4 +1,9 @@
 - [x] Standardize product dropdowns using the Documents template and verify selectors and menus
+- [x] Remove Billing from the sidebar everywhere; billing lives in Settings, and the standalone billing page is no longer linked
+- [x] Add and verify the supplied equipment detail page and its registry, edit, fault-report, and back links
+- [x] Match Edit Equipment to the supplied reference and verify editable fields and detail-page navigation
+- [x] Match the building New Task dialog and verify opening, fields, save and dismissal
+- [x] Replace Building Edit Details with the supplied in-place form, remove the old edit page, and verify save and dismissal
 - [ ] Fix dashboard search, building filtering, category filters, and report download
 - [ ] Fix compliance search/status/building filters, task details/completion, table-calendar switching, and pagination
 - [ ] Add dedicated equipment creation/edit flows; fix equipment search, status/building filters, actions, and pagination
@@ -7,9 +12,18 @@
 - [ ] Complete report tabs, building filters, exports/downloads, and staff-record fields
 - [ ] Add working contractor and internal-member creation flows
 - [ ] Fix audit-log search/filters, review/details, export, and pagination
-- [x] Remove Billing from the sidebar everywhere; billing lives in Settings, and the standalone billing page is no longer linked
+- [x] Enable Lovable Cloud: core schema, RLS, storage buckets, email auth
+- [x] Ship REST API v1 (102 endpoints at /api/public/v1, spec in docs/API.md)
+- [x] Real signup/login/contractor-signup/reset-password flows
+- [ ] Wire dashboard, buildings/sites, building, site, add-site to the sites data
+- [ ] Wire equipment pages to the equipment data (CRUD)
+- [ ] Wire repairs pages to repair_tickets (create, assign, complete, review, quotes)
+- [ ] Wire compliance + schedule + add/edit-task to tasks data
+- [ ] Wire documents page + upload/download to documents table and storage
+- [ ] Wire reports + edit-report to reports table; real export
+- [ ] Wire audit-log/review/view to audit_log (review-only, no delete)
+- [ ] Wire team-members/edit-member/add-member to team_members; certificates to certificates
+- [ ] Wire staff-records + training records
+- [ ] Wire settings profile/billing/notifications to profiles/app_settings/notifications
+- [ ] Verify signed-out pages keep demo presentation; signed-in pages show real data
 - [ ] Verify all tracked workflows, metadata, responsive layouts, and preview diagnostics
-- [x] Add and verify the supplied equipment detail page and its registry, edit, fault-report, and back links
-- [x] Match Edit Equipment to the supplied reference and verify editable fields and detail-page navigation
-- [x] Match the building New Task dialog and verify opening, fields, save and dismissal
-- [x] Replace Building Edit Details with the supplied in-place form, remove the old edit page, and verify save and dismissal

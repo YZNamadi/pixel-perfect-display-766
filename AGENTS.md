@@ -16,3 +16,5 @@
 - Building New Task opens a dedicated accessible dialog in place rather than a task-type chooser or separate wizard, preserving the building context.
 - Building Edit Details opens a dedicated accessible site-details dialog and updates the current building view; no separate edit-site route is retained, preserving building context.
 - Use ProductSelect for native-style option fields and the shared product menu tokens for custom/action dropdowns; retain native form values and handlers so visual changes do not alter workflows.
+- Backend: Lovable Cloud (Supabase). Pages read/write via the browser `@/integrations/supabase/client`; REST endpoints live in `src/routes/api/public/v1/$.ts` backed by `src/lib/api/v1.server.ts` — add new endpoints there, not as new route files. Follow `docs/BACKEND-WIRING.md` for data wiring; never seed rows on page load.
+- Audit log is review-only everywhere: entries may be viewed/reviewed/flagged but never deleted, by UI or API (`v1.server.ts` enforces 403).
