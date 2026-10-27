@@ -1,7 +1,9 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
+import { toast } from "sonner";
 
+import { supabase } from "@/integrations/supabase/client";
 import { KearlyLogo } from "@/components/kearly-logo";
 
 export const Route = createFileRoute("/contractor-signup")({
@@ -24,6 +26,9 @@ const steps = ["Account", "Profile", "Certificates", "Jobs"];
 function ContractorSignupPage() {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [busy, setBusy] = useState(false);
 
   return (
     <main className="su-page ct-page">
@@ -65,9 +70,25 @@ function ContractorSignupPage() {
 
         <form
           className="su-form ct-form"
-          onSubmit={(event) => {
+          onSubmit={async (event) => {
             event.preventDefault();
-            void navigate({ to: "/contractor-profile" });
+            setBusy(true);
+            const { data, error } = await supabase.auth.signUp({
+              email,
+              password,
+              options: { data: { account_type: "contractor" } },
+            });
+            setBusy(false);
+            if (error) {
+              toast.error(error.message);
+              return;
+            }
+            if (data.session) {
+              navigate({ to: "/contractor-profile" });
+              return;
+            }
+            toast.success("Check your email to confirm your account, then log in.");
+            navigate({ to: "/login" });
           }}
         >
           <h1 className="su-title">Create your account</h1>
@@ -75,18 +96,18 @@ function ContractorSignupPage() {
 
           <label className="su-label" htmlFor="ct-email">Work Email <span className="su-required">*</span></label>
           <div className="su-field">
-            <input className="su-input" id="ct-email" type="email" autoComplete="email" placeholder="alex@kearly.com" required />
+            <input className="su-input" id="ct-email" type="email" autoComplete="email" placeholder="alex@kearly.com" value={email} onChange={(event) => setEmail(event.target.value)} required />
           </div>
 
           <label className="su-label" htmlFor="ct-password">Password <span className="su-required">*</span></label>
           <div className="su-field">
-            <input className="su-input" id="ct-password" type={showPassword ? "text" : "password"} autoComplete="new-password" placeholder="••••••••" required />
+            <input className="su-input" id="ct-password" type={showPassword ? "text" : "password"} autoComplete="new-password" placeholder="••••••••" value={password} onChange={(event) => setPassword(event.target.value)} required />
             <button className="su-field-button" type="button" onClick={() => setShowPassword((v) => !v)} aria-label={showPassword ? "Hide password" : "Show password"}>
               {showPassword ? <Eye size={16} aria-hidden="true" /> : <EyeOff size={16} aria-hidden="true" />}
             </button>
           </div>
 
-          <button className="su-submit ct-submit" type="submit">Create Account</button>
+          <button className="su-submit ct-submit" type="submit" disabled={busy}>{busy ? "Creating account..." : "Create Account"}</button>
           <div className="su-divider"><span>OR</span></div>
           <Link className="su-google" to="/google-sign-in">
             <span className="su-google-mark" aria-hidden="true">G</span>

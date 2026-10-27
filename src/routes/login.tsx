@@ -1,6 +1,8 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
+import { toast } from "sonner";
 
+import { supabase } from "@/integrations/supabase/client";
 import { KearlyLogo } from "@/components/kearly-logo";
 
 export const Route = createFileRoute("/login")({
@@ -29,7 +31,21 @@ const trustedBy = ["SOC 2", "ISO 27001", "GDPR", "HIPAA", "PCI DSS"];
 
 function LoginPage() {
   const navigate = useNavigate();
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [busy, setBusy] = useState(false);
+
+  async function submit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    setBusy(true);
+    const { error } = await supabase.auth.signInWithPassword({ email, password });
+    setBusy(false);
+    if (error) {
+      toast.error(error.message);
+      return;
+    }
+    navigate({ to: "/dashboard" });
+  }
 
   return (
     <main className="su-page">
@@ -55,13 +71,7 @@ function LoginPage() {
       </section>
 
       <section className="su-form-side">
-        <form
-          className="su-form"
-          onSubmit={(event) => {
-            event.preventDefault();
-            void navigate({ to: "/dashboard" });
-          }}
-        >
+        <form className="su-form" onSubmit={submit}>
           <div className="lg-brand">
             <KearlyLogo className="lg-logo" />
             <span className="lg-brand-name">Kearly</span>
@@ -81,6 +91,8 @@ function LoginPage() {
               name="email"
               autoComplete="email"
               placeholder="alex@kearly.com"
+              value={email}
+              onChange={(event) => setEmail(event.target.value)}
               required
             />
           </div>
@@ -89,7 +101,7 @@ function LoginPage() {
             <label className="su-label" htmlFor="lg-password">
               Password <span className="su-required">*</span>
             </label>
-            <Link className="lg-forgot" to="/login">
+            <Link className="lg-forgot" to="/reset-password">
               Forgot password?
             </Link>
           </div>
@@ -107,8 +119,8 @@ function LoginPage() {
             />
           </div>
 
-          <button className="su-submit lg-submit" type="submit">
-            LOGIN
+          <button className="su-submit lg-submit" type="submit" disabled={busy}>
+            {busy ? "Logging in..." : "LOGIN"}
           </button>
 
           <div className="su-divider">

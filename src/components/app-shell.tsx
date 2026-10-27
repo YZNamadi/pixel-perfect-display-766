@@ -1,8 +1,9 @@
 import { Link } from "@tanstack/react-router";
-import type { ReactNode } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import type { LucideIcon } from "lucide-react";
 import { BarChart3, Building2, LayoutDashboard, ScrollText, Settings, ShieldCheck, Stethoscope, Users, Wrench } from "lucide-react";
 
+import { supabase } from "@/integrations/supabase/client";
 import { KearlyLogo } from "@/components/kearly-logo";
 
 const overview = [
@@ -23,7 +24,40 @@ function NavLink({ label, icon: Icon, to, active, badge }: { label: string; icon
   return <Link to={to} className={`po-nav-item ${active ? "is-active" : ""}`}><Icon size={17} aria-hidden="true" /><span>{label}</span>{badge ? <span className="po-nav-badge">{badge}</span> : null}</Link>;
 }
 
+type ShellUser = { name: string; role: string; initials: string };
+
+function initialsOf(name: string) {
+  const parts = name.trim().split(/\s+/).filter(Boolean);
+  if (!parts.length) return "AR";
+  return parts.slice(0, 2).map((p) => p[0]!.toUpperCase()).join("");
+}
+
 export function AppShell({ active, children }: { active: string; children: ReactNode }) {
+  const [user, setUser] = useState<ShellUser | null>(null);
+
+  useEffect(() => {
+    let activeSession = true;
+    supabase.auth.getUser().then(({ data }) => {
+      if (!activeSession || !data.user) return;
+      const meta = data.user.user_metadata as { full_name?: string } | null;
+      supabase
+        .from("profiles")
+        .select("full_name, role_label")
+        .eq("id", data.user.id)
+        .single()
+        .then(({ data: profile }) => {
+          if (!activeSession) return;
+          const name = profile?.full_name || meta?.full_name || data.user.email || "Signed-in user";
+          setUser({ name, role: profile?.role_label || "Portfolio admin", initials: initialsOf(name) });
+        });
+    });
+    return () => {
+      activeSession = false;
+    };
+  }, []);
+
+  const shown = user ?? { name: "Alex Rowe", role: "Portfolio admin", initials: "AR" };
+
   return <div className="po-shell">
     <aside className="po-sidebar">
       <Link to="/dashboard" className="po-logo" aria-label="Kearly"><KearlyLogo className="po-logo-mark" /><span className="po-logo-text"><span className="po-logo-name">KEARLY</span><span className="po-logo-tag">Compliance. Automated &amp; Simplified.</span></span></Link>
@@ -33,7 +67,7 @@ export function AppShell({ active, children }: { active: string; children: React
         <p className="po-nav-label po-nav-label-gap">GOVERNANCE</p>
         {governance.map((item) => <NavLink key={item.label} {...item} active={active === item.label} />)}
       </nav>
-      <div className="po-sidebar-foot"><Link to="/settings" className={`po-nav-item ${active === "Settings" ? "is-active" : ""}`}><Settings size={17} aria-hidden="true" /><span>Settings</span></Link><div className="po-user"><span className="po-user-avatar" aria-hidden="true">AR</span><span className="po-user-text"><span className="po-user-name">Alex Rowe</span><span className="po-user-role">Portfolio admin</span></span></div></div>
+      <div className="po-sidebar-foot"><Link to="/settings" className={`po-nav-item ${active === "Settings" ? "is-active" : ""}`}><Settings size={17} aria-hidden="true" /><span>Settings</span></Link><div className="po-user"><span className="po-user-avatar" aria-hidden="true">{shown.initials}</span><span className="po-user-text"><span className="po-user-name">{shown.name}</span><span className="po-user-role">{shown.role}</span></span></div></div>
     </aside>
     <main className="po-main">{children}</main>
   </div>;

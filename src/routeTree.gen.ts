@@ -42,6 +42,7 @@ import { Route as LoginRouteImport } from './routes/login'
 import { Route as NewTicketRouteImport } from './routes/new-ticket'
 import { Route as RepairsRouteImport } from './routes/repairs'
 import { Route as ReportsRouteImport } from './routes/reports'
+import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as ReviewTicketRouteImport } from './routes/review-ticket'
 import { Route as ScheduleRouteImport } from './routes/schedule'
 import { Route as SettingsRouteImport } from './routes/settings'
@@ -50,6 +51,7 @@ import { Route as SiteRouteImport } from './routes/site'
 import { Route as StaffRecordsRouteImport } from './routes/staff-records'
 import { Route as TeamRouteImport } from './routes/team'
 import { Route as TeamMembersRouteImport } from './routes/team-members'
+import { Route as ApiPublicV1SplatRouteImport } from './routes/api/public/v1/$'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -216,6 +218,11 @@ const ReportsRoute = ReportsRouteImport.update({
   path: '/reports',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ResetPasswordRoute = ResetPasswordRouteImport.update({
+  id: '/reset-password',
+  path: '/reset-password',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ReviewTicketRoute = ReviewTicketRouteImport.update({
   id: '/review-ticket',
   path: '/review-ticket',
@@ -256,6 +263,11 @@ const TeamMembersRoute = TeamMembersRouteImport.update({
   path: '/team-members',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiPublicV1SplatRoute = ApiPublicV1SplatRouteImport.update({
+  id: '/api/public/v1/$',
+  path: '/api/public/v1/$',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -291,6 +303,7 @@ export interface FileRoutesByFullPath {
   '/new-ticket': typeof NewTicketRoute
   '/repairs': typeof RepairsRoute
   '/reports': typeof ReportsRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/review-ticket': typeof ReviewTicketRoute
   '/schedule': typeof ScheduleRoute
   '/settings': typeof SettingsRoute
@@ -299,6 +312,7 @@ export interface FileRoutesByFullPath {
   '/staff-records': typeof StaffRecordsRoute
   '/team': typeof TeamRoute
   '/team-members': typeof TeamMembersRoute
+  '/api/public/v1/$': typeof ApiPublicV1SplatRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -334,6 +348,7 @@ export interface FileRoutesByTo {
   '/new-ticket': typeof NewTicketRoute
   '/repairs': typeof RepairsRoute
   '/reports': typeof ReportsRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/review-ticket': typeof ReviewTicketRoute
   '/schedule': typeof ScheduleRoute
   '/settings': typeof SettingsRoute
@@ -342,6 +357,7 @@ export interface FileRoutesByTo {
   '/staff-records': typeof StaffRecordsRoute
   '/team': typeof TeamRoute
   '/team-members': typeof TeamMembersRoute
+  '/api/public/v1/$': typeof ApiPublicV1SplatRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -378,6 +394,7 @@ export interface FileRoutesById {
   '/new-ticket': typeof NewTicketRoute
   '/repairs': typeof RepairsRoute
   '/reports': typeof ReportsRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/review-ticket': typeof ReviewTicketRoute
   '/schedule': typeof ScheduleRoute
   '/settings': typeof SettingsRoute
@@ -386,6 +403,7 @@ export interface FileRoutesById {
   '/staff-records': typeof StaffRecordsRoute
   '/team': typeof TeamRoute
   '/team-members': typeof TeamMembersRoute
+  '/api/public/v1/$': typeof ApiPublicV1SplatRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -423,6 +441,7 @@ export interface FileRouteTypes {
     | '/new-ticket'
     | '/repairs'
     | '/reports'
+    | '/reset-password'
     | '/review-ticket'
     | '/schedule'
     | '/settings'
@@ -431,6 +450,7 @@ export interface FileRouteTypes {
     | '/staff-records'
     | '/team'
     | '/team-members'
+    | '/api/public/v1/$'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -466,6 +486,7 @@ export interface FileRouteTypes {
     | '/new-ticket'
     | '/repairs'
     | '/reports'
+    | '/reset-password'
     | '/review-ticket'
     | '/schedule'
     | '/settings'
@@ -474,6 +495,7 @@ export interface FileRouteTypes {
     | '/staff-records'
     | '/team'
     | '/team-members'
+    | '/api/public/v1/$'
   id:
     | '__root__'
     | '/'
@@ -509,6 +531,7 @@ export interface FileRouteTypes {
     | '/new-ticket'
     | '/repairs'
     | '/reports'
+    | '/reset-password'
     | '/review-ticket'
     | '/schedule'
     | '/settings'
@@ -517,6 +540,7 @@ export interface FileRouteTypes {
     | '/staff-records'
     | '/team'
     | '/team-members'
+    | '/api/public/v1/$'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -553,6 +577,7 @@ export interface RootRouteChildren {
   NewTicketRoute: typeof NewTicketRoute
   RepairsRoute: typeof RepairsRoute
   ReportsRoute: typeof ReportsRoute
+  ResetPasswordRoute: typeof ResetPasswordRoute
   ReviewTicketRoute: typeof ReviewTicketRoute
   ScheduleRoute: typeof ScheduleRoute
   SettingsRoute: typeof SettingsRoute
@@ -561,6 +586,7 @@ export interface RootRouteChildren {
   StaffRecordsRoute: typeof StaffRecordsRoute
   TeamRoute: typeof TeamRoute
   TeamMembersRoute: typeof TeamMembersRoute
+  ApiPublicV1SplatRoute: typeof ApiPublicV1SplatRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -796,6 +822,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ReportsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/reset-password': {
+      id: '/reset-password'
+      path: '/reset-password'
+      fullPath: '/reset-password'
+      preLoaderRoute: typeof ResetPasswordRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/review-ticket': {
       id: '/review-ticket'
       path: '/review-ticket'
@@ -852,6 +885,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TeamMembersRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/v1/$': {
+      id: '/api/public/v1/$'
+      path: '/api/public/v1/$'
+      fullPath: '/api/public/v1/$'
+      preLoaderRoute: typeof ApiPublicV1SplatRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -889,6 +929,7 @@ const rootRouteChildren: RootRouteChildren = {
   NewTicketRoute: NewTicketRoute,
   RepairsRoute: RepairsRoute,
   ReportsRoute: ReportsRoute,
+  ResetPasswordRoute: ResetPasswordRoute,
   ReviewTicketRoute: ReviewTicketRoute,
   ScheduleRoute: ScheduleRoute,
   SettingsRoute: SettingsRoute,
@@ -897,6 +938,7 @@ const rootRouteChildren: RootRouteChildren = {
   StaffRecordsRoute: StaffRecordsRoute,
   TeamRoute: TeamRoute,
   TeamMembersRoute: TeamMembersRoute,
+  ApiPublicV1SplatRoute: ApiPublicV1SplatRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
