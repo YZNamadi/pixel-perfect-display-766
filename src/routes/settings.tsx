@@ -240,25 +240,25 @@ function SettingsPage() {
                 <div className="se-fields">
                   <div className="se-field">
                     <label htmlFor="se-name">Full Name</label>
-                    <input id="se-name" type="text" defaultValue="Alex Rowe" />
+                    <input id="se-name" type="text" value={profile.name} onChange={(event) => setProfile({ ...profile, name: event.target.value })} />
                   </div>
                   <div className="se-field">
                     <label htmlFor="se-email">Email Address</label>
-                    <input id="se-email" type="email" defaultValue="alex.rowe@kearlycompliance.com" />
+                    <input id="se-email" type="email" value={profile.email} disabled readOnly />
                   </div>
                   <div className="se-field">
                     <label htmlFor="se-phone">Phone Number</label>
-                    <input id="se-phone" type="tel" defaultValue="+44 7700 900077" />
+                    <input id="se-phone" type="tel" value={profile.phone} onChange={(event) => setProfile({ ...profile, phone: event.target.value })} />
                   </div>
                   <div className="se-field">
                     <label htmlFor="se-role">Job Title / Role</label>
-                    <input id="se-role" type="text" defaultValue="Portfolio Compliance Administrator" />
+                    <input id="se-role" type="text" value={profile.role} onChange={(event) => setProfile({ ...profile, role: event.target.value })} />
                   </div>
                 </div>
 
                 <div className="se-foot">
-                  <button type="button" className="se-primary">
-                    Save Global Changes
+                  <button type="button" className="se-primary" onClick={saveProfile} disabled={saving}>
+                    {saving ? "Saving..." : "Save Global Changes"}
                   </button>
                 </div>
               </>
