@@ -50,6 +50,7 @@ import { Route as SiteRouteImport } from './routes/site'
 import { Route as StaffRecordsRouteImport } from './routes/staff-records'
 import { Route as TeamRouteImport } from './routes/team'
 import { Route as TeamMembersRouteImport } from './routes/team-members'
+import { Route as ApiPublicV1SplatRouteImport } from './routes/api/public/v1/$'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -256,6 +257,11 @@ const TeamMembersRoute = TeamMembersRouteImport.update({
   path: '/team-members',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiPublicV1SplatRoute = ApiPublicV1SplatRouteImport.update({
+  id: '/api/public/v1/$',
+  path: '/api/public/v1/$',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -299,6 +305,7 @@ export interface FileRoutesByFullPath {
   '/staff-records': typeof StaffRecordsRoute
   '/team': typeof TeamRoute
   '/team-members': typeof TeamMembersRoute
+  '/api/public/v1/$': typeof ApiPublicV1SplatRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -342,6 +349,7 @@ export interface FileRoutesByTo {
   '/staff-records': typeof StaffRecordsRoute
   '/team': typeof TeamRoute
   '/team-members': typeof TeamMembersRoute
+  '/api/public/v1/$': typeof ApiPublicV1SplatRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -386,6 +394,7 @@ export interface FileRoutesById {
   '/staff-records': typeof StaffRecordsRoute
   '/team': typeof TeamRoute
   '/team-members': typeof TeamMembersRoute
+  '/api/public/v1/$': typeof ApiPublicV1SplatRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -431,6 +440,7 @@ export interface FileRouteTypes {
     | '/staff-records'
     | '/team'
     | '/team-members'
+    | '/api/public/v1/$'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -474,6 +484,7 @@ export interface FileRouteTypes {
     | '/staff-records'
     | '/team'
     | '/team-members'
+    | '/api/public/v1/$'
   id:
     | '__root__'
     | '/'
@@ -517,6 +528,7 @@ export interface FileRouteTypes {
     | '/staff-records'
     | '/team'
     | '/team-members'
+    | '/api/public/v1/$'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -561,6 +573,7 @@ export interface RootRouteChildren {
   StaffRecordsRoute: typeof StaffRecordsRoute
   TeamRoute: typeof TeamRoute
   TeamMembersRoute: typeof TeamMembersRoute
+  ApiPublicV1SplatRoute: typeof ApiPublicV1SplatRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -852,6 +865,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TeamMembersRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/v1/$': {
+      id: '/api/public/v1/$'
+      path: '/api/public/v1/$'
+      fullPath: '/api/public/v1/$'
+      preLoaderRoute: typeof ApiPublicV1SplatRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -897,6 +917,7 @@ const rootRouteChildren: RootRouteChildren = {
   StaffRecordsRoute: StaffRecordsRoute,
   TeamRoute: TeamRoute,
   TeamMembersRoute: TeamMembersRoute,
+  ApiPublicV1SplatRoute: ApiPublicV1SplatRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
