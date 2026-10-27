@@ -1,6 +1,9 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 import { Eye, EyeOff, Mail } from "lucide-react";
+import { toast } from "sonner";
+
+import { supabase } from "@/integrations/supabase/client";
 
 export const Route = createFileRoute("/signup")({
   head: () => ({
@@ -28,8 +31,32 @@ const trustedBy = ["NHS", "Bupa", "Spire", "UCLH", "Circle"];
 
 function SignupPage() {
   const navigate = useNavigate();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [isContractor, setIsContractor] = useState(false);
+  const [busy, setBusy] = useState(false);
+
+  async function submit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    setBusy(true);
+    const { data, error } = await supabase.auth.signUp({
+      email,
+      password,
+      options: { data: { account_type: isContractor ? "contractor" : "facility" } },
+    });
+    setBusy(false);
+    if (error) {
+      toast.error(error.message);
+      return;
+    }
+    if (data.session) {
+      navigate({ to: isContractor ? "/contractor-profile" : "/facility" });
+      return;
+    }
+    toast.success("Check your email to confirm your account, then log in.");
+    navigate({ to: "/login" });
+  }
 
   return (
     <main className="su-page">
@@ -54,13 +81,7 @@ function SignupPage() {
       </section>
 
       <section className="su-form-side">
-        <form
-          className="su-form"
-          onSubmit={(event) => {
-            event.preventDefault();
-            void navigate({ to: isContractor ? "/contractor-signup" : "/facility" });
-          }}
-        >
+        <form className="su-form" onSubmit={submit}>
           <h1 className="su-title">Create your account</h1>
           <p className="su-subtitle">Welcome! Please fill in your details to get started.</p>
 
@@ -75,6 +96,8 @@ function SignupPage() {
               name="email"
               autoComplete="email"
               placeholder="alex@kearly.com"
+              value={email}
+              onChange={(event) => setEmail(event.target.value)}
               required
             />
             <Mail className="su-field-icon" size={16} aria-hidden="true" />
@@ -91,6 +114,8 @@ function SignupPage() {
               name="password"
               autoComplete="new-password"
               placeholder="••••••••"
+              value={password}
+              onChange={(event) => setPassword(event.target.value)}
               required
             />
             <button
@@ -116,8 +141,8 @@ function SignupPage() {
             </label>
           </div>
 
-          <button className="su-submit" type="submit">
-            Create Account
+          <button className="su-submit" type="submit" disabled={busy}>
+            {busy ? "Creating account..." : "Create Account"}
           </button>
 
           <div className="su-divider">
