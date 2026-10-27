@@ -1,7 +1,9 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
+import { toast } from "sonner";
 
+import { supabase } from "@/integrations/supabase/client";
 import { KearlyLogo } from "@/components/kearly-logo";
 
 export const Route = createFileRoute("/contractor-signup")({
@@ -24,6 +26,9 @@ const steps = ["Account", "Profile", "Certificates", "Jobs"];
 function ContractorSignupPage() {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [busy, setBusy] = useState(false);
 
   return (
     <main className="su-page ct-page">

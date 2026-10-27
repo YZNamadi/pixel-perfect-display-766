@@ -42,6 +42,7 @@ import { Route as LoginRouteImport } from './routes/login'
 import { Route as NewTicketRouteImport } from './routes/new-ticket'
 import { Route as RepairsRouteImport } from './routes/repairs'
 import { Route as ReportsRouteImport } from './routes/reports'
+import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as ReviewTicketRouteImport } from './routes/review-ticket'
 import { Route as ScheduleRouteImport } from './routes/schedule'
 import { Route as SettingsRouteImport } from './routes/settings'
@@ -217,6 +218,11 @@ const ReportsRoute = ReportsRouteImport.update({
   path: '/reports',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ResetPasswordRoute = ResetPasswordRouteImport.update({
+  id: '/reset-password',
+  path: '/reset-password',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ReviewTicketRoute = ReviewTicketRouteImport.update({
   id: '/review-ticket',
   path: '/review-ticket',
@@ -297,6 +303,7 @@ export interface FileRoutesByFullPath {
   '/new-ticket': typeof NewTicketRoute
   '/repairs': typeof RepairsRoute
   '/reports': typeof ReportsRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/review-ticket': typeof ReviewTicketRoute
   '/schedule': typeof ScheduleRoute
   '/settings': typeof SettingsRoute
@@ -341,6 +348,7 @@ export interface FileRoutesByTo {
   '/new-ticket': typeof NewTicketRoute
   '/repairs': typeof RepairsRoute
   '/reports': typeof ReportsRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/review-ticket': typeof ReviewTicketRoute
   '/schedule': typeof ScheduleRoute
   '/settings': typeof SettingsRoute
@@ -386,6 +394,7 @@ export interface FileRoutesById {
   '/new-ticket': typeof NewTicketRoute
   '/repairs': typeof RepairsRoute
   '/reports': typeof ReportsRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/review-ticket': typeof ReviewTicketRoute
   '/schedule': typeof ScheduleRoute
   '/settings': typeof SettingsRoute
@@ -432,6 +441,7 @@ export interface FileRouteTypes {
     | '/new-ticket'
     | '/repairs'
     | '/reports'
+    | '/reset-password'
     | '/review-ticket'
     | '/schedule'
     | '/settings'
@@ -476,6 +486,7 @@ export interface FileRouteTypes {
     | '/new-ticket'
     | '/repairs'
     | '/reports'
+    | '/reset-password'
     | '/review-ticket'
     | '/schedule'
     | '/settings'
@@ -520,6 +531,7 @@ export interface FileRouteTypes {
     | '/new-ticket'
     | '/repairs'
     | '/reports'
+    | '/reset-password'
     | '/review-ticket'
     | '/schedule'
     | '/settings'
@@ -565,6 +577,7 @@ export interface RootRouteChildren {
   NewTicketRoute: typeof NewTicketRoute
   RepairsRoute: typeof RepairsRoute
   ReportsRoute: typeof ReportsRoute
+  ResetPasswordRoute: typeof ResetPasswordRoute
   ReviewTicketRoute: typeof ReviewTicketRoute
   ScheduleRoute: typeof ScheduleRoute
   SettingsRoute: typeof SettingsRoute
@@ -809,6 +822,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ReportsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/reset-password': {
+      id: '/reset-password'
+      path: '/reset-password'
+      fullPath: '/reset-password'
+      preLoaderRoute: typeof ResetPasswordRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/review-ticket': {
       id: '/review-ticket'
       path: '/review-ticket'
@@ -909,6 +929,7 @@ const rootRouteChildren: RootRouteChildren = {
   NewTicketRoute: NewTicketRoute,
   RepairsRoute: RepairsRoute,
   ReportsRoute: ReportsRoute,
+  ResetPasswordRoute: ResetPasswordRoute,
   ReviewTicketRoute: ReviewTicketRoute,
   ScheduleRoute: ScheduleRoute,
   SettingsRoute: SettingsRoute,
